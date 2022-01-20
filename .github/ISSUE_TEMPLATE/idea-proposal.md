@@ -1,7 +1,7 @@
 ---
-name: idea
+name: Idea Proposal
 about: Propose a new idea
-title: 
+title: ''
 labels: ''
 assignees: ''
 

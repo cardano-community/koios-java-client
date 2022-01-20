@@ -1,7 +1,7 @@
 ---
-name: 
-about: 
-title: 
+name: Issue Report
+about: Report an issue
+title: ''
 labels: ''
 assignees: ''
 
