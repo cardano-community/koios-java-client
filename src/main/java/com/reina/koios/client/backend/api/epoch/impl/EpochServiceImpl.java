@@ -1,6 +1,6 @@
 package com.reina.koios.client.backend.api.epoch.impl;
 
-import com.reina.koios.client.backend.api.BaseService;
+import com.reina.koios.client.backend.api.base.BaseService;
 import com.reina.koios.client.backend.api.epoch.EpochService;
 import com.reina.koios.client.backend.api.epoch.model.EpochInfo;
 import com.reina.koios.client.backend.api.epoch.model.EpochParams;

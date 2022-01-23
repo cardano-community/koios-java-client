@@ -2,7 +2,7 @@ package com.reina.koios.client.backend.api.block;
 
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
-import com.reina.koios.client.backend.api.block.model.BlockTx;
+import com.reina.koios.client.backend.api.TxHash;
 import com.reina.koios.client.backend.factory.BackendFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -42,7 +42,7 @@ class BlockServiceIntegrationTest {
     @Test
     void getBlockTransactionsTest() {
         String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
-        BlockTx[] blockTransactions = blockService.getBlockTransactions(hash);
+        TxHash[] blockTransactions = blockService.getBlockTransactions(hash);
         log.info(Arrays.toString(blockTransactions));
         Assertions.assertNotNull(blockTransactions);
     }

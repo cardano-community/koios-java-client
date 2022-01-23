@@ -35,7 +35,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Transaction Metadata
         - Transaction Metadata Labels
         - Transaction Status (Block Confirmations)
-    - [ ] Address
+    - [x] Address
         - Address Information
         - Address Transactions
         - Transactions from Payment Credentials

@@ -2,7 +2,7 @@ package com.reina.koios.client.backend.api.block;
 
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
-import com.reina.koios.client.backend.api.block.model.BlockTx;
+import com.reina.koios.client.backend.api.TxHash;
 
 public interface BlockService {
 
@@ -37,7 +37,7 @@ public interface BlockService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param blockHash Block Hash in hex format (required)
-     * @return Array of {@link BlockTx} Included Transaction of a specific block
+     * @return Array of {@link TxHash} Included Transaction of a specific block
      */
-    BlockTx[] getBlockTransactions(String blockHash);
+    TxHash[] getBlockTransactions(String blockHash);
 }

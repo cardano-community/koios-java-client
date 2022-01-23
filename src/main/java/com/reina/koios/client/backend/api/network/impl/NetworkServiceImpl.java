@@ -1,6 +1,6 @@
 package com.reina.koios.client.backend.api.network.impl;
 
-import com.reina.koios.client.backend.api.BaseService;
+import com.reina.koios.client.backend.api.base.BaseService;
 import com.reina.koios.client.backend.api.network.NetworkService;
 import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;

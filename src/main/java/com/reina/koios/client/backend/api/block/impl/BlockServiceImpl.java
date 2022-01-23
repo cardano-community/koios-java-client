@@ -1,10 +1,10 @@
 package com.reina.koios.client.backend.api.block.impl;
 
-import com.reina.koios.client.backend.api.BaseService;
+import com.reina.koios.client.backend.api.TxHash;
+import com.reina.koios.client.backend.api.base.BaseService;
 import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
-import com.reina.koios.client.backend.api.block.model.BlockTx;
 import com.reina.koios.client.backend.factory.OperationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,13 +52,13 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public BlockTx[] getBlockTransactions(String blockHash) {
-        return (BlockTx[]) getWebClient().get()
+    public TxHash[] getBlockTransactions(String blockHash) {
+        return (TxHash[]) getWebClient().get()
                 .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_txs").queryParam("_block_hash", blockHash).build())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToMono(clientResponse -> {
                     if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(BlockTx[].class);
+                        return clientResponse.bodyToMono(TxHash[].class);
                     } else if (clientResponse.statusCode().is4xxClientError()) {
                         return Mono.just("Error response");
                     } else {

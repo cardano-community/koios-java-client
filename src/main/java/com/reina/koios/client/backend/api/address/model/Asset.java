@@ -1,4 +1,4 @@
-package com.reina.koios.client.backend.api.block.model;
+package com.reina.koios.client.backend.api.address.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -14,10 +14,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BlockTx {
+public class Asset {
 
     /**
-     * Transaction Hash
+     * Asset Policy ID (hex)
      */
-    private String txHash;
+    private String policyId;
+
+    /**
+     * Asset Name (hex)
+     */
+    private String assetName;
+
+    /**
+     * Sum of assets for UTxO
+     */
+    private String quantity;
 }

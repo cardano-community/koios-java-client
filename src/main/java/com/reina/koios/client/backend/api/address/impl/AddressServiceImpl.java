@@ -1,8 +1,10 @@
-package com.reina.koios.client.backend.api.transactions.impl;
+package com.reina.koios.client.backend.api.address.impl;
 
+import com.reina.koios.client.backend.api.TxHash;
+import com.reina.koios.client.backend.api.address.AddressService;
+import com.reina.koios.client.backend.api.address.model.AddressInfo;
+import com.reina.koios.client.backend.api.address.model.AssetInfo;
 import com.reina.koios.client.backend.api.base.BaseService;
-import com.reina.koios.client.backend.api.transactions.TransactionsService;
-import com.reina.koios.client.backend.api.transactions.model.*;
 import com.reina.koios.client.backend.factory.OperationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,21 +13,20 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public class TransactionsServiceImpl extends BaseService implements TransactionsService {
+public class AddressServiceImpl extends BaseService implements AddressService {
 
-    public TransactionsServiceImpl(OperationType operationType, WebClient webClient) {
+    public AddressServiceImpl(OperationType operationType, WebClient webClient) {
         super(operationType, webClient);
     }
 
     @Override
-    public TxInfo[] getTransactionInformation(List<String> txHashes) {
-        return (TxInfo[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_info")
+    public AddressInfo[] getAddressInformation(String address) {
+        return (AddressInfo[]) getWebClient().get()
+                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_info").queryParam("_address", address).build())
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
                 .exchangeToMono(clientResponse -> {
                     if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxInfo[].class);
+                        return clientResponse.bodyToMono(AddressInfo[].class);
                     } else if (clientResponse.statusCode().is4xxClientError()) {
                         return Mono.just("Error response");
                     } else {
@@ -36,14 +37,14 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public TxUtxo[] getTransactionUTxOs(List<String> txHashes) {
-        return (TxUtxo[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_info")
+    public TxHash[] getAddressTransactions(List<String> addressList, Integer afterBlockHeight) {
+        return (TxHash[]) getWebClient().post()
+                .uri(getCustomUrlSuffix() + "/address_txs")
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
+                .bodyValue(buildBody("_addresses",addressList, afterBlockHeight))
                 .exchangeToMono(clientResponse -> {
                     if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxUtxo[].class);
+                        return clientResponse.bodyToMono(TxHash[].class);
                     } else if (clientResponse.statusCode().is4xxClientError()) {
                         return Mono.just("Error response");
                     } else {
@@ -54,14 +55,14 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public TxMetadata[] getTransactionMetadata(List<String> txHashes) {
-        return (TxMetadata[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_metadata")
+    public TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialList, Integer afterBlockHeight) {
+        return (TxHash[]) getWebClient().post()
+                .uri(getCustomUrlSuffix() + "/credential_txs")
                 .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
+                .bodyValue(buildBody("_payment_credentials",paymentCredentialList, afterBlockHeight))
                 .exchangeToMono(clientResponse -> {
                     if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxMetadata[].class);
+                        return clientResponse.bodyToMono(TxHash[].class);
                     } else if (clientResponse.statusCode().is4xxClientError()) {
                         return Mono.just("Error response");
                     } else {
@@ -72,13 +73,13 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public TxMetadataLabels[] getTransactionMetadataLabels() {
-        return (TxMetadataLabels[]) getWebClient().get()
-                .uri("/tx_metalabels")
+    public AssetInfo[] getAddressAssets(String address) {
+        return (AssetInfo[]) getWebClient().get()
+                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_assets").queryParam("_address", address).build())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchangeToMono(clientResponse -> {
                     if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxMetadataLabels[].class);
+                        return clientResponse.bodyToMono(AssetInfo[].class);
                     } else if (clientResponse.statusCode().is4xxClientError()) {
                         return Mono.just("Error response");
                     } else {
@@ -88,33 +89,19 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
                 .block();
     }
 
-    @Override
-    public TxStatus[] getTransactionStatus(List<String> txHashes) {
-        return (TxStatus[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_metadata")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxStatus[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
-    }
-
-    private String buildBody(List<String> txHashes) {
-        StringBuilder jsonBodyValue = new StringBuilder("{\"_tx_hashes\":[");
-        for (int i = 0; i < txHashes.size(); i++) {
-            jsonBodyValue.append("\"").append(txHashes.get(i)).append("\"");
-            if (i + 1 < txHashes.size()) {
+    private String buildBody(String arrayObjString, List<String> list, Integer afterBlockHeight) {
+        StringBuilder jsonBodyValue = new StringBuilder("{\"").append(arrayObjString).append("\":[");
+        for (int i = 0; i < list.size(); i++) {
+            jsonBodyValue.append("\"").append(list.get(i)).append("\"");
+            if (i + 1 < list.size()) {
                 jsonBodyValue.append(",");
             }
         }
-        jsonBodyValue.append("]}");
+        jsonBodyValue.append("]");
+        if (afterBlockHeight != null) {
+            jsonBodyValue.append(",\"_after_block_height\":").append(afterBlockHeight);
+        }
+        jsonBodyValue.append("}");
         return jsonBodyValue.toString();
     }
 }

@@ -1,4 +1,4 @@
-package com.reina.koios.client.backend.api;
+package com.reina.koios.client.backend.api.base;
 
 import com.reina.koios.client.backend.factory.OperationType;
 import lombok.Data;

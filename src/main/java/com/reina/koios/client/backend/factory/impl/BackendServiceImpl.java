@@ -1,5 +1,7 @@
 package com.reina.koios.client.backend.factory.impl;
 
+import com.reina.koios.client.backend.api.address.AddressService;
+import com.reina.koios.client.backend.api.address.impl.AddressServiceImpl;
 import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.block.impl.BlockServiceImpl;
 import com.reina.koios.client.backend.api.epoch.EpochService;
@@ -32,6 +34,7 @@ public class BackendServiceImpl implements BackendService {
     private final EpochService epochService;
     private final BlockService blockService;
     private final TransactionsService transactionsService;
+    private final AddressService addressService;
 
     public BackendServiceImpl(String baseUrl) {
         this(OperationType.CUSTOM_RPC, baseUrl);
@@ -52,6 +55,7 @@ public class BackendServiceImpl implements BackendService {
         this.epochService = new EpochServiceImpl(operationType, webClient);
         this.blockService = new BlockServiceImpl(operationType, webClient);
         this.transactionsService = new TransactionsServiceImpl(operationType, webClient);
+        this.addressService = new AddressServiceImpl(operationType, webClient);
     }
 
     @SneakyThrows
