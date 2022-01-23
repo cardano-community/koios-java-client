@@ -70,34 +70,6 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>io.swagger.codegen.v3</groupId>-->
-<!--                <artifactId>swagger-codegen-maven-plugin</artifactId>-->
-<!--                <version>3.0.31</version>-->
-<!--                <executions>-->
-<!--                    &lt;!&ndash; AUTHENTICATION-API &ndash;&gt;-->
-<!--                    <execution>-->
-<!--                        <id>authentication-api</id>-->
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <inputSpec>${project.basedir}/src/main/resources/koiosapi.yaml</inputSpec>-->
-<!--                            <language>java</language>-->
-<!--                            <configOptions>-->
-<!--                                <sourceFolder>src/main/java</sourceFolder>-->
-<!--                                <library>resttemplate</library>-->
-<!--                                <async>true</async>-->
-<!--                                <reactive>true</reactive>-->
-<!--                                <useTags>true</useTags>-->
-<!--                                <apiPackage>${project.groupId}.api</apiPackage>-->
-<!--                                <modelPackage>${project.groupId}.model</modelPackage>-->
-<!--                                <interfaceOnly>true</interfaceOnly>-->
-<!--                            </configOptions>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 </project>

@@ -40,7 +40,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Address Transactions
         - Transactions from Payment Credentials
         - Address Assets
-    - [ ] Account
+    - [x] Account
         - List of All Accounts
         - Account Information
         - Account Rewards

@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.factory;
 
+import com.reina.koios.client.backend.api.account.AccountService;
 import com.reina.koios.client.backend.api.address.AddressService;
 import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.epoch.EpochService;
@@ -39,12 +40,12 @@ public interface BackendService {
      */
     AddressService getAddressService();
 
-//    /**
-//     * Get Account Service
-//     * @return {@link AccountService}
-//     */
-//    AccountService getAccountService();
-//
+    /**
+     * Get Account Service
+     * @return {@link AccountService}
+     */
+    AccountService getAccountService();
+
 //    /**
 //     * Get Asset Service
 //     * @return {@link AssetService}

@@ -1,5 +1,7 @@
 package com.reina.koios.client.backend.factory.impl;
 
+import com.reina.koios.client.backend.api.account.AccountService;
+import com.reina.koios.client.backend.api.account.impl.AccountServiceImpl;
 import com.reina.koios.client.backend.api.address.AddressService;
 import com.reina.koios.client.backend.api.address.impl.AddressServiceImpl;
 import com.reina.koios.client.backend.api.block.BlockService;
@@ -35,6 +37,7 @@ public class BackendServiceImpl implements BackendService {
     private final BlockService blockService;
     private final TransactionsService transactionsService;
     private final AddressService addressService;
+    private final AccountService accountService;
 
     public BackendServiceImpl(String baseUrl) {
         this(OperationType.CUSTOM_RPC, baseUrl);
@@ -48,7 +51,7 @@ public class BackendServiceImpl implements BackendService {
         if (operationType != OperationType.CUSTOM_RPC) {
             log.info("Koios URL: " + operationType.getBaseUrl());
         } else {
-            log.info("Custom RPC URL: " + operationType.getBaseUrl());
+            log.info("Custom RPC URL: " + baseUrl);
         }
         WebClient webClient = createWebClient(baseUrl);
         this.networkService = new NetworkServiceImpl(operationType, webClient);
@@ -56,6 +59,7 @@ public class BackendServiceImpl implements BackendService {
         this.blockService = new BlockServiceImpl(operationType, webClient);
         this.transactionsService = new TransactionsServiceImpl(operationType, webClient);
         this.addressService = new AddressServiceImpl(operationType, webClient);
+        this.accountService = new AccountServiceImpl(operationType, webClient);
     }
 
     @SneakyThrows
