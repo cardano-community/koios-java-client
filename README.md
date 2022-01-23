@@ -35,12 +35,12 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Transaction Metadata
         - Transaction Metadata Labels
         - Transaction Status (Block Confirmations)
-    - [x] Address
+    - [ ] Address
         - Address Information
         - Address Transactions
         - Transactions from Payment Credentials
         - Address Assets
-    - [x] Account
+    - [ ] Account
         - List of All Accounts
         - Account Information
         - Account Rewards
@@ -48,11 +48,11 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Account Addresses
         - Account Assets
         - Account History
-    - [x] Asset
+    - [ ] Asset
         - Assets Address List
         - Asset Information
         - Asset Summary
-    - [x] Pool
+    - [ ] Pool
         - Pool List
         - Pool Information
         - Pool Delegators List
@@ -60,7 +60,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Pool Updates (History)
         - Pool Relays
         - Pool Metadata
-    - [x] Script
+    - [ ] Script
         - Script List
         - Script Redeemers
 
