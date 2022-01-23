@@ -18,7 +18,7 @@ class AccountServiceIntegrationTest {
 
     @BeforeAll
     public void setup() {
-        accountService = BackendFactory.getCustomRPCService("http://127.0.0.1:8050").getAccountService();
+        accountService = BackendFactory.getKoiosTestnetService().getAccountService();
     }
 
     @Test
