@@ -4,12 +4,16 @@ import com.reina.koios.client.backend.api.account.AccountService;
 import com.reina.koios.client.backend.api.account.impl.AccountServiceImpl;
 import com.reina.koios.client.backend.api.address.AddressService;
 import com.reina.koios.client.backend.api.address.impl.AddressServiceImpl;
+import com.reina.koios.client.backend.api.asset.AssetService;
+import com.reina.koios.client.backend.api.asset.impl.AssetServiceImpl;
 import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.block.impl.BlockServiceImpl;
 import com.reina.koios.client.backend.api.epoch.EpochService;
 import com.reina.koios.client.backend.api.epoch.impl.EpochServiceImpl;
 import com.reina.koios.client.backend.api.network.NetworkService;
 import com.reina.koios.client.backend.api.network.impl.NetworkServiceImpl;
+import com.reina.koios.client.backend.api.pool.PoolService;
+import com.reina.koios.client.backend.api.pool.impl.PoolServiceImpl;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 import com.reina.koios.client.backend.api.transactions.impl.TransactionsServiceImpl;
 import com.reina.koios.client.backend.factory.BackendService;
@@ -38,6 +42,8 @@ public class BackendServiceImpl implements BackendService {
     private final TransactionsService transactionsService;
     private final AddressService addressService;
     private final AccountService accountService;
+    private final AssetService assetService;
+    private final PoolService poolService;
 
     public BackendServiceImpl(String baseUrl) {
         this(OperationType.CUSTOM_RPC, baseUrl);
@@ -60,6 +66,8 @@ public class BackendServiceImpl implements BackendService {
         this.transactionsService = new TransactionsServiceImpl(operationType, webClient);
         this.addressService = new AddressServiceImpl(operationType, webClient);
         this.accountService = new AccountServiceImpl(operationType, webClient);
+        this.assetService = new AssetServiceImpl(operationType, webClient);
+        this.poolService = new PoolServiceImpl(operationType, webClient);
     }
 
     @SneakyThrows

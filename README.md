@@ -48,11 +48,12 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Account Addresses
         - Account Assets
         - Account History
-    - [ ] Asset
+    - [x] Asset
         - Assets Address List
         - Asset Information
         - Asset Summary
-    - [ ] Pool
+        - Assets List
+    - [x] Pool
         - Pool List
         - Pool Information
         - Pool Delegators List

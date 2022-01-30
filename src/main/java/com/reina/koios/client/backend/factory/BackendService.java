@@ -2,9 +2,11 @@ package com.reina.koios.client.backend.factory;
 
 import com.reina.koios.client.backend.api.account.AccountService;
 import com.reina.koios.client.backend.api.address.AddressService;
+import com.reina.koios.client.backend.api.asset.AssetService;
 import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.epoch.EpochService;
 import com.reina.koios.client.backend.api.network.NetworkService;
+import com.reina.koios.client.backend.api.pool.PoolService;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 
 public interface BackendService {
@@ -46,18 +48,18 @@ public interface BackendService {
      */
     AccountService getAccountService();
 
-//    /**
-//     * Get Asset Service
-//     * @return {@link AssetService}
-//     */
-//    AssetService getAssetService();
-//
-//    /**
-//     * Get Pool Service
-//     * @return {@link PoolService}
-//     */
-//    PoolService getPoolService();
-//
+    /**
+     * Get Asset Service
+     * @return {@link AssetService}
+     */
+    AssetService getAssetService();
+
+    /**
+     * Get Pool Service
+     * @return {@link PoolService}
+     */
+    PoolService getPoolService();
+
 //    /**
 //     * Get Script Service
 //     * @return {@link ScriptService}

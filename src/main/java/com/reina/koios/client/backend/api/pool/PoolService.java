@@ -1,89 +1,82 @@
-package com.reina.koios.client.backend.api.account;
+package com.reina.koios.client.backend.api.pool;
 
-import com.reina.koios.client.backend.api.account.model.*;
+import com.reina.koios.client.backend.api.pool.model.*;
 
-public interface AccountService {
+public interface PoolService {
 
     /**
-     * Get a list of all accounts
+     * Pool List
+     * A list of all currently registered/retiring (not retired) pools
+     * <p><b>200</b> - Array of pool IDs and tickers
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
+     * @return Array of {@link Pool} IDs and tickers
+     */
+    Pool[] getPoolList();
+
+    /**
+     * Pool Information
+     * Current pool status and details for specified pool id
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @return Array of {@link StakeAddress}
+     * @param poolBech32 Pool ID in bech32 format (required)
+     * @return Array of {@link PoolInfo}
      */
-    StakeAddress[] getAccountList();
+    PoolInfo[] getPoolInformation(String poolBech32);
 
     /**
-     * Account Information
-     * Get the account info of any (payment or staking) address
+     * Pool Delegators List
+     * Return information about delegators by a given pool and optional epoch (current if omitted)
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountInfo} per the specified payment or staking address
+     * @param poolBech32 Pool ID in bech32 format (required)
+     * @param epochNo    Epoch Number to fetch details for (optional)
      */
-    AccountInfo[] getAccountInformation(String address);
+    PoolDelegator[] getPoolDelegatorsList(String poolBech32, Long epochNo);
 
     /**
-     * Account Rewards
-     * Get the full rewards history (including MIR) for a stake address, or certain epoch if specified
+     * Pool Blocks
+     * Return information about blocks minted by a given pool in current epoch (or _epoch_no if provided)
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
-     * @param epochNo      Filter for earned rewards Epoch Number (optional)
-     * @return Array of {@link AccountRewards}
+     * @param poolBech32 Pool ID in bech32 format (required)
+     * @param epochNo    Epoch Number to fetch details for (optional)
      */
-    AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo);
+    PoolBlock[] getPoolBlocks(String poolBech32, Long epochNo);
 
     /**
-     * Account Updates (History)
-     * Get the account updates (registration, deregistration, delegation and withdrawals)
+     * Pool Updates (History)
+     * Return all pool updates for all pools or only updates for specific pool if specified
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
-     * @return Array of {@link AccountUpdates}
+     * @param poolBech32 Pool ID in bech32 format (optional) (optional)
      */
-    AccountUpdates[] getAccountUpdates(String stakeAddress);
+    PoolUpdate[] getPoolUpdates(String poolBech32);
 
     /**
-     * Account Addresses
-     * Get all addresses associated with an account
+     * Pool Relays
+     * A list of registered relays for all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     *
-     * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountAddress}
      */
-    AccountAddress[] getAccountAddresses(String address);
+    PoolRelay[] getPoolRelays();
 
     /**
-     * Account Assets
-     * Get the native asset balance of an account
+     * Pool Metadata
+     * Metadata(on &amp; off-chain) for all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     *
-     * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountAsset}
      */
-    AccountAsset[] getAccountAssets(String address);
-
-    /**
-     * Account History
-     * Get the staking history of an account
-     * <p><b>200</b> - Array of active stake values per epoch
-     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
-     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountHistory} active stake values per epoch
-     */
-    AccountHistory[] getAccountHistory(String address);
+    PoolMetadata[] getPoolMetadata();
 }

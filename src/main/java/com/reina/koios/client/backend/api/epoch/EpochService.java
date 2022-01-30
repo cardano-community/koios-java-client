@@ -11,6 +11,7 @@ public interface EpochService {
      * <p><b>200</b> - Array of detailed summary for each epoch
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
      * @param epochNo Epoch Number to fetch details for (optional)
      * @return Array of {@link EpochInfo} detailed summary for each epoch
      */
@@ -22,6 +23,7 @@ public interface EpochService {
      * <p><b>200</b> - Array of protocol parameters for each epoch
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
      * @param epochNo Epoch Number to fetch details for (optional)
      * @return Array of {@link EpochParams} protocol parameters for each epoch
      */
