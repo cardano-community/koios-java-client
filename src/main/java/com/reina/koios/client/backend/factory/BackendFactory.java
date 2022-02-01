@@ -9,30 +9,57 @@ public class BackendFactory {
     }
 
     /**
-     * Get Mainnet BackendService for Koios
+     * Get Mainnet BackendService for Koios (Latest Version)
      *
      * @return {@link BackendService}
      */
     public static BackendService getKoiosMainnetService() {
-        return new BackendServiceImpl(OperationType.KOIOS_MAINNET);
+        return getKoiosMainnetService(ApiVersion.VERSION_0);
     }
 
     /**
-     * Get Testnet BackendService for Koios
+     * Get Mainnet BackendService for Koios By Version
+     *
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosMainnetService(ApiVersion apiVersion) {
+        return new BackendServiceImpl(OperationType.KOIOS_MAINNET+apiVersion.getVersion());
+    }
+
+    /**
+     * Get Testnet BackendService for Koios (Latest Version)
      *
      * @return {@link BackendService}
      */
     public static BackendService getKoiosTestnetService() {
-        return new BackendServiceImpl(OperationType.KOIOS_TESTNET);
+        return getKoiosTestnetService(ApiVersion.VERSION_0);
     }
 
     /**
-     * Get Guild Network BackendService for Koios
+     * Get Testnet BackendService for Koios By Version
+     *
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosTestnetService(ApiVersion apiVersion) {
+        return new BackendServiceImpl(OperationType.KOIOS_TESTNET+apiVersion.getVersion());
+    }
+
+    /**
+     * Get Guild Network BackendService for Koios (Latest Version)
      *
      * @return {@link BackendService}
      */
     public static BackendService getKoiosGuildService() {
-        return new BackendServiceImpl(OperationType.KOIOS_GUILD);
+        return getKoiosGuildService(ApiVersion.VERSION_0);
+    }
+
+    /**
+     * Get Guild Network BackendService for Koios By Version
+     *
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosGuildService(ApiVersion apiVersion) {
+        return new BackendServiceImpl(OperationType.KOIOS_GUILD+apiVersion.getVersion());
     }
 
     /**
