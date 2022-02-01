@@ -8,9 +8,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -33,6 +36,14 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
+    void getTransactionInformationBadRequestTest() {
+        String txHash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionInformation(List.of(txHash)));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void getTransactionUTxOsTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         TxUtxo[] transactionUTxOs = transactionsService.getTransactionUTxOs(List.of(txHash));
@@ -42,11 +53,27 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
+    void getTransactionUTxOsBadRequestTest() {
+        String txHash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionUTxOs(List.of(txHash)));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
     void getTransactionMetadataTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         TxMetadata[] transactionMetadata = transactionsService.getTransactionMetadata(List.of(txHash));
         log.info(Arrays.toString(transactionMetadata));
         Assertions.assertNotNull(transactionMetadata);
+    }
+
+    @Test
+    void getTransactionMetadataBadRequestTest() {
+        String txHash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionMetadata(List.of(txHash)));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -63,5 +90,13 @@ class TransactionsServiceIntegrationTest {
         log.info(Arrays.toString(transactionStatus));
         Assertions.assertNotNull(transactionStatus);
         Assertions.assertEquals(txHash, transactionStatus[0].getTxHash());
+    }
+
+    @Test
+    void getTransactionStatusBadRequestTest() {
+        String txHash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionMetadata(List.of(txHash)));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 }

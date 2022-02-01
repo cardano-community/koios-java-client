@@ -119,6 +119,9 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     private String buildBody(List<String> txHashes) {
+        if (txHashes == null || txHashes.isEmpty()) {
+            return null;
+        }
         StringBuilder jsonBodyValue = new StringBuilder("{\"_tx_hashes\":[");
         for (int i = 0; i < txHashes.size(); i++) {
             jsonBodyValue.append("\"").append(txHashes.get(i)).append("\"");
