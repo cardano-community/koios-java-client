@@ -43,12 +43,12 @@ public interface AddressService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param paymentCredentialList List of Cardano payment credential(s) in hex format
-     * @param afterBlockHeight      Only fetch information after specific block height
+     * @param paymentCredentialsList List of Cardano payment credential(s) in hex format
+     * @param afterBlockHeight       Only fetch information after specific block height
      * @return Array of {@link TxHash} Included Transactions
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialList, Integer afterBlockHeight) throws ApiException;
+    TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight) throws ApiException;
 
     /**
      * Address Assets

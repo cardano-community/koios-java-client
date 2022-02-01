@@ -54,8 +54,13 @@ class AddressServiceIntegrationTest {
 
     @Test
     void getAddressTransactionsBadRequestTest() {
-        String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(address),250));
+        String badAddress = "a123sd";
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(badAddress),250));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+
+        String address = "addr_test1qz0xcyfuwkf6a2c8g0mhjdaxxvtuw2u04dqjx7tt2gwaq5522z65y7wauh6rryspdn7xrg5u7nkf5ung6qk5dn3a7u8syvce7n";
+        exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(address),-5));
         assertInstanceOf(ApiException.class, exception);
         assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
@@ -70,8 +75,13 @@ class AddressServiceIntegrationTest {
 
     @Test
     void getTransactionsByPaymentCredentialsBadRequestTest() {
-        String paymentCredentials = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),250));
+        String badPaymentCredentials = "a123sd";
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(badPaymentCredentials),250));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+
+        String paymentCredentials = "d38191f836e65ae4a8072ba07fa3b0bd6256ffed4a95895008ba5f1b";
+        exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),-5));
         assertInstanceOf(ApiException.class, exception);
         assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }

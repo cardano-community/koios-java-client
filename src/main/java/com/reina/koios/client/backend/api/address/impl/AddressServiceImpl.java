@@ -43,6 +43,9 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public TxHash[] getAddressTransactions(List<String> addressList, Integer afterBlockHeight) throws ApiException {
+        if (afterBlockHeight<0) {
+            throw new ApiException("Non Positive \"afterBlockHeight\" Value", HttpStatus.BAD_REQUEST);
+        }
         for (String address : addressList) {
             if (!Bech32Util.isValid(address)) {
                 throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
@@ -63,12 +66,20 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     }
 
     @Override
-    public TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialList, Integer afterBlockHeight) throws ApiException {
+    public TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight) throws ApiException {
+        if (afterBlockHeight<0) {
+            throw new ApiException("Non Positive \"afterBlockHeight\" Value", HttpStatus.BAD_REQUEST);
+        }
+        for (String paymentCredentials : paymentCredentialsList) {
+            if (!paymentCredentials.matches("^[0-9a-fA-F]+$")) {
+                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+            }
+        }
         try {
             return getWebClient().post()
                     .uri(getCustomUrlSuffix() + "/credential_txs")
                     .accept(MediaType.APPLICATION_JSON)
-                    .bodyValue(buildBody("_payment_credentials", paymentCredentialList, afterBlockHeight))
+                    .bodyValue(buildBody("_payment_credentials", paymentCredentialsList, afterBlockHeight))
                     .retrieve()
                     .bodyToMono(TxHash[].class)
                     .timeout(getTimeoutDuration())
