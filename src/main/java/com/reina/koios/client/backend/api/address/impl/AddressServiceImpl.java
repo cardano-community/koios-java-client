@@ -43,7 +43,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public TxHash[] getAddressTransactions(List<String> addressList, Integer afterBlockHeight) throws ApiException {
-        if (afterBlockHeight<0) {
+        if (afterBlockHeight < 0) {
             throw new ApiException("Non Positive \"afterBlockHeight\" Value", HttpStatus.BAD_REQUEST);
         }
         for (String address : addressList) {
@@ -67,7 +67,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight) throws ApiException {
-        if (afterBlockHeight<0) {
+        if (afterBlockHeight < 0) {
             throw new ApiException("Non Positive \"afterBlockHeight\" Value", HttpStatus.BAD_REQUEST);
         }
         for (String paymentCredentials : paymentCredentialsList) {
