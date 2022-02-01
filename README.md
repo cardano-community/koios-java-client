@@ -19,9 +19,9 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Structured Java Objects logging
 - Supported REST Services:
     - [x] Network
-        - Query Chain Tip
-        - Get Genesis Info
-        - Get Historical tokenomic stats
+        - Chain Tip
+        - Genesis Info
+        - Historical tokenomic stats
     - [x] Epoch
         - Epoch Information
         - Epoch's Protocol Parameters
