@@ -42,5 +42,5 @@ public interface NetworkService {
      * @return Array of {@link Totals} with supply/reserves/utxo/fees/treasury stats
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Totals[] getHistoricalTokenomicStats(String epochNo) throws ApiException;
+    Totals[] getHistoricalTokenomicStats(Long epochNo) throws ApiException;
 }
