@@ -98,6 +98,23 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
+    public String submitTx(byte[] cborData) throws ApiException {
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/submittx")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_CBOR)
+                    .bodyValue(cborData)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
+    }
+
+    @Override
     public TxStatus[] getTransactionStatus(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
             if (!tx.matches("^[0-9a-fA-F]+$")) {

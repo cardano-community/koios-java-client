@@ -34,6 +34,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Transaction UTxOs
         - Transaction Metadata
         - Transaction Metadata Labels
+        - Transaction Submission
         - Transaction Status (Block Confirmations)
     - [x] Address
         - Address Information

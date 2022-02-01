@@ -59,6 +59,18 @@ public interface TransactionsService {
     TxMetadataLabels[] getTransactionMetadataLabels() throws ApiException;
 
     /**
+     * Submit Transaction
+     * Submit an already serialized transaction to the network.
+     * <p><b>202</b> - OK
+     * <p><b>400</b> - An error occurred while submitting transaction.
+     *
+     * @param cborData (optional)
+     * @return Transaction Id (Hex String)
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    String submitTx(byte[] cborData) throws ApiException;
+
+    /**
      * Transaction Status (Block Confirmations)
      * Get the number of block confirmations for a given transaction hash list
      * <p><b>200</b> - Array of transaction confirmation counts

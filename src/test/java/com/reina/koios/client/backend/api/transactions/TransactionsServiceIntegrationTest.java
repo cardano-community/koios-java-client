@@ -83,6 +83,13 @@ class TransactionsServiceIntegrationTest {
         Assertions.assertNotNull(transactionMetadataLabels);
     }
 
+    @Test
+    void submitTxBadRequestTest() {
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.submitTx(new byte[0]));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+    }
+
 //    @Test
     void getTransactionStatusTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
