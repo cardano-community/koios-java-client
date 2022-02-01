@@ -21,7 +21,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
     - [x] Network
         - Chain Tip
         - Genesis Info
-        - Historical tokenomic stats
+        - Historical Tokenomic Statistics
     - [x] Epoch
         - Epoch Information
         - Epoch's Protocol Parameters
