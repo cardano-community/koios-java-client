@@ -16,7 +16,13 @@ import lombok.ToString;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Asset {
 
+    /**
+     * Asset Policy ID (hex)
+     */
     private String policyId;
 
+    /**
+     * AssetNames Object
+     */
     private AssetNames assetNames;
 }

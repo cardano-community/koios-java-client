@@ -18,7 +18,13 @@ import java.util.ArrayList;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AssetNames {
 
+    /**
+     * Asset Names (hex)
+     */
     private ArrayList<String> hex;
 
+    /**
+     * Asset Names (ASCII)
+     */
     private ArrayList<String> ascii;
 }
