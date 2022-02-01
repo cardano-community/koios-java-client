@@ -7,6 +7,7 @@ import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;
 import com.reina.koios.client.backend.api.network.model.Totals;
 import com.reina.koios.client.backend.factory.OperationType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -48,7 +49,10 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     }
 
     @Override
-    public Totals[] getHistoricalTokenomicStats(String epochNo) throws ApiException {
+    public Totals[] getHistoricalTokenomicStats(Long epochNo) throws ApiException {
+        if (epochNo < 0) {
+            throw new ApiException("Non Positive \"epochNo\" Value", HttpStatus.BAD_REQUEST);
+        }
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/totals")
