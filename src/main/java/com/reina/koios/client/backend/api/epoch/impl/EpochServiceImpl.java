@@ -1,14 +1,14 @@
 package com.reina.koios.client.backend.api.epoch.impl;
 
 import com.reina.koios.client.backend.api.base.BaseService;
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.epoch.EpochService;
 import com.reina.koios.client.backend.api.epoch.model.EpochInfo;
 import com.reina.koios.client.backend.api.epoch.model.EpochParams;
 import com.reina.koios.client.backend.factory.OperationType;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 public class EpochServiceImpl extends BaseService implements EpochService {
 
@@ -17,36 +17,36 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
-    public EpochInfo[] getEpochInformation(String epochNo) {
-        return (EpochInfo[]) getWebClient().get()
-                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/epoch_info").queryParam("_epoch_no", epochNo).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(EpochInfo[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public EpochInfo[] getEpochInformation(String epochNo) throws ApiException {
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/epoch_info")
+                            .queryParam("_epoch_no", epochNo)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(EpochInfo[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public EpochParams[] getEpochParameters(String epochNo) {
-        return (EpochParams[]) getWebClient().get()
-                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/epoch_params").queryParam("_epoch_no", epochNo).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(EpochParams[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public EpochParams[] getEpochParameters(String epochNo) throws ApiException {
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/epoch_params")
+                            .queryParam("_epoch_no", epochNo)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(EpochParams[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 }

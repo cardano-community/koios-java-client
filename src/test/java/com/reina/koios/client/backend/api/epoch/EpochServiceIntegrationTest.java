@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.epoch;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.epoch.model.EpochInfo;
 import com.reina.koios.client.backend.api.epoch.model.EpochParams;
 import com.reina.koios.client.backend.factory.BackendFactory;
@@ -23,7 +24,7 @@ class EpochServiceIntegrationTest {
     }
 
     @Test
-    void getEpochInformationTest() {
+    void getEpochInformationTest() throws ApiException {
         String epochNo = "180";
         EpochInfo[] epochInformation = epochService.getEpochInformation(epochNo);
         log.info(Arrays.toString(epochInformation));
@@ -32,7 +33,7 @@ class EpochServiceIntegrationTest {
     }
 
     @Test
-    void getEpochParametersTest() {
+    void getEpochParametersTest() throws ApiException {
         String epochNo = "180";
         EpochParams[] epochParameters = epochService.getEpochParameters(epochNo);
         log.info(Arrays.toString(epochParameters));

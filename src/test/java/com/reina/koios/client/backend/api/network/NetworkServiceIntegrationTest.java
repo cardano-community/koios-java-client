@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.network;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;
 import com.reina.koios.client.backend.api.network.model.Totals;
@@ -24,14 +25,14 @@ class NetworkServiceIntegrationTest {
     }
 
     @Test
-    void getChainTipTest() {
+    void getChainTipTest() throws ApiException {
         Tip[] tip = networkService.getChainTip();
         log.info(Arrays.toString(tip));
         Assertions.assertNotNull(tip);
     }
 
     @Test
-    void getGenesisInfoTest() {
+    void getGenesisInfoTest() throws ApiException {
         Genesis[] genesis = networkService.getGenesisInfo();
         log.info(Arrays.toString(genesis));
         Assertions.assertNotNull(genesis);
@@ -39,7 +40,7 @@ class NetworkServiceIntegrationTest {
     }
 
     @Test
-    void getHistoricalTokenomicStatsTest() {
+    void getHistoricalTokenomicStatsTest() throws ApiException {
         String epochNo = "180";
         Totals[] historicalTokenomicStats = networkService.getHistoricalTokenomicStats(epochNo);
         log.info(Arrays.toString(historicalTokenomicStats));

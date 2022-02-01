@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.epoch;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.epoch.model.EpochInfo;
 import com.reina.koios.client.backend.api.epoch.model.EpochParams;
 
@@ -14,8 +15,9 @@ public interface EpochService {
      *
      * @param epochNo Epoch Number to fetch details for (optional)
      * @return Array of {@link EpochInfo} detailed summary for each epoch
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    EpochInfo[] getEpochInformation(String epochNo);
+    EpochInfo[] getEpochInformation(String epochNo) throws ApiException;
 
     /**
      * Epoch's Protocol Parameters
@@ -26,6 +28,7 @@ public interface EpochService {
      *
      * @param epochNo Epoch Number to fetch details for (optional)
      * @return Array of {@link EpochParams} protocol parameters for each epoch
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    EpochParams[] getEpochParameters(String epochNo);
+    EpochParams[] getEpochParameters(String epochNo) throws ApiException;
 }

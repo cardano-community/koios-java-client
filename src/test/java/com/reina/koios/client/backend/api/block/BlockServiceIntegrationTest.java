@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.block;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
 import com.reina.koios.client.backend.api.TxHash;
@@ -9,8 +10,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -24,14 +28,14 @@ class BlockServiceIntegrationTest {
     }
 
     @Test
-    void getBlockListTest() {
+    void getBlockListTest() throws ApiException {
         Block[] blockList = blockService.getBlockList();
         log.info(Arrays.toString(blockList));
         Assertions.assertNotNull(blockList);
     }
 
     @Test
-    void getBlockInformationTest() {
+    void getBlockInformationTest() throws ApiException {
         String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
         BlockInfo[] blockInformation = blockService.getBlockInformation(hash);
         log.info(Arrays.toString(blockInformation));
@@ -40,10 +44,26 @@ class BlockServiceIntegrationTest {
     }
 
     @Test
-    void getBlockTransactionsTest() {
+    void getBlockInformationBadRequestTest() {
+        String hash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockInformation(hash));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void getBlockTransactionsTest() throws ApiException {
         String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
         TxHash[] blockTransactions = blockService.getBlockTransactions(hash);
         log.info(Arrays.toString(blockTransactions));
         Assertions.assertNotNull(blockTransactions);
+    }
+
+    @Test
+    void getBlockTransactionsBadRequestTest() {
+        String hash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactions(hash));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 }

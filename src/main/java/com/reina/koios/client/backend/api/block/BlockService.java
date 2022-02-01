@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.block;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
 import com.reina.koios.client.backend.api.TxHash;
@@ -14,8 +15,9 @@ public interface BlockService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @return Array of detailed summary of every {@link Block}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Block[] getBlockList();
+    Block[] getBlockList() throws ApiException;
 
     /**
      * Block Information
@@ -26,8 +28,9 @@ public interface BlockService {
      *
      * @param blockHash Block Hash in hex format (required)
      * @return Array of {@link BlockInfo} of a specific block
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    BlockInfo[] getBlockInformation(String blockHash);
+    BlockInfo[] getBlockInformation(String blockHash) throws ApiException;
 
     /**
      * Block Transactions
@@ -38,6 +41,7 @@ public interface BlockService {
      *
      * @param blockHash Block Hash in hex format (required)
      * @return Array of {@link TxHash} Included Transaction of a specific block
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxHash[] getBlockTransactions(String blockHash);
+    TxHash[] getBlockTransactions(String blockHash) throws ApiException;
 }

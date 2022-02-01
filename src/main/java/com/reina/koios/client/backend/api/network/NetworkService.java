@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.network;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;
 import com.reina.koios.client.backend.api.network.model.Totals;
@@ -14,8 +15,9 @@ public interface NetworkService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @return Array of {@link Tip} block summary (limit+paginated)
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Tip[] getChainTip();
+    Tip[] getChainTip() throws ApiException;
 
     /**
      * Get Genesis info
@@ -25,8 +27,9 @@ public interface NetworkService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @return Array of {@link Genesis} parameters used to start each era on chain
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Genesis[] getGenesisInfo();
+    Genesis[] getGenesisInfo() throws ApiException;
 
     /**
      * Get historical tokenomic stats
@@ -37,6 +40,7 @@ public interface NetworkService {
      *
      * @param epochNo Epoch Number to fetch details for (optional)
      * @return Array of {@link Totals} with supply/reserves/utxo/fees/treasury stats
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Totals[] getHistoricalTokenomicStats(String epochNo);
+    Totals[] getHistoricalTokenomicStats(String epochNo) throws ApiException;
 }

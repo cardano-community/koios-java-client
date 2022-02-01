@@ -1,13 +1,14 @@
 package com.reina.koios.client.backend.api.transactions.impl;
 
 import com.reina.koios.client.backend.api.base.BaseService;
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 import com.reina.koios.client.backend.api.transactions.model.*;
 import com.reina.koios.client.backend.factory.OperationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 
@@ -18,99 +19,110 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public TxInfo[] getTransactionInformation(List<String> txHashes) {
-        return (TxInfo[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_info")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxInfo[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxInfo[] getTransactionInformation(List<String> txHashes) throws ApiException {
+        for (String tx : txHashes) {
+            if (!tx.matches("^[0-9a-fA-F]+$")) {
+                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/tx_info")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(buildBody(txHashes))
+                    .retrieve()
+                    .bodyToMono(TxInfo[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxUtxo[] getTransactionUTxOs(List<String> txHashes) {
-        return (TxUtxo[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_info")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxUtxo[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxUtxo[] getTransactionUTxOs(List<String> txHashes) throws ApiException {
+        for (String tx : txHashes) {
+            if (!tx.matches("^[0-9a-fA-F]+$")) {
+                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/tx_utxos")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(buildBody(txHashes))
+                    .retrieve()
+                    .bodyToMono(TxUtxo[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxMetadata[] getTransactionMetadata(List<String> txHashes) {
-        return (TxMetadata[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_metadata")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxMetadata[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxMetadata[] getTransactionMetadata(List<String> txHashes) throws ApiException {
+        for (String tx : txHashes) {
+            if (!tx.matches("^[0-9a-fA-F]+$")) {
+                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/tx_metadata")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(buildBody(txHashes))
+                    .retrieve()
+                    .bodyToMono(TxMetadata[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxMetadataLabels[] getTransactionMetadataLabels() {
-        return (TxMetadataLabels[]) getWebClient().get()
-                .uri("/tx_metalabels")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxMetadataLabels[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxMetadataLabels[] getTransactionMetadataLabels() throws ApiException {
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/tx_metalabels")
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(TxMetadataLabels[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxStatus[] getTransactionStatus(List<String> txHashes) {
-        return (TxStatus[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/tx_metadata")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody(txHashes))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxStatus[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxStatus[] getTransactionStatus(List<String> txHashes) throws ApiException {
+        for (String tx : txHashes) {
+            if (!tx.matches("^[0-9a-fA-F]+$")) {
+                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/tx_status")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(buildBody(txHashes))
+                    .retrieve()
+                    .bodyToMono(TxStatus[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     private String buildBody(List<String> txHashes) {
         StringBuilder jsonBodyValue = new StringBuilder("{\"_tx_hashes\":[");
         for (int i = 0; i < txHashes.size(); i++) {
             jsonBodyValue.append("\"").append(txHashes.get(i)).append("\"");
-            if (i + 1 < txHashes.size()) {
+            if (i < txHashes.size() - 1) {
                 jsonBodyValue.append(",");
             }
         }

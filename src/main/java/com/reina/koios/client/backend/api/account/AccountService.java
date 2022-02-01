@@ -1,6 +1,7 @@
 package com.reina.koios.client.backend.api.account;
 
 import com.reina.koios.client.backend.api.account.model.*;
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 
 public interface AccountService {
 
@@ -12,8 +13,9 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @return Array of {@link StakeAddress}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    StakeAddress[] getAccountList();
+    StakeAddress[] getAccountList() throws ApiException;
 
     /**
      * Account Information
@@ -24,8 +26,9 @@ public interface AccountService {
      *
      * @param address Cardano payment or staking address in bech32 format (required)
      * @return Array of {@link AccountInfo} per the specified payment or staking address
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountInfo[] getAccountInformation(String address);
+    AccountInfo[] getAccountInformation(String address) throws ApiException;
 
     /**
      * Account Rewards
@@ -37,8 +40,9 @@ public interface AccountService {
      * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
      * @param epochNo      Filter for earned rewards Epoch Number (optional)
      * @return Array of {@link AccountRewards}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo);
+    AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo) throws ApiException;
 
     /**
      * Account Updates (History)
@@ -49,8 +53,9 @@ public interface AccountService {
      *
      * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
      * @return Array of {@link AccountUpdates}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountUpdates[] getAccountUpdates(String stakeAddress);
+    AccountUpdates[] getAccountUpdates(String stakeAddress) throws ApiException;
 
     /**
      * Account Addresses
@@ -61,8 +66,9 @@ public interface AccountService {
      *
      * @param address Cardano payment or staking address in bech32 format (required)
      * @return Array of {@link AccountAddress}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountAddress[] getAccountAddresses(String address);
+    AccountAddress[] getAccountAddresses(String address) throws ApiException;
 
     /**
      * Account Assets
@@ -73,8 +79,9 @@ public interface AccountService {
      *
      * @param address Cardano payment or staking address in bech32 format (required)
      * @return Array of {@link AccountAsset}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountAsset[] getAccountAssets(String address);
+    AccountAsset[] getAccountAssets(String address) throws ApiException;
 
     /**
      * Account History
@@ -82,8 +89,10 @@ public interface AccountService {
      * <p><b>200</b> - Array of active stake values per epoch
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
      * @param address Cardano payment or staking address in bech32 format (required)
      * @return Array of {@link AccountHistory} active stake values per epoch
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountHistory[] getAccountHistory(String address);
+    AccountHistory[] getAccountHistory(String address) throws ApiException;
 }

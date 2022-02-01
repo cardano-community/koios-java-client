@@ -5,11 +5,13 @@ import com.reina.koios.client.backend.api.address.AddressService;
 import com.reina.koios.client.backend.api.address.model.AddressInfo;
 import com.reina.koios.client.backend.api.address.model.AssetInfo;
 import com.reina.koios.client.backend.api.base.BaseService;
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.factory.OperationType;
+import com.reina.koios.client.utils.Bech32Util;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 
@@ -20,73 +22,80 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     }
 
     @Override
-    public AddressInfo[] getAddressInformation(String address) {
-        return (AddressInfo[]) getWebClient().get()
-                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_info").queryParam("_address", address).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(AddressInfo[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public AddressInfo[] getAddressInformation(String address) throws ApiException {
+        if (!Bech32Util.isValid(address)) {
+            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_info")
+                            .queryParam("_address", address)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(AddressInfo[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxHash[] getAddressTransactions(List<String> addressList, Integer afterBlockHeight) {
-        return (TxHash[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/address_txs")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody("_addresses",addressList, afterBlockHeight))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxHash[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxHash[] getAddressTransactions(List<String> addressList, Integer afterBlockHeight) throws ApiException {
+        for (String address : addressList) {
+            if (!Bech32Util.isValid(address)) {
+                throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
+            }
+        }
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/address_txs")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(buildBody("_addresses", addressList, afterBlockHeight))
+                    .retrieve()
+                    .bodyToMono(TxHash[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialList, Integer afterBlockHeight) {
-        return (TxHash[]) getWebClient().post()
-                .uri(getCustomUrlSuffix() + "/credential_txs")
-                .accept(MediaType.APPLICATION_JSON)
-                .bodyValue(buildBody("_payment_credentials",paymentCredentialList, afterBlockHeight))
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxHash[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialList, Integer afterBlockHeight) throws ApiException {
+        try {
+            return getWebClient().post()
+                    .uri(getCustomUrlSuffix() + "/credential_txs")
+                    .accept(MediaType.APPLICATION_JSON)
+                    .bodyValue(buildBody("_payment_credentials", paymentCredentialList, afterBlockHeight))
+                    .retrieve()
+                    .bodyToMono(TxHash[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public AssetInfo[] getAddressAssets(String address) {
-        return (AssetInfo[]) getWebClient().get()
-                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_assets").queryParam("_address", address).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(AssetInfo[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public AssetInfo[] getAddressAssets(String address) throws ApiException {
+        if (!Bech32Util.isValid(address)) {
+            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_assets")
+                            .queryParam("_address", address)
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(AssetInfo[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     private String buildBody(String arrayObjString, List<String> list, Integer afterBlockHeight) {

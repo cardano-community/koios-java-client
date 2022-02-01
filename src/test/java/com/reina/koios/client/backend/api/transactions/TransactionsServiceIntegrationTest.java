@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.transactions;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.transactions.model.*;
 import com.reina.koios.client.backend.factory.BackendFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
-    void getTransactionInformationTest() {
+    void getTransactionInformationTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         TxInfo[] transactionInformation = transactionsService.getTransactionInformation(List.of(txHash));
         log.info(Arrays.toString(transactionInformation));
@@ -32,7 +33,7 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
-    void getTransactionUTxOsTest() {
+    void getTransactionUTxOsTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         TxUtxo[] transactionUTxOs = transactionsService.getTransactionUTxOs(List.of(txHash));
         log.info(Arrays.toString(transactionUTxOs));
@@ -41,7 +42,7 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
-    void getTransactionMetadataTest() {
+    void getTransactionMetadataTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         TxMetadata[] transactionMetadata = transactionsService.getTransactionMetadata(List.of(txHash));
         log.info(Arrays.toString(transactionMetadata));
@@ -49,14 +50,14 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
-    void getTransactionMetadataLabelsTest() {
+    void getTransactionMetadataLabelsTest() throws ApiException {
         TxMetadataLabels[] transactionMetadataLabels = transactionsService.getTransactionMetadataLabels();
         log.info(Arrays.toString(transactionMetadataLabels));
         Assertions.assertNotNull(transactionMetadataLabels);
     }
 
-    @Test
-    void getTransactionStatusTest() {
+//    @Test
+    void getTransactionStatusTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         TxStatus[] transactionStatus = transactionsService.getTransactionStatus(List.of(txHash));
         log.info(Arrays.toString(transactionStatus));

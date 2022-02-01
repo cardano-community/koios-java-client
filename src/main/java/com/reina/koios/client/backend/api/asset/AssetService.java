@@ -4,6 +4,7 @@ import com.reina.koios.client.backend.api.asset.model.Asset;
 import com.reina.koios.client.backend.api.asset.model.AssetAddress;
 import com.reina.koios.client.backend.api.asset.model.AssetInformation;
 import com.reina.koios.client.backend.api.asset.model.AssetTx;
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 
 public interface AssetService {
 
@@ -16,8 +17,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @return Array of {@link AssetAddress}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetAddress[] getAssetsAddressList(String assetPolicy, String assetName);
+    AssetAddress[] getAssetsAddressList(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Information
@@ -28,8 +31,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @return Array of {@link AssetInformation}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetInformation[] getAssetInformation(String assetPolicy, String assetName);
+    AssetInformation[] getAssetInformation(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Summary
@@ -40,8 +45,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @return Array of {@link AssetTx}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetTx[] getAssetTxs(String assetPolicy, String assetName);
+    AssetTx[] getAssetTxs(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Summary
@@ -49,7 +56,9 @@ public interface AssetService {
      * <p><b>200</b> - Array of policy IDs and asset names
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     * @return AssetList
+     *
+     * @return Array of {@link Asset}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Asset[] getAssetList();
+    Asset[] getAssetList() throws ApiException;
 }

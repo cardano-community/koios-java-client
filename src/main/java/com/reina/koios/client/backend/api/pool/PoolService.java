@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.pool;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.pool.model.*;
 
 public interface PoolService {
@@ -12,20 +13,22 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @return Array of {@link Pool} IDs and tickers
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Pool[] getPoolList();
+    Pool[] getPoolList() throws ApiException;
 
     /**
      * Pool Information
-     * Current pool status and details for specified pool id
+     * Current pool statuses and details for a specified list of pool ids
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param poolBech32 Pool ID in bech32 format (required)
+     * @param poolId Pool ID in bech32 format
      * @return Array of {@link PoolInfo}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolInfo[] getPoolInformation(String poolBech32);
+    PoolInfo[] getPoolInformation(String poolId) throws ApiException;
 
     /**
      * Pool Delegators List
@@ -36,8 +39,10 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for (optional)
+     * @return Array of {@link PoolDelegator}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolDelegator[] getPoolDelegatorsList(String poolBech32, Long epochNo);
+    PoolDelegator[] getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException;
 
     /**
      * Pool Blocks
@@ -48,8 +53,10 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for (optional)
+     * @return Array of {@link PoolBlock}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolBlock[] getPoolBlocks(String poolBech32, Long epochNo);
+    PoolBlock[] getPoolBlocks(String poolBech32, Long epochNo) throws ApiException;
 
     /**
      * Pool Updates (History)
@@ -58,9 +65,11 @@ public interface PoolService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param poolBech32 Pool ID in bech32 format (optional) (optional)
+     * @param poolBech32 Pool ID in bech32 format (optional)
+     * @return Array of {@link PoolUpdate}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolUpdate[] getPoolUpdates(String poolBech32);
+    PoolUpdate[] getPoolUpdates(String poolBech32) throws ApiException;
 
     /**
      * Pool Relays
@@ -68,8 +77,11 @@ public interface PoolService {
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @return Array of {@link PoolRelay}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolRelay[] getPoolRelays();
+    PoolRelay[] getPoolRelays() throws ApiException;
 
     /**
      * Pool Metadata
@@ -77,6 +89,9 @@ public interface PoolService {
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @return Array of {@link PoolMetadata}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolMetadata[] getPoolMetadata();
+    PoolMetadata[] getPoolMetadata() throws ApiException;
 }

@@ -2,6 +2,7 @@ package com.reina.koios.client.backend.api.block.impl;
 
 import com.reina.koios.client.backend.api.TxHash;
 import com.reina.koios.client.backend.api.base.BaseService;
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
@@ -9,7 +10,7 @@ import com.reina.koios.client.backend.factory.OperationType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 public class BlockServiceImpl extends BaseService implements BlockService {
 
@@ -18,53 +19,55 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public Block[] getBlockList() {
-        return (Block[]) getWebClient().get()
-                .uri("/blocks")
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(Block[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public Block[] getBlockList() throws ApiException {
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/blocks").build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(Block[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public BlockInfo[] getBlockInformation(String blockHash) {
-        return (BlockInfo[]) getWebClient().get()
-                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_info").queryParam("_block_hash", blockHash).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(BlockInfo[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public BlockInfo[] getBlockInformation(String blockHash) throws ApiException {
+        if (!blockHash.matches("^[0-9a-fA-F]+$")) {
+            throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_info")
+                            .queryParam("_block_hash", blockHash).build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(BlockInfo[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 
     @Override
-    public TxHash[] getBlockTransactions(String blockHash) {
-        return (TxHash[]) getWebClient().get()
-                .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_txs").queryParam("_block_hash", blockHash).build())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(clientResponse -> {
-                    if (clientResponse.statusCode().equals(HttpStatus.OK)) {
-                        return clientResponse.bodyToMono(TxHash[].class);
-                    } else if (clientResponse.statusCode().is4xxClientError()) {
-                        return Mono.just("Error response");
-                    } else {
-                        return clientResponse.createException().flatMap(Mono::error);
-                    }
-                }).timeout(getTimeoutDuration())
-                .block();
+    public TxHash[] getBlockTransactions(String blockHash) throws ApiException {
+        if (!blockHash.matches("^[0-9a-fA-F]+$")) {
+            throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
+        }
+        try {
+            return getWebClient().get()
+                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_txs")
+                            .queryParam("_block_hash", blockHash).build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(TxHash[].class)
+                    .timeout(getTimeoutDuration())
+                    .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
     }
 }

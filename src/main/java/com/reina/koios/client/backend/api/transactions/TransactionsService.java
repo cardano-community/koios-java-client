@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.transactions;
 
+import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.transactions.model.*;
 
 import java.util.List;
@@ -15,8 +16,9 @@ public interface TransactionsService {
      *
      * @param txHashes (optional)
      * @return Array of {@link TxInfo} detailed information about transaction(s)
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxInfo[] getTransactionInformation(List<String> txHashes);
+    TxInfo[] getTransactionInformation(List<String> txHashes) throws ApiException;
 
     /**
      * Transaction UTxOs
@@ -27,8 +29,9 @@ public interface TransactionsService {
      *
      * @param txHashes (optional)
      * @return Array of {@link TxUtxo} inputs and outputs for given transaction(s)
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxUtxo[] getTransactionUTxOs(List<String> txHashes);
+    TxUtxo[] getTransactionUTxOs(List<String> txHashes) throws ApiException;
 
     /**
      * Transaction Metadata
@@ -39,8 +42,9 @@ public interface TransactionsService {
      *
      * @param txHashes (optional)
      * @return Array of {@link TxMetadata} information present in each of the transactions queried
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxMetadata[] getTransactionMetadata(List<String> txHashes);
+    TxMetadata[] getTransactionMetadata(List<String> txHashes) throws ApiException;
 
     /**
      * Transaction Metadata Labels
@@ -50,8 +54,9 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @return Array of known {@link TxMetadataLabels}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxMetadataLabels[] getTransactionMetadataLabels();
+    TxMetadataLabels[] getTransactionMetadataLabels() throws ApiException;
 
     /**
      * Transaction Status (Block Confirmations)
@@ -62,6 +67,7 @@ public interface TransactionsService {
      *
      * @param txHashes (optional)
      * @return Array of transaction confirmation counts {@link TxStatus}
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxStatus[] getTransactionStatus(List<String> txHashes);
+    TxStatus[] getTransactionStatus(List<String> txHashes) throws ApiException;
 }
