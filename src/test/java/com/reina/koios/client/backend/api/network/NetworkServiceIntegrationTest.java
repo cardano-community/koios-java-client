@@ -10,8 +10,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -41,10 +44,17 @@ class NetworkServiceIntegrationTest {
 
     @Test
     void getHistoricalTokenomicStatsTest() throws ApiException {
-        String epochNo = "180";
-        Totals[] historicalTokenomicStats = networkService.getHistoricalTokenomicStats(epochNo);
+        Long epochNo = 180L;
+        Totals[] historicalTokenomicStats = networkService.getHistoricalTokenomicStats(180L);
         log.info(Arrays.toString(historicalTokenomicStats));
         Assertions.assertNotNull(historicalTokenomicStats);
-        Assertions.assertEquals(epochNo,String.valueOf(historicalTokenomicStats[0].getEpochNo()));
+        Assertions.assertEquals(epochNo,historicalTokenomicStats[0].getEpochNo());
+    }
+
+    @Test
+    void getHistoricalTokenomicStatsBadRequestTest() {
+        ApiException exception = assertThrows(ApiException.class, () -> networkService.getHistoricalTokenomicStats(-5L));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 }
