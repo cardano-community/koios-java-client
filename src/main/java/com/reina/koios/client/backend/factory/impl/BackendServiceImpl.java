@@ -14,6 +14,8 @@ import com.reina.koios.client.backend.api.network.NetworkService;
 import com.reina.koios.client.backend.api.network.impl.NetworkServiceImpl;
 import com.reina.koios.client.backend.api.pool.PoolService;
 import com.reina.koios.client.backend.api.pool.impl.PoolServiceImpl;
+import com.reina.koios.client.backend.api.script.ScriptService;
+import com.reina.koios.client.backend.api.script.impl.ScriptServiceImpl;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 import com.reina.koios.client.backend.api.transactions.impl.TransactionsServiceImpl;
 import com.reina.koios.client.backend.factory.BackendService;
@@ -44,6 +46,7 @@ public class BackendServiceImpl implements BackendService {
     private final AccountService accountService;
     private final AssetService assetService;
     private final PoolService poolService;
+    private final ScriptService scriptService;
 
     public BackendServiceImpl(String baseUrl) {
         this(OperationType.CUSTOM_RPC, baseUrl);
@@ -68,6 +71,7 @@ public class BackendServiceImpl implements BackendService {
         this.accountService = new AccountServiceImpl(operationType, webClient);
         this.assetService = new AssetServiceImpl(operationType, webClient);
         this.poolService = new PoolServiceImpl(operationType, webClient);
+        this.scriptService = new ScriptServiceImpl(operationType, webClient);
     }
 
     @SneakyThrows

@@ -61,7 +61,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Pool Updates (History)
         - Pool Relays
         - Pool Metadata
-    - [ ] Script
+    - [x] Script
         - Script List
         - Script Redeemers
 

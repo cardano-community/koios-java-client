@@ -7,6 +7,7 @@ import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.epoch.EpochService;
 import com.reina.koios.client.backend.api.network.NetworkService;
 import com.reina.koios.client.backend.api.pool.PoolService;
+import com.reina.koios.client.backend.api.script.ScriptService;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 
 public interface BackendService {
@@ -60,9 +61,9 @@ public interface BackendService {
      */
     PoolService getPoolService();
 
-//    /**
-//     * Get Script Service
-//     * @return {@link ScriptService}
-//     */
-//    ScriptService getScriptService();
+    /**
+     * Get Script Service
+     * @return {@link ScriptService}
+     */
+    ScriptService getScriptService();
 }
