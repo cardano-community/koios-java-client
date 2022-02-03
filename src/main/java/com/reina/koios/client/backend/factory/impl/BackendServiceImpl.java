@@ -18,6 +18,7 @@ import com.reina.koios.client.backend.api.script.ScriptService;
 import com.reina.koios.client.backend.api.script.impl.ScriptServiceImpl;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 import com.reina.koios.client.backend.api.transactions.impl.TransactionsServiceImpl;
+import com.reina.koios.client.backend.factory.ApiVersion;
 import com.reina.koios.client.backend.factory.BackendService;
 import com.reina.koios.client.backend.factory.OperationType;
 import io.netty.handler.ssl.SslContext;
@@ -52,8 +53,8 @@ public class BackendServiceImpl implements BackendService {
         this(OperationType.CUSTOM_RPC, baseUrl);
     }
 
-    public BackendServiceImpl(OperationType operationType) {
-        this(operationType, operationType.getBaseUrl());
+    public BackendServiceImpl(OperationType operationType, ApiVersion apiVersion) {
+        this(operationType, operationType.getBaseUrl()+apiVersion.getVersion());
     }
 
     private BackendServiceImpl(OperationType operationType, String baseUrl) {

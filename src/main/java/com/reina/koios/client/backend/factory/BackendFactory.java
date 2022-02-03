@@ -23,7 +23,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosMainnetService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_MAINNET+apiVersion.getVersion());
+        return new BackendServiceImpl(OperationType.KOIOS_MAINNET, apiVersion);
     }
 
     /**
@@ -41,7 +41,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosTestnetService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_TESTNET+apiVersion.getVersion());
+        return new BackendServiceImpl(OperationType.KOIOS_TESTNET, apiVersion);
     }
 
     /**
@@ -59,7 +59,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosGuildService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_GUILD+apiVersion.getVersion());
+        return new BackendServiceImpl(OperationType.KOIOS_GUILD, apiVersion);
     }
 
     /**
