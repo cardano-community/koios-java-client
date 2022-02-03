@@ -2,7 +2,7 @@
     <hr/>
         <h1 align="center" style="border-bottom: none">Koios Java Client</h1>
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/License-Apache_2.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0) ![Build Status](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/badge.svg)
 <hr/>
 </div>
 
