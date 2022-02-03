@@ -11,7 +11,7 @@ public class BaseService {
 
     private final WebClient webClient;
     private final String customUrlSuffix;
-    private final Duration timeoutDuration = Duration.ofSeconds(5);
+    private final Duration timeoutDuration = Duration.ofSeconds(20);
 
     public BaseService(OperationType operationType, WebClient webClient) {
         this.webClient = webClient;
