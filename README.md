@@ -2,7 +2,7 @@
     <hr/>
         <h1 align="center" style="border-bottom: none">Koios Java Client</h1>
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0) [![Build Status](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Build Status](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/)
 <hr/>
 </div>
 
@@ -17,6 +17,8 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 ## Features
 - Synchronous REST messaging using java objects
 - Structured Java Objects logging
+- Pagination (Limit and Offset) Supported
+- Rate Control
 - Supported REST Services:
     - [x] Network
         - Chain Tip
@@ -50,10 +52,11 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Account Assets
         - Account History
     - [x] Asset
-        - Assets Address List
+        - Asset List
+        - Asset Address List
         - Asset Information
         - Asset Summary
-        - Assets List
+        - Asset Transaction History
     - [x] Pool
         - Pool List
         - Pool Information

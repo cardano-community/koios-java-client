@@ -7,7 +7,7 @@ import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;
 import com.reina.koios.client.backend.api.network.model.Totals;
 import com.reina.koios.client.backend.factory.OperationType;
-import org.springframework.http.HttpStatus;
+import com.reina.koios.client.backend.factory.options.Options;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -50,9 +50,7 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
 
     @Override
     public Totals[] getHistoricalTokenomicStats(Long epochNo) throws ApiException {
-        if (epochNo < 0) {
-            throw new ApiException("Non Positive \"epochNo\" Value", HttpStatus.BAD_REQUEST);
-        }
+        validateEpoch(epochNo);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/totals")
@@ -63,6 +61,15 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
                     .bodyToMono(Totals[].class)
                     .timeout(getTimeoutDuration())
                     .block();
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
+    }
+
+    @Override
+    public Totals[] getHistoricalTokenomicStats(Options options) throws ApiException {
+        try {
+            return (Totals[]) sendGetRequest("/totals", options, Totals[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }

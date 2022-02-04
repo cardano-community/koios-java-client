@@ -7,7 +7,7 @@ import com.reina.koios.client.backend.api.block.BlockService;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
 import com.reina.koios.client.backend.factory.OperationType;
-import org.springframework.http.HttpStatus;
+import com.reina.koios.client.backend.factory.options.Options;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -19,15 +19,9 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public Block[] getBlockList() throws ApiException {
+    public Block[] getBlockList(Options options) throws ApiException {
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/blocks").build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(Block[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
+            return (Block[]) sendGetRequest("/blocks", options, Block[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
@@ -35,9 +29,7 @@ public class BlockServiceImpl extends BaseService implements BlockService {
 
     @Override
     public BlockInfo[] getBlockInformation(String blockHash) throws ApiException {
-        if (!blockHash.matches("^[0-9a-fA-F]+$")) {
-            throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-        }
+        validateHexFormat(blockHash);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_info")
@@ -54,9 +46,7 @@ public class BlockServiceImpl extends BaseService implements BlockService {
 
     @Override
     public TxHash[] getBlockTransactions(String blockHash) throws ApiException {
-        if (!blockHash.matches("^[0-9a-fA-F]+$")) {
-            throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-        }
+        validateHexFormat(blockHash);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_txs")

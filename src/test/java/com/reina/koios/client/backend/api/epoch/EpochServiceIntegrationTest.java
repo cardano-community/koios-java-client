@@ -4,6 +4,8 @@ import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.epoch.model.EpochInfo;
 import com.reina.koios.client.backend.api.epoch.model.EpochParams;
 import com.reina.koios.client.backend.factory.BackendFactory;
+import com.reina.koios.client.backend.factory.options.Limit;
+import com.reina.koios.client.backend.factory.options.Options;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,19 +27,37 @@ class EpochServiceIntegrationTest {
 
     @Test
     void getEpochInformationTest() throws ApiException {
-        String epochNo = "180";
+        Long epochNo = 180L;
         EpochInfo[] epochInformation = epochService.getEpochInformation(epochNo);
         log.info(Arrays.toString(epochInformation));
         Assertions.assertNotNull(epochInformation);
-        Assertions.assertEquals(epochNo, String.valueOf(epochInformation[0].getEpochNo()));
+        Assertions.assertEquals(epochNo, epochInformation[0].getEpochNo());
+    }
+
+    @Test
+    void getEpochInformationLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        EpochInfo[] epochInformation = epochService.getEpochInformation(options);
+        log.info(Arrays.toString(epochInformation));
+        Assertions.assertNotNull(epochInformation);
+        Assertions.assertEquals(10,epochInformation.length);
     }
 
     @Test
     void getEpochParametersTest() throws ApiException {
-        String epochNo = "180";
+        Long epochNo = 180L;
         EpochParams[] epochParameters = epochService.getEpochParameters(epochNo);
         log.info(Arrays.toString(epochParameters));
         Assertions.assertNotNull(epochParameters);
-        Assertions.assertEquals(epochNo, String.valueOf(epochParameters[0].getEpochNo()));
+        Assertions.assertEquals(epochNo, epochParameters[0].getEpochNo());
+    }
+
+    @Test
+    void getEpochParametersLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        EpochParams[] epochParameters = epochService.getEpochParameters(options);
+        log.info(Arrays.toString(epochParameters));
+        Assertions.assertNotNull(epochParameters);
+        Assertions.assertEquals(10,epochParameters.length);
     }
 }

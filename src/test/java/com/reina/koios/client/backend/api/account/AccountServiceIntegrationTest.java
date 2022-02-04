@@ -3,6 +3,8 @@ package com.reina.koios.client.backend.api.account;
 import com.reina.koios.client.backend.api.account.model.*;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.factory.BackendFactory;
+import com.reina.koios.client.backend.factory.options.Limit;
+import com.reina.koios.client.backend.factory.options.Options;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,10 +28,12 @@ class AccountServiceIntegrationTest {
     }
 
     @Test
-    void getAccountListTest() throws ApiException {
-        StakeAddress[] stakeAddresses = accountService.getAccountList();
+    void getAccountListLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        StakeAddress[] stakeAddresses = accountService.getAccountList(options);
         log.info(Arrays.toString(stakeAddresses));
         Assertions.assertNotNull(stakeAddresses);
+        Assertions.assertEquals(10, stakeAddresses.length);
     }
 
     @Test
@@ -51,19 +55,25 @@ class AccountServiceIntegrationTest {
     @Test
     void getAccountRewardsTest() throws ApiException {
         String stakeAddress = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
-        AccountRewards[] accountRewards = accountService.getAccountRewards(stakeAddress,180L);
-        log.info(Arrays.toString(accountRewards));
-        Assertions.assertNotNull(accountRewards);
-
-        accountRewards = accountService.getAccountRewards(stakeAddress,null);
+        AccountRewards[] accountRewards = accountService.getAccountRewards(stakeAddress, 180L);
         log.info(Arrays.toString(accountRewards));
         Assertions.assertNotNull(accountRewards);
     }
 
     @Test
+    void getAccountRewardsLimitTest() throws ApiException {
+        String stakeAddress = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        Options options = Options.builder().option(Limit.of(10)).build();
+        AccountRewards[] accountRewards = accountService.getAccountRewards(stakeAddress, options);
+        log.info(Arrays.toString(accountRewards));
+        Assertions.assertNotNull(accountRewards);
+        Assertions.assertEquals(10, accountRewards.length);
+    }
+
+    @Test
     void getAccountRewardsBadRequestTest() {
         String stakeAddress = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountRewards(stakeAddress,180L));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountRewards(stakeAddress, 180L));
         assertInstanceOf(ApiException.class, exception);
         assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }

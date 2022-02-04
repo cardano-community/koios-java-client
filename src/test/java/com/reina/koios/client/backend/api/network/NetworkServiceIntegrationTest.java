@@ -5,6 +5,8 @@ import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;
 import com.reina.koios.client.backend.api.network.model.Totals;
 import com.reina.koios.client.backend.factory.BackendFactory;
+import com.reina.koios.client.backend.factory.options.Limit;
+import com.reina.koios.client.backend.factory.options.Options;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -49,6 +51,15 @@ class NetworkServiceIntegrationTest {
         log.info(Arrays.toString(historicalTokenomicStats));
         Assertions.assertNotNull(historicalTokenomicStats);
         Assertions.assertEquals(epochNo,historicalTokenomicStats[0].getEpochNo());
+    }
+
+    @Test
+    void getHistoricalTokenomicStatsLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        Totals[] historicalTokenomicStats = networkService.getHistoricalTokenomicStats(options);
+        log.info(Arrays.toString(historicalTokenomicStats));
+        Assertions.assertNotNull(historicalTokenomicStats);
+        Assertions.assertEquals(10,historicalTokenomicStats.length);
     }
 
     @Test

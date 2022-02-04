@@ -7,7 +7,6 @@ import com.reina.koios.client.backend.api.address.model.AssetInfo;
 import com.reina.koios.client.backend.api.base.BaseService;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.factory.OperationType;
-import com.reina.koios.client.utils.Bech32Util;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -23,9 +22,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public AddressInfo[] getAddressInformation(String address) throws ApiException {
-        if (!Bech32Util.isValid(address)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(address);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_info")
@@ -47,9 +44,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             throw new ApiException("Non Positive \"afterBlockHeight\" Value", HttpStatus.BAD_REQUEST);
         }
         for (String address : addressList) {
-            if (!Bech32Util.isValid(address)) {
-                throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-            }
+            validateBech32(address);
         }
         try {
             return getWebClient().post()
@@ -71,9 +66,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             throw new ApiException("Non Positive \"afterBlockHeight\" Value", HttpStatus.BAD_REQUEST);
         }
         for (String paymentCredentials : paymentCredentialsList) {
-            if (!paymentCredentials.matches("^[0-9a-fA-F]+$")) {
-                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-            }
+            validateHexFormat(paymentCredentials);
         }
         try {
             return getWebClient().post()
@@ -91,9 +84,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public AssetInfo[] getAddressAssets(String address) throws ApiException {
-        if (!Bech32Util.isValid(address)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(address);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/address_assets")

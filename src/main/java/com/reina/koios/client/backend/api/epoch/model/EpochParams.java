@@ -21,7 +21,7 @@ public class EpochParams {
     /**
      * Epoch number
      */
-    private Integer epochNo = null;
+    private Long epochNo = null;
 
     /**
      * The 'a' parameter to calculate the minimum transaction fee

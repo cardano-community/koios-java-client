@@ -19,7 +19,7 @@ public class EpochInfo {
     /**
      * Epoch number
      */
-    private Integer epochNo = null;
+    private Long epochNo = null;
 
     /**
      * Total output value across all transactions in epoch

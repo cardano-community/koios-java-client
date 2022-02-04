@@ -1,10 +1,12 @@
 package com.reina.koios.client.backend.api.block;
 
+import com.reina.koios.client.backend.api.TxHash;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
-import com.reina.koios.client.backend.api.TxHash;
 import com.reina.koios.client.backend.factory.BackendFactory;
+import com.reina.koios.client.backend.factory.options.Limit;
+import com.reina.koios.client.backend.factory.options.Options;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,10 +30,12 @@ class BlockServiceIntegrationTest {
     }
 
     @Test
-    void getBlockListTest() throws ApiException {
-        Block[] blockList = blockService.getBlockList();
+    void getBlockListLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        Block[] blockList = blockService.getBlockList(options);
         log.info(Arrays.toString(blockList));
         Assertions.assertNotNull(blockList);
+        Assertions.assertEquals(10,blockList.length);
     }
 
     @Test

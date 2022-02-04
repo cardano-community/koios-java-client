@@ -5,9 +5,10 @@ import com.reina.koios.client.backend.api.account.model.*;
 import com.reina.koios.client.backend.api.base.BaseService;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.factory.OperationType;
-import com.reina.koios.client.utils.Bech32Util;
-import org.springframework.http.HttpStatus;
+import com.reina.koios.client.backend.factory.options.Options;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
@@ -18,15 +19,9 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public StakeAddress[] getAccountList() throws ApiException {
+    public StakeAddress[] getAccountList(Options options) throws ApiException {
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_list").build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(StakeAddress[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
+            return (StakeAddress[]) sendGetRequest("/account_list", options, StakeAddress[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
@@ -34,9 +29,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Override
     public AccountInfo[] getAccountInformation(String address) throws ApiException {
-        if (!Bech32Util.isValid(address)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(address);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_info")
@@ -53,9 +46,8 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Override
     public AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo) throws ApiException {
-        if (!Bech32Util.isValid(stakeAddress)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(stakeAddress);
+        validateEpoch(epochNo);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_rewards")
@@ -73,10 +65,19 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public AccountUpdates[] getAccountUpdates(String stakeAddress) throws ApiException {
-        if (!Bech32Util.isValid(stakeAddress)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
+    public AccountRewards[] getAccountRewards(String stakeAddress, Options options) throws ApiException {
+        try {
+            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+            multiValueMap.add("_stake_address",stakeAddress);
+            return (AccountRewards[]) sendGetRequest("/account_rewards", multiValueMap, options, AccountRewards[].class);
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
+    }
+
+    @Override
+    public AccountUpdates[] getAccountUpdates(String stakeAddress) throws ApiException {
+        validateBech32(stakeAddress);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_updates")
@@ -94,9 +95,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Override
     public AccountAddress[] getAccountAddresses(String address) throws ApiException {
-        if (!Bech32Util.isValid(address)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(address);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_addresses")
@@ -114,9 +113,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Override
     public AccountAsset[] getAccountAssets(String address) throws ApiException {
-        if (!Bech32Util.isValid(address)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(address);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_assets")
@@ -134,9 +131,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Override
     public AccountHistory[] getAccountHistory(String address) throws ApiException {
-        if (!Bech32Util.isValid(address)) {
-            throw new ApiException("Invalid Bech32 Format", HttpStatus.BAD_REQUEST);
-        }
+        validateBech32(address);
         try {
             return getWebClient().get()
                     .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_history")

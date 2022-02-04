@@ -1,9 +1,10 @@
 package com.reina.koios.client.backend.api.block;
 
+import com.reina.koios.client.backend.api.TxHash;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.block.model.Block;
 import com.reina.koios.client.backend.api.block.model.BlockInfo;
-import com.reina.koios.client.backend.api.TxHash;
+import com.reina.koios.client.backend.factory.options.Options;
 
 public interface BlockService {
 
@@ -14,10 +15,11 @@ public interface BlockService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
+     * @param options Filtering & Pagination options (optional)
      * @return Array of detailed summary of every {@link Block}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Block[] getBlockList() throws ApiException;
+    Block[] getBlockList(Options options) throws ApiException;
 
     /**
      * Block Information

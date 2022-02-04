@@ -3,6 +3,7 @@ package com.reina.koios.client.backend.api.script;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.script.model.Script;
 import com.reina.koios.client.backend.api.script.model.ScriptRedeemer;
+import com.reina.koios.client.backend.factory.options.Options;
 
 public interface ScriptService {
 
@@ -13,10 +14,11 @@ public interface ScriptService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
+     * @param options Filtering & Pagination options (optional)
      * @return Array of {@link Script}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Script[] getScriptList() throws ApiException;
+    Script[] getScriptList(Options options) throws ApiException;
 
     /**
      * Script Redeemers

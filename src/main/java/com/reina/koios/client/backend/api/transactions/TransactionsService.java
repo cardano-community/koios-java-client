@@ -2,6 +2,7 @@ package com.reina.koios.client.backend.api.transactions;
 
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.transactions.model.*;
+import com.reina.koios.client.backend.factory.options.Options;
 
 import java.util.List;
 
@@ -53,10 +54,11 @@ public interface TransactionsService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
+     * @param options Filtering & Pagination options (optional)
      * @return Array of known {@link TxMetadataLabels}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxMetadataLabels[] getTransactionMetadataLabels() throws ApiException;
+    TxMetadataLabels[] getTransactionMetadataLabels(Options options) throws ApiException;
 
     /**
      * Submit Transaction

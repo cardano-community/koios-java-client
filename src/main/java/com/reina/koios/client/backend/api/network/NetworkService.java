@@ -4,6 +4,7 @@ import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.network.model.Genesis;
 import com.reina.koios.client.backend.api.network.model.Tip;
 import com.reina.koios.client.backend.api.network.model.Totals;
+import com.reina.koios.client.backend.factory.options.Options;
 
 public interface NetworkService {
 
@@ -43,4 +44,17 @@ public interface NetworkService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Totals[] getHistoricalTokenomicStats(Long epochNo) throws ApiException;
+
+    /**
+     * Get historical tokenomic stats
+     * Get the circulating utxo, treasury, rewards, supply and reserves in lovelace for specified epoch, all epochs if empty
+     * <p><b>200</b> - Array of supply/reserves/utxo/fees/treasury stats
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering & Pagination options (optional)
+     * @return Array of {@link Totals} with supply/reserves/utxo/fees/treasury stats
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Totals[] getHistoricalTokenomicStats(Options options) throws ApiException;
 }

@@ -4,6 +4,8 @@ import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.script.model.Script;
 import com.reina.koios.client.backend.api.script.model.ScriptRedeemer;
 import com.reina.koios.client.backend.factory.BackendFactory;
+import com.reina.koios.client.backend.factory.options.Limit;
+import com.reina.koios.client.backend.factory.options.Options;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -27,10 +29,12 @@ class ScriptServiceIntegrationTest {
     }
 
     @Test
-    void getScriptListTest() throws ApiException {
-        Script[] scriptList = scriptService.getScriptList();
+    void getScriptListLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        Script[] scriptList = scriptService.getScriptList(options);
         log.info(Arrays.toString(scriptList));
         Assertions.assertNotNull(scriptList);
+        Assertions.assertEquals(10, scriptList.length);
     }
 
     @Test

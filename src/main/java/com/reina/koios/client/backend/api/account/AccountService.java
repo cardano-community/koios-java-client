@@ -2,6 +2,7 @@ package com.reina.koios.client.backend.api.account;
 
 import com.reina.koios.client.backend.api.account.model.*;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
+import com.reina.koios.client.backend.factory.options.Options;
 
 public interface AccountService {
 
@@ -12,10 +13,11 @@ public interface AccountService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
+     * @param options Filtering & Pagination options (optional)
      * @return Array of {@link StakeAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    StakeAddress[] getAccountList() throws ApiException;
+    StakeAddress[] getAccountList(Options options) throws ApiException;
 
     /**
      * Account Information
@@ -43,6 +45,20 @@ public interface AccountService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo) throws ApiException;
+
+    /**
+     * Account Rewards
+     * Get the full rewards history (including MIR) for a stake address, or certain epoch if specified
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
+     * @param options Filtering & Pagination options (optional)
+     * @return Array of {@link AccountRewards}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    AccountRewards[] getAccountRewards(String stakeAddress, Options options) throws ApiException;
 
     /**
      * Account Updates (History)

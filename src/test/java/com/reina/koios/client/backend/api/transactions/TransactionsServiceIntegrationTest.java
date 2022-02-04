@@ -3,6 +3,8 @@ package com.reina.koios.client.backend.api.transactions;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.transactions.model.*;
 import com.reina.koios.client.backend.factory.BackendFactory;
+import com.reina.koios.client.backend.factory.options.Limit;
+import com.reina.koios.client.backend.factory.options.Options;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -77,10 +79,12 @@ class TransactionsServiceIntegrationTest {
     }
 
     @Test
-    void getTransactionMetadataLabelsTest() throws ApiException {
-        TxMetadataLabels[] transactionMetadataLabels = transactionsService.getTransactionMetadataLabels();
+    void getTransactionMetadataLabelsLimitTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        TxMetadataLabels[] transactionMetadataLabels = transactionsService.getTransactionMetadataLabels(options);
         log.info(Arrays.toString(transactionMetadataLabels));
         Assertions.assertNotNull(transactionMetadataLabels);
+        Assertions.assertEquals(10,transactionMetadataLabels.length);
     }
 
     @Test

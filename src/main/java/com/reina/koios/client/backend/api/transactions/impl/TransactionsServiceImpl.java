@@ -5,7 +5,7 @@ import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.api.transactions.TransactionsService;
 import com.reina.koios.client.backend.api.transactions.model.*;
 import com.reina.koios.client.backend.factory.OperationType;
-import org.springframework.http.HttpStatus;
+import com.reina.koios.client.backend.factory.options.Options;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -21,9 +21,7 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     @Override
     public TxInfo[] getTransactionInformation(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
-            if (!tx.matches("^[0-9a-fA-F]+$")) {
-                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-            }
+            validateHexFormat(tx);
         }
         try {
             return getWebClient().post()
@@ -42,9 +40,7 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     @Override
     public TxUtxo[] getTransactionUTxOs(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
-            if (!tx.matches("^[0-9a-fA-F]+$")) {
-                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-            }
+            validateHexFormat(tx);
         }
         try {
             return getWebClient().post()
@@ -63,9 +59,7 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     @Override
     public TxMetadata[] getTransactionMetadata(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
-            if (!tx.matches("^[0-9a-fA-F]+$")) {
-                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-            }
+            validateHexFormat(tx);
         }
         try {
             return getWebClient().post()
@@ -82,16 +76,9 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public TxMetadataLabels[] getTransactionMetadataLabels() throws ApiException {
+    public TxMetadataLabels[] getTransactionMetadataLabels(Options options) throws ApiException {
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/tx_metalabels")
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(TxMetadataLabels[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
+            return (TxMetadataLabels[]) sendGetRequest("/tx_metalabels", options, TxMetadataLabels[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
@@ -117,9 +104,7 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     @Override
     public TxStatus[] getTransactionStatus(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
-            if (!tx.matches("^[0-9a-fA-F]+$")) {
-                throw new ApiException("Invalid Hexadecimal String Format", HttpStatus.BAD_REQUEST);
-            }
+            validateHexFormat(tx);
         }
         try {
             return getWebClient().post()
