@@ -4,7 +4,7 @@
 
 [![Build](https://github.com/edridudi/koios-java-client/actions/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
 [![codeQL](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/codeql-analysis.yml)
-[![Coverage](https://raw.githubusercontent.com/edridudi/koios-java-client/main/.github/badges/jacoco.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
 [![License](https://img.shields.io:/github/license/edridudi/koios-java-client?color=blue&label=license)](https://opensource.org/licenses/Apache-2.0)
 <hr/>
 </div>
