@@ -1,10 +1,12 @@
 package com.reina.koios.client.backend.api.base.exception;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 public class ApiException extends Exception {
 
