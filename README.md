@@ -2,7 +2,10 @@
     <hr/>
         <h1 align="center" style="border-bottom: none">Koios Java Client</h1>
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Build Status](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Build](https://github.com/edridudi/koios-java-client/actions/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
+[![CodeQL](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml)
+[![Coverage](https://github.com/edridudi/koios-java-client/.github/badges/jacoco.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
 <hr/>
 </div>
 
@@ -44,7 +47,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Transactions from Payment Credentials
         - Address Assets
     - [x] Account
-        - List of All Accounts
+        - Account List
         - Account Information
         - Account Rewards
         - Account Updates (History)
