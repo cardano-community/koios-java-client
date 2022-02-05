@@ -2,10 +2,10 @@
     <hr/>
         <h1 align="center" style="border-bottom: none">Koios Java Client</h1>
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build](https://github.com/edridudi/koios-java-client/actions/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
-[![CodeQL](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml)
-[![Coverage](https://github.com/edridudi/koios-java-client/.github/badges/jacoco.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
+[![codeQL](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml)
+[![Coverage](https://raw.githubusercontent.com/edridudi/koios-java-client/main/.github/badges/jacoco.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
+[![License](https://img.shields.io:/github/license/edridudi/koios-java-client?color=blue&label=license)](https://opensource.org/licenses/Apache-2.0)
 <hr/>
 </div>
 

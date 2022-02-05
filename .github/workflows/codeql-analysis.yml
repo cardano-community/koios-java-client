@@ -1,4 +1,4 @@
-name: CodeQL
+name: codeQL
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B package -Dmaven.test.skip=true --file pom.xml
 
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 https://git.io/JvXDl
