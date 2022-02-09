@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>2.6.3</spring-boot.version>
         <netty-tcnative-boringssl-static.version>2.0.48.Final</netty-tcnative-boringssl-static.version>
-        <swagger-annotations.version>2.1.12</swagger-annotations.version>
+        <swagger-annotations.version>2.1.13</swagger-annotations.version>
         <lombok.version>1.18.22</lombok.version>
         <bcprov-jdk15to18.version>1.70</bcprov-jdk15to18.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
