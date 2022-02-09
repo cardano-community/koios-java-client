@@ -2,10 +2,10 @@
     <hr/>
         <h1 align="center" style="border-bottom: none">Koios Java Client</h1>
 
-[![Build](https://github.com/edridudi/koios-java-client/actions/workflows/maven.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
-[![codeQL](https://github.com/edridudi/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/codeql-analysis.yml)
-[![Coverage](.github/badges/jacoco.svg)](https://github.com/edridudi/koios-java-client/actions/workflows/.github/workflows/maven.yml)
-[![License](https://img.shields.io:/github/license/edridudi/koios-java-client?color=blue&label=license)](https://opensource.org/licenses/Apache-2.0)
+[![Build](https://github.com/koios-official/koios-java-client/actions/workflows/maven.yml/badge.svg)](https://github.com/koios-official/koios-java-client/actions/workflows/.github/workflows/maven.yml)
+[![codeQL](https://github.com/koios-official/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/koios-official/koios-java-client/actions/workflows/.github/workflows/codeql-analysis.yml)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/koios-official/koios-java-client/actions/workflows/.github/workflows/maven.yml)
+[![License](https://img.shields.io:/github/license/koios-official/koios-java-client?color=blue&label=license)](https://opensource.org/licenses/Apache-2.0)
 <hr/>
 </div>
 
