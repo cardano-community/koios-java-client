@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class NetworkServiceIntegrationTest {
+class NetworkServiceTestnetIntegrationTest {
 
     private NetworkService networkService;
 
@@ -47,7 +47,7 @@ class NetworkServiceIntegrationTest {
     @Test
     void getHistoricalTokenomicStatsTest() throws ApiException {
         Long epochNo = 180L;
-        Totals[] historicalTokenomicStats = networkService.getHistoricalTokenomicStats(180L);
+        Totals[] historicalTokenomicStats = networkService.getHistoricalTokenomicStats(epochNo);
         log.info(Arrays.toString(historicalTokenomicStats));
         Assertions.assertNotNull(historicalTokenomicStats);
         Assertions.assertEquals(epochNo,historicalTokenomicStats[0].getEpochNo());

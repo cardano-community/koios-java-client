@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class BlockServiceIntegrationTest {
+class BlockServiceTestnetIntegrationTest {
 
     private BlockService blockService;
 

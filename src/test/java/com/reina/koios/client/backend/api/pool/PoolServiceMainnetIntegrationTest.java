@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PoolServiceIntegrationTest {
+class PoolServiceMainnetIntegrationTest {
 
     private PoolService poolService;
 
     @BeforeAll
     public void setup() {
-        poolService = BackendFactory.getKoiosTestnetService().getPoolService();
+        poolService = BackendFactory.getKoiosMainnetService().getPoolService();
     }
 
     @Test
@@ -39,7 +39,7 @@ class PoolServiceIntegrationTest {
 
     @Test
     void getPoolInformationTest() throws ApiException {
-        String poolId = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolId = "pool100wj94uzf54vup2hdzk0afng4dhjaqggt7j434mtgm8v2gfvfgp";
         PoolInfo[] poolInfos = poolService.getPoolInformation(List.of(poolId));
         log.info(Arrays.toString(poolInfos));
         Assertions.assertNotNull(poolInfos);
@@ -55,15 +55,15 @@ class PoolServiceIntegrationTest {
 
     @Test
     void getPoolDelegatorsListTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        PoolDelegator[] poolDelegators = poolService.getPoolDelegatorsList(poolBech32, 180L);
+        String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
+        PoolDelegator[] poolDelegators = poolService.getPoolDelegatorsList(poolBech32, 294L);
         log.info(Arrays.toString(poolDelegators));
         Assertions.assertNotNull(poolDelegators);
     }
 
     @Test
     void getPoolDelegatorsListLimitTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
         Options options = Options.builder().option(Limit.of(2)).build();
         PoolDelegator[] poolDelegators = poolService.getPoolDelegatorsList(poolBech32, options);
         log.info(Arrays.toString(poolDelegators));
@@ -81,15 +81,15 @@ class PoolServiceIntegrationTest {
 
     @Test
     void getPoolBlocksTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        PoolBlock[] poolBlocks = poolService.getPoolBlocks(poolBech32, 180L);
+        String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
+        PoolBlock[] poolBlocks = poolService.getPoolBlocks(poolBech32, 294L);
         log.info(Arrays.toString(poolBlocks));
         Assertions.assertNotNull(poolBlocks);
     }
 
     @Test
     void getPoolBlocksLimitTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
         Options options = Options.builder().option(Limit.of(10)).build();
         PoolBlock[] poolBlocks = poolService.getPoolBlocks(poolBech32, options);
         log.info(Arrays.toString(poolBlocks));
@@ -107,7 +107,7 @@ class PoolServiceIntegrationTest {
 
     @Test
     void getPoolUpdatesTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
         PoolUpdate[] poolUpdates = poolService.getPoolUpdates(poolBech32);
         log.info(Arrays.toString(poolUpdates));
         Assertions.assertNotNull(poolUpdates);
