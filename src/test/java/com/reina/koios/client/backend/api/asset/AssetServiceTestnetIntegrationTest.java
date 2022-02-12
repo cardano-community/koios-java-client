@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AssetServiceIntegrationTest {
+class AssetServiceTestnetIntegrationTest {
 
     private AssetService assetService;
 

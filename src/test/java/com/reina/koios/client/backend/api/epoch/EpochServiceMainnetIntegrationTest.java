@@ -16,18 +16,18 @@ import java.util.Arrays;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EpochServiceIntegrationTest {
+class EpochServiceMainnetIntegrationTest {
 
     private EpochService epochService;
 
     @BeforeAll
     public void setup() {
-        epochService = BackendFactory.getKoiosTestnetService().getEpochService();
+        epochService = BackendFactory.getKoiosMainnetService().getEpochService();
     }
 
     @Test
     void getEpochInformationTest() throws ApiException {
-        Long epochNo = 180L;
+        Long epochNo = 294L;
         EpochInfo[] epochInformation = epochService.getEpochInformation(epochNo);
         log.info(Arrays.toString(epochInformation));
         Assertions.assertNotNull(epochInformation);
@@ -45,7 +45,7 @@ class EpochServiceIntegrationTest {
 
     @Test
     void getEpochParametersTest() throws ApiException {
-        Long epochNo = 180L;
+        Long epochNo = 294L;
         EpochParams[] epochParameters = epochService.getEpochParameters(epochNo);
         log.info(Arrays.toString(epochParameters));
         Assertions.assertNotNull(epochParameters);

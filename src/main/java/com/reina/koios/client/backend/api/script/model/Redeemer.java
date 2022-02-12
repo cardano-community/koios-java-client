@@ -31,7 +31,7 @@ public class Redeemer {
     /**
      * The budget in Cpu steps to run a script
      */
-    private Integer unitSteps;
+    private Long unitSteps;
 
     /**
      * The budget in fees to run a script - the fees depend on the ExUnits and the current prices
