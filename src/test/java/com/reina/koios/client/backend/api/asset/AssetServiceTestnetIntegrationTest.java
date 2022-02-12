@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AssetServiceIntegrationTest {
+class AssetServiceTestnetIntegrationTest {
 
     private AssetService assetService;
 
@@ -71,6 +71,41 @@ class AssetServiceIntegrationTest {
         String assetPolicy = "654ebfc69ea9b582d09755a0760fdac7b3e16718ef47acd958708035";
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetInformation(assetPolicy, assetNameHex));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void getAssetHistoryTest() throws ApiException {
+        String assetPolicy = "654ebfc69ea9b582d09755a0760fdac7b3e16718ef47acd958708035";
+        String assetName = "MusicBong359";
+        String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
+        AssetHistory[] assetHistories = assetService.getAssetHistory(assetPolicy, assetNameHex);
+        log.info(Arrays.toString(assetHistories));
+        Assertions.assertNotNull(assetHistories);
+    }
+
+    @Test
+    void getAssetHistoryBadRequestTest() {
+        String assetPolicy = "654ebfc69ea9b582d09755a0760fdac7b3e16718ef47acd958708035";
+        String assetNameHex = "53706f6f6b79426f782331asdsadsa";
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetHistory(assetPolicy, assetNameHex));
+        assertInstanceOf(ApiException.class, exception);
+        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @Test
+    void getAssetPolicyInformationTest() throws ApiException {
+        String assetPolicy = "654ebfc69ea9b582d09755a0760fdac7b3e16718ef47acd958708035";
+        AssetPolicyInfo[] assetPolicyInfos = assetService.getAssetPolicyInformation(assetPolicy);
+        log.info(Arrays.toString(assetPolicyInfos));
+        Assertions.assertNotNull(assetPolicyInfos);
+    }
+
+    @Test
+    void getAssetPolicyInformationBadRequestTest() {
+        String assetPolicy = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetPolicyInformation(assetPolicy));
         assertInstanceOf(ApiException.class, exception);
         assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
