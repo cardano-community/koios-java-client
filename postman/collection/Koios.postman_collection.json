@@ -724,7 +724,28 @@
 					"name": "Asset",
 					"item": [
 						{
-							"name": "Assets Address List",
+							"name": "Asset List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/asset_list",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"asset_list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Asset Address List",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -786,7 +807,96 @@
 							"response": []
 						},
 						{
+							"name": "Asset History",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/asset_history?_asset_policy={{policy_id}}&_asset_name={{asset_name}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"asset_history"
+									],
+									"query": [
+										{
+											"key": "_asset_policy",
+											"value": "{{policy_id}}"
+										},
+										{
+											"key": "_asset_name",
+											"value": "{{asset_name}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Asset Policy Information",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/asset_policy_info?_asset_policy={{policy_id}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"asset_policy_info"
+									],
+									"query": [
+										{
+											"key": "_asset_policy",
+											"value": "{{policy_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Asset Summary",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/asset_summary?_asset_policy={{policy_id}}&_asset_name={{asset_name}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"asset_summary"
+									],
+									"query": [
+										{
+											"key": "_asset_policy",
+											"value": "{{policy_id}}"
+										},
+										{
+											"key": "_asset_name",
+											"value": "{{asset_name}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Asset Transaction History",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -811,27 +921,6 @@
 											"key": "_asset_name",
 											"value": "{{asset_name}}"
 										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Asset Summary",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/asset_list",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{koios_host}}",
-										"{{koios_domain}}"
-									],
-									"path": [
-										"{{path}}",
-										"v0",
-										"asset_list"
 									]
 								}
 							},

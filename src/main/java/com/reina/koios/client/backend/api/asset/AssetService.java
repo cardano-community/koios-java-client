@@ -1,5 +1,6 @@
 package com.reina.koios.client.backend.api.asset;
 
+import com.reina.koios.client.backend.api.asset.model.AssetHistory;
 import com.reina.koios.client.backend.api.asset.model.*;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.factory.options.Options;
@@ -32,6 +33,33 @@ public interface AssetService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     AssetAddress[] getAssetsAddressList(String assetPolicy, String assetName) throws ApiException;
+
+    /**
+     * Asset History
+     * Get the mint/burn history of an asset
+     * <p><b>200</b> - Array of asset mint/burn history
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
+     * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @return Array of {@link AssetHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    AssetHistory[] getAssetHistory(String assetPolicy, String assetName) throws ApiException;
+
+    /**
+     * Asset Policy Information
+     * Get the information for all assets under the same policy
+     * <p><b>200</b> - Array of detailed information of assets under the same policy
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
+     * @return Array of {@link AssetPolicyInfo}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    AssetPolicyInfo[] getAssetPolicyInformation(String assetPolicy) throws ApiException;
 
     /**
      * Asset Information

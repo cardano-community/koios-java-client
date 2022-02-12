@@ -6,7 +6,6 @@ import com.reina.koios.client.backend.api.base.BaseService;
 import com.reina.koios.client.backend.api.base.exception.ApiException;
 import com.reina.koios.client.backend.factory.OperationType;
 import com.reina.koios.client.backend.factory.options.Options;
-import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,16 +28,39 @@ public class AssetServiceImpl extends BaseService implements AssetService {
 
     @Override
     public AssetAddress[] getAssetsAddressList(String assetPolicy, String assetName) throws ApiException {
+        validateHexFormat(assetPolicy);
+        validateHexFormat(assetName);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/asset_address_list")
-                            .queryParam("_asset_policy", assetPolicy)
-                            .queryParam("_asset_name", assetName).build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AssetAddress[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
+            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+            multiValueMap.add("_asset_policy", assetPolicy);
+            multiValueMap.add("_asset_name", assetName);
+            return (AssetAddress[]) sendGetRequest("/asset_address_list", multiValueMap, getEmptyOptions(), AssetAddress[].class);
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
+    }
+
+    @Override
+    public AssetHistory[] getAssetHistory(String assetPolicy, String assetName) throws ApiException {
+        validateHexFormat(assetPolicy);
+        validateHexFormat(assetName);
+        try {
+            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+            multiValueMap.add("_asset_policy", assetPolicy);
+            multiValueMap.add("_asset_name", assetName);
+            return (AssetHistory[]) sendGetRequest("/asset_history", multiValueMap, getEmptyOptions(), AssetHistory[].class);
+        } catch (WebClientResponseException e) {
+            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+        }
+    }
+
+    @Override
+    public AssetPolicyInfo[] getAssetPolicyInformation(String assetPolicy) throws ApiException {
+        validateHexFormat(assetPolicy);
+        try {
+            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+            multiValueMap.add("_asset_policy", assetPolicy);
+            return (AssetPolicyInfo[]) sendGetRequest("/asset_policy_info", multiValueMap, getEmptyOptions(), AssetPolicyInfo[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
@@ -46,16 +68,13 @@ public class AssetServiceImpl extends BaseService implements AssetService {
 
     @Override
     public AssetInformation[] getAssetInformation(String assetPolicy, String assetName) throws ApiException {
+        validateHexFormat(assetPolicy);
+        validateHexFormat(assetName);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/asset_info")
-                            .queryParam("_asset_policy", assetPolicy)
-                            .queryParam("_asset_name", assetName).build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AssetInformation[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
+            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+            multiValueMap.add("_asset_policy", assetPolicy);
+            multiValueMap.add("_asset_name", assetName);
+            return (AssetInformation[]) sendGetRequest("/asset_info", multiValueMap, getEmptyOptions(), AssetInformation[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
@@ -63,6 +82,8 @@ public class AssetServiceImpl extends BaseService implements AssetService {
 
     @Override
     public AssetSummary[] getAssetSummary(String assetPolicy, String assetName) throws ApiException {
+        validateHexFormat(assetPolicy);
+        validateHexFormat(assetName);
         try {
             MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
             multiValueMap.add("_asset_policy", assetPolicy);
@@ -75,16 +96,13 @@ public class AssetServiceImpl extends BaseService implements AssetService {
 
     @Override
     public AssetTx[] getAssetTransactionHistory(String assetPolicy, String assetName) throws ApiException {
+        validateHexFormat(assetPolicy);
+        validateHexFormat(assetName);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/asset_txs")
-                            .queryParam("_asset_policy", assetPolicy)
-                            .queryParam("_asset_name", assetName).build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AssetTx[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
+            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
+            multiValueMap.add("_asset_policy", assetPolicy);
+            multiValueMap.add("_asset_name", assetName);
+            return (AssetTx[]) sendGetRequest("/asset_txs", multiValueMap, getEmptyOptions(), AssetTx[].class);
         } catch (WebClientResponseException e) {
             throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
         }
