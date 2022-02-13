@@ -14,19 +14,19 @@
 
 3. Donation
 
-   Want to drop some Ada to give some financial support? Have a look at the [Sponsor page](https://github.com/koios-official/koios-java-client/blob/master/SPONSORS.md) for more details.
+   Want to drop some Ada to give some financial support? Have a look at the [Sponsor page](https://github.com/cardano-community/koios-java-client/blob/master/SPONSORS.md) for more details.
 
 
 ## More
 
 ### :bug: Found an Issue?
 
-Open an [Issue Ticket](https://github.com/koios-official/koios-java-client/issues/new?template=bug.md).
+Open an [Issue Ticket](https://github.com/cardano-community/koios-java-client/issues/new?template=bug.md).
 
 ### :bulb: Have an idea?
 
-Open a [Proposal ticket](https://github.com/koios-official/koios-java-client/issues/new?template=idea.md).
+Open a [Proposal ticket](https://github.com/cardano-community/koios-java-client/issues/new?template=idea.md).
 
 ### :question: Have a question?
 
-Open a [Question ticket](https://github.com/koios-official/koios-java-client/issues/new).
+Open a [Question ticket](https://github.com/cardano-community/koios-java-client/issues/new).
