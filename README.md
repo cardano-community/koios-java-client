@@ -74,6 +74,64 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Script List
         - Script Redeemers
 
+## Use as a library in a Java Project
+
+### Add dependency
+
+- For Maven, add the following dependency to project's pom.xml
+```
+<dependency>
+    <groupId>io.github.cardano-community</groupId>
+    <artifactId>koios-java-client</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+- For Gradle, add the following dependency to build.gradle
+```
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.0'
+```
+
+### Get Koios Backend Service
+- Mainnet
+```
+BackendService backendService = BackendFactory.getKoiosMainnetService();
+```
+
+- Testnet
+```
+BackendService backendService = BackendFactory.getKoiosTestnetService();
+```
+
+- Guildnet
+```
+BackendService backendService = BackendFactory.getKoiosGuildService();
+```
+
+### Get Koios Backend Services
+```
+NetworkService networkService = backendService.getNetworkService();
+EpochService epochService = backendService.getEpochService();
+BlockService blockService = backendService.getBlockService();
+TransactionsService transactionsService = backendService.getTransactionsService();
+AddressService addressService = backendService.getAddressService();
+AccountService accountService = backendService.getAccountService();
+AssetService assetService = backendService.getAssetService();
+PoolService poolService = backendService.getPoolService();
+ScriptService scriptService = backendService.getScriptService();
+```
+
+## Clone & Build with Maven
+```
+git clone https://github.com/cardano-community/koios-java-client.git
+cd koios-java-client
+mvn clean install
+```
+
+## Used by
+* [ISR - Israeli Cardano Community](https://www.cardano-israel.com/)
+* [MusicBox - CNFT Project](https://www.musicboxnft.com/)
+
 <hr/>
 <div align="center">
 
