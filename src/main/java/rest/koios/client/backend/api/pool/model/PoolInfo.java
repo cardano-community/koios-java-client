@@ -109,7 +109,7 @@ public class PoolInfo {
     /**
      * Total pool blocks on chain
      */
-    private Long epochBlockCnt;
+    private Long blockCount;
 
     /**
      * Pool live stake

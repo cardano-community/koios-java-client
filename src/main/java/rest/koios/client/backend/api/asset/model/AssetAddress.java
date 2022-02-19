@@ -16,7 +16,13 @@ import java.math.BigInteger;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AssetAddress {
 
-    private String address;
+    /**
+     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
+     */
+    private String paymentAddress;
 
+    /**
+     * Asset balance on the payment address
+     */
     private BigInteger quantity;
 }

@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.pool;
 
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.pool.model.*;
 import rest.koios.client.backend.factory.options.Options;
@@ -19,10 +20,10 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link Pool} IDs and tickers
+     * @return Result of Type List of {@link Pool} IDs and tickers
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Pool[] getPoolList(Options options) throws ApiException;
+    Result<List<Pool>> getPoolList(Options options) throws ApiException;
 
     /**
      * Pool Information
@@ -32,10 +33,10 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolIds List of Cardano pool IDs (bech32 format)
-     * @return Array of {@link PoolInfo}
+     * @return Result of Type List of {@link PoolInfo}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolInfo[] getPoolInformation(List<String> poolIds) throws ApiException;
+    Result<List<PoolInfo>> getPoolInformation(List<String> poolIds) throws ApiException;
 
     /**
      * Pool Delegators List
@@ -46,10 +47,10 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for
-     * @return Array of {@link PoolDelegator}
+     * @return Result of Type List of {@link PoolDelegator}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolDelegator[] getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException;
+    Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException;
 
     /**
      * Pool Delegators List
@@ -60,10 +61,10 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link PoolDelegator}
+     * @return Result of Type List of {@link PoolDelegator}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolDelegator[] getPoolDelegatorsList(String poolBech32, Options options) throws ApiException;
+    Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Options options) throws ApiException;
 
     /**
      * Pool Blocks
@@ -74,10 +75,10 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for
-     * @return Array of {@link PoolBlock}
+     * @return Result of Type List of {@link PoolBlock}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolBlock[] getPoolBlocks(String poolBech32, Long epochNo) throws ApiException;
+    Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Long epochNo) throws ApiException;
 
     /**
      * Pool Blocks
@@ -88,10 +89,10 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link PoolBlock}
+     * @return Result of Type List of {@link PoolBlock}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolBlock[] getPoolBlocks(String poolBech32, Options options) throws ApiException;
+    Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Options options) throws ApiException;
 
     /**
      * Pool Updates (History)
@@ -101,10 +102,10 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format
-     * @return Array of {@link PoolUpdate}
+     * @return Result of Type List of {@link PoolUpdate}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolUpdate[] getPoolUpdates(String poolBech32) throws ApiException;
+    Result<List<PoolUpdate>> getPoolUpdates(String poolBech32) throws ApiException;
 
     /**
      * Pool Updates (History)
@@ -114,10 +115,10 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link PoolUpdate}
+     * @return Result of Type List of {@link PoolUpdate}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolUpdate[] getPoolUpdates(Options options) throws ApiException;
+    Result<List<PoolUpdate>> getPoolUpdates(Options options) throws ApiException;
 
     /**
      * Pool Relays
@@ -127,10 +128,10 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link PoolRelay}
+     * @return Result of Type List of {@link PoolRelay}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolRelay[] getPoolRelays(Options options) throws ApiException;
+    Result<List<PoolRelay>> getPoolRelays(Options options) throws ApiException;
 
     /**
      * Pool Metadata
@@ -140,8 +141,8 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link PoolMetadata}
+     * @return Result of Type List of {@link PoolMetadata}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    PoolMetadata[] getPoolMetadata(Options options) throws ApiException;
+    Result<List<PoolMetadata>> getPoolMetadata(Options options) throws ApiException;
 }

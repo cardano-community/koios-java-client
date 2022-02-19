@@ -1,8 +1,11 @@
 package rest.koios.client.backend.api.account;
 
 import rest.koios.client.backend.api.account.model.*;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
+
+import java.util.List;
 
 /**
  * Account Service
@@ -17,10 +20,10 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link StakeAddress}
+     * @return Result of Type List of {@link StakeAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    StakeAddress[] getAccountList(Options options) throws ApiException;
+    Result<List<StakeAddress>> getAccountList(Options options) throws ApiException;
 
     /**
      * Account Information
@@ -30,10 +33,10 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountInfo} per the specified payment or staking address
+     * @return Result of Type List of {@link AccountInfo} per the specified payment or staking address
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountInfo[] getAccountInformation(String address) throws ApiException;
+    Result<List<AccountInfo>> getAccountInformation(String address) throws ApiException;
 
     /**
      * Account Rewards
@@ -44,10 +47,10 @@ public interface AccountService {
      *
      * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
      * @param epochNo      Filter for earned rewards Epoch Number (optional)
-     * @return Array of {@link AccountRewards}
+     * @return Result of Type List of {@link AccountRewards}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo) throws ApiException;
+    Result<List<AccountRewards>> getAccountRewards(String stakeAddress, Long epochNo) throws ApiException;
 
     /**
      * Account Rewards
@@ -58,10 +61,10 @@ public interface AccountService {
      *
      * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link AccountRewards}
+     * @return Result of Type List of {@link AccountRewards}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountRewards[] getAccountRewards(String stakeAddress, Options options) throws ApiException;
+    Result<List<AccountRewards>> getAccountRewards(String stakeAddress, Options options) throws ApiException;
 
     /**
      * Account Updates (History)
@@ -71,10 +74,10 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param stakeAddress Cardano staking address (reward account) in bech32 format (required)
-     * @return Array of {@link AccountUpdates}
+     * @return Result of Type List of {@link AccountUpdates}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountUpdates[] getAccountUpdates(String stakeAddress) throws ApiException;
+    Result<List<AccountUpdates>> getAccountUpdates(String stakeAddress) throws ApiException;
 
     /**
      * Account Addresses
@@ -84,10 +87,10 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountAddress}
+     * @return Result of Type List of {@link AccountAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountAddress[] getAccountAddresses(String address) throws ApiException;
+    Result<List<AccountAddress>> getAccountAddresses(String address) throws ApiException;
 
     /**
      * Account Assets
@@ -97,10 +100,10 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountAsset}
+     * @return Result of Type List of {@link AccountAsset}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountAsset[] getAccountAssets(String address) throws ApiException;
+    Result<List<AccountAsset>> getAccountAssets(String address) throws ApiException;
 
     /**
      * Account History
@@ -110,8 +113,8 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param address Cardano payment or staking address in bech32 format (required)
-     * @return Array of {@link AccountHistory} active stake values per epoch
+     * @return Result of Type List of {@link AccountHistory} active stake values per epoch
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AccountHistory[] getAccountHistory(String address) throws ApiException;
+    Result<List<AccountHistory>> getAccountHistory(String address) throws ApiException;
 }

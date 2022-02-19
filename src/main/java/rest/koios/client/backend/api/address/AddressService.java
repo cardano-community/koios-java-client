@@ -3,6 +3,7 @@ package rest.koios.client.backend.api.address;
 import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.address.model.AssetInfo;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public interface AddressService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param address Cardano payment address in bech32 format (required)
-     * @return Array of {@link AddressInfo} with Balance, Stake Address, UTxO set associated with the specified address.
+     * @return Result of Type List of {@link AddressInfo} with Balance, Stake Address, UTxO set associated with the specified address.
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AddressInfo[] getAddressInformation(String address) throws ApiException;
+    Result<List<AddressInfo>> getAddressInformation(String address) throws ApiException;
 
     /**
      * Address Transactions
@@ -34,10 +35,10 @@ public interface AddressService {
      *
      * @param addressList      input address list
      * @param afterBlockHeight filtering after specified block height (inclusive)
-     * @return Array of {@link TxHash} Included Transactions
+     * @return Result of Type List of {@link TxHash} Included Transactions
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxHash[] getAddressTransactions(List<String> addressList, Integer afterBlockHeight) throws ApiException;
+    Result<List<TxHash>> getAddressTransactions(List<String> addressList, Integer afterBlockHeight) throws ApiException;
 
     /**
      * Address Assets
@@ -47,10 +48,10 @@ public interface AddressService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param address Cardano payment address in bech32 format (required)
-     * @return Array of {@link AssetInfo} Included in specified address
+     * @return Result of Type List of {@link AssetInfo} Included in specified address
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetInfo[] getAddressAssets(String address) throws ApiException;
+    Result<List<AssetInfo>> getAddressAssets(String address) throws ApiException;
 
     /**
      * Transactions from payment credentials
@@ -61,8 +62,8 @@ public interface AddressService {
      *
      * @param paymentCredentialsList List of Cardano payment credential(s) in hex format
      * @param afterBlockHeight       Only fetch information after specific block height
-     * @return Array of {@link TxHash} Included Transactions
+     * @return Result of Type List of {@link TxHash} Included Transactions
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxHash[] getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight) throws ApiException;
+    Result<List<TxHash>> getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight) throws ApiException;
 }

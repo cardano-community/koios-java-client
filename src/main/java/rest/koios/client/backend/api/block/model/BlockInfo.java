@@ -9,11 +9,16 @@ import lombok.*;
  */
 @Getter
 @Setter
-@ToString
+@ToString(callSuper=true)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BlockInfo extends Block {
+
+    /**
+     * Operational Certificate Hash
+     */
+    private String opCert;
 
     /**
      * Parent Block Hash

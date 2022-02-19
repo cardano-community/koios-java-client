@@ -1,10 +1,13 @@
 package rest.koios.client.backend.api.block;
 
 import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.factory.options.Options;
+
+import java.util.List;
 
 /**
  * Block Service
@@ -19,10 +22,10 @@ public interface BlockService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of detailed summary of every {@link Block}
+     * @return Result of Type List of detailed summary of every {@link Block}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Block[] getBlockList(Options options) throws ApiException;
+    Result<List<Block>> getBlockList(Options options) throws ApiException;
 
     /**
      * Block Information
@@ -32,10 +35,10 @@ public interface BlockService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param blockHash Block Hash in hex format (required)
-     * @return Array of {@link BlockInfo} of a specific block
+     * @return Result of Type List of {@link BlockInfo} of a specific block
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    BlockInfo[] getBlockInformation(String blockHash) throws ApiException;
+    Result<List<BlockInfo>> getBlockInformation(String blockHash) throws ApiException;
 
     /**
      * Block Transactions
@@ -45,8 +48,8 @@ public interface BlockService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param blockHash Block Hash in hex format (required)
-     * @return Array of {@link TxHash} Included Transaction of a specific block
+     * @return Result of Type List of {@link TxHash} Included Transaction of a specific block
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxHash[] getBlockTransactions(String blockHash) throws ApiException;
+    Result<List<TxHash>> getBlockTransactions(String blockHash) throws ApiException;
 }

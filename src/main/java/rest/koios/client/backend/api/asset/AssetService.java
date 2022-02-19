@@ -1,8 +1,11 @@
 package rest.koios.client.backend.api.asset;
 
 import rest.koios.client.backend.api.asset.model.*;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
+
+import java.util.List;
 
 /**
  * Asset Service
@@ -17,10 +20,10 @@ public interface AssetService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link Asset} - policy IDs and asset names
+     * @return Result of Type List of {@link Asset} - policy IDs and asset names
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Asset[] getAssetList(Options options) throws ApiException;
+    Result<List<Asset>> getAssetList(Options options) throws ApiException;
 
     /**
      * Assets Address List
@@ -31,10 +34,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
-     * @return Array of {@link AssetAddress}
+     * @return Result of Type List of {@link AssetAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetAddress[] getAssetsAddressList(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset History
@@ -45,10 +48,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
-     * @return Array of {@link AssetHistory}
+     * @return Result of Type List of {@link AssetHistory}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetHistory[] getAssetHistory(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetHistory>> getAssetHistory(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Policy Information
@@ -58,10 +61,10 @@ public interface AssetService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
-     * @return Array of {@link AssetPolicyInfo}
+     * @return Result of Type List of {@link AssetPolicyInfo}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetPolicyInfo[] getAssetPolicyInformation(String assetPolicy) throws ApiException;
+    Result<List<AssetPolicyInfo>> getAssetPolicyInformation(String assetPolicy) throws ApiException;
 
     /**
      * Asset Information
@@ -72,10 +75,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
-     * @return Array of {@link AssetInformation}
+     * @return Result of Type List of {@link AssetInformation}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetInformation[] getAssetInformation(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetInformation>> getAssetInformation(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Summary
@@ -86,10 +89,10 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
-     * @return Array of {@link AssetTx}
+     * @return Result of Type List of {@link AssetSummary}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetSummary[] getAssetSummary(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetSummary>> getAssetSummary(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Transaction History
@@ -100,8 +103,8 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
-     * @return Array of {@link AssetTx}
+     * @return Result of Type List of {@link AssetTx}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    AssetTx[] getAssetTransactionHistory(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName) throws ApiException;
 }

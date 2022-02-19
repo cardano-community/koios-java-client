@@ -1,5 +1,8 @@
 package rest.koios.client.backend.factory.impl;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import rest.koios.client.backend.api.account.AccountService;
 import rest.koios.client.backend.api.account.impl.AccountServiceImpl;
 import rest.koios.client.backend.api.address.AddressService;
@@ -21,20 +24,6 @@ import rest.koios.client.backend.api.transactions.impl.TransactionsServiceImpl;
 import rest.koios.client.backend.factory.ApiVersion;
 import rest.koios.client.backend.factory.BackendService;
 import rest.koios.client.backend.factory.OperationType;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import io.netty.resolver.DefaultAddressResolverGroup;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.client.reactive.ReactorClientHttpConnector;
-import org.springframework.web.reactive.function.client.ExchangeStrategies;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.netty.http.client.HttpClient;
 
 /**
  * Backend Service Implementation
@@ -60,7 +49,25 @@ public class BackendServiceImpl implements BackendService {
      * @param baseUrl baseUrl
      */
     public BackendServiceImpl(String baseUrl) {
-        this(OperationType.CUSTOM_RPC, baseUrl);
+        log.info("Koios URL: " + baseUrl);
+        this.networkService = new NetworkServiceImpl(baseUrl);
+        this.epochService = new EpochServiceImpl(baseUrl);
+        this.blockService = new BlockServiceImpl(baseUrl);
+        this.transactionsService = new TransactionsServiceImpl(baseUrl);
+        this.addressService = new AddressServiceImpl(baseUrl);
+        this.accountService = new AccountServiceImpl(baseUrl);
+        this.assetService = new AssetServiceImpl(baseUrl);
+        this.poolService = new PoolServiceImpl(baseUrl);
+        this.scriptService = new ScriptServiceImpl(baseUrl);
+    }
+
+    /**
+     * Backend Service Implementation Constructor
+     *
+     * @param operationType Operation Type
+     */
+    private BackendServiceImpl(OperationType operationType) {
+        this(operationType, ApiVersion.VERSION_0);
     }
 
     /**
@@ -70,51 +77,6 @@ public class BackendServiceImpl implements BackendService {
      * @param apiVersion    API Version
      */
     public BackendServiceImpl(OperationType operationType, ApiVersion apiVersion) {
-        this(operationType, operationType.getBaseUrl() + apiVersion.getVersion());
-    }
-
-    /**
-     * Backend Service Implementation Constructor
-     *
-     * @param operationType Operation Type
-     * @param baseUrl       baseUrl
-     */
-    private BackendServiceImpl(OperationType operationType, String baseUrl) {
-        if (operationType != OperationType.CUSTOM_RPC) {
-            log.info("Koios URL: " + operationType.getBaseUrl());
-        } else {
-            log.info("Custom RPC URL: " + baseUrl);
-        }
-        WebClient webClient = createWebClient(baseUrl);
-        this.networkService = new NetworkServiceImpl(operationType, webClient);
-        this.epochService = new EpochServiceImpl(operationType, webClient);
-        this.blockService = new BlockServiceImpl(operationType, webClient);
-        this.transactionsService = new TransactionsServiceImpl(operationType, webClient);
-        this.addressService = new AddressServiceImpl(operationType, webClient);
-        this.accountService = new AccountServiceImpl(operationType, webClient);
-        this.assetService = new AssetServiceImpl(operationType, webClient);
-        this.poolService = new PoolServiceImpl(operationType, webClient);
-        this.scriptService = new ScriptServiceImpl(operationType, webClient);
-    }
-
-    @SneakyThrows
-    private WebClient createWebClient(String baseUrl) {
-        WebClient.Builder webClientBuilder = WebClient
-                .builder()
-                .baseUrl(baseUrl)
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .exchangeStrategies(ExchangeStrategies.builder()
-                        .codecs(configurer -> configurer
-                                .defaultCodecs()
-                                .maxInMemorySize(16 * 1024 * 1024))
-                        .build());
-        if (baseUrl.contains("https")) {
-            SslContext context = SslContextBuilder.forClient()
-                    .trustManager(InsecureTrustManagerFactory.INSTANCE)
-                    .build();
-            HttpClient httpClient = HttpClient.create().secure(t -> t.sslContext(context)).resolver(DefaultAddressResolverGroup.INSTANCE);
-            webClientBuilder.clientConnector(new ReactorClientHttpConnector(httpClient));
-        }
-        return webClientBuilder.build();
+        this(operationType.getBaseUrl()+apiVersion.getVersion()+"/");
     }
 }

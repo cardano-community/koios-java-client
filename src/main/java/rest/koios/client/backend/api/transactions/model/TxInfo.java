@@ -87,6 +87,11 @@ public class TxInfo {
     private Integer invalidAfter = null;
 
     /**
+     * An array of collateral inputs needed when dealing with smart contracts (same json schema as inputs)
+     */
+    private List<Object> collaterals = null;
+
+    /**
      * An array with details about inputs used in a transaction
      */
     private List<Object> inputs = null;

@@ -1,9 +1,12 @@
 package rest.koios.client.backend.api.script;
 
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.script.model.Script;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
 import rest.koios.client.backend.factory.options.Options;
+
+import java.util.List;
 
 /**
  * Script Service
@@ -18,10 +21,10 @@ public interface ScriptService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link Script}
+     * @return Result of Type List of {@link Script}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Script[] getScriptList(Options options) throws ApiException;
+    Result<List<Script>> getScriptList(Options options) throws ApiException;
 
     /**
      * Script Redeemers
@@ -31,8 +34,8 @@ public interface ScriptService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param scriptHash Script hash in hexadecimal format (hex) (required)
-     * @return Array of all {@link ScriptRedeemer} for a given script hash
+     * @return Result of Type List of all {@link ScriptRedeemer} for a given script hash
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    ScriptRedeemer[] getScriptRedeemers(String scriptHash) throws ApiException;
+    Result<List<ScriptRedeemer>> getScriptRedeemers(String scriptHash) throws ApiException;
 }

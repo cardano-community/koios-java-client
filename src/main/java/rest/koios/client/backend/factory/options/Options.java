@@ -5,6 +5,8 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Options
@@ -28,6 +30,14 @@ public class Options {
      */
     public Options(List<Option> options) {
         this.options = options;
+    }
+
+    /**
+     * Options List to Map
+     * @return Map of Options
+     */
+    public Map<String, String> toMap() {
+        return options.stream().collect(Collectors.toMap(Option::getOptionTypeValue, Option::getValue));
     }
 
     /**

@@ -1,10 +1,13 @@
 package rest.koios.client.backend.api.network;
 
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.network.model.Genesis;
 import rest.koios.client.backend.api.network.model.Tip;
 import rest.koios.client.backend.api.network.model.Totals;
 import rest.koios.client.backend.factory.options.Options;
+
+import java.util.List;
 
 /**
  * Network Service
@@ -18,10 +21,10 @@ public interface NetworkService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @return Array of {@link Tip} block summary (limit+paginated)
+     * @return Result of Type List of {@link Tip} block summary (limit+paginated)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Tip[] getChainTip() throws ApiException;
+    Result<List<Tip>> getChainTip() throws ApiException;
 
     /**
      * Get Genesis info
@@ -30,10 +33,10 @@ public interface NetworkService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @return Array of {@link Genesis} parameters used to start each era on chain
+     * @return Result of Type List of {@link Genesis} parameters used to start each era on chain
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Genesis[] getGenesisInfo() throws ApiException;
+    Result<List<Genesis>> getGenesisInfo() throws ApiException;
 
     /**
      * Get historical tokenomic stats
@@ -43,10 +46,10 @@ public interface NetworkService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param epochNo Epoch Number to fetch details for (optional)
-     * @return Array of {@link Totals} with supply/reserves/utxo/fees/treasury stats
+     * @return Result of Type List of {@link Totals} with supply/reserves/utxo/fees/treasury stats
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Totals[] getHistoricalTokenomicStats(Long epochNo) throws ApiException;
+    Result<List<Totals>> getHistoricalTokenomicStats(Long epochNo) throws ApiException;
 
     /**
      * Get historical tokenomic stats
@@ -56,8 +59,8 @@ public interface NetworkService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of {@link Totals} with supply/reserves/utxo/fees/treasury stats
+     * @return Result of Type List of {@link Totals} with supply/reserves/utxo/fees/treasury stats
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Totals[] getHistoricalTokenomicStats(Options options) throws ApiException;
+    Result<List<Totals>> getHistoricalTokenomicStats(Options options) throws ApiException;
 }

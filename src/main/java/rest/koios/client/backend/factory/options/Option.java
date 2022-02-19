@@ -12,6 +12,7 @@ public abstract class Option {
 
     /**
      * Option Constructor
+     *
      * @param optionType optionType
      */
     public Option(OptionType optionType) {
@@ -20,7 +21,17 @@ public abstract class Option {
 
     /**
      * getValue
+     *
      * @return abstract value per child Objects
      */
     public abstract String getValue();
+
+    /**
+     * getOptionTypeValue
+     *
+     * @return OptionType Name in lower case
+     */
+    public String getOptionTypeValue() {
+        return optionType.name().toLowerCase();
+    }
 }

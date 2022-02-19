@@ -5,14 +5,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.http.HttpStatus;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.pool.model.*;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,18 +30,20 @@ class PoolServiceTestnetIntegrationTest {
     @Test
     void getPoolListLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
-        Pool[] poolList = poolService.getPoolList(options);
-        log.info(Arrays.toString(poolList));
-        Assertions.assertNotNull(poolList);
-        Assertions.assertEquals(10, poolList.length);
+        Result<List<Pool>> poolListResult = poolService.getPoolList(options);
+        Assertions.assertTrue(poolListResult.isSuccessful());
+        Assertions.assertNotNull(poolListResult.getValue());
+        log.info(poolListResult.getValue().toString());
+        assertEquals(10, poolListResult.getValue().size());
     }
 
     @Test
     void getPoolInformationTest() throws ApiException {
         String poolId = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        PoolInfo[] poolInfos = poolService.getPoolInformation(List.of(poolId));
-        log.info(Arrays.toString(poolInfos));
-        Assertions.assertNotNull(poolInfos);
+        Result<List<PoolInfo>> poolInfosResult = poolService.getPoolInformation(List.of(poolId));
+        Assertions.assertTrue(poolInfosResult.isSuccessful());
+        Assertions.assertNotNull(poolInfosResult.getValue());
+        log.info(poolInfosResult.getValue().toString());
     }
 
     @Test
@@ -50,25 +51,26 @@ class PoolServiceTestnetIntegrationTest {
         String poolId = "asdsa";
         ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolInformation(List.of(poolId)));
         assertInstanceOf(ApiException.class, exception);
-        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
     void getPoolDelegatorsListTest() throws ApiException {
         String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        PoolDelegator[] poolDelegators = poolService.getPoolDelegatorsList(poolBech32, 180L);
-        log.info(Arrays.toString(poolDelegators));
-        Assertions.assertNotNull(poolDelegators);
+        Result<List<PoolDelegator>> poolDelegatorsResult = poolService.getPoolDelegatorsList(poolBech32, 180L);
+        Assertions.assertTrue(poolDelegatorsResult.isSuccessful());
+        Assertions.assertNotNull(poolDelegatorsResult.getValue());
+        log.info(poolDelegatorsResult.getValue().toString());
     }
 
     @Test
     void getPoolDelegatorsListLimitTest() throws ApiException {
         String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
         Options options = Options.builder().option(Limit.of(2)).build();
-        PoolDelegator[] poolDelegators = poolService.getPoolDelegatorsList(poolBech32, options);
-        log.info(Arrays.toString(poolDelegators));
-        Assertions.assertNotNull(poolDelegators);
-        Assertions.assertEquals(2, poolDelegators.length);
+        Result<List<PoolDelegator>> poolDelegatorsResult = poolService.getPoolDelegatorsList(poolBech32, options);
+        Assertions.assertTrue(poolDelegatorsResult.isSuccessful());
+        Assertions.assertNotNull(poolDelegatorsResult.getValue());
+        log.info(poolDelegatorsResult.getValue().toString());
+        assertEquals(2, poolDelegatorsResult.getValue().size());
     }
 
     @Test
@@ -76,25 +78,26 @@ class PoolServiceTestnetIntegrationTest {
         String poolBech32 = "123asd";
         ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolDelegatorsList(poolBech32, 180L));
         assertInstanceOf(ApiException.class, exception);
-        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
     void getPoolBlocksTest() throws ApiException {
         String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        PoolBlock[] poolBlocks = poolService.getPoolBlocks(poolBech32, 180L);
-        log.info(Arrays.toString(poolBlocks));
-        Assertions.assertNotNull(poolBlocks);
+        Result<List<PoolBlock>> poolBlocksResult = poolService.getPoolBlocks(poolBech32, 180L);
+        Assertions.assertTrue(poolBlocksResult.isSuccessful());
+        Assertions.assertNotNull(poolBlocksResult.getValue());
+        log.info(poolBlocksResult.getValue().toString());
     }
 
     @Test
     void getPoolBlocksLimitTest() throws ApiException {
         String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
         Options options = Options.builder().option(Limit.of(10)).build();
-        PoolBlock[] poolBlocks = poolService.getPoolBlocks(poolBech32, options);
-        log.info(Arrays.toString(poolBlocks));
-        Assertions.assertNotNull(poolBlocks);
-        Assertions.assertEquals(10, poolBlocks.length);
+        Result<List<PoolBlock>> poolBlocksResult = poolService.getPoolBlocks(poolBech32, options);
+        Assertions.assertTrue(poolBlocksResult.isSuccessful());
+        Assertions.assertNotNull(poolBlocksResult.getValue());
+        log.info(poolBlocksResult.getValue().toString());
+        assertEquals(10, poolBlocksResult.getValue().size());
     }
 
     @Test
@@ -102,24 +105,25 @@ class PoolServiceTestnetIntegrationTest {
         String poolBech32 = "123asd";
         ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolBlocks(poolBech32, 180L));
         assertInstanceOf(ApiException.class, exception);
-        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
     void getPoolUpdatesTest() throws ApiException {
         String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        PoolUpdate[] poolUpdates = poolService.getPoolUpdates(poolBech32);
-        log.info(Arrays.toString(poolUpdates));
-        Assertions.assertNotNull(poolUpdates);
+        Result<List<PoolUpdate>> poolUpdatesResult = poolService.getPoolUpdates(poolBech32);
+        Assertions.assertTrue(poolUpdatesResult.isSuccessful());
+        Assertions.assertNotNull(poolUpdatesResult.getValue());
+        log.info(poolUpdatesResult.getValue().toString());
     }
 
     @Test
     void getPoolUpdatesLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
-        PoolUpdate[] poolUpdates = poolService.getPoolUpdates(options);
-        log.info(Arrays.toString(poolUpdates));
-        Assertions.assertNotNull(poolUpdates);
-        Assertions.assertEquals(10, poolUpdates.length);
+        Result<List<PoolUpdate>> poolUpdatesResult = poolService.getPoolUpdates(options);
+        Assertions.assertTrue(poolUpdatesResult.isSuccessful());
+        Assertions.assertNotNull(poolUpdatesResult.getValue());
+        log.info(poolUpdatesResult.getValue().toString());
+        assertEquals(10, poolUpdatesResult.getValue().size());
     }
 
     @Test
@@ -127,24 +131,25 @@ class PoolServiceTestnetIntegrationTest {
         String poolBech32 = "123asd";
         ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolUpdates(poolBech32));
         assertInstanceOf(ApiException.class, exception);
-        assertEquals(exception.getCode(), HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
     void getPoolRelaysLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
-        PoolRelay[] poolRelays = poolService.getPoolRelays(options);
-        log.info(Arrays.toString(poolRelays));
-        Assertions.assertNotNull(poolRelays);
-        Assertions.assertEquals(10, poolRelays.length);
+        Result<List<PoolRelay>> poolRelaysResult = poolService.getPoolRelays(options);
+        Assertions.assertTrue(poolRelaysResult.isSuccessful());
+        Assertions.assertNotNull(poolRelaysResult.getValue());
+        log.info(poolRelaysResult.getValue().toString());
+        assertEquals(10, poolRelaysResult.getValue().size());
     }
 
     @Test
     void getPoolMetadataLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
-        PoolMetadata[] poolMetadata = poolService.getPoolMetadata(options);
-        log.info(Arrays.toString(poolMetadata));
-        Assertions.assertNotNull(poolMetadata);
-        Assertions.assertEquals(10, poolMetadata.length);
+        Result<List<PoolMetadata>> poolMetadataResult = poolService.getPoolMetadata(options);
+        Assertions.assertTrue(poolMetadataResult.isSuccessful());
+        Assertions.assertNotNull(poolMetadataResult.getValue());
+        log.info(poolMetadataResult.getValue().toString());
+        assertEquals(10, poolMetadataResult.getValue().size());
     }
 }

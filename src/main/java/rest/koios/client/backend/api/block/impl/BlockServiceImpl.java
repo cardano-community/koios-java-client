@@ -2,71 +2,68 @@ package rest.koios.client.backend.api.block.impl;
 
 import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.base.BaseService;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.BlockService;
+import rest.koios.client.backend.api.block.api.BlockApi;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
-import rest.koios.client.backend.factory.OperationType;
 import rest.koios.client.backend.factory.options.Options;
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Block Service Implementation
  */
 public class BlockServiceImpl extends BaseService implements BlockService {
 
+    private final BlockApi blockApi;
+
     /**
      * Block Service Implementation Constructor
      *
-     * @param operationType Operation Type
-     * @param webClient     webClient
+     * @param baseUrl Base URL
      */
-    public BlockServiceImpl(OperationType operationType, WebClient webClient) {
-        super(operationType, webClient);
+    public BlockServiceImpl(String baseUrl) {
+        super(baseUrl);
+        blockApi = getRetrofit().create(BlockApi.class);
     }
 
     @Override
-    public Block[] getBlockList(Options options) throws ApiException {
+    public Result<List<Block>> getBlockList(Options options) throws ApiException {
+        Call<List<Block>> call = blockApi.getBlockList(options.toMap());
         try {
-            return (Block[]) sendGetRequest("/blocks", options, Block[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<Block>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public BlockInfo[] getBlockInformation(String blockHash) throws ApiException {
+    public Result<List<BlockInfo>> getBlockInformation(String blockHash) throws ApiException {
         validateHexFormat(blockHash);
+        Call<List<BlockInfo>> call = blockApi.getBlockInformation(blockHash);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_info")
-                            .queryParam("_block_hash", blockHash).build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(BlockInfo[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<BlockInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public TxHash[] getBlockTransactions(String blockHash) throws ApiException {
+    public Result<List<TxHash>> getBlockTransactions(String blockHash) throws ApiException {
         validateHexFormat(blockHash);
+        Call<List<TxHash>> call = blockApi.getBlockTransactions(blockHash);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/block_txs")
-                            .queryParam("_block_hash", blockHash).build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(TxHash[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<TxHash>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 }

@@ -47,7 +47,7 @@ public class AccountInfo {
     /**
      * Rewards Available Amount
      */
-    private Long rewardAvailable;
+    private Long rewardsAvailable;
 
     /**
      * Reserves Amount

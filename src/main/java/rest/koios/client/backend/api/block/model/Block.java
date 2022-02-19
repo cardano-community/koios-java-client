@@ -40,6 +40,11 @@ public class Block {
     private Integer height = null;
 
     /**
+     * Block Size
+     */
+    private Long size = null;
+
+    /**
      * Timestamp for when the block was created
      */
     private String blockTime = null;

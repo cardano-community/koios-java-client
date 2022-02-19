@@ -1,8 +1,6 @@
 package rest.koios.client.utils;
 
 import org.bouncycastle.util.Arrays;
-import reactor.util.function.Tuple2;
-import reactor.util.function.Tuples;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +23,20 @@ public class Bech32Util {
      * Bech32Data
      */
     public static class Bech32Data {
+
+        /**
+         * hrp
+         */
         public final String hrp;
+
+        /**
+         * data
+         */
         public final byte[] data;
+
+        /**
+         * ver
+         */
         public final byte ver;
 
         private Bech32Data(final String hrp, final byte[] data, byte ver) {
@@ -47,12 +57,12 @@ public class Bech32Util {
         if (!hasValidChars(bech32EncodedString)) {
             return false;
         }
-        Tuple2<String, byte[]> data = bech32Decode(bech32EncodedString);
-        if (data.getT2().length < CheckSumSize) {
+        Tuple<String, byte[]> data = bech32Decode(bech32EncodedString);
+        if (data._2.length < CheckSumSize) {
             return false;
         }
 
-        return verifyChecksum(data.getT1(), data.getT2());
+        return verifyChecksum(data._1, data._2);
     }
 
     /**
@@ -125,7 +135,7 @@ public class Bech32Util {
         return polymod(temp) == 1;
     }
 
-    private static Tuple2<String, byte[]> bech32Decode(String bech32EncodedString) {
+    private static Tuple<String, byte[]> bech32Decode(String bech32EncodedString) {
 
         bech32EncodedString = bech32EncodedString.toLowerCase();
 
@@ -138,7 +148,7 @@ public class Bech32Util {
             b32Arr[i] = (byte) B32Chars.indexOf(data.charAt(i));
         }
 
-        return Tuples.of(hrp, b32Arr);
+        return new Tuple(hrp, b32Arr);
     }
 
     private static byte[] convertBits(byte[] data, int fromBits, int toBits, boolean pad) {
@@ -189,10 +199,10 @@ public class Bech32Util {
      * @return Bech32 Decoded Object
      */
     public static Bech32Data decode(String bech32EncodedString) {
-        Tuple2<String, byte[]> bech32Data = bech32Decode(bech32EncodedString);
+        Tuple<String, byte[]> bech32Data = bech32Decode(bech32EncodedString);
 
-        String hrp = bech32Data.getT1();
-        byte[] b32Arr = bech32Data.getT2();
+        String hrp = bech32Data._1;
+        byte[] b32Arr = bech32Data._2;
 
         if (b32Arr.length < CheckSumSize) {
             throw new RuntimeException("Invalid data length.");
@@ -211,6 +221,13 @@ public class Bech32Util {
         return new Bech32Data(hrp, b256Arr, witVer);
     }
 
+    /**
+     * encode
+     *
+     * @param data data
+     * @param hrp  hrp
+     * @return String
+     */
     public static String encode(byte[] data, String hrp) {
         if (data == null || data.length == 0)
             throw new RuntimeException("Data can not be null or empty.");

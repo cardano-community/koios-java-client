@@ -19,11 +19,7 @@ public enum OperationType {
     /**
      * Guildnet
      */
-    KOIOS_GUILD("https://guild.koios.rest/api/"),
-    /**
-     * Custom
-     */
-    CUSTOM_RPC();
+    KOIOS_GUILD("https://guild.koios.rest/api/");
 
     private final String baseUrl;
 

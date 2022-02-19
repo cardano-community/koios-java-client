@@ -1,158 +1,128 @@
 package rest.koios.client.backend.api.account.impl;
 
-import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import rest.koios.client.backend.api.account.AccountService;
+import rest.koios.client.backend.api.account.api.AccountApi;
 import rest.koios.client.backend.api.account.model.*;
 import rest.koios.client.backend.api.base.BaseService;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.factory.OperationType;
 import rest.koios.client.backend.factory.options.Options;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Account Service Implementation
  */
 public class AccountServiceImpl extends BaseService implements AccountService {
 
+    private final AccountApi accountApi;
+
     /**
      * Account Service Implementation Constructor
      *
-     * @param operationType Operation Type
-     * @param webClient     webClient
+     * @param baseUrl Base URL
      */
-    public AccountServiceImpl(OperationType operationType, WebClient webClient) {
-        super(operationType, webClient);
+    public AccountServiceImpl(String baseUrl) {
+        super(baseUrl);
+        accountApi = getRetrofit().create(AccountApi.class);
     }
 
     @Override
-    public StakeAddress[] getAccountList(Options options) throws ApiException {
+    public Result<List<StakeAddress>> getAccountList(Options options) throws ApiException {
+        Call<List<StakeAddress>> call = accountApi.getAccountList(options.toMap());
         try {
-            return (StakeAddress[]) sendGetRequest("/account_list", options, StakeAddress[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<StakeAddress>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public AccountInfo[] getAccountInformation(String address) throws ApiException {
+    public Result<List<AccountInfo>> getAccountInformation(String address) throws ApiException {
         validateBech32(address);
+        Call<List<AccountInfo>> call = accountApi.getAccountInformation(address);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_info")
-                            .queryParam("_address", address).build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AccountInfo[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<AccountInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public AccountRewards[] getAccountRewards(String stakeAddress, Long epochNo) throws ApiException {
+    public Result<List<AccountRewards>> getAccountRewards(String stakeAddress, Long epochNo) throws ApiException {
         validateBech32(stakeAddress);
         validateEpoch(epochNo);
+        Call<List<AccountRewards>> call = accountApi.getAccountRewards(stakeAddress, epochNo);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_rewards")
-                            .queryParam("_stake_address", stakeAddress)
-                            .queryParam("_epoch_no", epochNo)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AccountRewards[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<AccountRewards>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public AccountRewards[] getAccountRewards(String stakeAddress, Options options) throws ApiException {
-        try {
-            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-            multiValueMap.add("_stake_address", stakeAddress);
-            return (AccountRewards[]) sendGetRequest("/account_rewards", multiValueMap, options, AccountRewards[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
-        }
-    }
-
-    @Override
-    public AccountUpdates[] getAccountUpdates(String stakeAddress) throws ApiException {
+    public Result<List<AccountRewards>> getAccountRewards(String stakeAddress, Options options) throws ApiException {
         validateBech32(stakeAddress);
+        Call<List<AccountRewards>> call = accountApi.getAccountRewards(stakeAddress, options.toMap());
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_updates")
-                            .queryParam("_stake_address", stakeAddress)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AccountUpdates[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<AccountRewards>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public AccountAddress[] getAccountAddresses(String address) throws ApiException {
-        validateBech32(address);
+    public Result<List<AccountUpdates>> getAccountUpdates(String stakeAddress) throws ApiException {
+        validateBech32(stakeAddress);
+        Call<List<AccountUpdates>> call = accountApi.getAccountUpdates(stakeAddress);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_addresses")
-                            .queryParam("_address", address)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AccountAddress[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<AccountUpdates>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public AccountAsset[] getAccountAssets(String address) throws ApiException {
+    public Result<List<AccountAddress>> getAccountAddresses(String address) throws ApiException {
         validateBech32(address);
+        Call<List<AccountAddress>> call = accountApi.getAccountAddresses(address);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_assets")
-                            .queryParam("_address", address)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AccountAsset[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<AccountAddress>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public AccountHistory[] getAccountHistory(String address) throws ApiException {
+    public Result<List<AccountAsset>> getAccountAssets(String address) throws ApiException {
         validateBech32(address);
+        Call<List<AccountAsset>> call = accountApi.getAccountAssets(address);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/account_history")
-                            .queryParam("_address", address)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(AccountHistory[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<AccountAsset>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<AccountHistory>> getAccountHistory(String address) throws ApiException {
+        validateBech32(address);
+        Call<List<AccountHistory>> call = accountApi.getAccountHistory(address);
+        try {
+            Response<List<AccountHistory>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 }

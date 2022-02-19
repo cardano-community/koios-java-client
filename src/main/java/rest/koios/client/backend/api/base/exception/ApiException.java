@@ -3,7 +3,6 @@ package rest.koios.client.backend.api.base.exception;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
 
 /**
  * ApiException
@@ -14,29 +13,21 @@ import org.springframework.http.HttpStatus;
 public class ApiException extends Exception {
 
     /**
-     * details
+     * ApiException Constructor
+     *
+     * @param message  message
      */
-    private String details;
-
-    /**
-     * code
-     */
-    private int code;
-
-    /**
-     * message
-     */
-    private String message;
+    public ApiException(String message) {
+        super(message);
+    }
 
     /**
      * ApiException Constructor
      *
-     * @param errorBody  errorBody
-     * @param statusCode statusCode
+     * @param message  message
+     * @param e Exception
      */
-    public ApiException(String errorBody, HttpStatus statusCode) {
-        this.message = errorBody;
-        this.code = statusCode.value();
-        this.details = statusCode.getReasonPhrase();
+    public ApiException(String message, Exception e) {
+        super(message, e);
     }
 }

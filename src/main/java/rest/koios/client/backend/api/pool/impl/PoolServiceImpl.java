@@ -1,183 +1,160 @@
 package rest.koios.client.backend.api.pool.impl;
 
-import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import rest.koios.client.backend.api.base.BaseService;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.pool.PoolService;
+import rest.koios.client.backend.api.pool.api.PoolApi;
 import rest.koios.client.backend.api.pool.model.*;
-import rest.koios.client.backend.factory.OperationType;
 import rest.koios.client.backend.factory.options.Options;
+import retrofit2.Call;
+import retrofit2.Response;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Pool Service Implementation
  */
 public class PoolServiceImpl extends BaseService implements PoolService {
 
+    private final PoolApi poolApi;
+
     /**
      * Pool Service Implementation Constructor
      *
-     * @param operationType Operation Type
-     * @param webClient     webClient
+     * @param baseUrl Base URL
      */
-    public PoolServiceImpl(OperationType operationType, WebClient webClient) {
-        super(operationType, webClient);
+    public PoolServiceImpl(String baseUrl) {
+        super(baseUrl);
+        poolApi = getRetrofit().create(PoolApi.class);
     }
 
     @Override
-    public Pool[] getPoolList(Options options) throws ApiException {
+    public Result<List<Pool>> getPoolList(Options options) throws ApiException {
+        Call<List<Pool>> call = poolApi.getPoolList(options.toMap());
         try {
-            return (Pool[]) sendGetRequest("/pool_list", options, Pool[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<Pool>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolInfo[] getPoolInformation(List<String> poolIds) throws ApiException {
+    public Result<List<PoolInfo>> getPoolInformation(List<String> poolIds) throws ApiException {
         for (String poolId : poolIds) {
             validateBech32(poolId);
         }
+        Call<List<PoolInfo>> call = poolApi.getPoolInformation(buildBody(poolIds));
         try {
-            return getWebClient().post()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/pool_info").build())
-                    .bodyValue(buildPoolInfoBody(poolIds))
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(PoolInfo[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolDelegator[] getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException {
+    public Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException {
         validateEpoch(epochNo);
         validateBech32(poolBech32);
+        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsList(poolBech32, epochNo);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/pool_delegators")
-                            .queryParam("_pool_bech32", poolBech32)
-                            .queryParam("_epoch_no", epochNo)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(PoolDelegator[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolDelegator>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolDelegator[] getPoolDelegatorsList(String poolBech32, Options options) throws ApiException {
+    public Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
+        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsList(poolBech32, options.toMap());
         try {
-            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-            multiValueMap.add("_pool_bech32", poolBech32);
-            return (PoolDelegator[]) sendGetRequest("/pool_delegators", multiValueMap, options, PoolDelegator[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolDelegator>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolBlock[] getPoolBlocks(String poolBech32, Long epochNo) throws ApiException {
+    public Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Long epochNo) throws ApiException {
         validateEpoch(epochNo);
         validateBech32(poolBech32);
+        Call<List<PoolBlock>> call = poolApi.getPoolBlocks(poolBech32, epochNo);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/pool_blocks")
-                            .queryParam("_pool_bech32", poolBech32)
-                            .queryParam("_epoch_no", epochNo)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(PoolBlock[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolBlock>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolBlock[] getPoolBlocks(String poolBech32, Options options) throws ApiException {
+    public Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
+        Call<List<PoolBlock>> call = poolApi.getPoolBlocks(poolBech32, options.toMap());
         try {
-            MultiValueMap<String, String> multiValueMap = new LinkedMultiValueMap<>();
-            multiValueMap.add("_pool_bech32", poolBech32);
-            return (PoolBlock[]) sendGetRequest("/pool_blocks", multiValueMap, options, PoolBlock[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolBlock>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolUpdate[] getPoolUpdates(String poolBech32) throws ApiException {
+    public Result<List<PoolUpdate>> getPoolUpdates(String poolBech32) throws ApiException {
         validateBech32(poolBech32);
+        Call<List<PoolUpdate>> call = poolApi.getPoolUpdates(poolBech32);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/pool_updates")
-                            .queryParam("_pool_bech32", poolBech32)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(PoolUpdate[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolUpdate>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolUpdate[] getPoolUpdates(Options options) throws ApiException {
+    public Result<List<PoolUpdate>> getPoolUpdates(Options options) throws ApiException {
+        Call<List<PoolUpdate>> call = poolApi.getPoolUpdates(options.toMap());
         try {
-            return (PoolUpdate[]) sendGetRequest("/pool_updates", options, PoolUpdate[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolUpdate>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolRelay[] getPoolRelays(Options options) throws ApiException {
+    public Result<List<PoolRelay>> getPoolRelays(Options options) throws ApiException {
+        Call<List<PoolRelay>> call = poolApi.getPoolRelays(options.toMap());
         try {
-            return (PoolRelay[]) sendGetRequest("/pool_relays", options, PoolRelay[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolRelay>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public PoolMetadata[] getPoolMetadata(Options options) throws ApiException {
+    public Result<List<PoolMetadata>> getPoolMetadata(Options options) throws ApiException {
+        Call<List<PoolMetadata>> call = poolApi.getPoolMetadata(options.toMap());
         try {
-            return (PoolMetadata[]) sendGetRequest("/pool_metadata", options, PoolMetadata[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<PoolMetadata>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
-    private String buildPoolInfoBody(List<String> poolIds) {
-        if (poolIds == null || poolIds.isEmpty()) {
-            return null;
-        }
-        StringBuilder jsonBodyValue = new StringBuilder("{\"_pool_bech32_ids\":[");
-        for (int i = 0; i < poolIds.size(); i++) {
-            jsonBodyValue.append("\"").append(poolIds.get(i)).append("\"");
-            if (i < poolIds.size() - 1) {
-                jsonBodyValue.append(",");
-            }
-        }
-        jsonBodyValue.append("]}");
-        return jsonBodyValue.toString();
+    private Map<String, Object> buildBody(List<String> poolIds) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_pool_bech32_ids", poolIds);
+        return bodyMap;
     }
 }

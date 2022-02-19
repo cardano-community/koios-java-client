@@ -19,7 +19,7 @@ public class AccountAsset {
     /**
      * Asset Policy ID (hex)
      */
-    private String policyId;
+    private String assetPolicy;
 
     /**
      * Asset Name (hex)

@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions;
 
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.transactions.model.*;
 import rest.koios.client.backend.factory.options.Options;
@@ -19,10 +20,10 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param txHashes (optional)
-     * @return Array of {@link TxInfo} detailed information about transaction(s)
+     * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxInfo[] getTransactionInformation(List<String> txHashes) throws ApiException;
+    Result<List<TxInfo>> getTransactionInformation(List<String> txHashes) throws ApiException;
 
     /**
      * Transaction UTxOs
@@ -32,10 +33,10 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param txHashes (optional)
-     * @return Array of {@link TxUtxo} inputs and outputs for given transaction(s)
+     * @return Result of Type List of {@link TxUtxo} inputs and outputs for given transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxUtxo[] getTransactionUTxOs(List<String> txHashes) throws ApiException;
+    Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes) throws ApiException;
 
     /**
      * Transaction Metadata
@@ -45,10 +46,10 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param txHashes (optional)
-     * @return Array of {@link TxMetadata} information present in each of the transactions queried
+     * @return Result of Type List of {@link TxMetadata} information present in each of the transactions queried
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxMetadata[] getTransactionMetadata(List<String> txHashes) throws ApiException;
+    Result<List<TxMetadata>> getTransactionMetadata(List<String> txHashes) throws ApiException;
 
     /**
      * Transaction Metadata Labels
@@ -58,10 +59,10 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Array of known {@link TxMetadataLabels}
+     * @return Result of Type List of known {@link TxMetadataLabels}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxMetadataLabels[] getTransactionMetadataLabels(Options options) throws ApiException;
+    Result<List<TxMetadataLabels>> getTransactionMetadataLabels(Options options) throws ApiException;
 
     /**
      * Submit Transaction
@@ -70,10 +71,10 @@ public interface TransactionsService {
      * <p><b>400</b> - An error occurred while submitting transaction.
      *
      * @param cborData (optional)
-     * @return Transaction Id (Hex String)
+     * @return Result of Transaction Id (Hex String)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    String submitTx(byte[] cborData) throws ApiException;
+    Result<String> submitTx(byte[] cborData) throws ApiException;
 
     /**
      * Transaction Status (Block Confirmations)
@@ -83,8 +84,8 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param txHashes (optional)
-     * @return Array of transaction confirmation counts {@link TxStatus}
+     * @return Result of Type List of transaction confirmation counts {@link TxStatus}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    TxStatus[] getTransactionStatus(List<String> txHashes) throws ApiException;
+    Result<List<TxStatus>> getTransactionStatus(List<String> txHashes) throws ApiException;
 }

@@ -1,82 +1,79 @@
 package rest.koios.client.backend.api.epoch.impl;
 
 import rest.koios.client.backend.api.base.BaseService;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.epoch.EpochService;
+import rest.koios.client.backend.api.epoch.api.EpochApi;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
-import rest.koios.client.backend.factory.OperationType;
 import rest.koios.client.backend.factory.options.Options;
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
+import retrofit2.Call;
+import retrofit2.Response;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Epoch Service Implementation
  */
 public class EpochServiceImpl extends BaseService implements EpochService {
 
+    private final EpochApi epochApi;
+
     /**
      * Epoch Service Implementation Constructor
      *
-     * @param operationType Operation Type
-     * @param webClient     webClient
+     * @param baseUrl Base URL
      */
-    public EpochServiceImpl(OperationType operationType, WebClient webClient) {
-        super(operationType, webClient);
+    public EpochServiceImpl(String baseUrl) {
+        super(baseUrl);
+        epochApi = getRetrofit().create(EpochApi.class);
     }
 
     @Override
-    public EpochInfo[] getEpochInformation(Long epochNo) throws ApiException {
+    public Result<List<EpochInfo>> getEpochInformation(Long epochNo) throws ApiException {
         validateEpoch(epochNo);
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(epochNo);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/epoch_info")
-                            .queryParam("_epoch_no", epochNo)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(EpochInfo[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<EpochInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public EpochInfo[] getEpochInformation(Options options) throws ApiException {
+    public Result<List<EpochInfo>> getEpochInformation(Options options) throws ApiException {
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(options.toMap());
         try {
-            return (EpochInfo[]) sendGetRequest("/epoch_info", options, EpochInfo[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<EpochInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public EpochParams[] getEpochParameters(Long epochNo) throws ApiException {
+    public Result<List<EpochParams>> getEpochParameters(Long epochNo) throws ApiException {
         validateEpoch(epochNo);
+        Call<List<EpochParams>> call = epochApi.getEpochParameters(epochNo);
         try {
-            return getWebClient().get()
-                    .uri(uriBuilder -> uriBuilder.path(getCustomUrlSuffix() + "/epoch_params")
-                            .queryParam("_epoch_no", epochNo)
-                            .build())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .retrieve()
-                    .bodyToMono(EpochParams[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<EpochParams>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public EpochParams[] getEpochParameters(Options options) throws ApiException {
+    public Result<List<EpochParams>> getEpochParameters(Options options) throws ApiException {
+        Call<List<EpochParams>> call = epochApi.getEpochParameters(options.toMap());
         try {
-            return (EpochParams[]) sendGetRequest("/epoch_params", options, EpochParams[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<EpochParams>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 }

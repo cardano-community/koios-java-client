@@ -1,146 +1,121 @@
 package rest.koios.client.backend.api.transactions.impl;
 
-import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rest.koios.client.backend.api.base.BaseService;
+import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.transactions.TransactionsService;
+import rest.koios.client.backend.api.transactions.api.TransactionApi;
 import rest.koios.client.backend.api.transactions.model.*;
-import rest.koios.client.backend.factory.OperationType;
 import rest.koios.client.backend.factory.options.Options;
+import retrofit2.Call;
+import retrofit2.Response;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Transaction Service Implementation
  */
 public class TransactionsServiceImpl extends BaseService implements TransactionsService {
 
+    private final TransactionApi transactionApi;
+
     /**
      * Transaction Service Implementation Constructor
      *
-     * @param operationType Operation Type
-     * @param webClient     webClient
+     * @param baseUrl Base URL
      */
-    public TransactionsServiceImpl(OperationType operationType, WebClient webClient) {
-        super(operationType, webClient);
+    public TransactionsServiceImpl(String baseUrl) {
+        super(baseUrl);
+        transactionApi = getRetrofit().create(TransactionApi.class);
     }
 
     @Override
-    public TxInfo[] getTransactionInformation(List<String> txHashes) throws ApiException {
+    public Result<List<TxInfo>> getTransactionInformation(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
+        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildBody(txHashes));
         try {
-            return getWebClient().post()
-                    .uri(getCustomUrlSuffix() + "/tx_info")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .bodyValue(buildBody(txHashes))
-                    .retrieve()
-                    .bodyToMono(TxInfo[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<TxInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public TxUtxo[] getTransactionUTxOs(List<String> txHashes) throws ApiException {
+    public Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
+        Call<List<TxUtxo>> call = transactionApi.getTransactionUTxOs(buildBody(txHashes));
         try {
-            return getWebClient().post()
-                    .uri(getCustomUrlSuffix() + "/tx_utxos")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .bodyValue(buildBody(txHashes))
-                    .retrieve()
-                    .bodyToMono(TxUtxo[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<TxUtxo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public TxMetadata[] getTransactionMetadata(List<String> txHashes) throws ApiException {
+    public Result<List<TxMetadata>> getTransactionMetadata(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
+        Call<List<TxMetadata>> call = transactionApi.getTransactionMetadata(buildBody(txHashes));
         try {
-            return getWebClient().post()
-                    .uri(getCustomUrlSuffix() + "/tx_metadata")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .bodyValue(buildBody(txHashes))
-                    .retrieve()
-                    .bodyToMono(TxMetadata[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<TxMetadata>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public TxMetadataLabels[] getTransactionMetadataLabels(Options options) throws ApiException {
+    public Result<List<TxMetadataLabels>> getTransactionMetadataLabels(Options options) throws ApiException {
+        Call<List<TxMetadataLabels>> call = transactionApi.getTransactionMetadataLabels(options.toMap());
         try {
-            return (TxMetadataLabels[]) sendGetRequest("/tx_metalabels", options, TxMetadataLabels[].class);
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<TxMetadataLabels>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public String submitTx(byte[] cborData) throws ApiException {
+    public Result<String> submitTx(byte[] cborData) throws ApiException {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/cbor"), cborData);
+        Call<String> txnCall = transactionApi.submitTx(requestBody);
         try {
-            return getWebClient().post()
-                    .uri(getCustomUrlSuffix() + "/submittx")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .contentType(MediaType.APPLICATION_CBOR)
-                    .bodyValue(cborData)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<String> response = txnCall.execute();
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public TxStatus[] getTransactionStatus(List<String> txHashes) throws ApiException {
+    public Result<List<TxStatus>> getTransactionStatus(List<String> txHashes) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
+        Call<List<TxStatus>> call = transactionApi.getTransactionStatus(buildBody(txHashes));
         try {
-            return getWebClient().post()
-                    .uri(getCustomUrlSuffix() + "/tx_status")
-                    .accept(MediaType.APPLICATION_JSON)
-                    .bodyValue(buildBody(txHashes))
-                    .retrieve()
-                    .bodyToMono(TxStatus[].class)
-                    .timeout(getTimeoutDuration())
-                    .block();
-        } catch (WebClientResponseException e) {
-            throw new ApiException(e.getResponseBodyAsString(), e.getStatusCode());
+            Response<List<TxStatus>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
-    private String buildBody(List<String> txHashes) {
-        if (txHashes == null || txHashes.isEmpty()) {
-            return null;
-        }
-        StringBuilder jsonBodyValue = new StringBuilder("{\"_tx_hashes\":[");
-        for (int i = 0; i < txHashes.size(); i++) {
-            jsonBodyValue.append("\"").append(txHashes.get(i)).append("\"");
-            if (i < txHashes.size() - 1) {
-                jsonBodyValue.append(",");
-            }
-        }
-        jsonBodyValue.append("]}");
-        return jsonBodyValue.toString();
+    private Map<String, Object> buildBody(List<String> txHashes) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_tx_hashes", txHashes);
+        return bodyMap;
     }
 }
