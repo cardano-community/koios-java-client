@@ -8,7 +8,7 @@ public enum OptionType {
     /**
      * FILTERING OPTION TYPE
      */
-    FILTERING,
+    FILTER,
     /**
      * OFFSET OPTION TYPE
      */

@@ -11,6 +11,8 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.factory.BackendFactory;
+import rest.koios.client.backend.factory.options.Filter;
+import rest.koios.client.backend.factory.options.FilterType;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 
@@ -37,6 +39,18 @@ class BlockServiceMainnetIntegrationTest {
         log.info(blockListResult.getValue().toString());
         Assertions.assertNotNull(blockListResult.getValue());
         assertEquals(10, blockListResult.getValue().size());
+    }
+
+    @Test
+    void getBlockListFilterTest() throws ApiException {
+        Options options = Options.builder()
+                .option(Filter.of("epoch", FilterType.EQ, "250"))
+                .option(Filter.of("epoch_slot", FilterType.LT, "180")).build();
+        Result<List<Block>> blockListResult = blockService.getBlockList(options);
+        Assertions.assertTrue(blockListResult.isSuccessful());
+        log.info(blockListResult.getValue().toString());
+        Assertions.assertNotNull(blockListResult.getValue());
+        assertEquals(2, blockListResult.getValue().size());
     }
 
     @Test
