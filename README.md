@@ -21,6 +21,8 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Synchronous REST messaging using java objects
 - Structured Java Objects logging
 - Pagination (Limit and Offset) Supported
+- Horizontal Filtering Supported
+- Sorting Supported
 - Rate Control
 - Supported REST Services:
     - [x] Network
