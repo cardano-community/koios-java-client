@@ -38,13 +38,6 @@ class PoolServiceTestnetIntegrationTest {
     }
 
     @Test
-    void getPoolListBadRequestTest() {
-        Options options = Options.builder().option(Limit.of(0)).build();
-        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolList(options));
-        assertInstanceOf(ApiException.class, exception);
-    }
-
-    @Test
     void getPoolInformationTest() throws ApiException {
         String poolId = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
         Result<List<PoolInfo>> poolInfosResult = poolService.getPoolInformation(List.of(poolId), null);
