@@ -21,10 +21,10 @@ public interface NetworkService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @return Result of Type List of {@link Tip} block summary (limit+paginated)
+     * @return Result of {@link Tip} block summary
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<Tip>> getChainTip() throws ApiException;
+    Result<Tip> getChainTip() throws ApiException;
 
     /**
      * Get Genesis info
@@ -33,26 +33,26 @@ public interface NetworkService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @return Result of Type List of {@link Genesis} parameters used to start each era on chain
+     * @return Result of {@link Genesis} parameters used to start each era on chain
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<Genesis>> getGenesisInfo() throws ApiException;
+    Result<Genesis> getGenesisInfo() throws ApiException;
 
     /**
-     * Get historical tokenomic stats
+     * Get historical tokenomic stats By Epoch
      * Get the circulating utxo, treasury, rewards, supply and reserves in lovelace for specified epoch, all epochs if empty
      * <p><b>200</b> - Array of supply/reserves/utxo/fees/treasury stats
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param epochNo Epoch Number to fetch details for (optional)
-     * @return Result of Type List of {@link Totals} with supply/reserves/utxo/fees/treasury stats
+     * @return Result of {@link Totals} with supply/reserves/utxo/fees/treasury stats
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<Totals>> getHistoricalTokenomicStats(Long epochNo) throws ApiException;
+    Result<Totals> getHistoricalTokenomicStatsByEpoch(Long epochNo) throws ApiException;
 
     /**
-     * Get historical tokenomic stats
+     * Get historical tokenomic stats with Filtering, Pagination, Ordering Options
      * Get the circulating utxo, treasury, rewards, supply and reserves in lovelace for specified epoch, all epochs if empty
      * <p><b>200</b> - Array of supply/reserves/utxo/fees/treasury stats
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint

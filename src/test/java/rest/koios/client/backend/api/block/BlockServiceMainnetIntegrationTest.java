@@ -42,7 +42,7 @@ class BlockServiceMainnetIntegrationTest {
     @Test
     void getBlockInformationTest() throws ApiException {
         String hash = "f6192a1aaa6d3d05b4703891a6b66cd757801c61ace86cbe5ab0d66e07f601ab";
-        Result<List<BlockInfo>> blockInformationResult = blockService.getBlockInformation(hash);
+        Result<BlockInfo> blockInformationResult = blockService.getBlockInformation(hash);
         Assertions.assertTrue(blockInformationResult.isSuccessful());
         Assertions.assertNotNull(blockInformationResult.getValue());
         log.info(blockInformationResult.getValue().toString());
@@ -58,7 +58,7 @@ class BlockServiceMainnetIntegrationTest {
     @Test
     void getBlockTransactionsTest() throws ApiException {
         String hash = "f6192a1aaa6d3d05b4703891a6b66cd757801c61ace86cbe5ab0d66e07f601ab";
-        Result<List<TxHash>> blockTransactionsResult = blockService.getBlockTransactions(hash);
+        Result<List<TxHash>> blockTransactionsResult = blockService.getBlockTransactions(hash, null);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());
         log.info(blockTransactionsResult.getValue().toString());;
@@ -67,7 +67,7 @@ class BlockServiceMainnetIntegrationTest {
     @Test
     void getBlockTransactionsBadRequestTest() {
         String hash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactions(hash));
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactions(hash, null));
         assertInstanceOf(ApiException.class, exception);
     }
 }

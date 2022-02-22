@@ -32,7 +32,7 @@ class NetworkServiceMainnetIntegrationTest {
 
     @Test
     void getChainTipTest() throws ApiException {
-        Result<List<Tip>> tipResult = networkService.getChainTip();
+        Result<Tip> tipResult = networkService.getChainTip();
         Assertions.assertTrue(tipResult.isSuccessful());
         Assertions.assertNotNull(tipResult.getValue());
         log.info(tipResult.getValue().toString());
@@ -40,21 +40,21 @@ class NetworkServiceMainnetIntegrationTest {
 
     @Test
     void getGenesisInfoTest() throws ApiException {
-        Result<List<Genesis>> genesisResult = networkService.getGenesisInfo();
+        Result<Genesis> genesisResult = networkService.getGenesisInfo();
         Assertions.assertTrue(genesisResult.isSuccessful());
         Assertions.assertNotNull(genesisResult.getValue());
         log.info(genesisResult.getValue().toString());
-        Assertions.assertEquals("45000000000000000", genesisResult.getValue().get(0).getMaxlovelacesupply());
+        Assertions.assertEquals("45000000000000000", genesisResult.getValue().getMaxlovelacesupply());
     }
 
     @Test
     void getHistoricalTokenomicStatsTest() throws ApiException {
         Long epochNo = 294L;
-        Result<List<Totals>> historicalTokenomicStatsResult = networkService.getHistoricalTokenomicStats(epochNo);
+        Result<Totals> historicalTokenomicStatsResult = networkService.getHistoricalTokenomicStatsByEpoch(epochNo);
         Assertions.assertTrue(historicalTokenomicStatsResult.isSuccessful());
         Assertions.assertNotNull(historicalTokenomicStatsResult.getValue());
         log.info(historicalTokenomicStatsResult.getValue().toString());
-        Assertions.assertEquals(epochNo,historicalTokenomicStatsResult.getValue().get(0).getEpochNo());
+        Assertions.assertEquals(epochNo,historicalTokenomicStatsResult.getValue().getEpochNo());
     }
 
     @Test
@@ -69,7 +69,7 @@ class NetworkServiceMainnetIntegrationTest {
 
     @Test
     void getHistoricalTokenomicStatsBadRequestTest() {
-        ApiException exception = assertThrows(ApiException.class, () -> networkService.getHistoricalTokenomicStats(-5L));
+        ApiException exception = assertThrows(ApiException.class, () -> networkService.getHistoricalTokenomicStatsByEpoch(-5L));
         assertInstanceOf(ApiException.class, exception);
     }
 }

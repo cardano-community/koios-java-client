@@ -3,7 +3,7 @@ package rest.koios.client.backend.api.base;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
-import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -17,13 +17,16 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
  * Base Service
  */
-@Data
 @Slf4j
+@Getter
 public class BaseService {
 
     private final Retrofit retrofit;
@@ -42,6 +45,18 @@ public class BaseService {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(client).addConverterFactory(JacksonConverterFactory.create()).build();
+    }
+
+    protected <T> Result<T> processResponseGetOne(Response<List<T>> response) {
+        if (response.isSuccessful()) {
+            if (response.body() != null && !response.body().isEmpty()) {
+                return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body().get(0)).code(response.code()).build();
+            } else {
+                return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
+            }
+        } else {
+            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).toString()).code(response.code()).build();
+        }
     }
 
     /**
@@ -111,5 +126,13 @@ public class BaseService {
         if (!hex.matches("^[0-9a-fA-F]+$")) {
             throw new ApiException("Invalid Hexadecimal String Format");
         }
+    }
+
+    protected Map<String, String> optionsToParamMap(Options options) {
+        Map<String, String> paramsMap = Collections.emptyMap();
+        if (options != null && !options.getOptions().isEmpty()) {
+            paramsMap = options.toMap();
+        }
+        return paramsMap;
     }
 }

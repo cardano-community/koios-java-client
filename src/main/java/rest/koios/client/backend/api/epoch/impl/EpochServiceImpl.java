@@ -32,12 +32,12 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
-    public Result<List<EpochInfo>> getEpochInformation(Long epochNo) throws ApiException {
+    public Result<EpochInfo> getEpochInformationByEpoch(Long epochNo) throws ApiException {
         validateEpoch(epochNo);
-        Call<List<EpochInfo>> call = epochApi.getEpochInformation(epochNo);
+        Call<List<EpochInfo>> call = epochApi.getEpochInformationByEpoch(epochNo);
         try {
             Response<List<EpochInfo>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
@@ -45,7 +45,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<List<EpochInfo>> getEpochInformation(Options options) throws ApiException {
-        Call<List<EpochInfo>> call = epochApi.getEpochInformation(options.toMap());
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(optionsToParamMap(options));
         try {
             Response<List<EpochInfo>> response = (Response) execute(call);
             return processResponse(response);
@@ -55,12 +55,12 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
-    public Result<List<EpochParams>> getEpochParameters(Long epochNo) throws ApiException {
+    public Result<EpochParams> getEpochParametersByEpoch(Long epochNo) throws ApiException {
         validateEpoch(epochNo);
-        Call<List<EpochParams>> call = epochApi.getEpochParameters(epochNo);
+        Call<List<EpochParams>> call = epochApi.getEpochParametersByEpoch(epochNo);
         try {
             Response<List<EpochParams>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
@@ -68,7 +68,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<List<EpochParams>> getEpochParameters(Options options) throws ApiException {
-        Call<List<EpochParams>> call = epochApi.getEpochParameters(options.toMap());
+        Call<List<EpochParams>> call = epochApi.getEpochParameters(optionsToParamMap(options));
         try {
             Response<List<EpochParams>> response = (Response) execute(call);
             return processResponse(response);

@@ -41,7 +41,7 @@ class PoolServiceMainnetIntegrationTest {
     @Test
     void getPoolInformationTest() throws ApiException {
         String poolId = "pool100wj94uzf54vup2hdzk0afng4dhjaqggt7j434mtgm8v2gfvfgp";
-        Result<List<PoolInfo>> poolInfosResult = poolService.getPoolInformation(List.of(poolId));
+        Result<List<PoolInfo>> poolInfosResult = poolService.getPoolInformation(List.of(poolId), null);
         Assertions.assertTrue(poolInfosResult.isSuccessful());
         Assertions.assertNotNull(poolInfosResult.getValue());
         log.info(poolInfosResult.getValue().toString());
@@ -50,14 +50,14 @@ class PoolServiceMainnetIntegrationTest {
     @Test
     void getPoolInformationBadRequestTest() {
         String poolId = "asdsa";
-        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolInformation(List.of(poolId)));
+        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolInformation(List.of(poolId), null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getPoolDelegatorsListTest() throws ApiException {
         String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
-        Result<List<PoolDelegator>> poolDelegatorsResult = poolService.getPoolDelegatorsList(poolBech32, 180L);
+        Result<List<PoolDelegator>> poolDelegatorsResult = poolService.getPoolDelegatorsListByEpoch(poolBech32, 180L, null);
         Assertions.assertTrue(poolDelegatorsResult.isSuccessful());
         Assertions.assertNotNull(poolDelegatorsResult.getValue());
         log.info(poolDelegatorsResult.getValue().toString());
@@ -77,14 +77,14 @@ class PoolServiceMainnetIntegrationTest {
     @Test
     void getPoolDelegatorsListBadRequestTest() {
         String poolBech32 = "123asd";
-        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolDelegatorsList(poolBech32, 180L));
+        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolDelegatorsListByEpoch(poolBech32, 180L, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getPoolBlocksTest() throws ApiException {
         String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
-        Result<List<PoolBlock>> poolBlocksResult = poolService.getPoolBlocks(poolBech32, 180L);
+        Result<List<PoolBlock>> poolBlocksResult = poolService.getPoolBlocksByEpoch(poolBech32, 180L, null);
         Assertions.assertTrue(poolBlocksResult.isSuccessful());
         Assertions.assertNotNull(poolBlocksResult.getValue());
         log.info(poolBlocksResult.getValue().toString());
@@ -104,14 +104,14 @@ class PoolServiceMainnetIntegrationTest {
     @Test
     void getPoolBlocksBadRequestTest() {
         String poolBech32 = "123asd";
-        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolBlocks(poolBech32, 180L));
+        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolBlocksByEpoch(poolBech32, 180L, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getPoolUpdatesTest() throws ApiException {
         String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
-        Result<List<PoolUpdate>> poolUpdatesResult = poolService.getPoolUpdates(poolBech32);
+        Result<List<PoolUpdate>> poolUpdatesResult = poolService.getPoolUpdatesByPoolBech32(poolBech32, null);
         Assertions.assertTrue(poolUpdatesResult.isSuccessful());
         Assertions.assertNotNull(poolUpdatesResult.getValue());
         log.info(poolUpdatesResult.getValue().toString());
@@ -130,7 +130,7 @@ class PoolServiceMainnetIntegrationTest {
     @Test
     void getPoolUpdatesBadRequestTest() {
         String poolBech32 = "123asd";
-        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolUpdates(poolBech32));
+        ApiException exception = assertThrows(ApiException.class, () -> poolService.getPoolUpdatesByPoolBech32(poolBech32, null));
         assertInstanceOf(ApiException.class, exception);
     }
 

@@ -31,11 +31,11 @@ class EpochServiceMainnetIntegrationTest {
     @Test
     void getEpochInformationTest() throws ApiException {
         Long epochNo = 294L;
-        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(epochNo);
+        Result<EpochInfo> epochInformationResult = epochService.getEpochInformationByEpoch(epochNo);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
-        Assertions.assertEquals(epochNo, epochInformationResult.getValue().get(0).getEpochNo());
+        Assertions.assertEquals(epochNo, epochInformationResult.getValue().getEpochNo());
     }
 
     @Test
@@ -51,11 +51,11 @@ class EpochServiceMainnetIntegrationTest {
     @Test
     void getEpochParametersTest() throws ApiException {
         Long epochNo = 294L;
-        Result<List<EpochParams>> epochParametersResult = epochService.getEpochParameters(epochNo);
+        Result<EpochParams> epochParametersResult = epochService.getEpochParametersByEpoch(epochNo);
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());
         log.info(epochParametersResult.getValue().toString());
-        Assertions.assertEquals(epochNo, epochParametersResult.getValue().get(0).getEpochNo());
+        Assertions.assertEquals(epochNo, epochParametersResult.getValue().getEpochNo());
     }
 
     @Test

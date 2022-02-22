@@ -41,7 +41,7 @@ class ScriptServiceTestnetIntegrationTest {
     @Test
     void getScriptRedeemersTest() throws ApiException {
         String scriptHash = "0cc40ebefcdd1a32dc96ec4b548075779c28f6842b487d56bf54fd29";
-        Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash);
+        Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, null);
         Assertions.assertTrue(scriptRedeemersResult.isSuccessful());
         Assertions.assertNotNull(scriptRedeemersResult.getValue());
         log.info(scriptRedeemersResult.getValue().toString());
@@ -50,7 +50,7 @@ class ScriptServiceTestnetIntegrationTest {
     @Test
     void getScriptRedeemersBadRequestTest() {
         String scriptHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> scriptService.getScriptRedeemers(scriptHash));
+        ApiException exception = assertThrows(ApiException.class, () -> scriptService.getScriptRedeemers(scriptHash, null));
         assertInstanceOf(ApiException.class, exception);
     }
 }

@@ -21,20 +21,20 @@ public interface AccountApi {
     Call<List<AccountInfo>> getAccountInformation(@Query("_address") String address);
 
     @GET("account_rewards")
-    Call<List<AccountRewards>> getAccountRewards(@Query("_stake_address") String stakeAddress, @Query("_epoch_no") Long epochNo);
+    Call<List<AccountRewards>> getAccountRewardsByEpoch(@Query("_stake_address") String stakeAddress, @Query("_epoch_no") Long epochNo);
 
     @GET("account_rewards")
     Call<List<AccountRewards>> getAccountRewards(@Query("_stake_address") String stakeAddress, @QueryMap Map<String, String> paramsMap);
 
     @GET("account_updates")
-    Call<List<AccountUpdates>> getAccountUpdates(@Query("_stake_address") String stakeAddress);
+    Call<List<AccountUpdates>> getAccountUpdates(@Query("_stake_address") String stakeAddress, @QueryMap Map<String, String> paramsMap);
 
     @GET("account_addresses")
-    Call<List<AccountAddress>> getAccountAddresses(@Query("_address") String address);
+    Call<List<AccountAddress>> getAccountAddresses(@Query("_address") String address, @QueryMap Map<String, String> paramsMap);
 
     @GET("account_assets")
-    Call<List<AccountAsset>> getAccountAssets(@Query("_address") String address);
+    Call<List<AccountAsset>> getAccountAssets(@Query("_address") String address, @QueryMap Map<String, String> paramsMap);
 
     @GET("account_history")
-    Call<List<AccountHistory>> getAccountHistory(@Query("_address") String address);
+    Call<List<AccountHistory>> getAccountHistory(@Query("_address") String address, @QueryMap Map<String, String> paramsMap);
 }

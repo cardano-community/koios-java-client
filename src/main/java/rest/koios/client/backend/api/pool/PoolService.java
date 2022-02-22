@@ -13,7 +13,7 @@ import java.util.List;
 public interface PoolService {
 
     /**
-     * Pool List
+     * Pool List with Filtering, Pagination, Ordering Options
      * A list of all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Array of pool IDs and tickers
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -26,89 +26,93 @@ public interface PoolService {
     Result<List<Pool>> getPoolList(Options options) throws ApiException;
 
     /**
-     * Pool Information
+     * Pool Information with Filtering, Pagination, Ordering Options
      * Current pool statuses and details for a specified list of pool ids
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolIds List of Cardano pool IDs (bech32 format)
+     * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolInfo}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolInfo>> getPoolInformation(List<String> poolIds) throws ApiException;
+    Result<List<PoolInfo>> getPoolInformation(List<String> poolIds, Options options) throws ApiException;
 
     /**
-     * Pool Delegators List
-     * Return information about delegators by a given pool and optional epoch (current if omitted)
+     * Pool Delegators List By Epoch with Filtering, Pagination, Ordering Options
+     * Return information about delegators by a given pool and epoch
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for
+     * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolDelegator}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException;
+    Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
 
     /**
-     * Pool Delegators List
-     * Return information about delegators by a given pool and optional epoch (current if omitted)
+     * Pool Delegators List for Current Epoch with Filtering, Pagination, Ordering Options
+     * Return information about delegators by a given pool
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
-     * @param options Filtering and Pagination options (optional)
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolDelegator}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Options options) throws ApiException;
 
     /**
-     * Pool Blocks
-     * Return information about blocks minted by a given pool in current epoch (or _epoch_no if provided)
+     * Pool Blocks By Epoch with Filtering, Pagination, Ordering Options
+     * Return information about blocks minted by a given pool in a specific epoch
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolBlock}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Long epochNo) throws ApiException;
+    Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
 
     /**
-     * Pool Blocks
-     * Return information about blocks minted by a given pool in current epoch (or _epoch_no if provided)
+     * Pool Blocks in Current Epoch with Filtering, Pagination, Ordering Options
+     * Return information about blocks minted by a given pool in current epoch
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
-     * @param options Filtering and Pagination options (optional)
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolBlock}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Options options) throws ApiException;
 
     /**
-     * Pool Updates (History)
-     * Return all pool updates for all pools or only updates for specific pool if specified
+     * Pool Updates (History) for specific pool with Filtering, Pagination, Ordering Options
+     * Return all pool updates for specified pool
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolUpdate}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolUpdate>> getPoolUpdates(String poolBech32) throws ApiException;
+    Result<List<PoolUpdate>> getPoolUpdatesByPoolBech32(String poolBech32, Options options) throws ApiException;
 
     /**
-     * Pool Updates (History)
+     * Pool Updates (History) with Filtering, Pagination, Ordering Options
      * Return all pool updates for all pools or only updates for specific pool if specified
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -121,7 +125,7 @@ public interface PoolService {
     Result<List<PoolUpdate>> getPoolUpdates(Options options) throws ApiException;
 
     /**
-     * Pool Relays
+     * Pool Relays with Filtering, Pagination, Ordering Options
      * A list of registered relays for all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -134,7 +138,7 @@ public interface PoolService {
     Result<List<PoolRelay>> getPoolRelays(Options options) throws ApiException;
 
     /**
-     * Pool Metadata
+     * Pool Metadata with Filtering, Pagination, Ordering Options
      * Metadata(on &amp; off-chain) for all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint

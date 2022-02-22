@@ -11,7 +11,6 @@ import lombok.*;
 @Setter
 @ToString(callSuper=true)
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class BlockInfo extends Block {
 

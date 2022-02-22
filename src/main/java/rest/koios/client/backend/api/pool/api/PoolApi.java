@@ -16,22 +16,22 @@ public interface PoolApi {
     Call<List<Pool>> getPoolList(@QueryMap Map<String, String> paramsMap);
 
     @POST("pool_info")
-    Call<List<PoolInfo>> getPoolInformation(@Body Map<String, Object> requestBody);
+    Call<List<PoolInfo>> getPoolInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     @GET("pool_delegators")
-    Call<List<PoolDelegator>> getPoolDelegatorsList(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo);
+    Call<List<PoolDelegator>> getPoolDelegatorsListByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo, @QueryMap Map<String, String> paramsMap);
 
     @GET("pool_delegators")
     Call<List<PoolDelegator>> getPoolDelegatorsList(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
     @GET("pool_blocks")
-    Call<List<PoolBlock>> getPoolBlocks(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo);
+    Call<List<PoolBlock>> getPoolBlocksByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo, @QueryMap Map<String, String> paramsMap);
 
     @GET("pool_blocks")
     Call<List<PoolBlock>> getPoolBlocks(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
     @GET("pool_updates")
-    Call<List<PoolUpdate>> getPoolUpdates(@Query("_pool_bech32") String poolBech32);
+    Call<List<PoolUpdate>> getPoolUpdatesByPoolBech32(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
     @GET("pool_updates")
     Call<List<PoolUpdate>> getPoolUpdates(@QueryMap Map<String, String> paramsMap);

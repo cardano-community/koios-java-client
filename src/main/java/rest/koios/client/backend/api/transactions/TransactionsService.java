@@ -19,11 +19,12 @@ public interface TransactionsService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param txHashes (optional)
+     * @param txHashes List of Cardano Transaction hashes
+     * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxInfo>> getTransactionInformation(List<String> txHashes) throws ApiException;
+    Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, Options options) throws ApiException;
 
     /**
      * Transaction UTxOs
@@ -32,11 +33,12 @@ public interface TransactionsService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param txHashes (optional)
+     * @param txHashes List of Cardano Transaction hashes
+     * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link TxUtxo} inputs and outputs for given transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes) throws ApiException;
+    Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes, Options options) throws ApiException;
 
     /**
      * Transaction Metadata
@@ -45,15 +47,16 @@ public interface TransactionsService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param txHashes (optional)
+     * @param txHashes List of Cardano Transaction hashes
+     * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link TxMetadata} information present in each of the transactions queried
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxMetadata>> getTransactionMetadata(List<String> txHashes) throws ApiException;
+    Result<List<TxMetadata>> getTransactionMetadata(List<String> txHashes, Options options) throws ApiException;
 
     /**
-     * Transaction Metadata Labels
-     * Get a list of all transaction metalabels
+     * Transaction Metadata Labels with Filtering, Pagination, Ordering Options
+     * Get a list of all transaction metadata labels
      * <p><b>200</b> - Array of known metadata labels
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
@@ -83,9 +86,10 @@ public interface TransactionsService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param txHashes (optional)
+     * @param txHashes List of Cardano Transaction hashes
+     * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of transaction confirmation counts {@link TxStatus}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxStatus>> getTransactionStatus(List<String> txHashes) throws ApiException;
+    Result<List<TxStatus>> getTransactionStatus(List<String> txHashes, Options options) throws ApiException;
 }

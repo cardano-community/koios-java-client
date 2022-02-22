@@ -23,5 +23,5 @@ public interface BlockApi {
     Call<List<BlockInfo>> getBlockInformation(@Query("_block_hash") String blockHash);
 
     @GET("block_txs")
-    Call<List<TxHash>> getBlockTransactions(@Query("_block_hash") String blockHash);
+    Call<List<TxHash>> getBlockTransactions(@Query("_block_hash") String blockHash, @QueryMap Map<String, String> paramsMap);
 }

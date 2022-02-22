@@ -19,5 +19,5 @@ public interface ScriptApi {
     Call<List<Script>> getScriptList(@QueryMap Map<String, String> paramsMap);
 
     @GET("script_redeemers")
-    Call<List<ScriptRedeemer>> getScriptRedeemers(@Query("_script_hash") String scriptHash);
+    Call<List<ScriptRedeemer>> getScriptRedeemers(@Query("_script_hash") String scriptHash, @QueryMap Map<String, String> paramsMap);
 }

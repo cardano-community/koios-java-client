@@ -31,7 +31,7 @@ class AddressServiceMainnetIntegrationTest {
     @Test
     void getAddressInformationTest() throws ApiException {
         String address = "addr1qyp9kz50sh9c53hpmk3l4ewj9ur794t2hdqpngsjn3wkc5sztv9glpwt3frwrhdrltjaytc8ut2k4w6qrx3p98zad3fq07xe9g";
-        Result<List<AddressInfo>> addressInformationResult = addressService.getAddressInformation(address);
+        Result<AddressInfo> addressInformationResult = addressService.getAddressInformation(address);
         Assertions.assertTrue(addressInformationResult.isSuccessful());
         Assertions.assertNotNull(addressInformationResult.getValue());
         log.info(addressInformationResult.getValue().toString());
@@ -47,7 +47,7 @@ class AddressServiceMainnetIntegrationTest {
     @Test
     void getAddressTransactionsTest() throws ApiException {
         String address = "addr1qyp9kz50sh9c53hpmk3l4ewj9ur794t2hdqpngsjn3wkc5sztv9glpwt3frwrhdrltjaytc8ut2k4w6qrx3p98zad3fq07xe9g";
-        Result<List<TxHash>> txHashesResult = addressService.getAddressTransactions(List.of(address),250);
+        Result<List<TxHash>> txHashesResult = addressService.getAddressTransactions(List.of(address), 250, null);
         Assertions.assertTrue(txHashesResult.isSuccessful());
         Assertions.assertNotNull(txHashesResult.getValue());
         log.info(txHashesResult.getValue().toString());
@@ -56,18 +56,18 @@ class AddressServiceMainnetIntegrationTest {
     @Test
     void getAddressTransactionsBadRequestTest() {
         String badAddress = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(badAddress),250));
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(badAddress), 250, null));
         assertInstanceOf(ApiException.class, exception);
 
         String address = "addr1qyp9kz50sh9c53hpmk3l4ewj9ur794t2hdqpngsjn3wkc5sztv9glpwt3frwrhdrltjaytc8ut2k4w6qrx3p98zad3fq07xe9g";
-        exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(address),-5));
+        exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(address), -5, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAddressAssetsTest() throws ApiException {
         String address = "addr1qyp9kz50sh9c53hpmk3l4ewj9ur794t2hdqpngsjn3wkc5sztv9glpwt3frwrhdrltjaytc8ut2k4w6qrx3p98zad3fq07xe9g";
-        Result<List<AssetInfo>> assetInfosResult = addressService.getAddressAssets(address);
+        Result<List<AssetInfo>> assetInfosResult = addressService.getAddressAssets(address, null);
         Assertions.assertTrue(assetInfosResult.isSuccessful());
         Assertions.assertNotNull(assetInfosResult.getValue());
         log.info(assetInfosResult.getValue().toString());
@@ -76,14 +76,14 @@ class AddressServiceMainnetIntegrationTest {
     @Test
     void getAddressAssetsBadRequestTest() {
         String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressAssets(address));
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressAssets(address, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getTransactionsByPaymentCredentialsTest() throws ApiException {
         String paymentCredentials = "025b0a8f85cb8a46e1dda3fae5d22f07e2d56abb4019a2129c5d6c52";
-        Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),250);
+        Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials), 250, null);
         Assertions.assertTrue(txHashesResult.isSuccessful());
         Assertions.assertNotNull(txHashesResult.getValue());
         log.info(txHashesResult.getValue().toString());
@@ -92,11 +92,11 @@ class AddressServiceMainnetIntegrationTest {
     @Test
     void getTransactionsByPaymentCredentialsBadRequestTest() {
         String badPaymentCredentials = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(badPaymentCredentials),250));
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(badPaymentCredentials), 250, null));
         assertInstanceOf(ApiException.class, exception);
 
         String paymentCredentials = "025b0a8f85cb8a46e1dda3fae5d22f07e2d56abb4019a2129c5d6c52";
-        exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),-5));
+        exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials), -5, null));
         assertInstanceOf(ApiException.class, exception);
     }
 }

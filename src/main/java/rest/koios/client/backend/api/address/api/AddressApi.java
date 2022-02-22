@@ -4,10 +4,7 @@ import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.address.model.AssetInfo;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 
 import java.util.List;
 import java.util.Map;
@@ -21,11 +18,11 @@ public interface AddressApi {
     Call<List<AddressInfo>> getAddressInformation(@Query("_address") String address);
 
     @POST("address_txs")
-    Call<List<TxHash>> getAddressTransactions(@Body Map<String, Object> requestBody);
+    Call<List<TxHash>> getAddressTransactions(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     @GET("address_assets")
-    Call<List<AssetInfo>> getAddressAssets(@Query("_address") String address);
+    Call<List<AssetInfo>> getAddressAssets(@Query("_address") String address, @QueryMap Map<String, String> paramsMap);
 
     @POST("credential_txs")
-    Call<List<TxHash>> getTransactionsByPaymentCredentials(@Body Map<String, Object> requestBody);
+    Call<List<TxHash>> getTransactionsByPaymentCredentials(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 }

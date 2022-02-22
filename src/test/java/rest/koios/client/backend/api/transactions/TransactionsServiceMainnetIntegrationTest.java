@@ -30,7 +30,7 @@ class TransactionsServiceMainnetIntegrationTest {
     @Test
     void getTransactionInformationTest() throws ApiException {
         String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
-        Result<List<TxInfo>> transactionInformationResult = transactionsService.getTransactionInformation(List.of(txHash));
+        Result<List<TxInfo>> transactionInformationResult = transactionsService.getTransactionInformation(List.of(txHash), null);
         Assertions.assertTrue(transactionInformationResult.isSuccessful());
         Assertions.assertNotNull(transactionInformationResult.getValue());
         log.info(transactionInformationResult.getValue().toString());
@@ -39,14 +39,14 @@ class TransactionsServiceMainnetIntegrationTest {
     @Test
     void getTransactionInformationBadRequestTest() {
         String txHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionInformation(List.of(txHash)));
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionInformation(List.of(txHash), null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getTransactionUTxOsTest() throws ApiException {
         String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
-        Result<List<TxUtxo>> transactionUTxOsResult = transactionsService.getTransactionUTxOs(List.of(txHash));
+        Result<List<TxUtxo>> transactionUTxOsResult = transactionsService.getTransactionUTxOs(List.of(txHash), null);
         Assertions.assertTrue(transactionUTxOsResult.isSuccessful());
         Assertions.assertNotNull(transactionUTxOsResult.getValue());
         log.info(transactionUTxOsResult.getValue().toString());
@@ -55,14 +55,14 @@ class TransactionsServiceMainnetIntegrationTest {
     @Test
     void getTransactionUTxOsBadRequestTest() {
         String txHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionUTxOs(List.of(txHash)));
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionUTxOs(List.of(txHash), null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getTransactionMetadataTest() throws ApiException {
         String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
-        Result<List<TxMetadata>> transactionMetadataResult = transactionsService.getTransactionMetadata(List.of(txHash));
+        Result<List<TxMetadata>> transactionMetadataResult = transactionsService.getTransactionMetadata(List.of(txHash), null);
         Assertions.assertTrue(transactionMetadataResult.isSuccessful());
         Assertions.assertNotNull(transactionMetadataResult.getValue());
         log.info(transactionMetadataResult.getValue().toString());
@@ -71,7 +71,7 @@ class TransactionsServiceMainnetIntegrationTest {
     @Test
     void getTransactionMetadataBadRequestTest() {
         String txHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionMetadata(List.of(txHash)));
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionMetadata(List.of(txHash), null));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -95,7 +95,7 @@ class TransactionsServiceMainnetIntegrationTest {
     @Test
     void getTransactionStatusTest() throws ApiException {
         String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
-        Result<List<TxStatus>> transactionStatusResult = transactionsService.getTransactionStatus(List.of(txHash));
+        Result<List<TxStatus>> transactionStatusResult = transactionsService.getTransactionStatus(List.of(txHash), null);
         Assertions.assertTrue(transactionStatusResult.isSuccessful());
         Assertions.assertNotNull(transactionStatusResult.getValue());
         log.info(transactionStatusResult.getValue().toString());
@@ -104,7 +104,7 @@ class TransactionsServiceMainnetIntegrationTest {
     @Test
     void getTransactionStatusBadRequestTest() {
         String txHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionMetadata(List.of(txHash)));
+        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionMetadata(List.of(txHash), null));
         assertInstanceOf(ApiException.class, exception);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 public interface AssetService {
 
     /**
-     * Asset List
+     * Asset List with Filtering, Pagination, Ordering Options
      * Get the list of all native assets (paginated)
      * <p><b>200</b> - Array of policy IDs and asset names
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -26,7 +26,7 @@ public interface AssetService {
     Result<List<Asset>> getAssetList(Options options) throws ApiException;
 
     /**
-     * Assets Address List
+     * Assets Address List with Filtering, Pagination, Ordering Options
      * Get a list of all addresses for a given asset
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -34,13 +34,14 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AssetAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName, Options options) throws ApiException;
 
     /**
-     * Asset History
+     * Asset History with Filtering, Pagination, Ordering Options
      * Get the mint/burn history of an asset
      * <p><b>200</b> - Array of asset mint/burn history
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -48,10 +49,11 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AssetHistory}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetHistory>> getAssetHistory(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetHistory>> getAssetHistory(String assetPolicy, String assetName, Options options) throws ApiException;
 
     /**
      * Asset Policy Information
@@ -64,7 +66,7 @@ public interface AssetService {
      * @return Result of Type List of {@link AssetPolicyInfo}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetPolicyInfo>> getAssetPolicyInformation(String assetPolicy) throws ApiException;
+    Result<AssetPolicyInfo> getAssetPolicyInformation(String assetPolicy) throws ApiException;
 
     /**
      * Asset Information
@@ -78,7 +80,7 @@ public interface AssetService {
      * @return Result of Type List of {@link AssetInformation}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetInformation>> getAssetInformation(String assetPolicy, String assetName) throws ApiException;
+    Result<AssetInformation> getAssetInformation(String assetPolicy, String assetName) throws ApiException;
 
     /**
      * Asset Summary
@@ -92,10 +94,10 @@ public interface AssetService {
      * @return Result of Type List of {@link AssetSummary}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetSummary>> getAssetSummary(String assetPolicy, String assetName) throws ApiException;
+    Result<AssetSummary> getAssetSummary(String assetPolicy, String assetName) throws ApiException;
 
     /**
-     * Asset Transaction History
+     * Asset Transaction History with Filtering, Pagination, Ordering Options
      * Get the list of all asset transaction hashes (newest first)
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -103,8 +105,9 @@ public interface AssetService {
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
+     * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AssetTx}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName) throws ApiException;
+    Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException;
 }

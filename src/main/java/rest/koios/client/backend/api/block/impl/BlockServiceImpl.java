@@ -34,7 +34,7 @@ public class BlockServiceImpl extends BaseService implements BlockService {
 
     @Override
     public Result<List<Block>> getBlockList(Options options) throws ApiException {
-        Call<List<Block>> call = blockApi.getBlockList(options.toMap());
+        Call<List<Block>> call = blockApi.getBlockList(optionsToParamMap(options));
         try {
             Response<List<Block>> response = (Response) execute(call);
             return processResponse(response);
@@ -44,21 +44,21 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public Result<List<BlockInfo>> getBlockInformation(String blockHash) throws ApiException {
+    public Result<BlockInfo> getBlockInformation(String blockHash) throws ApiException {
         validateHexFormat(blockHash);
         Call<List<BlockInfo>> call = blockApi.getBlockInformation(blockHash);
         try {
             Response<List<BlockInfo>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<TxHash>> getBlockTransactions(String blockHash) throws ApiException {
+    public Result<List<TxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException {
         validateHexFormat(blockHash);
-        Call<List<TxHash>> call = blockApi.getBlockTransactions(blockHash);
+        Call<List<TxHash>> call = blockApi.getBlockTransactions(blockHash, optionsToParamMap(options));
         try {
             Response<List<TxHash>> response = (Response) execute(call);
             return processResponse(response);

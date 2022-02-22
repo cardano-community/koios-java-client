@@ -34,7 +34,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
 
     @Override
     public Result<List<Pool>> getPoolList(Options options) throws ApiException {
-        Call<List<Pool>> call = poolApi.getPoolList(options.toMap());
+        Call<List<Pool>> call = poolApi.getPoolList(optionsToParamMap(options));
         try {
             Response<List<Pool>> response = (Response) execute(call);
             return processResponse(response);
@@ -44,11 +44,11 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolInfo>> getPoolInformation(List<String> poolIds) throws ApiException {
+    public Result<List<PoolInfo>> getPoolInformation(List<String> poolIds, Options options) throws ApiException {
         for (String poolId : poolIds) {
             validateBech32(poolId);
         }
-        Call<List<PoolInfo>> call = poolApi.getPoolInformation(buildBody(poolIds));
+        Call<List<PoolInfo>> call = poolApi.getPoolInformation(buildBody(poolIds), optionsToParamMap(options));
         try {
             Response<List<PoolInfo>> response = (Response) execute(call);
             return processResponse(response);
@@ -58,10 +58,10 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Long epochNo) throws ApiException {
+    public Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException {
         validateEpoch(epochNo);
         validateBech32(poolBech32);
-        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsList(poolBech32, epochNo);
+        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsListByEpoch(poolBech32, epochNo, optionsToParamMap(options));
         try {
             Response<List<PoolDelegator>> response = (Response) execute(call);
             return processResponse(response);
@@ -73,7 +73,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     @Override
     public Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
-        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsList(poolBech32, options.toMap());
+        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsList(poolBech32, optionsToParamMap(options));
         try {
             Response<List<PoolDelegator>> response = (Response) execute(call);
             return processResponse(response);
@@ -83,10 +83,10 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Long epochNo) throws ApiException {
+    public Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException {
         validateEpoch(epochNo);
         validateBech32(poolBech32);
-        Call<List<PoolBlock>> call = poolApi.getPoolBlocks(poolBech32, epochNo);
+        Call<List<PoolBlock>> call = poolApi.getPoolBlocksByEpoch(poolBech32, epochNo, optionsToParamMap(options));
         try {
             Response<List<PoolBlock>> response = (Response) execute(call);
             return processResponse(response);
@@ -98,7 +98,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     @Override
     public Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
-        Call<List<PoolBlock>> call = poolApi.getPoolBlocks(poolBech32, options.toMap());
+        Call<List<PoolBlock>> call = poolApi.getPoolBlocks(poolBech32, optionsToParamMap(options));
         try {
             Response<List<PoolBlock>> response = (Response) execute(call);
             return processResponse(response);
@@ -108,9 +108,9 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolUpdate>> getPoolUpdates(String poolBech32) throws ApiException {
+    public Result<List<PoolUpdate>> getPoolUpdatesByPoolBech32(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
-        Call<List<PoolUpdate>> call = poolApi.getPoolUpdates(poolBech32);
+        Call<List<PoolUpdate>> call = poolApi.getPoolUpdatesByPoolBech32(poolBech32, optionsToParamMap(options));
         try {
             Response<List<PoolUpdate>> response = (Response) execute(call);
             return processResponse(response);
@@ -121,7 +121,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
 
     @Override
     public Result<List<PoolUpdate>> getPoolUpdates(Options options) throws ApiException {
-        Call<List<PoolUpdate>> call = poolApi.getPoolUpdates(options.toMap());
+        Call<List<PoolUpdate>> call = poolApi.getPoolUpdates(optionsToParamMap(options));
         try {
             Response<List<PoolUpdate>> response = (Response) execute(call);
             return processResponse(response);
@@ -132,7 +132,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
 
     @Override
     public Result<List<PoolRelay>> getPoolRelays(Options options) throws ApiException {
-        Call<List<PoolRelay>> call = poolApi.getPoolRelays(options.toMap());
+        Call<List<PoolRelay>> call = poolApi.getPoolRelays(optionsToParamMap(options));
         try {
             Response<List<PoolRelay>> response = (Response) execute(call);
             return processResponse(response);
@@ -143,7 +143,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
 
     @Override
     public Result<List<PoolMetadata>> getPoolMetadata(Options options) throws ApiException {
-        Call<List<PoolMetadata>> call = poolApi.getPoolMetadata(options.toMap());
+        Call<List<PoolMetadata>> call = poolApi.getPoolMetadata(optionsToParamMap(options));
         try {
             Response<List<PoolMetadata>> response = (Response) execute(call);
             return processResponse(response);

@@ -12,6 +12,8 @@ import rest.koios.client.backend.api.epoch.model.EpochParams;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.Order;
+import rest.koios.client.backend.factory.options.SortType;
 
 import java.util.List;
 
@@ -31,11 +33,11 @@ class EpochServiceTestnetIntegrationTest {
     @Test
     void getEpochInformationTest() throws ApiException {
         Long epochNo = 180L;
-        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(epochNo);
+        Result<EpochInfo> epochInformationResult = epochService.getEpochInformationByEpoch(epochNo);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
-        Assertions.assertEquals(epochNo, epochInformationResult.getValue().get(0).getEpochNo());
+        Assertions.assertEquals(epochNo, epochInformationResult.getValue().getEpochNo());
     }
 
     @Test
@@ -49,13 +51,23 @@ class EpochServiceTestnetIntegrationTest {
     }
 
     @Test
+    void getLatestEpochInformationTest() throws ApiException {
+        Options options = Options.builder().option(Order.by("epoch_no", SortType.DESC)).option(Limit.of(1)).build();
+        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
+        Assertions.assertTrue(epochInformationResult.isSuccessful());
+        log.info(epochInformationResult.getValue().toString());
+        Assertions.assertNotNull(epochInformationResult.getValue());
+        assertEquals(1, epochInformationResult.getValue().size());
+    }
+
+    @Test
     void getEpochParametersTest() throws ApiException {
         Long epochNo = 180L;
-        Result<List<EpochParams>> epochParametersResult = epochService.getEpochParameters(epochNo);
+        Result<EpochParams> epochParametersResult = epochService.getEpochParametersByEpoch(epochNo);
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());
         log.info(epochParametersResult.getValue().toString());
-        Assertions.assertEquals(epochNo, epochParametersResult.getValue().get(0).getEpochNo());
+        Assertions.assertEquals(epochNo, epochParametersResult.getValue().getEpochNo());
     }
 
     @Test

@@ -32,7 +32,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
 
     @Override
     public Result<List<Asset>> getAssetList(Options options) throws ApiException {
-        Call<List<Asset>> call = assetApi.getAssetList(options.toMap());
+        Call<List<Asset>> call = assetApi.getAssetList(optionsToParamMap(options));
         try {
             Response<List<Asset>> response = (Response) execute(call);
             return processResponse(response);
@@ -42,10 +42,10 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName) throws ApiException {
+    public Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
-        Call<List<AssetAddress>> call = assetApi.getAssetsAddressList(assetPolicy, assetName);
+        Call<List<AssetAddress>> call = assetApi.getAssetsAddressList(assetPolicy, assetName, optionsToParamMap(options));
         try {
             Response<List<AssetAddress>> response = (Response) execute(call);
             return processResponse(response);
@@ -55,23 +55,23 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<AssetInformation>> getAssetInformation(String assetPolicy, String assetName) throws ApiException {
+    public Result<AssetInformation> getAssetInformation(String assetPolicy, String assetName) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<AssetInformation>> call = assetApi.getAssetInformation(assetPolicy, assetName);
         try {
             Response<List<AssetInformation>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<AssetHistory>> getAssetHistory(String assetPolicy, String assetName) throws ApiException {
+    public Result<List<AssetHistory>> getAssetHistory(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
-        Call<List<AssetHistory>> call = assetApi.getAssetHistory(assetPolicy, assetName);
+        Call<List<AssetHistory>> call = assetApi.getAssetHistory(assetPolicy, assetName, optionsToParamMap(options));
         try {
             Response<List<AssetHistory>> response = (Response) execute(call);
             return processResponse(response);
@@ -81,35 +81,35 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<AssetPolicyInfo>> getAssetPolicyInformation(String assetPolicy) throws ApiException {
+    public Result<AssetPolicyInfo> getAssetPolicyInformation(String assetPolicy) throws ApiException {
         validateHexFormat(assetPolicy);
         Call<List<AssetPolicyInfo>> call = assetApi.getAssetPolicyInformation(assetPolicy);
         try {
             Response<List<AssetPolicyInfo>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<AssetSummary>> getAssetSummary(String assetPolicy, String assetName) throws ApiException {
+    public Result<AssetSummary> getAssetSummary(String assetPolicy, String assetName) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<AssetSummary>> call = assetApi.getAssetSummary(assetPolicy, assetName);
         try {
             Response<List<AssetSummary>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName) throws ApiException {
+    public Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
-        Call<List<AssetTx>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName);
+        Call<List<AssetTx>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName, optionsToParamMap(options));
         try {
             Response<List<AssetTx>> response = (Response) execute(call);
             return processResponse(response);

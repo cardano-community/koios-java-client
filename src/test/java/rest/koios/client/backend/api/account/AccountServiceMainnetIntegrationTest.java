@@ -40,7 +40,7 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountInformationTest() throws ApiException {
         String address = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountInfo>> accountInformationResult = accountService.getAccountInformation(address);
+        Result<AccountInfo> accountInformationResult = accountService.getAccountInformation(address);
         Assertions.assertTrue(accountInformationResult.isSuccessful());
         Assertions.assertNotNull(accountInformationResult.getValue());
         log.info(accountInformationResult.getValue().toString());
@@ -55,10 +55,12 @@ class AccountServiceMainnetIntegrationTest {
 
     @Test
     void getAccountRewardsTest() throws ApiException {
+        Long epochNo = 294L;
         String stakeAddress = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountRewards>> accountRewardsResult = accountService.getAccountRewards(stakeAddress, 180L);
+        Result<AccountRewards> accountRewardsResult = accountService.getAccountRewardsByEpoch(stakeAddress, epochNo);
         Assertions.assertTrue(accountRewardsResult.isSuccessful());
         Assertions.assertNotNull(accountRewardsResult.getValue());
+        assertEquals(epochNo, accountRewardsResult.getValue().getEarnedEpoch());
         log.info(accountRewardsResult.getValue().toString());
     }
 
@@ -76,14 +78,14 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountRewardsBadRequestTest() {
         String stakeAddress = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountRewards(stakeAddress, 180L));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountRewardsByEpoch(stakeAddress, 294L));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAccountUpdatesTest() throws ApiException {
         String stakeAddress = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountUpdates>> accountUpdatesResult = accountService.getAccountUpdates(stakeAddress);
+        Result<List<AccountUpdates>> accountUpdatesResult = accountService.getAccountUpdates(stakeAddress, null);
         Assertions.assertTrue(accountUpdatesResult.isSuccessful());
         Assertions.assertNotNull(accountUpdatesResult.getValue());
         log.info(accountUpdatesResult.getValue().toString());
@@ -92,14 +94,14 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountUpdatesBadRequestTest() {
         String stakeAddress = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountUpdates(stakeAddress));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountUpdates(stakeAddress, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAccountAddressesTest() throws ApiException {
         String address = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(address);
+        Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(address, null);
         Assertions.assertTrue(accountAddressesResult.isSuccessful());
         Assertions.assertNotNull(accountAddressesResult.getValue());
         log.info(accountAddressesResult.getValue().toString());
@@ -108,14 +110,14 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountAddressesBadRequestTest() {
         String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAddresses(address));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAddresses(address, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAccountAssetsTest() throws ApiException {
         String address = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountAsset>> accountAssetsResult = accountService.getAccountAssets(address);
+        Result<List<AccountAsset>> accountAssetsResult = accountService.getAccountAssets(address, null);
         Assertions.assertTrue(accountAssetsResult.isSuccessful());
         Assertions.assertNotNull(accountAssetsResult.getValue());
         log.info(accountAssetsResult.getValue().toString());
@@ -124,14 +126,14 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountAssetsBadRequestTest() {
         String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAssets(address));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAssets(address, null));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAccountHistoryTest() throws ApiException {
         String address = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountHistory>> accountHistoryResult = accountService.getAccountHistory(address);
+        Result<List<AccountHistory>> accountHistoryResult = accountService.getAccountHistory(address, null);
         Assertions.assertTrue(accountHistoryResult.isSuccessful());
         Assertions.assertNotNull(accountHistoryResult.getValue());
         log.info(accountHistoryResult.getValue().toString());
@@ -140,7 +142,7 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountHistoryBadRequestTest() {
         String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountHistory(address));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountHistory(address, null));
         assertInstanceOf(ApiException.class, exception);
     }
 }

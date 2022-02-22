@@ -14,13 +14,13 @@ import java.util.Map;
 public interface TransactionApi {
 
     @POST("tx_info")
-    Call<List<TxInfo>> getTransactionInformation(@Body Map<String, Object> requestBody);
+    Call<List<TxInfo>> getTransactionInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     @POST("tx_utxos")
-    Call<List<TxUtxo>> getTransactionUTxOs(@Body Map<String, Object> requestBody);
+    Call<List<TxUtxo>> getTransactionUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     @POST("tx_metadata")
-    Call<List<TxMetadata>> getTransactionMetadata(@Body Map<String, Object> requestBody);
+    Call<List<TxMetadata>> getTransactionMetadata(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     @GET("tx_metalabels")
     Call<List<TxMetadataLabels>> getTransactionMetadataLabels(@QueryMap Map<String, String> paramsMap);
@@ -30,5 +30,5 @@ public interface TransactionApi {
     Call<String> submitTx(@Body RequestBody requestBody);
 
     @POST("tx_status")
-    Call<List<TxStatus>> getTransactionStatus(@Body Map<String, Object> requestBody);
+    Call<List<TxStatus>> getTransactionStatus(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 }

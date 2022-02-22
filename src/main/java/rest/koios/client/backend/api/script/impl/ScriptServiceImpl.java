@@ -33,7 +33,7 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
 
     @Override
     public Result<List<Script>> getScriptList(Options options) throws ApiException {
-        Call<List<Script>> call = scriptApi.getScriptList(options.toMap());
+        Call<List<Script>> call = scriptApi.getScriptList(optionsToParamMap(options));
         try {
             Response<List<Script>> response = (Response) execute(call);
             return processResponse(response);
@@ -43,9 +43,9 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     }
 
     @Override
-    public Result<List<ScriptRedeemer>> getScriptRedeemers(String scriptHash) throws ApiException {
+    public Result<List<ScriptRedeemer>> getScriptRedeemers(String scriptHash, Options options) throws ApiException {
         validateHexFormat(scriptHash);
-        Call<List<ScriptRedeemer>> call = scriptApi.getScriptRedeemers(scriptHash);
+        Call<List<ScriptRedeemer>> call = scriptApi.getScriptRedeemers(scriptHash, optionsToParamMap(options));
         try {
             Response<List<ScriptRedeemer>> response = (Response) execute(call);
             return processResponse(response);

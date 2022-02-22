@@ -33,34 +33,34 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     }
 
     @Override
-    public Result<List<Tip>> getChainTip() throws ApiException {
+    public Result<Tip> getChainTip() throws ApiException {
         Call<List<Tip>> call = networkApi.getChainTip();
         try {
             Response<List<Tip>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<Genesis>> getGenesisInfo() throws ApiException {
+    public Result<Genesis> getGenesisInfo() throws ApiException {
         Call<List<Genesis>> call = networkApi.getGenesisInfo();
         try {
             Response<List<Genesis>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<Totals>> getHistoricalTokenomicStats(Long epochNo) throws ApiException {
+    public Result<Totals> getHistoricalTokenomicStatsByEpoch(Long epochNo) throws ApiException {
         validateEpoch(epochNo);
-        Call<List<Totals>> call = networkApi.getHistoricalTokenomicStats(epochNo);
+        Call<List<Totals>> call = networkApi.getHistoricalTokenomicStatsByEpoch(epochNo);
         try {
             Response<List<Totals>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
@@ -68,7 +68,7 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
 
     @Override
     public Result<List<Totals>> getHistoricalTokenomicStats(Options options) throws ApiException {
-        Call<List<Totals>> call = networkApi.getHistoricalTokenomicStats(options.toMap());
+        Call<List<Totals>> call = networkApi.getHistoricalTokenomicStats(optionsToParamMap(options));
         try {
             Response<List<Totals>> response = (Response) execute(call);
             return processResponse(response);

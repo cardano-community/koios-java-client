@@ -8,6 +8,7 @@ import rest.koios.client.backend.api.address.model.AssetInfo;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -34,26 +35,31 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     }
 
     @Override
-    public Result<List<AddressInfo>> getAddressInformation(String address) throws ApiException {
+    public Result<AddressInfo> getAddressInformation(String address) throws ApiException {
         validateBech32(address);
         Call<List<AddressInfo>> call = addressApi.getAddressInformation(address);
         try {
             Response<List<AddressInfo>> response = (Response) execute(call);
-            return processResponse(response);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<TxHash>> getAddressTransactions(List<String> addressList, Integer afterBlockHeight) throws ApiException {
+    public Result<List<TxHash>> getAddressTransactions(List<String> addressList, Options options) throws ApiException {
+        return getAddressTransactions(addressList,0,options);
+    }
+
+    @Override
+    public Result<List<TxHash>> getAddressTransactions(List<String> addressList, Integer afterBlockHeight, Options options) throws ApiException {
         if (afterBlockHeight < 0) {
             throw new ApiException("Non Positive \"afterBlockHeight\" Value");
         }
         for (String address : addressList) {
             validateBech32(address);
         }
-        Call<List<TxHash>> call = addressApi.getAddressTransactions(buildBody("_addresses", addressList, afterBlockHeight));
+        Call<List<TxHash>> call = addressApi.getAddressTransactions(buildBody("_addresses", addressList, afterBlockHeight), optionsToParamMap(options));
         try {
             Response<List<TxHash>> response = (Response) execute(call);
             return processResponse(response);
@@ -63,9 +69,9 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     }
 
     @Override
-    public Result<List<AssetInfo>> getAddressAssets(String address) throws ApiException {
+    public Result<List<AssetInfo>> getAddressAssets(String address, Options options) throws ApiException {
         validateBech32(address);
-        Call<List<AssetInfo>> call = addressApi.getAddressAssets(address);
+        Call<List<AssetInfo>> call = addressApi.getAddressAssets(address, optionsToParamMap(options));
         try {
             Response<List<AssetInfo>> response = (Response) execute(call);
             return processResponse(response);
@@ -75,14 +81,19 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     }
 
     @Override
-    public Result<List<TxHash>> getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight) throws ApiException {
+    public Result<List<TxHash>> getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Options options) throws ApiException {
+        return getTransactionsByPaymentCredentials(paymentCredentialsList, 0, options);
+    }
+
+    @Override
+    public Result<List<TxHash>> getTransactionsByPaymentCredentials(List<String> paymentCredentialsList, Integer afterBlockHeight, Options options) throws ApiException {
         if (afterBlockHeight < 0) {
             throw new ApiException("Non Positive \"afterBlockHeight\" Value");
         }
         for (String paymentCredentials : paymentCredentialsList) {
             validateHexFormat(paymentCredentials);
         }
-        Call<List<TxHash>> call = addressApi.getTransactionsByPaymentCredentials(buildBody("_payment_credentials", paymentCredentialsList, afterBlockHeight));
+        Call<List<TxHash>> call = addressApi.getTransactionsByPaymentCredentials(buildBody("_payment_credentials", paymentCredentialsList, afterBlockHeight), optionsToParamMap(options));
         try {
             Response<List<TxHash>> response = (Response) execute(call);
             return processResponse(response);

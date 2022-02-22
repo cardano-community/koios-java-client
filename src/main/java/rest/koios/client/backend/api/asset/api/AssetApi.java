@@ -18,13 +18,13 @@ public interface AssetApi {
     Call<List<Asset>> getAssetList(@QueryMap Map<String, String> paramsMap);
 
     @GET("asset_address_list")
-    Call<List<AssetAddress>> getAssetsAddressList(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
+    Call<List<AssetAddress>> getAssetsAddressList(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 
     @GET("asset_info")
     Call<List<AssetInformation>> getAssetInformation(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
 
     @GET("asset_history")
-    Call<List<AssetHistory>> getAssetHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
+    Call<List<AssetHistory>> getAssetHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 
     @GET("asset_policy_info")
     Call<List<AssetPolicyInfo>> getAssetPolicyInformation(@Query("_asset_policy") String assetPolicy);
@@ -33,5 +33,5 @@ public interface AssetApi {
     Call<List<AssetSummary>> getAssetSummary(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
 
     @GET("asset_txs")
-    Call<List<AssetTx>> getAssetTransactionHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
+    Call<List<AssetTx>> getAssetTransactionHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 }

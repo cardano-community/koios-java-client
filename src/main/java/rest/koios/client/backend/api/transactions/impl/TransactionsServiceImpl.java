@@ -35,11 +35,11 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public Result<List<TxInfo>> getTransactionInformation(List<String> txHashes) throws ApiException {
+    public Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, Options options) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
-        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildBody(txHashes));
+        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildBody(txHashes), optionsToParamMap(options));
         try {
             Response<List<TxInfo>> response = (Response) execute(call);
             return processResponse(response);
@@ -49,11 +49,11 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes) throws ApiException {
+    public Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes, Options options) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
-        Call<List<TxUtxo>> call = transactionApi.getTransactionUTxOs(buildBody(txHashes));
+        Call<List<TxUtxo>> call = transactionApi.getTransactionUTxOs(buildBody(txHashes), optionsToParamMap(options));
         try {
             Response<List<TxUtxo>> response = (Response) execute(call);
             return processResponse(response);
@@ -63,11 +63,11 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public Result<List<TxMetadata>> getTransactionMetadata(List<String> txHashes) throws ApiException {
+    public Result<List<TxMetadata>> getTransactionMetadata(List<String> txHashes, Options options) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
-        Call<List<TxMetadata>> call = transactionApi.getTransactionMetadata(buildBody(txHashes));
+        Call<List<TxMetadata>> call = transactionApi.getTransactionMetadata(buildBody(txHashes), optionsToParamMap(options));
         try {
             Response<List<TxMetadata>> response = (Response) execute(call);
             return processResponse(response);
@@ -78,7 +78,7 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
 
     @Override
     public Result<List<TxMetadataLabels>> getTransactionMetadataLabels(Options options) throws ApiException {
-        Call<List<TxMetadataLabels>> call = transactionApi.getTransactionMetadataLabels(options.toMap());
+        Call<List<TxMetadataLabels>> call = transactionApi.getTransactionMetadataLabels(optionsToParamMap(options));
         try {
             Response<List<TxMetadataLabels>> response = (Response) execute(call);
             return processResponse(response);
@@ -100,11 +100,11 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public Result<List<TxStatus>> getTransactionStatus(List<String> txHashes) throws ApiException {
+    public Result<List<TxStatus>> getTransactionStatus(List<String> txHashes, Options options) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
-        Call<List<TxStatus>> call = transactionApi.getTransactionStatus(buildBody(txHashes));
+        Call<List<TxStatus>> call = transactionApi.getTransactionStatus(buildBody(txHashes), optionsToParamMap(options));
         try {
             Response<List<TxStatus>> response = (Response) execute(call);
             return processResponse(response);

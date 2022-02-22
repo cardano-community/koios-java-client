@@ -1,14 +1,14 @@
 package rest.koios.client.backend.api.base;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.ToString;
 
 /**
  * Result Object Of type T
  * @param <T> Result Type
  */
-@Data
+@Getter
 @Builder
 @ToString
 public class Result<T> {

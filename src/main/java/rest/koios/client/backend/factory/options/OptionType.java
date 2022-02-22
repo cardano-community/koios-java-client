@@ -18,8 +18,7 @@ public enum OptionType {
      */
     LIMIT,
     /**
-     * ORDERING OPTION TYPE
+     * ORDER OPTION TYPE
      */
-    ORDERING
-
+    ORDER
 }
