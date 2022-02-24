@@ -32,6 +32,14 @@ class BlockServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getLatestBlockTest() throws ApiException {
+        Result<Block> blockResult = blockService.getLatestBlock();
+        Assertions.assertTrue(blockResult.isSuccessful());
+        Assertions.assertNotNull(blockResult.getValue());
+        log.info(blockResult.getValue().toString());
+    }
+
+    @Test
     void getBlockListLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<Block>> blockListResult = blockService.getBlockList(options);
@@ -39,12 +47,6 @@ class BlockServiceMainnetIntegrationTest {
         log.info(blockListResult.getValue().toString());
         Assertions.assertNotNull(blockListResult.getValue());
         assertEquals(10, blockListResult.getValue().size());
-
-        Result<Block> blockResult = blockService.getLatestBlock();
-        Assertions.assertTrue(blockResult.isSuccessful());
-        Assertions.assertNotNull(blockResult.getValue());
-
-        assertEquals(blockListResult.getValue().get(0), blockResult.getValue());
     }
 
     @Test
