@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 /**
  * withdrawals within a transaction
  */
@@ -27,5 +25,5 @@ public class TxWithdrawal {
     /**
      * List of withdrawals with-in a transaction (if any)
      */
-    private List<String> stakeAddr;
+    private String stakeAddr;
 }

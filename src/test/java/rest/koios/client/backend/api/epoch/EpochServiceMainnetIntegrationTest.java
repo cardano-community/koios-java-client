@@ -39,6 +39,14 @@ class EpochServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getLatestEpochInformationTest() throws ApiException {
+        Result<EpochInfo> epochInformationResult = epochService.getLatestEpochInfo();
+        Assertions.assertTrue(epochInformationResult.isSuccessful());
+        Assertions.assertNotNull(epochInformationResult.getValue());
+        log.info(epochInformationResult.getValue().toString());
+    }
+
+    @Test
     void getEpochInformationLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
@@ -46,12 +54,6 @@ class EpochServiceMainnetIntegrationTest {
         log.info(epochInformationResult.getValue().toString());
         Assertions.assertNotNull(epochInformationResult.getValue());
         assertEquals(10, epochInformationResult.getValue().size());
-
-        Result<EpochInfo> epochInformationResult2 = epochService.getLatestEpochInfo();
-        Assertions.assertTrue(epochInformationResult2.isSuccessful());
-        Assertions.assertNotNull(epochInformationResult2.getValue());
-
-        assertEquals(epochInformationResult.getValue().get(0), epochInformationResult2.getValue());
     }
 
     @Test
@@ -65,18 +67,20 @@ class EpochServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getLatestEpochParametersTest() throws ApiException {
+        Result<EpochParams> epochParametersResult = epochService.getLatestEpochParameters();
+        Assertions.assertTrue(epochParametersResult.isSuccessful());
+        Assertions.assertNotNull(epochParametersResult.getValue());
+        log.info(epochParametersResult.getValue().toString());
+    }
+
+    @Test
     void getEpochParametersLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<EpochParams>> epochParametersResult = epochService.getEpochParameters(options);
         Assertions.assertTrue(epochParametersResult.isSuccessful());
-        log.info(epochParametersResult.getValue().toString());
         Assertions.assertNotNull(epochParametersResult.getValue());
+        log.info(epochParametersResult.getValue().toString());
         assertEquals(10, epochParametersResult.getValue().size());
-
-        Result<EpochParams> epochParametersResult2 = epochService.getLatestEpochParameters();
-        Assertions.assertTrue(epochParametersResult2.isSuccessful());
-        Assertions.assertNotNull(epochParametersResult2.getValue());
-
-        assertEquals(epochParametersResult.getValue().get(0), epochParametersResult2.getValue());
     }
 }

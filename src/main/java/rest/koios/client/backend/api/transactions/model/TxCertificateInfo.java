@@ -8,27 +8,27 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Certificates present within a transaction
+ * Certificate Info
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class TxCertificate {
+public class TxCertificateInfo {
 
     /**
-     * Certificate index
+     * Cardano staking address in bech32 format
      */
-    private Integer index;
+    private String stakeAddress;
 
     /**
-     * Type of certificate (could be delegation, stake_registration, stake_deregistraion, pool_update, pool_retire, param_proposal, reserve_MIR, treasury_MIR)
+     * Cardano pool ID in bech32 format
      */
-    private String type;
+    private String poolIdBech32;
 
     /**
-     * A JSON array containing information from the certificate
+     * Pool ID (Hex format)
      */
-    private TxCertificateInfo info;
+    private String poolIdHex;
 }
