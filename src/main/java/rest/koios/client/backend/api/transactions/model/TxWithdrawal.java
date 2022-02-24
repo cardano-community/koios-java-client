@@ -27,5 +27,5 @@ public class TxWithdrawal {
     /**
      * List of withdrawals with-in a transaction (if any)
      */
-    private List<WithdrawalStakeAddr> withdrawals;
+    private List<String> stakeAddr;
 }
