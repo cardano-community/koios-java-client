@@ -13,6 +13,19 @@ import java.util.List;
 public interface TransactionsService {
 
     /**
+     * Transaction Information for Specific Transaction
+     * Get detailed information about transaction
+     * <p><b>200</b> - detailed information about a transaction
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param txHash Cardano Transaction hash
+     * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<TxInfo> getTransactionInformation(String txHash) throws ApiException;
+
+    /**
      * Transaction Information
      * Get detailed information about transaction(s)
      * <p><b>200</b> - Array of detailed information about transaction(s)

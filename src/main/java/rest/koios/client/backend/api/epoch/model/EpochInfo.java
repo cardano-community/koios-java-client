@@ -7,8 +7,7 @@ import lombok.*;
 /**
  * Epoch Information
  */
-@Getter
-@Setter
+@Data
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)

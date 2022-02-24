@@ -27,7 +27,11 @@ public class Limit extends Option {
      * @return new Limit Option Object
      */
     public static Limit of(long limit) {
-        return new Limit(limit);
+        if (limit >= 0) {
+            return new Limit(limit);
+        } else {
+            throw new IllegalStateException("Can only Limit by a positive Value");
+        }
     }
 
     @Override

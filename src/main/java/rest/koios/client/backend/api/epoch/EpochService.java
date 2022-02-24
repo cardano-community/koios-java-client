@@ -14,6 +14,18 @@ import java.util.List;
 public interface EpochService {
 
     /**
+     * Latest Epoch Information
+     * Get the epoch information
+     * <p><b>200</b> - Array of detailed summary for each epoch
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @return Result of {@link EpochInfo} detailed summary
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<EpochInfo> getLatestEpochInfo() throws ApiException;
+
+    /**
      * Epoch Information by Specific Epoch
      * Get the epoch information
      * <p><b>200</b> - Array of detailed summary for each epoch
@@ -38,6 +50,18 @@ public interface EpochService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<EpochInfo>> getEpochInformation(Options options) throws ApiException;
+
+    /**
+     * Latest Epoch's Protocol Parameters
+     * Get the protocol parameters for latest epoch
+     * <p><b>200</b> - protocol parameters for latest epoch
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @return Result of {@link EpochParams} protocol parameters
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<EpochParams> getLatestEpochParameters() throws ApiException;
 
     /**
      * Epoch's Protocol Parameters by specific Epoch

@@ -2,7 +2,10 @@ package rest.koios.client.backend.api.transactions.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -64,12 +67,12 @@ public class TxInfo {
     /**
      * Total sum of all transaction outputs (in lovelaces)
      */
-    private Integer totalOutput = null;
+    private String totalOutput = null;
 
     /**
      * Total Transaction fee (in lovelaces)
      */
-    private Integer fee = null;
+    private Long fee = null;
 
     /**
      * Total Deposits included in transaction (for example, if it is registering a pool/key)
@@ -89,35 +92,35 @@ public class TxInfo {
     /**
      * An array of collateral inputs needed when dealing with smart contracts (same json schema as inputs)
      */
-    private List<Object> collaterals = null;
+    private List<TxIO> collaterals = null;
 
     /**
      * An array with details about inputs used in a transaction
      */
-    private List<Object> inputs = null;
+    private List<TxIO> inputs = null;
 
     /**
      * An array with details about outputs from the transaction
      */
-    private List<Object> outputs = null;
+    private List<TxIO> outputs = null;
 
     /**
      * Array of withdrawals with-in a transaction (if any)
      */
-    private List<Object> withdrawals = null;
+    private List<TxWithdrawal> withdrawals = null;
 
     /**
      * Array of minted assets with-in a transaction (if any)
      */
-    private List<Object> assetsMinted = null;
+    private List<TxAsset> assetsMinted = null;
 
     /**
      * Metadata present with-in a transaction (if any)
      */
-    private List<Object> metadata = null;
+    private List<Metadata> metadata = null;
 
     /**
      * Certificates present with-in a transaction (if any)
      */
-    private List<Object> certificates = null;
+    private List<TxCertificate> certificates = null;
 }

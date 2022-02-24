@@ -15,6 +15,18 @@ import java.util.List;
 public interface BlockService {
 
     /**
+     * Latest Block
+     * Get summarised details about the latest block
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @return Result of detailed summary of latest {@link Block}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<Block> getLatestBlock() throws ApiException;
+
+    /**
      * Block List with Filtering, Pagination, Ordering Options
      * Get summarised details about all blocks (paginated - latest first)
      * <p><b>200</b> - Success!

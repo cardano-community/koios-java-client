@@ -13,6 +13,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,18 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     public TransactionsServiceImpl(String baseUrl) {
         super(baseUrl);
         transactionApi = getRetrofit().create(TransactionApi.class);
+    }
+
+    @Override
+    public Result<TxInfo> getTransactionInformation(String txHash) throws ApiException {
+        validateHexFormat(txHash);
+        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildBody(List.of(txHash)), Collections.emptyMap());
+        try {
+            Response<List<TxInfo>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
     }
 
     @Override

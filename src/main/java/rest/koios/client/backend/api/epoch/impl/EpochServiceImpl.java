@@ -7,6 +7,7 @@ import rest.koios.client.backend.api.epoch.EpochService;
 import rest.koios.client.backend.api.epoch.api.EpochApi;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
+import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -32,6 +33,18 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
+    public Result<EpochInfo> getLatestEpochInfo() throws ApiException {
+        Options options = Options.builder().option(Limit.of(1)).build();
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(optionsToParamMap(options));
+        try {
+            Response<List<EpochInfo>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<EpochInfo> getEpochInformationByEpoch(Long epochNo) throws ApiException {
         validateEpoch(epochNo);
         Call<List<EpochInfo>> call = epochApi.getEpochInformationByEpoch(epochNo);
@@ -49,6 +62,18 @@ public class EpochServiceImpl extends BaseService implements EpochService {
         try {
             Response<List<EpochInfo>> response = (Response) execute(call);
             return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<EpochParams> getLatestEpochParameters() throws ApiException {
+        Options options = Options.builder().option(Limit.of(1)).build();
+        Call<List<EpochParams>> call = epochApi.getEpochParameters(optionsToParamMap(options));
+        try {
+            Response<List<EpochParams>> response = (Response) execute(call);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }

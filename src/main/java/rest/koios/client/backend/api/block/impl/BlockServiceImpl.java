@@ -8,6 +8,7 @@ import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.api.BlockApi;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
+import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -30,6 +31,18 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     public BlockServiceImpl(String baseUrl) {
         super(baseUrl);
         blockApi = getRetrofit().create(BlockApi.class);
+    }
+
+    @Override
+    public Result<Block> getLatestBlock() throws ApiException {
+        Options options = Options.builder().option(Limit.of(1)).build();
+        Call<List<Block>> call = blockApi.getBlockList(optionsToParamMap(options));
+        try {
+            Response<List<Block>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
     }
 
     @Override

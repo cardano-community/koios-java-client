@@ -46,6 +46,12 @@ class EpochServiceMainnetIntegrationTest {
         log.info(epochInformationResult.getValue().toString());
         Assertions.assertNotNull(epochInformationResult.getValue());
         assertEquals(10, epochInformationResult.getValue().size());
+
+        Result<EpochInfo> epochInformationResult2 = epochService.getLatestEpochInfo();
+        Assertions.assertTrue(epochInformationResult2.isSuccessful());
+        Assertions.assertNotNull(epochInformationResult2.getValue());
+
+        assertEquals(epochInformationResult.getValue().get(0), epochInformationResult2.getValue());
     }
 
     @Test
@@ -66,5 +72,11 @@ class EpochServiceMainnetIntegrationTest {
         log.info(epochParametersResult.getValue().toString());
         Assertions.assertNotNull(epochParametersResult.getValue());
         assertEquals(10, epochParametersResult.getValue().size());
+
+        Result<EpochParams> epochParametersResult2 = epochService.getLatestEpochParameters();
+        Assertions.assertTrue(epochParametersResult2.isSuccessful());
+        Assertions.assertNotNull(epochParametersResult2.getValue());
+
+        assertEquals(epochParametersResult.getValue().get(0), epochParametersResult2.getValue());
     }
 }

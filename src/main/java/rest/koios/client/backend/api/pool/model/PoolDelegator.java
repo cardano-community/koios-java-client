@@ -16,6 +16,9 @@ public class PoolDelegator {
 
     private String stakeAddress;
 
+    /**
+     * Current delegator live stake (in lovelace)
+     */
     private Long amount;
 
     private Long epochNo;

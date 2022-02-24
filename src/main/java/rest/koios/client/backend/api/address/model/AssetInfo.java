@@ -2,9 +2,10 @@ package rest.koios.client.backend.api.address.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
-
-import java.math.BigInteger;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Asset Information
@@ -29,5 +30,5 @@ public class AssetInfo {
     /**
      * Asset balance
      */
-    private BigInteger quantity;
+    private String quantity;
 }

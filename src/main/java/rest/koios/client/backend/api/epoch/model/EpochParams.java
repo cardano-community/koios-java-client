@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 /**
  * Epoch Parameters
  */
-@Getter
-@Setter
+@Data
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)

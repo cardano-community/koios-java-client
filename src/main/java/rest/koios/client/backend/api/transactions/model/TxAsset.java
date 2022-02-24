@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.asset.model;
+package rest.koios.client.backend.api.transactions.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,22 +8,27 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset Address
+ * Asset included in input/output UTxO
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetAddress {
+public class TxAsset {
 
     /**
-     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
+     * Asset Policy ID (hex)
      */
-    private String paymentAddress;
+    private String policyId;
 
     /**
-     * Asset balance on the payment address
+     * Asset Name (hex)
+     */
+    private String assetName;
+
+    /**
+     * Sum of assets for input/output UTxO
      */
     private String quantity;
 }

@@ -39,6 +39,12 @@ class BlockServiceMainnetIntegrationTest {
         log.info(blockListResult.getValue().toString());
         Assertions.assertNotNull(blockListResult.getValue());
         assertEquals(10, blockListResult.getValue().size());
+
+        Result<Block> blockResult = blockService.getLatestBlock();
+        Assertions.assertTrue(blockResult.isSuccessful());
+        Assertions.assertNotNull(blockResult.getValue());
+
+        assertEquals(blockListResult.getValue().get(0), blockResult.getValue());
     }
 
     @Test
@@ -75,7 +81,7 @@ class BlockServiceMainnetIntegrationTest {
         Result<List<TxHash>> blockTransactionsResult = blockService.getBlockTransactions(hash, null);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());
-        log.info(blockTransactionsResult.getValue().toString());;
+        log.info(blockTransactionsResult.getValue().toString());
     }
 
     @Test

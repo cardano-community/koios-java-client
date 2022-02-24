@@ -2,9 +2,10 @@ package rest.koios.client.backend.api.asset.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
-
-import java.math.BigInteger;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Asset Information
@@ -16,19 +17,37 @@ import java.math.BigInteger;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AssetInformation {
 
+    /**
+     * Asset Policy ID (hex)
+     */
     private String policyId;
 
+    /**
+     * Asset Name (hex)
+     */
     private String assetName;
 
+    /**
+     * Asset Name (ASCII)
+     */
     private String assetNameAscii;
 
+    /**
+     * The CIP14 fingerprint of the asset
+     */
     private String fingerprint;
 
-    private Object mintingTxMetadata;
+    /**
+     * Minting Transaction Metadata
+     */
+    private MintingTxMetadata mintingTxMetadata;
 
-    private String tokenRegistryMetadata;
+    /**
+     * Asset metadata registered on the Cardano Token Registry
+     */
+    private TokenRegistryMetadata tokenRegistryMetadata;
 
-    private BigInteger totalSupply;
+    private String totalSupply;
 
     private String creationTime;
 }
