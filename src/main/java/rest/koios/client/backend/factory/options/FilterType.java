@@ -1,5 +1,8 @@
 package rest.koios.client.backend.factory.options;
 
+/**
+ * Filter Type
+ */
 public enum FilterType {
 
     /**
