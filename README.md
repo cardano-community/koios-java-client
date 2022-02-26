@@ -69,6 +69,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Pool Information
         - Pool Delegators List
         - Pool Blocks
+        - Pool Stake, Block and Reward History
         - Pool Updates (History)
         - Pool Relays
         - Pool Metadata

@@ -69,14 +69,14 @@ public interface PoolService {
     Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Options options) throws ApiException;
 
     /**
-     * Pool Blocks By Epoch with Filtering, Pagination, Ordering Options
+     * Pool Blocks by Epoch with Filtering, Pagination, Ordering Options
      * Return information about blocks minted by a given pool in a specific epoch
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
-     * @param epochNo    Epoch Number to fetch details for
+     * @param epochNo    Epoch Number to fetch details for (required)
      * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolBlock}
      * @throws ApiException if an error occurs while attempting to invoke the API
@@ -84,7 +84,7 @@ public interface PoolService {
     Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
 
     /**
-     * Pool Blocks in Current Epoch with Filtering, Pagination, Ordering Options
+     * Pool Blocks with Filtering, Pagination, Ordering Options
      * Return information about blocks minted by a given pool in current epoch
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -96,6 +96,35 @@ public interface PoolService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Options options) throws ApiException;
+
+    /**
+     * Pool Stake, Block and Reward History by Epoch with Filtering, Pagination, Ordering Options
+     * Return information about pool stake, block and reward history in a given epoch _epoch_no (or all epochs that pool existed for, in descending order if no _epoch_no was provided)
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param poolBech32 Pool ID in bech32 format (required)
+     * @param epochNo    Epoch Number to fetch details for (required)
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of {@link PoolHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
+
+    /**
+     * Pool Stake, Block and Reward History with Filtering, Pagination, Ordering Options
+     * Return information about pool stake, block and reward history in a given epoch _epoch_no (or all epochs that pool existed for, in descending order if no _epoch_no was provided)
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param poolBech32 Pool ID in bech32 format (required)
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolHistory>> getPoolHistory(String poolBech32, Options options) throws ApiException;
 
     /**
      * Pool Updates (History) for specific pool with Filtering, Pagination, Ordering Options

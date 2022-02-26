@@ -108,6 +108,31 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
+    public Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException {
+        validateBech32(poolBech32);
+        validateEpoch(epochNo);
+        Call<List<PoolHistory>> call = poolApi.getPoolHistoryByEpoch(poolBech32, epochNo, optionsToParamMap(options));
+        try {
+            Response<List<PoolHistory>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<PoolHistory>> getPoolHistory(String poolBech32, Options options) throws ApiException {
+        validateBech32(poolBech32);
+        Call<List<PoolHistory>> call = poolApi.getPoolHistory(poolBech32, optionsToParamMap(options));
+        try {
+            Response<List<PoolHistory>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<List<PoolUpdate>> getPoolUpdatesByPoolBech32(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
         Call<List<PoolUpdate>> call = poolApi.getPoolUpdatesByPoolBech32(poolBech32, optionsToParamMap(options));

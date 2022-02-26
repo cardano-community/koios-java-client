@@ -30,6 +30,12 @@ public interface PoolApi {
     @GET("pool_blocks")
     Call<List<PoolBlock>> getPoolBlocks(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
+    @GET("pool_history")
+    Call<List<PoolHistory>> getPoolHistoryByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo, @QueryMap Map<String, String> optionsToParamMap);
+
+    @GET("pool_history")
+    Call<List<PoolHistory>> getPoolHistory(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> optionsToParamMap);
+
     @GET("pool_updates")
     Call<List<PoolUpdate>> getPoolUpdatesByPoolBech32(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
