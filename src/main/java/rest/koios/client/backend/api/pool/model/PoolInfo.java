@@ -29,7 +29,7 @@ public class PoolInfo {
     /**
      * Block number on chain where transaction was included
      */
-    private Long activeEpochNo;
+    private Integer activeEpochNo;
 
     /**
      * Pool VRF key hash
@@ -44,12 +44,12 @@ public class PoolInfo {
     /**
      * Pool fixed cost per epoch
      */
-    private Long fixedCost;
+    private String fixedCost;
 
     /**
      * Pool pledge in lovelace
      */
-    private Long pledge;
+    private String pledge;
 
     /**
      * Pool reward address
@@ -89,7 +89,7 @@ public class PoolInfo {
     /**
      * Announced retiring epoch (nullable)
      */
-    private Long retiringEpoch;
+    private Integer retiringEpoch;
 
     /**
      * Pool latest operational certificate hash
@@ -99,27 +99,32 @@ public class PoolInfo {
     /**
      * Pool latest operational certificate counter value
      */
-    private Long opCertCounter;
+    private Integer opCertCounter;
 
     /**
      * Pool active stake
      */
-    private Long activeStake;
+    private String activeStake;
 
     /**
      * Total pool blocks on chain
      */
-    private Long blockCount;
+    private Integer blockCount;
+
+    /**
+     * Summary of account balance for all pool owner's
+     */
+    private String livePledge;
 
     /**
      * Pool live stake
      */
-    private Long liveStake;
+    private String liveStake;
 
     /**
      * Pool live delegator count
      */
-    private Long liveDelegators;
+    private Integer liveDelegators;
 
     /**
      * Pool live saturation (decimal format)
