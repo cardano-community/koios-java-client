@@ -38,6 +38,21 @@ public class AssetInformation {
     private String fingerprint;
 
     /**
+     * Hash of the first mint transaction
+     */
+    private String mintingTxHash;
+
+    /**
+     * Count of total mint transactions
+     */
+    private Integer mintCnt;
+
+    /**
+     * Count of total burn transactions
+     */
+    private Integer burnCnt;
+
+    /**
      * Minting Transaction Metadata
      */
     private MintingTxMetadata mintingTxMetadata;
