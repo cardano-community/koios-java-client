@@ -31,12 +31,22 @@ public class EpochInfo {
     /**
      * Number of transactions submitted in epoch
      */
-    private Long txCount = null;
+    private Integer txCount = null;
 
     /**
      * Number of blocks created in epoch
      */
     private Integer blkCount = null;
+
+    /**
+     * Timestamp of the epoch start
+     */
+    private String startTime;
+
+    /**
+     * Timestamp of the epoch end
+     */
+    private String endTime;
 
     /**
      * Timestamp for first block created in epoch
