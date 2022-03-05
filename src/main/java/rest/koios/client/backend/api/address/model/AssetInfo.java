@@ -25,7 +25,7 @@ public class AssetInfo {
     /**
      * Asset Name (hex)
      */
-    private String assetNameHex;
+    private String assetName;
 
     /**
      * Sum of assets for output UTxO
