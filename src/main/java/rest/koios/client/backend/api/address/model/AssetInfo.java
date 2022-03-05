@@ -18,17 +18,17 @@ import lombok.ToString;
 public class AssetInfo {
 
     /**
-     * Asset Policy ID in hexadecimal format (hex)
+     * Asset Policy ID (hex)
      */
-    private String assetPolicyHex;
+    private String policyId;
 
     /**
-     * Asset Name in hexadecimal format (hex)
+     * Asset Name (hex)
      */
     private String assetNameHex;
 
     /**
-     * Asset balance
+     * Sum of assets for output UTxO
      */
     private String quantity;
 }
