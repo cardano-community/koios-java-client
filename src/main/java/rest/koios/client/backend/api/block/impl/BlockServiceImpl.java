@@ -14,7 +14,10 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Block Service Implementation
@@ -59,10 +62,24 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     @Override
     public Result<BlockInfo> getBlockInformation(String blockHash) throws ApiException {
         validateHexFormat(blockHash);
-        Call<List<BlockInfo>> call = blockApi.getBlockInformation(blockHash);
+        Call<List<BlockInfo>> call = blockApi.getBlockInformation(buildBody(List.of(blockHash)), Collections.emptyMap());
         try {
             Response<List<BlockInfo>> response = (Response) execute(call);
             return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<BlockInfo>> getBlocksInformation(List<String> blockHashes, Options options) throws ApiException {
+        for (String blockHash : blockHashes) {
+            validateHexFormat(blockHash);
+        }
+        Call<List<BlockInfo>> call = blockApi.getBlockInformation(buildBody(blockHashes), optionsToParamMap(options));
+        try {
+            Response<List<BlockInfo>> response = (Response) execute(call);
+            return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
@@ -78,5 +95,11 @@ public class BlockServiceImpl extends BaseService implements BlockService {
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
+    }
+
+    private Map<String, Object> buildBody(List<String> blockHashes) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_block_hashes", blockHashes);
+        return bodyMap;
     }
 }

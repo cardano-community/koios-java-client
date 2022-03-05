@@ -14,57 +14,59 @@ import lombok.*;
 public class Block {
 
     /**
-     * Block Hash in hex
+     * Hash of the block
      */
     private String hash = null;
 
     /**
-     * Epoch number
+     * Epoch number of the block
      */
     private Integer epoch = null;
 
     /**
-     * Absolute Slot number (slots not divided into epochs)
+     * Absolute slot number of the block
      */
     private Integer absSlot = null;
 
     /**
-     * Slot number within Epoch
+     * Slot number of the block in epoch
      */
     private Integer epochSlot = null;
 
     /**
-     * Block Height number on chain
+     * Block Height
      */
-    private Integer height = null;
+    private Integer blockHeight = null;
 
     /**
-     * Block Size
+     * Block size in bytes
      */
-    private Long size = null;
+    private Long blockSize = null;
 
     /**
-     * Timestamp for when the block was created
+     * Timestamp of the block
      */
     private String blockTime = null;
 
     /**
-     * Number of transactions submitted in epoch
+     * Number of transactions in the block
      */
     private Integer txCount = null;
 
     /**
-     * VRF key of the creator of the block
+     * VRF key of the block producer
      */
     private String vrfKey = null;
 
     /**
-     * Bech32 encoding of the pool hash which created the block
+     * Counter value of the operational certificate used to create this block
+     */
+    private Integer opCertCounter = null;
+
+    /**
+     * Pool ID in bech32 format
      */
     private String pool = null;
 
-    /**
-     * The value of the counter used to produce the operational certificate
-     */
-    private Integer opCertCounter = null;
+
 }

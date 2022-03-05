@@ -9,15 +9,85 @@ import lombok.*;
  */
 @Getter
 @Setter
-@ToString(callSuper=true)
+@ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BlockInfo extends Block {
+public class BlockInfo {
 
     /**
-     * Operational Certificate Hash
+     * Hash of the block
+     */
+    private String hash = null;
+
+    /**
+     * Epoch number of the block
+     */
+    private Integer epochNo = null;
+
+    /**
+     * Absolute slot number of the block
+     */
+    private Integer absSlot = null;
+
+    /**
+     * Slot number of the block in epoch
+     */
+    private Integer epochSlot = null;
+
+    /**
+     * Block Height
+     */
+    private Integer blockHeight = null;
+
+    /**
+     * Block size in bytes
+     */
+    private Long blockSize = null;
+
+    /**
+     * Timestamp of the block
+     */
+    private String blockTime = null;
+
+    /**
+     * Number of transactions in the block
+     */
+    private Integer txCount = null;
+
+    /**
+     * VRF key of the block producer
+     */
+    private String vrfKey = null;
+
+    /**
+     * Hash of the block producers' operational certificate
      */
     private String opCert;
+
+    /**
+     * Counter value of the operational certificate used to create this block
+     */
+    private Integer opCertCounter = null;
+
+    /**
+     * Pool ID in bech32 format
+     */
+    private String pool = null;
+
+    /**
+     * Total output of the block (in lovelace)
+     */
+    private String totalOutput;
+
+    /**
+     * Total fees of the block (in lovelace)
+     */
+    private String totalFees;
+
+    /**
+     * Number of Confirmations
+     */
+    private Long numConfirmations;
 
     /**
      * Parent Block Hash
