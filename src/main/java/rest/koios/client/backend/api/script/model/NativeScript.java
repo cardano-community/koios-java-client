@@ -1,6 +1,5 @@
 package rest.koios.client.backend.api.script.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -8,35 +7,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-
 /**
- * Script
+ * Native Script
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Script {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class NativeScript {
 
     /**
-     * Script Type
+     * Hash of a script
      */
-    private String type;
+    private String scriptHash;
 
     /**
-     * List of Scripts
+     * Hash of the script creation transaction
      */
-    private ArrayList<ScriptInner> scripts;
+    private String creationTxHash;
 
     /**
-     * Required Count
+     * Type of the script
      */
-    private Integer required;
+    private NativeScriptType type;
 
     /**
-     * Key Hash
+     * Script
      */
-    @JsonProperty("keyHash")
-    private String keyHash;
+    private Script script;
 }

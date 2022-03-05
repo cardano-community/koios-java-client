@@ -2,7 +2,8 @@ package rest.koios.client.backend.api.script;
 
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.script.model.Script;
+import rest.koios.client.backend.api.script.model.NativeScript;
+import rest.koios.client.backend.api.script.model.PlutusScript;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
 import rest.koios.client.backend.factory.options.Options;
 
@@ -14,17 +15,30 @@ import java.util.List;
 public interface ScriptService {
 
     /**
-     * Script List with Filtering, Pagination, Ordering Options
-     * List of all existing script hashes along with their creation transaction hashes
+     * Native Script List with Filtering, Pagination, Ordering Options
+     * List of all existing native script hashes along with their creation transaction hashes
      * <p><b>200</b> - List of script and creation tx hash pairs
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param options Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link Script}
+     * @return Result of Type List of {@link PlutusScript}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<Script>> getScriptList(Options options) throws ApiException;
+    Result<List<NativeScript>> getNativeScriptList(Options options) throws ApiException;
+
+    /**
+     * Plutus Script List with Filtering, Pagination, Ordering Options
+     * List of all existing Plutus script hashes along with their creation transaction hashes
+     * <p><b>200</b> - List of script and creation tx hash pairs
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PlutusScript}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PlutusScript>> getPlutusScriptList(Options options) throws ApiException;
 
     /**
      * Script Redeemers with Filtering, Pagination, Ordering Options
