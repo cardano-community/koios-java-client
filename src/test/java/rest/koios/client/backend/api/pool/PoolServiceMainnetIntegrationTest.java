@@ -66,12 +66,12 @@ class PoolServiceMainnetIntegrationTest {
     @Test
     void getPoolDelegatorsListLimitTest() throws ApiException {
         String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
-        Options options = Options.builder().option(Limit.of(2)).build();
+        Options options = Options.builder().option(Limit.of(1)).build();
         Result<List<PoolDelegator>> poolDelegatorsResult = poolService.getPoolDelegatorsList(poolBech32, options);
         Assertions.assertTrue(poolDelegatorsResult.isSuccessful());
         Assertions.assertNotNull(poolDelegatorsResult.getValue());
         log.info(poolDelegatorsResult.getValue().toString());
-        assertEquals(2, poolDelegatorsResult.getValue().size());
+        assertEquals(1, poolDelegatorsResult.getValue().size());
     }
 
     @Test
