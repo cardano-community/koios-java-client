@@ -18,4 +18,14 @@ public class TxHash {
      * Transaction Hash
      */
     private String txHash;
+
+    /**
+     * Block Height
+     */
+    private Integer blockHeight;
+
+    /**
+     * Timestamp of the block
+     */
+    private String blockTime;
 }
