@@ -123,4 +123,14 @@ public class TxInfo {
      * Certificates present with-in a transaction (if any)
      */
     private List<TxCertificate> certificates = null;
+
+    /**
+     * Native scripts present in a transaction (if any)
+     */
+    private List<TxNativeScript> nativeScripts;
+
+    /**
+     * Plutus contracts present in transaction (if any)
+     */
+    private List<TxPlutusContract> plutusContracts;
 }
