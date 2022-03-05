@@ -20,7 +20,7 @@ public class Unit {
     /**
      * The budget in Cpu steps to run a script
      */
-    private Integer steps;
+    private Long steps;
 
     /**
      * The budget in Memory to run a script

@@ -10,10 +10,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
 import rest.koios.client.backend.factory.BackendFactory;
-import rest.koios.client.backend.factory.options.Limit;
-import rest.koios.client.backend.factory.options.Options;
-import rest.koios.client.backend.factory.options.Order;
-import rest.koios.client.backend.factory.options.SortType;
+import rest.koios.client.backend.factory.options.*;
 
 import java.util.List;
 
@@ -49,13 +46,22 @@ class EpochServiceTestnetIntegrationTest {
     }
 
     @Test
-    void getEpochInformationLimitTest() throws ApiException {
-        Options options = Options.builder().option(Limit.of(10)).build();
+    void getEpochInformationLimitOffsetAndOrderTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).option(Order.by("epoch_no",SortType.DESC)).build();
         Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
         assertEquals(10, epochInformationResult.getValue().size());
+
+        Options options2 = Options.builder().option(Limit.of(5)).option(Offset.of(5L)).option(Order.by("epoch_no",SortType.DESC)).build();
+        Result<List<EpochInfo>> epochInformationResult2 = epochService.getEpochInformation(options2);
+        Assertions.assertTrue(epochInformationResult2.isSuccessful());
+        log.info(epochInformationResult2.getValue().toString());
+        Assertions.assertNotNull(epochInformationResult2.getValue());
+        assertEquals(5, epochInformationResult2.getValue().size());
+
+        Assertions.assertTrue(epochInformationResult.getValue().containsAll(epochInformationResult2.getValue()));
     }
 
     @Test

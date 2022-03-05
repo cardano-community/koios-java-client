@@ -7,7 +7,8 @@ import lombok.*;
 /**
  * Block
  */
-@Data
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)

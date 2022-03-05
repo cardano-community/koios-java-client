@@ -1,6 +1,5 @@
 package rest.koios.client.backend.api.base.exception;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 public class ApiException extends Exception {
 
     /**

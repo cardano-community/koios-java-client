@@ -7,9 +7,11 @@ import lombok.*;
 /**
  * Epoch Information
  */
-@Data
+@Getter
+@Setter
 @ToString
 @NoArgsConstructor
+@EqualsAndHashCode
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class EpochInfo {
 

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Plutus Script Input
+ */
 @Getter
 @Setter
 @ToString
@@ -17,7 +20,7 @@ public class PlutusScriptInput {
     /**
      * Plutus Script Redeemer
      */
-    private PlutusScriptRedeemer plutusScriptRedeemer;
+    private PlutusScriptRedeemer redeemer;
 
     /**
      * Datum

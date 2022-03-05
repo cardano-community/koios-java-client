@@ -11,10 +11,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.factory.BackendFactory;
-import rest.koios.client.backend.factory.options.Filter;
-import rest.koios.client.backend.factory.options.FilterType;
-import rest.koios.client.backend.factory.options.Limit;
-import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.*;
 
 import java.util.List;
 
