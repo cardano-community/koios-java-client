@@ -168,10 +168,19 @@
 						{
 							"name": "Block Information",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_block_hashes\": [\r\n        \"{{block_hash}}\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/block_info?_block_hash={{block_hash}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/block_info",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -181,17 +190,6 @@
 										"{{path}}",
 										"v0",
 										"block_info"
-									],
-									"query": [
-										{
-											"key": "_block_hash",
-											"value": "{{block_hash}}"
-										},
-										{
-											"key": "_block_hash",
-											"value": "test",
-											"disabled": true
-										}
 									]
 								}
 							},
@@ -439,7 +437,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"_addresses\": [\r\n    \"{{address}}\"\r\n  ],\r\n  \"_after_block_height\": 250\r\n}",
+									"raw": "{\r\n  \"_addresses\": [\r\n    \"{{address}}\"\r\n  ],\r\n  \"_after_block_height\": 0\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1045,6 +1043,37 @@
 							"response": []
 						},
 						{
+							"name": "Pool Stake, Block and Reward History",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_history?_pool_bech32={{pool_bech32}}&_epoch_no={{epoch_no}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"pool_history"
+									],
+									"query": [
+										{
+											"key": "_pool_bech32",
+											"value": "{{pool_bech32}}"
+										},
+										{
+											"key": "_epoch_no",
+											"value": "{{epoch_no}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Pool Updates (History)",
 							"request": {
 								"method": "GET",
@@ -1119,12 +1148,12 @@
 					"name": "Script",
 					"item": [
 						{
-							"name": "Script List",
+							"name": "Native Script List",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/script_list",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/native_script_list",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -1133,7 +1162,28 @@
 									"path": [
 										"{{path}}",
 										"v0",
-										"script_list"
+										"native_script_list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Plutus Script List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/plutus_script_list",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"plutus_script_list"
 									]
 								}
 							},
