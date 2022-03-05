@@ -25,7 +25,7 @@ public class Asset {
     private String assetName;
 
     /**
-     * Sum of assets for UTxO
+     * Sum of assets for output UTxO
      */
     private String quantity;
 }
