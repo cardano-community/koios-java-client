@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.address.model;
+package rest.koios.client.backend.api.transactions.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,27 +8,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset Information
+ * Plutus Script Output
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetInfo {
+public class PlutusScriptOutput {
 
     /**
-     * Asset Policy ID (hex)
+     * The Hash of the Plutus Data
      */
-    private String policyId;
+    private String hash;
 
     /**
-     * Asset Name (hex)
+     * The actual data in json format
      */
-    private String assetName;
-
-    /**
-     * Sum of assets for output UTxO
-     */
-    private String quantity;
+    private Object value;
 }

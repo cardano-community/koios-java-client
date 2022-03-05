@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.address.model;
+package rest.koios.client.backend.api.transactions.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,27 +8,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset Information
+ * Unit
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetInfo {
+public class Unit {
 
     /**
-     * Asset Policy ID (hex)
+     * The budget in Cpu steps to run a script
      */
-    private String policyId;
+    private Long steps;
 
     /**
-     * Asset Name (hex)
+     * The budget in Memory to run a script
      */
-    private String assetName;
-
-    /**
-     * Sum of assets for output UTxO
-     */
-    private String quantity;
+    private Integer mem;
 }

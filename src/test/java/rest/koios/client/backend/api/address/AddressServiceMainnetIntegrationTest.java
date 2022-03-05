@@ -66,7 +66,7 @@ class AddressServiceMainnetIntegrationTest {
 
     @Test
     void getAddressAssetsTest() throws ApiException {
-        String address = "addr1qyp9kz50sh9c53hpmk3l4ewj9ur794t2hdqpngsjn3wkc5sztv9glpwt3frwrhdrltjaytc8ut2k4w6qrx3p98zad3fq07xe9g";
+        String address = "addr1vx0l928zuszdgn2qs062tyze320v0vmg3hdszkw3fykwdece25sw8";
         Result<List<AssetInfo>> assetInfosResult = addressService.getAddressAssets(address, null);
         Assertions.assertTrue(assetInfosResult.isSuccessful());
         Assertions.assertNotNull(assetInfosResult.getValue());

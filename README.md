@@ -74,7 +74,8 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         - Pool Relays
         - Pool Metadata
     - [x] Script
-        - Script List
+        - Native Script List
+        - Plutus Script List
         - Script Redeemers
 
 ## Use as a library in a Java Project

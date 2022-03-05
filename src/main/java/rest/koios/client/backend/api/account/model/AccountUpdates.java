@@ -12,7 +12,6 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AccountUpdates extends TxHash {
 

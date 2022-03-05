@@ -27,6 +27,11 @@ public class AddressInfo {
     private String stakeAddress;
 
     /**
+     * Signifies whether the address is a script address
+     */
+    private Boolean scriptAddress;
+
+    /**
      * Set of UTxOs of Address for which details are being shown
      */
     private Set<AddressUtxo> utxoSet;

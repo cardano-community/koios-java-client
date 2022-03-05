@@ -1,31 +1,26 @@
-package rest.koios.client.backend.api;
+package rest.koios.client.backend.api.script.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 /**
- * Transaction Hash
+ * Plutus Script
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class TxHash {
+public class PlutusScript {
 
     /**
-     * Transaction Hash
+     * Hash of a script
      */
-    private String txHash;
+    private String scriptHash;
 
     /**
-     * Block Height
+     * Hash of the script creation transaction
      */
-    private Integer blockHeight;
-
-    /**
-     * Timestamp of the block
-     */
-    private String blockTime;
+    private String creationTxHash;
 }

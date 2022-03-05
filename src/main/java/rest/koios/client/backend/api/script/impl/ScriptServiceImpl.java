@@ -5,7 +5,8 @@ import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.script.ScriptService;
 import rest.koios.client.backend.api.script.api.ScriptApi;
-import rest.koios.client.backend.api.script.model.Script;
+import rest.koios.client.backend.api.script.model.NativeScript;
+import rest.koios.client.backend.api.script.model.PlutusScript;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
@@ -32,10 +33,21 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     }
 
     @Override
-    public Result<List<Script>> getScriptList(Options options) throws ApiException {
-        Call<List<Script>> call = scriptApi.getScriptList(optionsToParamMap(options));
+    public Result<List<NativeScript>> getNativeScriptList(Options options) throws ApiException {
+        Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(options));
         try {
-            Response<List<Script>> response = (Response) execute(call);
+            Response<List<NativeScript>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<PlutusScript>> getPlutusScriptList(Options options) throws ApiException {
+        Call<List<PlutusScript>> call = scriptApi.getPlutusScriptList(optionsToParamMap(options));
+        try {
+            Response<List<PlutusScript>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

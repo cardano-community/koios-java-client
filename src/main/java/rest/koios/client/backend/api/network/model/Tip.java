@@ -22,7 +22,7 @@ public class Tip {
     /**
      * Epoch number
      **/
-    private Integer epoch = null;
+    private Integer epochNo = null;
 
     /**
      * Absolute Slot number (slots not divided into epochs)

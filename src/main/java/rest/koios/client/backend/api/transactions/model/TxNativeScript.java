@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.address.model;
+package rest.koios.client.backend.api.transactions.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,27 +8,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset Information
+ * Native Script
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetInfo {
+public class TxNativeScript {
 
     /**
-     * Asset Policy ID (hex)
+     * Hash of a script
      */
-    private String policyId;
+    private String scriptHash;
 
     /**
-     * Asset Name (hex)
+     * JSON representation of the timelock script (null for other script types)
      */
-    private String assetName;
-
-    /**
-     * Sum of assets for output UTxO
-     */
-    private String quantity;
+    private Object scriptJson;
 }
