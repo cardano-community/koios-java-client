@@ -14,15 +14,33 @@ import lombok.*;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PoolBlock {
 
-    private Long epochNo;
+    /**
+     * Epoch number
+     */
+    private Integer epochNo;
 
-    private Long epochSlotNo;
+    /**
+     * Slot number of the block in epoch
+     */
+    private Integer epochSlot;
 
-    private Long blockNo;
+    /**
+     * Absolute slot number of the block
+     */
+    private Integer absSlot;
 
-    private Long slotNo;
+    /**
+     * Block height
+     */
+    private Integer blockHeight;
 
+    /**
+     * Hash of the block
+     */
     private String blockHash;
 
+    /**
+     * Timestamp of the block
+     */
     private String blockTime;
 }
