@@ -1,6 +1,8 @@
-package rest.koios.client.backend.factory.options;
+package rest.koios.client.backend.factory.options.filters;
 
 import lombok.Getter;
+import rest.koios.client.backend.factory.options.Option;
+import rest.koios.client.backend.factory.options.OptionType;
 
 /**
  * Filter

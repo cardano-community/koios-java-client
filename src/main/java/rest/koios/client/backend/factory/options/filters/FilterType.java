@@ -1,4 +1,4 @@
-package rest.koios.client.backend.factory.options;
+package rest.koios.client.backend.factory.options.filters;
 
 /**
  * Filter Type
@@ -38,40 +38,25 @@ public enum FilterType {
     /**
      * LIKE operator (use * in place of %)
      */
-    LIKE,
+    LIKE, // TODO Not Supported
 
     /**
      * one of a list of values, e.g. ?a=in.("hi,there","yes,you")
      */
-    IN,
+    IN, // TODO Not Supported
 
     /**
      * checking for exact equality (null,true,false,unknown)
      */
-    IS,
+    IS, // TODO Not Supported
 
     /**
      * contains e.g. ?tags=cs.{example, new}
      */
-    CS,
+    CS, // TODO Not Supported
 
     /**
      * contained in e.g. ?values=cd.{1,2,3}
      */
-    CD,
-
-    /**
-     * negates another operator
-     */
-    NOT,
-
-    /**
-     * logical OR operator
-     */
-    OR,
-
-    /**
-     * logical AND operator
-     */
-    AND
+    CD // TODO Not Supported
 }
