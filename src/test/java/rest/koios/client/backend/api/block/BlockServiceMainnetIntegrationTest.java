@@ -12,6 +12,8 @@ import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.*;
+import rest.koios.client.backend.factory.options.filters.Filter;
+import rest.koios.client.backend.factory.options.filters.FilterType;
 
 import java.util.List;
 

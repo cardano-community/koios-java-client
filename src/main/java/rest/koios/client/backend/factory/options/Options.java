@@ -1,6 +1,8 @@
 package rest.koios.client.backend.factory.options;
 
 import lombok.Getter;
+import rest.koios.client.backend.factory.options.filters.LogicalOperatorFilter;
+import rest.koios.client.backend.factory.options.filters.LogicalOperatorFilterType;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,10 +33,23 @@ public class Options {
 
     /**
      * Options List to Map
+     *
      * @return Map of Options
      */
     public Map<String, String> toMap() {
-        return options.stream().collect(Collectors.toMap(Option::getOptionTypeValue, Option::getValue));
+        List<Option> optionList = new ArrayList<>();
+        List<Option> filters = new ArrayList<>();
+        for (Option option : options) {
+            if (option.getOptionType() == OptionType.FILTER) {
+                filters.add(option);
+            } else {
+                optionList.add(option);
+            }
+        }
+        if (filters.size() >= 2) {
+            optionList.add(LogicalOperatorFilter.of(LogicalOperatorFilterType.AND,filters.toArray(new Option[0])));
+        }
+        return optionList.stream().collect(Collectors.toMap(Option::getOptionTypeValue, Option::getValue));
     }
 
     /**

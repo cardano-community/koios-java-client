@@ -125,6 +125,20 @@ PoolService poolService = backendService.getPoolService();
 ScriptService scriptService = backendService.getScriptService();
 ```
 
+### Advanced Query Example (Testnet)
+#### Querying a Descending Order of All Address Transactions since Block No. #3168087 to Block No. #3168097 (inclusive), Limited to Maximum of 10 Results.
+```
+String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
+
+Options options = Options.builder()
+        .option(Limit.of(10))
+        .option(Offset.of(0))
+        .option(Order.by("block_height", SortType.DESC))
+        .option(Filter.of("block_height", FilterType.GTE, "3168087"))
+        .option(Filter.of("block_height", FilterType.LTE, "3168097")).build();
+
+Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(List.of(address), options);
+```
 ## Clone & Build with Maven
 ```
 git clone https://github.com/cardano-community/koios-java-client.git
