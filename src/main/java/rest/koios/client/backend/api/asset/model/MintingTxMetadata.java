@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.asset.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -25,5 +26,5 @@ public class MintingTxMetadata {
     /**
      * The minting Tx JSON payload if it can be decoded as JSON
      */
-    private Object json;
+    private JsonNode json;
 }
