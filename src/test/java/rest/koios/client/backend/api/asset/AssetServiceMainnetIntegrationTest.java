@@ -12,6 +12,7 @@ import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,6 +63,18 @@ class AssetServiceMainnetIntegrationTest {
         Result<AssetInformation> assetInformationResult = assetService.getAssetInformation(assetPolicy, assetNameHex);
         Assertions.assertTrue(assetInformationResult.isSuccessful());
         Assertions.assertNotNull(assetInformationResult.getValue());
+        log.info(assetInformationResult.getValue().toString());
+    }
+
+    @Test
+    void getAssetInformationTokenTest() throws ApiException {
+        String assetPolicy = "14696a4676909f4e3cb1f2e60e2e08e5abed70caf5c02699be971139";
+        String assetName = "CUBY";
+        String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
+        Result<AssetInformation> assetInformationResult = assetService.getAssetInformation(assetPolicy, assetNameHex);
+        Assertions.assertTrue(assetInformationResult.isSuccessful());
+        Assertions.assertNotNull(assetInformationResult.getValue());
+        Assertions.assertNotNull(assetInformationResult.getValue().getTokenRegistryMetadata());
         log.info(assetInformationResult.getValue().toString());
     }
 

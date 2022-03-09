@@ -65,6 +65,19 @@ class AssetServiceTestnetIntegrationTest {
         Result<AssetInformation> assetInformationResult = assetService.getAssetInformation(assetPolicy, assetNameHex);
         Assertions.assertTrue(assetInformationResult.isSuccessful());
         Assertions.assertNotNull(assetInformationResult.getValue());
+        Assertions.assertNotNull(assetInformationResult.getValue().getMintingTxMetadata());
+        log.info(assetInformationResult.getValue().toString());
+    }
+
+    @Test
+    void getAssetInformationTokenTest() throws ApiException {
+        String assetPolicy = "34250edd1e9836f5378702fbf9416b709bc140e04f668cc355208518";
+        String assetName = "ATADAcoin";
+        String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
+        Result<AssetInformation> assetInformationResult = assetService.getAssetInformation(assetPolicy, assetNameHex);
+        Assertions.assertTrue(assetInformationResult.isSuccessful());
+        Assertions.assertNotNull(assetInformationResult.getValue());
+        Assertions.assertNotNull(assetInformationResult.getValue().getTokenRegistryMetadata());
         log.info(assetInformationResult.getValue().toString());
     }
 
