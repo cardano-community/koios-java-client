@@ -1,8 +1,12 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Transaction Metadata
@@ -22,5 +26,5 @@ public class TxMetadata {
     /**
      * A JSON array containing details about metadata within transaction
      */
-    private String metadata = null;
+    private JsonNode metadata = null;
 }

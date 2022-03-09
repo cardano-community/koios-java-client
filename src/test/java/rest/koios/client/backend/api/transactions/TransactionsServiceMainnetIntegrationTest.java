@@ -71,10 +71,12 @@ class TransactionsServiceMainnetIntegrationTest {
 
     @Test
     void getTransactionMetadataTest() throws ApiException {
-        String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
+        String txHash = "0b8ba3bed976fa4913f19adc9f6dd9063138db5b4dd29cecde369456b5155e94";
         Result<List<TxMetadata>> transactionMetadataResult = transactionsService.getTransactionMetadata(List.of(txHash), null);
         Assertions.assertTrue(transactionMetadataResult.isSuccessful());
         Assertions.assertNotNull(transactionMetadataResult.getValue());
+        Assertions.assertNotNull(transactionMetadataResult.getValue().get(0));
+        Assertions.assertNotNull(transactionMetadataResult.getValue().get(0).getMetadata());
         log.info(transactionMetadataResult.getValue().toString());
     }
 
