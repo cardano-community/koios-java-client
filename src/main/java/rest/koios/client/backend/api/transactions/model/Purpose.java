@@ -4,6 +4,23 @@ package rest.koios.client.backend.api.transactions.model;
  * Kind of validation of redeemer
  */
 public enum Purpose {
+    /**
+     * Spend
+     */
+    spend,
 
-    spend, mint, cert, reward
+    /**
+     * Mint
+     */
+    mint,
+
+    /**
+     * Cert
+     */
+    cert,
+
+    /**
+     * Reward
+     */
+    reward
 }
