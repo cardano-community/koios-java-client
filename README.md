@@ -24,6 +24,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Horizontal Filtering Supported
 - Sorting Supported
 - Rate Control
+- Inner Retry Mechanism upon Timeouts (Default: 3 Retries)
 - Supported REST Services:
     - [x] Network
         - Chain Tip

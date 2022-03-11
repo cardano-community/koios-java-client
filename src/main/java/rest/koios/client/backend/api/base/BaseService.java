@@ -16,6 +16,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,7 @@ public class BaseService {
     private final Duration timeoutDuration = Duration.ofSeconds(20);
     private final Bucket bucket;
     private final Options emptyOptions = new Options();
+    private final int RETRIES_COUNT = 3;
 
     /**
      * Base Service Constructor
@@ -83,7 +85,19 @@ public class BaseService {
      */
     public Response<Object> execute(Call<?> call) throws ApiException, IOException {
         if (getBucket().tryConsume(1)) {
-            return (Response<Object>) call.execute();
+            int tryCount = 1;
+            while (tryCount <= RETRIES_COUNT) {
+                try {
+                    return (Response<Object>) call.execute();
+                } catch (SocketTimeoutException e) {
+                    log.warn(e.getMessage());
+                    tryCount++;
+                    if (tryCount < RETRIES_COUNT) {
+                        log.info("Retrying... ("+tryCount+"/"+RETRIES_COUNT+")");
+                    }
+                }
+            }
+            throw new ApiException("Retry Count Exceeded.");
         } else {
             throw new ApiException("HTTP Error (429) - Too Many Requests.");
         }
