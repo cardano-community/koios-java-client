@@ -24,10 +24,10 @@ public class TxUtxo {
     /**
      * An array with details about inputs used in a transaction
      */
-    private List<Object> inputs = null;
+    private List<TxIO> inputs = null;
 
     /**
      * An array with details about outputs from the transaction
      */
-    private List<Object> outputs = null;
+    private List<TxIO> outputs = null;
 }

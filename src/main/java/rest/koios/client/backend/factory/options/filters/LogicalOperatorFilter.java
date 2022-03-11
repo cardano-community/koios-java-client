@@ -31,8 +31,9 @@ public class LogicalOperatorFilter extends Option {
     }
 
     /**
-     * Filter.of Static Constructor
+     * LogicalOperatorFilter.of Static Constructor
      *
+     * @param logicalOperatorFilterType Operator Filter Type (OR/AND)
      * @param options options List
      * @return new LogicalOperatorFilter Option Object
      */

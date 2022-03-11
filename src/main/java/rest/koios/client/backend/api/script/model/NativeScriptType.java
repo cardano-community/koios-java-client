@@ -5,5 +5,13 @@ package rest.koios.client.backend.api.script.model;
  */
 public enum NativeScriptType {
 
-    timelock, multisig
+    /**
+     * Time Locked
+     */
+    timelock,
+
+    /**
+     * Multi Signature
+     */
+    multisig
 }

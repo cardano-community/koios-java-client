@@ -11,7 +11,7 @@
     <url>https://github.com/cardano-community/koios-java-client</url>
 
     <properties>
-        <java.version>15</java.version>
+        <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <retrofit.version>2.9.0</retrofit.version>
         <jackson-databind.version>2.13.2</jackson-databind.version>
