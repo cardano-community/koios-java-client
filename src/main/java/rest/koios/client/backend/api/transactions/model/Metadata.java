@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -25,5 +26,5 @@ public class Metadata {
     /**
      * A JSON containing details about metadata within a transaction
      */
-    private String json;
+    private JsonNode json;
 }

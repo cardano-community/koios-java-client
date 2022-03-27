@@ -31,7 +31,8 @@ class TransactionsServiceTestnetIntegrationTest {
     void getTransactionInformationTest() throws ApiException {
         String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
         String txHash2 = "f34708f17ccdab75a234818ce48c062537e251a0ffa4c7ee53d43a60983d9d4c";
-        Result<List<TxInfo>> transactionInformationResult = transactionsService.getTransactionInformation(List.of(txHash, txHash2), null);
+        String txHash3 = "c610c446428b12d9649ab4476c1d0924c78ce09dd14455cc7aeeef651c01d65b";
+        Result<List<TxInfo>> transactionInformationResult = transactionsService.getTransactionInformation(List.of(txHash, txHash2, txHash3), null);
         Assertions.assertTrue(transactionInformationResult.isSuccessful());
         Assertions.assertNotNull(transactionInformationResult.getValue());
         log.info(transactionInformationResult.getValue().toString());
