@@ -140,6 +140,10 @@ Options options = Options.builder()
 
 Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(List.of(address), options);
 ```
+### Toggle Logging By Environment Variable
+```
+KOIOS_JAVA_LIB_LOGGING=true
+```
 ## Clone & Build with Maven
 ```
 git clone https://github.com/cardano-community/koios-java-client.git
@@ -148,9 +152,9 @@ mvn clean install
 ```
 
 ## Used by
+* [Bloxbean - Cardano Client Library](https://github.com/bloxbean/cardano-client-lib)
 * [ISR - Israeli Cardano Community](https://www.cardano-israel.com/)
 * [MusicBox - CNFT Project](https://www.musicboxnft.com/)
-
 <hr/>
 <div align="center">
 
