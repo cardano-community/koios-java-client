@@ -43,9 +43,15 @@ public class BaseService {
      */
     public BaseService(String baseUrl) {
         bucket = Bucket.builder().addLimit(Bandwidth.classic(100, Refill.intervally(100, Duration.ofSeconds(10)))).build();
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        boolean logging = Boolean.parseBoolean(System.getenv("KOIOS_JAVA_LIB_LOGGING"));
+        OkHttpClient client;
+        if (logging) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        } else {
+            client = new OkHttpClient.Builder().build();
+        }
         retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(client).addConverterFactory(JacksonConverterFactory.create()).build();
     }
 
