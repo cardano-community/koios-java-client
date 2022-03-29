@@ -21,7 +21,7 @@ public class Metadata {
     /**
      * Metadata key (index)
      */
-    private Integer key;
+    private Long key;
 
     /**
      * A JSON containing details about metadata within a transaction
