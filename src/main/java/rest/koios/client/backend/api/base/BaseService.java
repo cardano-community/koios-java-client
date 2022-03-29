@@ -55,7 +55,7 @@ public class BaseService {
         retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(client).addConverterFactory(JacksonConverterFactory.create()).build();
     }
 
-    protected <T> Result<T> processResponseGetOne(Response<List<T>> response) {
+    protected <T> Result<T> processResponseGetOne(Response<List<T>> response) throws IOException {
         if (response.isSuccessful()) {
             if (response.body() != null && !response.body().isEmpty()) {
                 return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body().get(0)).code(response.code()).build();
@@ -63,7 +63,7 @@ public class BaseService {
                 return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
             }
         } else {
-            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).toString()).code(response.code()).build();
+            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
         }
     }
 
@@ -74,11 +74,11 @@ public class BaseService {
      * @param <T>      Type Of Response
      * @return Result of Response
      */
-    protected <T> Result<T> processResponse(Response<T> response) {
+    protected <T> Result<T> processResponse(Response<T> response) throws IOException {
         if (response.isSuccessful())
             return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body()).code(response.code()).build();
         else
-            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).toString()).code(response.code()).build();
+            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
     }
 
     /**
