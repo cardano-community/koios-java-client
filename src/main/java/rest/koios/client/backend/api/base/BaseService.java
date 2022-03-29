@@ -94,7 +94,7 @@ public class BaseService {
             int tryCount = 1;
             while (tryCount <= RETRIES_COUNT) {
                 try {
-                    return (Response<Object>) call.execute();
+                    return (Response<Object>) call.clone().execute();
                 } catch (SocketTimeoutException e) {
                     log.warn(e.getMessage());
                     tryCount++;
