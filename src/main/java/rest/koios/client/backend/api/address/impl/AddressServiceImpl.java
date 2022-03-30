@@ -9,6 +9,7 @@ import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.SortType;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * Address Service Implementation
@@ -36,11 +38,23 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public Result<AddressInfo> getAddressInformation(String address) throws ApiException {
+        return getAddressInformation(address, SortType.DESC);
+    }
+
+    @Override
+    public Result<AddressInfo> getAddressInformation(String address, SortType utxoSortType) throws ApiException {
         validateBech32(address);
         Call<List<AddressInfo>> call = addressApi.getAddressInformation(address);
         try {
             Response<List<AddressInfo>> response = (Response) execute(call);
-            return processResponseGetOne(response);
+            Result<AddressInfo> result = processResponseGetOne(response);
+            //Sort
+            if (utxoSortType == SortType.DESC) {
+                result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()).descendingSet());
+            } else {
+                result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
+            }
+            return result;
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
