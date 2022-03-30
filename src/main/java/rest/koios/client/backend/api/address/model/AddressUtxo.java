@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AddressUtxo {
+public class AddressUtxo implements Comparable<AddressUtxo> {
 
     /**
      * Hash of the UTxO
@@ -50,4 +50,9 @@ public class AddressUtxo {
      * An array of assets which are included in the UTxO
      */
     private ArrayList<Asset> assetList;
+
+    @Override
+    public int compareTo(AddressUtxo other) {
+        return getBlockHeight().compareTo(other.getBlockHeight());
+    }
 }
