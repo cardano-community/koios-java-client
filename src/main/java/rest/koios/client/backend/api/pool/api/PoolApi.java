@@ -45,6 +45,6 @@ public interface PoolApi {
     @GET("pool_relays")
     Call<List<PoolRelay>> getPoolRelays(@QueryMap Map<String, String> paramsMap);
 
-    @GET("pool_metadata")
-    Call<List<PoolMetadata>> getPoolMetadata(@QueryMap Map<String, String> paramsMap);
+    @POST("pool_metadata")
+    Call<List<PoolMetadata>> getPoolMetadata(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 }

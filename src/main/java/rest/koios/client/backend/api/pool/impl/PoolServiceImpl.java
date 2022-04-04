@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -168,7 +169,15 @@ public class PoolServiceImpl extends BaseService implements PoolService {
 
     @Override
     public Result<List<PoolMetadata>> getPoolMetadata(Options options) throws ApiException {
-        Call<List<PoolMetadata>> call = poolApi.getPoolMetadata(optionsToParamMap(options));
+        return getPoolMetadata(Collections.emptyList(), options);
+    }
+
+    @Override
+    public Result<List<PoolMetadata>> getPoolMetadata(List<String> poolIds, Options options) throws ApiException {
+        for (String poolId : poolIds) {
+            validateBech32(poolId);
+        }
+        Call<List<PoolMetadata>> call = poolApi.getPoolMetadata(buildBody(poolIds), optionsToParamMap(options));
         try {
             Response<List<PoolMetadata>> response = (Response) execute(call);
             return processResponse(response);
@@ -179,7 +188,9 @@ public class PoolServiceImpl extends BaseService implements PoolService {
 
     private Map<String, Object> buildBody(List<String> poolIds) {
         Map<String, Object> bodyMap = new HashMap<>();
-        bodyMap.put("_pool_bech32_ids", poolIds);
+        if (!poolIds.isEmpty()) {
+            bodyMap.put("_pool_bech32_ids", poolIds);
+        }
         return bodyMap;
     }
 }
