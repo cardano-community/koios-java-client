@@ -178,4 +178,18 @@ public interface PoolService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PoolMetadata>> getPoolMetadata(Options options) throws ApiException;
+
+    /**
+     * Pool Metadata by Pool Ids with Filtering, Pagination, Ordering Options
+     * Metadata(on &amp; off-chain) for all currently registered/retiring (not retired) pools
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param poolIds Pool Bech32 Ids List (optional)
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolMetadata}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolMetadata>> getPoolMetadata(List<String> poolIds, Options options) throws ApiException;
 }
