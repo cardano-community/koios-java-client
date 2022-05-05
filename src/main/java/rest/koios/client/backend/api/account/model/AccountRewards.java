@@ -27,7 +27,7 @@ public class AccountRewards {
     /**
      * Rewards Amount
      */
-    private Long amount;
+    private String amount;
 
     /**
      * Rewards Type

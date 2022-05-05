@@ -43,12 +43,12 @@ public class PolicyAsset {
     private TokenRegistryMetadata tokenRegistryMetadata;
 
     /**
-     *
+     * Total Supply
      */
     private String totalSupply;
 
     /**
-     *
+     * Creation Time
      */
     private String creationTime;
 }

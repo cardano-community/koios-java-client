@@ -27,7 +27,7 @@ public interface AssetApi {
     Call<List<AssetHistory>> getAssetHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 
     @GET("asset_policy_info")
-    Call<List<AssetPolicyInfo>> getAssetPolicyInformation(@Query("_asset_policy") String assetPolicy);
+    Call<List<PolicyAsset>> getAssetPolicyInformation(@Query("_asset_policy") String assetPolicy);
 
     @GET("asset_summary")
     Call<List<AssetSummary>> getAssetSummary(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);

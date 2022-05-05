@@ -32,5 +32,5 @@ public class AccountHistory {
     /**
      * Active stake amount (in lovelaces)
      */
-    private Long activeStake = null;
+    private String activeStake = null;
 }

@@ -27,35 +27,35 @@ public class AccountInfo {
     /**
      * Account Balance
      */
-    private Long totalBalance;
+    private String totalBalance;
 
     /**
      * Utxo Balance
      */
-    private Long utxo;
+    private String utxo;
 
     /**
      * Rewards Balance
      */
-    private Long rewards;
+    private String rewards;
 
     /**
      * Withdrawals Amount
      */
-    private Long withdrawals;
+    private String withdrawals;
 
     /**
      * Rewards Available Amount
      */
-    private Long rewardsAvailable;
+    private String rewardsAvailable;
 
     /**
      * Reserves Amount
      */
-    private Long reserves;
+    private String reserves;
 
     /**
      * Treasury Amount
      */
-    private Long treasury;
+    private String treasury;
 }
