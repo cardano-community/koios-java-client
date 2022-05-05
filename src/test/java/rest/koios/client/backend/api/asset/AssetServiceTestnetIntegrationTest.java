@@ -111,7 +111,7 @@ class AssetServiceTestnetIntegrationTest {
     @Test
     void getAssetPolicyInformationTest() throws ApiException {
         String assetPolicy = "34250edd1e9836f5378702fbf9416b709bc140e04f668cc355208518";
-        Result<AssetPolicyInfo> assetPolicyInfoResult = assetService.getAssetPolicyInformation(assetPolicy);
+        Result<List<PolicyAsset>> assetPolicyInfoResult = assetService.getAssetPolicyInformation(assetPolicy);
         Assertions.assertTrue(assetPolicyInfoResult.isSuccessful());
         Assertions.assertNotNull(assetPolicyInfoResult.getValue());
         log.info(assetPolicyInfoResult.getValue().toString());
