@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.asset.api;
 
+import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -33,5 +34,5 @@ public interface AssetApi {
     Call<List<AssetSummary>> getAssetSummary(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
 
     @GET("asset_txs")
-    Call<List<AssetTx>> getAssetTransactionHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
+    Call<List<TxHash>> getAssetTransactionHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 }

@@ -20,6 +20,11 @@ public class TxHash {
     private String txHash;
 
     /**
+     * Epoch number of the block
+     */
+    private Integer epochNo;
+
+    /**
      * Block Height
      */
     private Integer blockHeight;

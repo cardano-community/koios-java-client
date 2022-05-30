@@ -1,6 +1,5 @@
 package rest.koios.client.backend.api.block.impl;
 
-import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
@@ -8,6 +7,7 @@ import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.api.BlockApi;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
+import rest.koios.client.backend.api.block.model.BlockTxHash;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
@@ -86,11 +86,11 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public Result<List<TxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException {
+    public Result<List<BlockTxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException {
         validateHexFormat(blockHash);
-        Call<List<TxHash>> call = blockApi.getBlockTransactions(blockHash, optionsToParamMap(options));
+        Call<List<BlockTxHash>> call = blockApi.getBlockTransactions(blockHash, optionsToParamMap(options));
         try {
-            Response<List<TxHash>> response = (Response) execute(call);
+            Response<List<BlockTxHash>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

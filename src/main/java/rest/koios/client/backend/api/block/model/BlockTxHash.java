@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.asset.model;
+package rest.koios.client.backend.api.block.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,30 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
-/**
- * Asset Transactions
- */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetTx {
+public class BlockTxHash {
 
     /**
-     * Policy Id
+     * Hash identifier of the transaction
      */
-    private String policyId;
-
-    /**
-     * Asset Name
-     */
-    private String assetName;
-
-    /**
-     * Tx Hashes List
-     */
-    private List<String> txHashes;
+    private String txHash;
 }
