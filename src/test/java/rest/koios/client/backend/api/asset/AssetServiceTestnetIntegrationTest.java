@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
@@ -148,7 +149,7 @@ class AssetServiceTestnetIntegrationTest {
         String assetPolicy = "654ebfc69ea9b582d09755a0760fdac7b3e16718ef47acd958708035";
         String assetName = "MusicBong359";
         String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
-        Result<List<AssetTx>> assetTxsResult = assetService.getAssetTransactionHistory(assetPolicy, assetNameHex, null);
+        Result<List<TxHash>> assetTxsResult = assetService.getAssetTransactionHistory(assetPolicy, assetNameHex, null);
         Assertions.assertTrue(assetTxsResult.isSuccessful());
         Assertions.assertNotNull(assetTxsResult.getValue());
         log.info(assetTxsResult.getValue().toString());

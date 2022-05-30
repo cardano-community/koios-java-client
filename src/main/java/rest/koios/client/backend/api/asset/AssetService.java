@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.asset;
 
+import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
@@ -106,8 +107,8 @@ public interface AssetService {
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (required)
      * @param options     Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link AssetTx}
+     * @return Result of Type List of {@link TxHash}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException;
+    Result<List<TxHash>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException;
 }

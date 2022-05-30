@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.asset.impl;
 
+import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.asset.AssetService;
 import rest.koios.client.backend.api.asset.api.AssetApi;
 import rest.koios.client.backend.api.asset.model.*;
@@ -106,12 +107,12 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<AssetTx>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException {
+    public Result<List<TxHash>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
-        Call<List<AssetTx>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName, optionsToParamMap(options));
+        Call<List<TxHash>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName, optionsToParamMap(options));
         try {
-            Response<List<AssetTx>> response = (Response) execute(call);
+            Response<List<TxHash>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

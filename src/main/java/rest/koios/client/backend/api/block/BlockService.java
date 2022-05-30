@@ -1,10 +1,10 @@
 package rest.koios.client.backend.api.block;
 
-import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
+import rest.koios.client.backend.api.block.model.BlockTxHash;
 import rest.koios.client.backend.factory.options.Options;
 
 import java.util.List;
@@ -74,8 +74,8 @@ public interface BlockService {
      *
      * @param blockHash Block Hash in hex format (required)
      * @param options Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link TxHash} Included Transaction of a specific block
+     * @return Result of Type List of {@link BlockTxHash} Included Transaction of a specific block
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException;
+    Result<List<BlockTxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException;
 }
