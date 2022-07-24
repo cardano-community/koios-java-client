@@ -69,5 +69,13 @@ public class Block {
      */
     private String pool = null;
 
+    /**
+     * The protocol major version
+     */
+    private Integer protoMajor;
 
+    /**
+     * The protocol minor version
+     */
+    private Integer protoMinor;
 }
