@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.epoch.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EpochParams {
 
     /**
@@ -173,6 +175,12 @@ public class EpochParams {
 
     /**
      * The cost per UTxO word
+     * @deprecated
      */
     private Integer coinsPerUtxoWord = null;
+
+    /**
+     * The cost per UTxO byte
+     */
+    private Integer coinsPerUtxoSize = null;
 }
