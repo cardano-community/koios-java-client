@@ -1,5 +1,7 @@
 package rest.koios.client.backend.api.base;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
@@ -52,7 +54,10 @@ public class BaseService {
         } else {
             client = new OkHttpClient.Builder().build();
         }
-        retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(client).addConverterFactory(JacksonConverterFactory.create()).build();
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(client).addConverterFactory(JacksonConverterFactory
+                .create(objectMapper)).build();
     }
 
     protected <T> Result<T> processResponseGetOne(Response<List<T>> response) throws IOException {

@@ -17,9 +17,20 @@ import java.math.BigDecimal;
 public class EpochParams {
 
     /**
+     * The cost per UTxO size
+     */
+    private Integer coinsPerUtxoSize = null;
+
+    /**
      * Epoch number
      */
     private Long epochNo = null;
+
+
+    /**
+     * Extra Entropy
+     */
+    private String extraEntropy;
 
     /**
      * The 'a' parameter to calculate the minimum transaction fee

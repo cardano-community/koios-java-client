@@ -64,4 +64,14 @@ public class EpochInfo {
      * Rewards accumulated as of given epoch (in lovelaces)
      */
     private Long activeStake = null;
+
+    /**
+     * Total rewards earned in epoch (null for pre-Shelley epochs)
+     */
+    private String totalRewards;
+
+    /**
+     * Average block reward for epoch (null for pre-Shelley epochs)
+     */
+    private String avgBlkReward;
 }

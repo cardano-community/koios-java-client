@@ -75,6 +75,16 @@ public class BlockInfo {
     private String pool = null;
 
     /**
+     * The protocol major version
+     */
+    private Integer protoMajor;
+
+    /**
+     * The protocol minor version
+     */
+    private Integer protoMinor;
+
+    /**
      * Total output of the block (in lovelace)
      */
     private String totalOutput;
