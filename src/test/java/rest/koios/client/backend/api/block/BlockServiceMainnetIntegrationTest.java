@@ -40,6 +40,15 @@ class BlockServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getSpecificBlockTest() throws ApiException {
+        Result<List<Block>> blockResult = blockService.getBlockList(Options.builder().option(Filter.of("block_height", FilterType.EQ, "7539197")).build());
+        log.info(blockResult.toString());
+        Assertions.assertTrue(blockResult.isSuccessful());
+        Assertions.assertNotNull(blockResult.getValue());
+        log.info(blockResult.getValue().toString());
+    }
+
+    @Test
     void getBlockListLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<Block>> blockListResult = blockService.getBlockList(options);
