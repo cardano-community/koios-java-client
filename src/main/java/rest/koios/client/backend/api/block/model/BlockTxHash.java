@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Block Tx Hash
+ */
 @Getter
 @Setter
 @ToString

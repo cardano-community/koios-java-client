@@ -48,6 +48,8 @@ public class Options {
         }
         if (filters.size() >= 2) {
             optionList.add(LogicalOperatorFilter.of(LogicalOperatorFilterType.AND,filters.toArray(new Option[0])));
+        } else if (filters.size() == 1) {
+            optionList.add(filters.get(0));
         }
         return optionList.stream().collect(Collectors.toMap(Option::getOptionTypeValue, Option::getValue));
     }

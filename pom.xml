@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <retrofit.version>2.9.0</retrofit.version>
         <jackson-databind.version>2.13.3</jackson-databind.version>
-        <logging-interceptor.version>4.9.3</logging-interceptor.version>
+        <logging-interceptor.version>4.10.0</logging-interceptor.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
         <slf4j-reload4j.version>1.7.36</slf4j-reload4j.version>

@@ -13,6 +13,8 @@ import rest.koios.client.backend.api.block.model.BlockTxHash;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.filters.Filter;
+import rest.koios.client.backend.factory.options.filters.FilterType;
 
 import java.util.List;
 
@@ -32,6 +34,15 @@ class BlockServiceTestnetIntegrationTest {
     @Test
     void getLatestBlockTest() throws ApiException {
         Result<Block> blockResult = blockService.getLatestBlock();
+        Assertions.assertTrue(blockResult.isSuccessful());
+        Assertions.assertNotNull(blockResult.getValue());
+        log.info(blockResult.getValue().toString());
+    }
+
+    @Test
+    void getSpecificBlockTest() throws ApiException {
+        Result<List<Block>> blockResult = blockService.getBlockList(Options.builder().option(Filter.of("block_height", FilterType.EQ, "2590132")).build());
+        log.info(blockResult.toString());
         Assertions.assertTrue(blockResult.isSuccessful());
         Assertions.assertNotNull(blockResult.getValue());
         log.info(blockResult.getValue().toString());
