@@ -1,10 +1,16 @@
 package rest.koios.client.backend.api.epoch.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import rest.koios.client.backend.api.epoch.helper.CostModelsDeserializer;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * Epoch Parameters
@@ -17,15 +23,9 @@ import java.math.BigDecimal;
 public class EpochParams {
 
     /**
-     * The cost per UTxO size
-     */
-    private Integer coinsPerUtxoSize = null;
-
-    /**
      * Epoch number
      */
     private Long epochNo = null;
-
 
     /**
      * Extra Entropy
@@ -135,7 +135,8 @@ public class EpochParams {
     /**
      * The per language cost models
      */
-    private String costModels = null;
+    @JsonDeserialize(using = CostModelsDeserializer.class)
+    private Map<String, Map<String, Long>> costModels = null;
 
     /**
      * The per word cost of script memory usage
@@ -183,7 +184,13 @@ public class EpochParams {
     private Integer maxCollateralInputs = null;
 
     /**
+     * The cost per UTxO size
+     */
+    private Integer coinsPerUtxoSize = null;
+
+    /**
      * The cost per UTxO word
      */
+    @Deprecated
     private Integer coinsPerUtxoWord = null;
 }
