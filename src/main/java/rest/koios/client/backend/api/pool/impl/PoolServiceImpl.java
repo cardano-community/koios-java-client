@@ -26,10 +26,10 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     /**
      * Pool Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public PoolServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public PoolServiceImpl(BaseService baseService) {
+        super(baseService);
         poolApi = getRetrofit().create(PoolApi.class);
     }
 

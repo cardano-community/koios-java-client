@@ -29,10 +29,10 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     /**
      * Address Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public AddressServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AddressServiceImpl(BaseService baseService) {
+        super(baseService);
         addressApi = getRetrofit().create(AddressApi.class);
     }
 

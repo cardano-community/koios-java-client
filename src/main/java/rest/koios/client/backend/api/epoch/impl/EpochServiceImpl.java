@@ -25,10 +25,10 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     /**
      * Epoch Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public EpochServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public EpochServiceImpl(BaseService baseService) {
+        super(baseService);
         epochApi = getRetrofit().create(EpochApi.class);
     }
 

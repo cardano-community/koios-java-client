@@ -28,10 +28,10 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     /**
      * Transaction Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public TransactionsServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public TransactionsServiceImpl(BaseService baseService) {
+        super(baseService);
         transactionApi = getRetrofit().create(TransactionApi.class);
     }
 
@@ -102,7 +102,7 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
 
     @Override
     public Result<String> submitTx(byte[] cborData) throws ApiException {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/cbor"), cborData);
+        RequestBody requestBody = RequestBody.create(cborData, MediaType.parse("application/cbor"));
         Call<String> txnCall = transactionApi.submitTx(requestBody);
         try {
             Response<String> response = txnCall.execute();

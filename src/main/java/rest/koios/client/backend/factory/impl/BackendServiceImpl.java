@@ -9,6 +9,7 @@ import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.impl.AddressServiceImpl;
 import rest.koios.client.backend.api.asset.AssetService;
 import rest.koios.client.backend.api.asset.impl.AssetServiceImpl;
+import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.impl.BlockServiceImpl;
 import rest.koios.client.backend.api.epoch.EpochService;
@@ -50,15 +51,16 @@ public class BackendServiceImpl implements BackendService {
      */
     public BackendServiceImpl(String baseUrl) {
         log.info("Koios URL: " + baseUrl);
-        this.networkService = new NetworkServiceImpl(baseUrl);
-        this.epochService = new EpochServiceImpl(baseUrl);
-        this.blockService = new BlockServiceImpl(baseUrl);
-        this.transactionsService = new TransactionsServiceImpl(baseUrl);
-        this.addressService = new AddressServiceImpl(baseUrl);
-        this.accountService = new AccountServiceImpl(baseUrl);
-        this.assetService = new AssetServiceImpl(baseUrl);
-        this.poolService = new PoolServiceImpl(baseUrl);
-        this.scriptService = new ScriptServiceImpl(baseUrl);
+        BaseService baseService = new BaseService(baseUrl);
+        this.networkService = new NetworkServiceImpl(baseService);
+        this.epochService = new EpochServiceImpl(baseService);
+        this.blockService = new BlockServiceImpl(baseService);
+        this.transactionsService = new TransactionsServiceImpl(baseService);
+        this.addressService = new AddressServiceImpl(baseService);
+        this.accountService = new AccountServiceImpl(baseService);
+        this.assetService = new AssetServiceImpl(baseService);
+        this.poolService = new PoolServiceImpl(baseService);
+        this.scriptService = new ScriptServiceImpl(baseService);
     }
 
     /**

@@ -23,10 +23,10 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     /**
      * Account Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public AccountServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AccountServiceImpl(BaseService baseService) {
+        super(baseService);
         accountApi = getRetrofit().create(AccountApi.class);
     }
 

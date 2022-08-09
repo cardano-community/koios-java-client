@@ -1,6 +1,7 @@
-<div align="center">
+<div style="text-align: center">
+<img src="https://www.koios.rest/wp-content/uploads/ct-logos/logo_db1c2ccfd12c53198baca560933d95d7_2x.png" style="height: 120px;" alt="Koios"/>
     <hr/>
-        <h1 align="center" style="border-bottom: none">Koios Java Client</h1>
+<h2 style="border-bottom: none; text-align: center">Koios Java Client</h2>
 
 [![Build](https://github.com/cardano-community/koios-java-client/actions/workflows/maven.yml/badge.svg)](https://github.com/cardano-community/koios-java-client/actions/workflows/.github/workflows/maven.yml)
 [![codeQL](https://github.com/cardano-community/koios-java-client/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/cardano-community/koios-java-client/actions/workflows/.github/workflows/codeql-analysis.yml)
@@ -24,7 +25,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Horizontal Filtering Supported
 - Sorting Supported
 - Rate Control
-- Inner Retry Mechanism upon Timeouts (Default: 3 Retries)
+- Inner Retry Mechanism upon Timeouts
 - Supported REST Services:
     - [x] Network
         - Chain Tip
@@ -84,7 +85,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 ### Add dependency
 
 - For Maven, add the following dependency to project's pom.xml
-```
+```xml
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
@@ -99,22 +100,22 @@ compile group: 'io.github.cardano-community', name: 'koios-java-client', version
 
 ### Get Koios Backend Service
 - Mainnet
-```
+```java
 BackendService backendService = BackendFactory.getKoiosMainnetService();
 ```
 
 - Testnet
-```
+```java
 BackendService backendService = BackendFactory.getKoiosTestnetService();
 ```
 
 - Guildnet
-```
+```java
 BackendService backendService = BackendFactory.getKoiosGuildService();
 ```
 
 ### Get Koios Backend Services
-```
+```java
 NetworkService networkService = backendService.getNetworkService();
 EpochService epochService = backendService.getEpochService();
 BlockService blockService = backendService.getBlockService();
@@ -128,7 +129,7 @@ ScriptService scriptService = backendService.getScriptService();
 
 ### Advanced Query Example (Testnet)
 #### Querying a Descending Order of All Address Transactions since Block No. #3168087 to Block No. #3168097 (inclusive), Limited to Maximum of 10 Results.
-```
+```java
 String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
 
 Options options = Options.builder()
@@ -140,12 +141,17 @@ Options options = Options.builder()
 
 Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(List.of(address), options);
 ```
-### Toggle Logging By Environment Variable
-```
-KOIOS_JAVA_LIB_LOGGING=true
-```
+### Supported Environment Variables
+
+|              Variable              |  Type   |                          Description                           | Default |
+|:----------------------------------:|:-------:|:--------------------------------------------------------------:|:-------:|
+|       KOIOS_JAVA_LIB_LOGGING       | boolean |                         Toggle Logging                         |  false  |
+|    KOIOS_JAVA_LIB_RETRIES_COUNT    | integer |         Sets the max retry count upon request timeout          |    5    |
+|  KOIOS_JAVA_LIB_READ_TIMEOUT_SEC   | integer |  Sets the default read timeout for new connections (seconds)   |   60    |
+| KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC | integer | Sets the default connect timeout for new connections (seconds) |   60    |
+
 ## Clone & Build with Maven
-```
+```shell
 git clone https://github.com/cardano-community/koios-java-client.git
 cd koios-java-client
 mvn clean install
@@ -156,12 +162,9 @@ mvn clean install
 * [ISR - Israeli Cardano Community](https://www.cardano-israel.com/)
 * [MusicBox - CNFT Project](https://www.musicboxnft.com/)
 <hr/>
-<div align="center">
 
-</div>
-
-<p align="center">
-<a href="CONTRIBUTING.md">:triangular_ruler: Contributing</a>
-  |
-<a href="SPONSORS.md">:gift_heart: Sponsors</a>
+<p style="text-align: center">
+    <a href="CONTRIBUTING.md">:triangular_ruler: Contributing</a>
+      |
+    <a href="SPONSORS.md">:gift_heart: Sponsors</a>
 </p>
