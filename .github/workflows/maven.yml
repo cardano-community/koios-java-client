@@ -33,9 +33,13 @@ jobs:
       with:
         jacoco-csv-file: target/site/jacoco/jacoco.csv
         badges-directory: .github/badges
-        generate-branches-badge: true
+        generate-branches-badge: false
         coverage-badge-filename: jacoco.svg
+        generate-coverage-endpoint: true
+        coverage-endpoint-filename: jacoco.json
         generate-summary: true
+        summary-filename: coverage-summary.json
+        coverage-label: Coverage
 
     - name: Log Coverage Percentage
       run: |
@@ -47,8 +51,8 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         default_author: github_actions
-        message: 'commit badge'
-        add: '*.svg'
+        message: 'Commit Coverage Report'
+        add: '*.json'
 
     - name: Upload JaCoCo coverage report
       uses: actions/upload-artifact@v2
