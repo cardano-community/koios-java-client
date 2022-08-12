@@ -45,9 +45,9 @@ public class BlockInfo {
     private Long blockSize = null;
 
     /**
-     * Timestamp of the block
+     * UNIX timestamp of the block
      */
-    private String blockTime = null;
+    private Long blockTime = null;
 
     /**
      * Number of transactions in the block

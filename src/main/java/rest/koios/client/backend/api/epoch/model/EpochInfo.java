@@ -41,24 +41,24 @@ public class EpochInfo {
     private Integer blkCount = null;
 
     /**
-     * Timestamp of the epoch start
+     * UNIX timestamp of the epoch start
      */
-    private String startTime;
+    private Long startTime;
 
     /**
-     * Timestamp of the epoch end
+     * UNIX timestamp of the epoch end
      */
-    private String endTime;
+    private Long endTime;
 
     /**
-     * Timestamp for first block created in epoch
+     * UNIX timestamp of the epoch's first block
      */
-    private String firstBlockTime = null;
+    private Long firstBlockTime = null;
 
     /**
-     * Timestamp for last block created in epoch
+     * UNIX timestamp of the epoch's last block
      */
-    private String lastBlockTime = null;
+    private Long lastBlockTime = null;
 
     /**
      * Rewards accumulated as of given epoch (in lovelaces)

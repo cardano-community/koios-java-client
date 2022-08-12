@@ -40,9 +40,9 @@ public class Genesis {
     private String maxlovelacesupply = null;
 
     /**
-     * Timestamp for first block (genesis) on chain
+     * UNIX timestamp of the first block (genesis) on chain
      **/
-    private String systemstart = null;
+    private Long systemstart = null;
 
     /**
      * Active Slot Co-Efficient (f) - determines the _probability_ of number of slots in epoch that are expected to have blocks (so mainnet, this would be: 432000 * 0.05 &#x3D; 21600 estimated blocks)

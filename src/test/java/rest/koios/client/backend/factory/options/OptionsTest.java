@@ -46,7 +46,6 @@ public class OptionsTest {
         assertEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
         assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
-        assertFalse(transactionsResult.getValue().get(0).getBlockTime().isEmpty());
     }
 
     @Test
@@ -70,7 +69,6 @@ public class OptionsTest {
         assertEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
         assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
-        assertFalse(transactionsResult.getValue().get(0).getBlockTime().isEmpty());
     }
 
     @Test
@@ -95,7 +93,6 @@ public class OptionsTest {
         assertEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
         assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
-        assertFalse(transactionsResult.getValue().get(0).getBlockTime().isEmpty());
     }
 
     @Test
@@ -119,6 +116,5 @@ public class OptionsTest {
         assertNotEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
         assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
-        assertFalse(transactionsResult.getValue().get(0).getBlockTime().isEmpty());
     }
 }

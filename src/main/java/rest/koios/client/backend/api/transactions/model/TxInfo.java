@@ -50,9 +50,9 @@ public class TxInfo {
     private Integer absoluteSlot = null;
 
     /**
-     * Timestamp where block containing transaction was created
+     * UNIX timestamp of the transaction
      */
-    private String txTimestamp = null;
+    private Long txTimestamp = null;
 
     /**
      * Index of transaction within block

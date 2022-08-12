@@ -68,7 +68,7 @@ public class AssetInformation {
     private String totalSupply;
 
     /**
-     * Creation Time
+     * UNIX timestamp of the first asset mint
      */
-    private String creationTime;
+    private Long creationTime;
 }

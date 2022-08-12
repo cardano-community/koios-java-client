@@ -40,7 +40,7 @@ public class Tip {
     private Integer blockNo = null;
 
     /**
-     * Timestamp for when the block was created
+     * UNIX timestamp of the block
      **/
-    private String blockTime = null;
+    private Long blockTime = null;
 }
