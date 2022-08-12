@@ -23,12 +23,12 @@ public class EpochInfo {
     /**
      * Total output value across all transactions in epoch
      */
-    private Long outSum = null;
+    private String outSum = null;
 
     /**
      * Total fees incurred by transactions in epoch
      */
-    private Long fees = null;
+    private String fees = null;
 
     /**
      * Number of transactions submitted in epoch
@@ -63,7 +63,7 @@ public class EpochInfo {
     /**
      * Rewards accumulated as of given epoch (in lovelaces)
      */
-    private Long activeStake = null;
+    private String activeStake = null;
 
     /**
      * Total rewards earned in epoch (null for pre-Shelley epochs)

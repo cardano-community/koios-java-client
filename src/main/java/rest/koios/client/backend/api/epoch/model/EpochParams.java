@@ -60,12 +60,12 @@ public class EpochParams {
     /**
      * The amount (in lovelace) required for a deposit to register a stake address
      */
-    private Integer keyDeposit = null;
+    private String keyDeposit = null;
 
     /**
      * The amount (in lovelace) required for a deposit to register a stake pool
      */
-    private Integer poolDeposit = null;
+    private String poolDeposit = null;
 
     /**
      * The maximum number of epochs in the future that a pool retirement is allowed to be scheduled for
@@ -115,12 +115,12 @@ public class EpochParams {
     /**
      * The minimum value of a UTxO entry
      */
-    private Integer minUtxoValue = null;
+    private String minUtxoValue = null;
 
     /**
      * The minimum pool cost
      */
-    private Integer minPoolCost = null;
+    private String minPoolCost = null;
 
     /**
      * The nonce value for this epoch
@@ -186,11 +186,11 @@ public class EpochParams {
     /**
      * The cost per UTxO size
      */
-    private Integer coinsPerUtxoSize = null;
+    private String coinsPerUtxoSize = null;
 
     /**
      * The cost per UTxO word
      */
     @Deprecated
-    private Integer coinsPerUtxoWord = null;
+    private String coinsPerUtxoWord = null;
 }

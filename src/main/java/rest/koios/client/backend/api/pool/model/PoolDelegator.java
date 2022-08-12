@@ -14,12 +14,15 @@ import lombok.*;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PoolDelegator {
 
+    /**
+     * Cardano staking address (reward account) in bech32 format
+     */
     private String stakeAddress;
 
     /**
      * Current delegator live stake (in lovelace)
      */
-    private Long amount;
+    private String amount;
 
     /**
      * Epoch number

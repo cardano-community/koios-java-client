@@ -22,25 +22,25 @@ public class Totals {
     /**
      * Circulating UTxOs for given epoch (in lovelaces)
      **/
-    private Long circulation = null;
+    private String circulation = null;
 
     /**
      * Funds in treasury for given epoch (in lovelaces)
      **/
-    private Long treasury = null;
+    private String treasury = null;
 
     /**
      * Rewards accumulated as of given epoch (in lovelaces)
      **/
-    private Long reward = null;
+    private String reward = null;
 
     /**
      * Total Active Supply (sum of treasury funds, rewards, UTxOs, deposits and fees) for given epoch (in lovelaces)
      **/
-    private Long supply = null;
+    private String supply = null;
 
     /**
      * Total Reserves yet to be unlocked on chain
      **/
-    private Long reserves = null;
+    private String reserves = null;
 }

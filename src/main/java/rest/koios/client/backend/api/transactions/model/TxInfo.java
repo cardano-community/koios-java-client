@@ -72,7 +72,7 @@ public class TxInfo {
     /**
      * Total Transaction fee (in lovelaces)
      */
-    private Long fee = null;
+    private String fee = null;
 
     /**
      * Total Deposits included in transaction (for example, if it is registering a pool/key)
