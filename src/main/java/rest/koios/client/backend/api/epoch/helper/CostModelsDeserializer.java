@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Cost Models Json Deserializer
+ */
 public class CostModelsDeserializer extends JsonDeserializer<Map<String, Map<String, Long>>> {
 
     @Override
