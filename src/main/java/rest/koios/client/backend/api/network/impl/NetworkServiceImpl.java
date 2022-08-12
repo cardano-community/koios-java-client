@@ -55,7 +55,7 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     }
 
     @Override
-    public Result<Totals> getHistoricalTokenomicStatsByEpoch(Long epochNo) throws ApiException {
+    public Result<Totals> getHistoricalTokenomicStatsByEpoch(Integer epochNo) throws ApiException {
         validateEpoch(epochNo);
         Call<List<Totals>> call = networkApi.getHistoricalTokenomicStatsByEpoch(epochNo);
         try {

@@ -21,5 +21,8 @@ public class PoolDelegator {
      */
     private Long amount;
 
-    private Long epochNo;
+    /**
+     * Epoch number
+     */
+    private Integer activeEpochNo;
 }

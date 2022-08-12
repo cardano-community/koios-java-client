@@ -16,13 +16,13 @@ import java.util.Map;
 public interface EpochApi {
 
     @GET("epoch_info")
-    Call<List<EpochInfo>> getEpochInformationByEpoch(@Query("_epoch_no") Long epochNo);
+    Call<List<EpochInfo>> getEpochInformationByEpoch(@Query("_epoch_no") Integer epochNo);
 
     @GET("epoch_info")
     Call<List<EpochInfo>> getEpochInformation(@QueryMap Map<String, String> paramsMap);
 
     @GET("epoch_params")
-    Call<List<EpochParams>> getEpochParametersByEpoch(@Query("_epoch_no") Long epochNo);
+    Call<List<EpochParams>> getEpochParametersByEpoch(@Query("_epoch_no") Integer epochNo);
 
     @GET("epoch_params")
     Call<List<EpochParams>> getEpochParameters(@QueryMap Map<String, String> paramsMap);

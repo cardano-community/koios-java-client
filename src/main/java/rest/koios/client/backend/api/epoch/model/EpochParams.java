@@ -25,7 +25,7 @@ public class EpochParams {
     /**
      * Epoch number
      */
-    private Long epochNo = null;
+    private Integer epochNo = null;
 
     /**
      * Extra Entropy

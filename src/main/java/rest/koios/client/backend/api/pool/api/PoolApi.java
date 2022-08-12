@@ -40,7 +40,7 @@ public interface PoolApi {
      * @return List of {@link PoolDelegator}
      */
     @GET("pool_delegators")
-    Call<List<PoolDelegator>> getPoolDelegatorsListByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo, @QueryMap Map<String, String> paramsMap);
+    Call<List<PoolDelegator>> getPoolDelegatorsListByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Return information about delegators by a given pool and for current epoch
@@ -61,7 +61,7 @@ public interface PoolApi {
      * @return List of {@link PoolBlock}
      */
     @GET("pool_blocks")
-    Call<List<PoolBlock>> getPoolBlocksByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo, @QueryMap Map<String, String> paramsMap);
+    Call<List<PoolBlock>> getPoolBlocksByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Return information about blocks minted by a given pool in current epoch
@@ -82,7 +82,7 @@ public interface PoolApi {
      * @return List of {@link PoolHistory}
      */
     @GET("pool_history")
-    Call<List<PoolHistory>> getPoolHistoryByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Long epochNo, @QueryMap Map<String, String> paramsMap);
+    Call<List<PoolHistory>> getPoolHistoryByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Return information about pool stake, block and reward history for all epochs that pool existed for.

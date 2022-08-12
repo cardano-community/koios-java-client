@@ -52,7 +52,7 @@ public interface PoolService {
      * @return Result of Type List of {@link PoolDelegator}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
+    Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException;
 
     /**
      * Pool Delegators List for Current Epoch with Filtering, Pagination, Ordering Options
@@ -81,7 +81,7 @@ public interface PoolService {
      * @return Result of Type List of {@link PoolBlock}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
+    Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException;
 
     /**
      * Pool Blocks with Filtering, Pagination, Ordering Options
@@ -110,7 +110,7 @@ public interface PoolService {
      * @return Result of {@link PoolHistory}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException;
+    Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException;
 
     /**
      * Pool Stake, Block and Reward History with Filtering, Pagination, Ordering Options

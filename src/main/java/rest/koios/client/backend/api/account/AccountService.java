@@ -50,7 +50,7 @@ public interface AccountService {
      * @return Result of {@link AccountRewards}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<AccountRewards> getAccountRewardsByEpoch(String stakeAddress, Long epochNo) throws ApiException;
+    Result<AccountRewards> getAccountRewardsByEpoch(String stakeAddress, Integer epochNo) throws ApiException;
 
     /**
      * Account Rewards with Filtering, Pagination, Ordering Options

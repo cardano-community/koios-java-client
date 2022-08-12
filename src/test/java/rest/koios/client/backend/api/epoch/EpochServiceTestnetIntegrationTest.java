@@ -29,7 +29,7 @@ class EpochServiceTestnetIntegrationTest {
 
     @Test
     void getEpochInformationTest() throws ApiException {
-        Long epochNo = 180L;
+        Integer epochNo = 180;
         Result<EpochInfo> epochInformationResult = epochService.getEpochInformationByEpoch(epochNo);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
@@ -76,7 +76,7 @@ class EpochServiceTestnetIntegrationTest {
 
     @Test
     void getEpochParametersTest() throws ApiException {
-        Long epochNo = 180L;
+        Integer epochNo = 180;
         Result<EpochParams> epochParametersResult = epochService.getEpochParametersByEpoch(epochNo);
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());

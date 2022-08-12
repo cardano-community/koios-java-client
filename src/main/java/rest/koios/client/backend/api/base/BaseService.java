@@ -173,7 +173,7 @@ public class BaseService {
      * @param epochNo Epoch Number
      * @throws ApiException if an error occurs while attempting to validate epoch
      */
-    protected void validateEpoch(Long epochNo) throws ApiException {
+    protected void validateEpoch(Integer epochNo) throws ApiException {
         if (epochNo == null) {
             throw new ApiException("Null Value for \"epochNo\"");
         }

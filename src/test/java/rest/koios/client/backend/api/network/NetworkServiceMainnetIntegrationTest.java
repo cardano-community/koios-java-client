@@ -49,7 +49,7 @@ class NetworkServiceMainnetIntegrationTest {
 
     @Test
     void getHistoricalTokenomicStatsTest() throws ApiException {
-        Long epochNo = 294L;
+        Integer epochNo = 294;
         Result<Totals> historicalTokenomicStatsResult = networkService.getHistoricalTokenomicStatsByEpoch(epochNo);
         Assertions.assertTrue(historicalTokenomicStatsResult.isSuccessful());
         Assertions.assertNotNull(historicalTokenomicStatsResult.getValue());
@@ -69,7 +69,7 @@ class NetworkServiceMainnetIntegrationTest {
 
     @Test
     void getHistoricalTokenomicStatsBadRequestTest() {
-        ApiException exception = assertThrows(ApiException.class, () -> networkService.getHistoricalTokenomicStatsByEpoch(-5L));
+        ApiException exception = assertThrows(ApiException.class, () -> networkService.getHistoricalTokenomicStatsByEpoch(-5));
         assertInstanceOf(ApiException.class, exception);
     }
 }

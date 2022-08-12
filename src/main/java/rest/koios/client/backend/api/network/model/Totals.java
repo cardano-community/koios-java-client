@@ -17,7 +17,7 @@ public class Totals {
     /**
      * Epoch number
      **/
-    private Long epochNo = null;
+    private Integer epochNo = null;
 
     /**
      * Circulating UTxOs for given epoch (in lovelaces)

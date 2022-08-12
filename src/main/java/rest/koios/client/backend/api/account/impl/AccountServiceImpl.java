@@ -54,7 +54,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<AccountRewards> getAccountRewardsByEpoch(String stakeAddress, Long epochNo) throws ApiException {
+    public Result<AccountRewards> getAccountRewardsByEpoch(String stakeAddress, Integer epochNo) throws ApiException {
         validateBech32(stakeAddress);
         validateEpoch(epochNo);
         Call<List<AccountRewards>> call = accountApi.getAccountRewardsByEpoch(stakeAddress, epochNo);

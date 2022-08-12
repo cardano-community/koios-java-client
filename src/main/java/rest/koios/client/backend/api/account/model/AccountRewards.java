@@ -17,7 +17,7 @@ public class AccountRewards {
     /**
      * Earned Rewards Epoch
      */
-    private Long earnedEpoch;
+    private Integer earnedEpoch;
 
     /**
      * Spendable Epoch

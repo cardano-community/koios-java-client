@@ -40,7 +40,7 @@ public interface AccountApi {
      * @return Full rewards history (including MIR) for a stake address, or certain epoch if specified
      */
     @GET("account_rewards")
-    Call<List<AccountRewards>> getAccountRewardsByEpoch(@Query("_stake_address") String stakeAddress, @Query("_epoch_no") Long epochNo);
+    Call<List<AccountRewards>> getAccountRewardsByEpoch(@Query("_stake_address") String stakeAddress, @Query("_epoch_no") Integer epochNo);
 
     /**
      * Get Account Rewards
