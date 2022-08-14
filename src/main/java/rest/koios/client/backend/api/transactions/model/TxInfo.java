@@ -37,7 +37,7 @@ public class TxInfo {
     /**
      * Epoch number of the block
      */
-    private Integer epoch = null;
+    private Integer epochNo = null;
 
     /**
      * Slot number of the block in epoch
