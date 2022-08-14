@@ -13,20 +13,48 @@ import java.util.Map;
  */
 public interface TransactionApi {
 
+    /**
+     * Get Transaction Information
+     *
+     * @param requestBody Json Body containing Array of Cardano Transaction hashes
+     * @param paramsMap   Filtering Options Query Parameters
+     * @return detailed information about transaction(s)
+     */
     @POST("tx_info")
     Call<List<TxInfo>> getTransactionInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
+    /**
+     * Get Transaction UTxOs
+     *
+     * @param requestBody Json Body containing Array of Cardano Transaction hashes
+     * @param paramsMap   Filtering Options Query Parameters
+     * @return UTxO set (inputs/outputs) of transactions.
+     */
     @POST("tx_utxos")
     Call<List<TxUtxo>> getTransactionUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
+    /**
+     * Get Transaction Metadata
+     *
+     * @param requestBody Json Body containing Array of Cardano Transaction hashes
+     * @param paramsMap   Filtering Options Query Parameters
+     * @return Metadata information (if any) for given transaction(s)
+     */
     @POST("tx_metadata")
     Call<List<TxMetadata>> getTransactionMetadata(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
+    /**
+     * Get Transaction Metadata Labels
+     *
+     * @param paramsMap Filtering Options Query Parameters
+     * @return list of all transaction metalabels
+     */
     @GET("tx_metalabels")
     Call<List<TxMetadataLabels>> getTransactionMetadataLabels(@QueryMap Map<String, String> paramsMap);
 
     /**
      * Submit Tx
+     *
      * @param requestBody body
      * @return Tx Id
      */
@@ -36,8 +64,9 @@ public interface TransactionApi {
 
     /**
      * getTransactionStatus
+     *
      * @param requestBody body
-     * @param paramsMap request params
+     * @param paramsMap   request params
      * @return List of Tx Statuses
      */
     @POST("tx_status")

@@ -2,7 +2,10 @@ package rest.koios.client.backend.api.network.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Genesis
@@ -42,10 +45,10 @@ public class Genesis {
     /**
      * UNIX timestamp of the first block (genesis) on chain
      **/
-    private Long systemstart = null;
+    private Integer systemstart = null;
 
     /**
-     * Active Slot Co-Efficient (f) - determines the _probability_ of number of slots in epoch that are expected to have blocks (so mainnet, this would be: 432000 * 0.05 &#x3D; 21600 estimated blocks)
+     * Active Slot Co-Efficient (f) - determines the _probability_ of number of slots in epoch that are expected to have blocks (so mainnet, this would be: 432000 * 0.05 = 21600 estimated blocks)
      **/
     private String activeslotcoeff = null;
 
@@ -60,7 +63,7 @@ public class Genesis {
     private String maxkesrevolutions = null;
 
     /**
-     * A unit (k) used to divide epochs to determine stability window (used in security checks like ensuring atleast 1 block was created in 3*k/f period, or to finalize next epoch&#x27;s nonce at 4*k/f slots before end of epoch)
+     * A unit (k) used to divide epochs to determine stability window (used in security checks like ensuring atleast 1 block was created in 3*k/f period, or to finalize next epoch's nonce at 4*k/f slots before end of epoch)
      **/
     private String securityparam = null;
 
