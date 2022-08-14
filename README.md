@@ -36,7 +36,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Sorting Supported
 - Rate Control
 - Inner Retry Mechanism upon Timeouts
-<details>
+<details open>
 <summary>Supported REST Services</summary>
 <table>
     <thead>
