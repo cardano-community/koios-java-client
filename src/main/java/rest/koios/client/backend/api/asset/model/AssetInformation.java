@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * Asset Information
  */
@@ -55,7 +57,7 @@ public class AssetInformation {
     /**
      * Minting Transaction Metadata
      */
-    private MintingTxMetadata mintingTxMetadata;
+    private List<MintingTxMetadata> mintingTxMetadata;
 
     /**
      * Asset metadata registered on the Cardano Token Registry
@@ -68,7 +70,7 @@ public class AssetInformation {
     private String totalSupply;
 
     /**
-     * Creation Time
+     * UNIX timestamp of the first asset mint
      */
-    private String creationTime;
+    private Long creationTime;
 }

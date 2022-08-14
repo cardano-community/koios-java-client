@@ -30,7 +30,7 @@ public class TxHash {
     private Integer blockHeight;
 
     /**
-     * Timestamp of the block
+     * UNIX timestamp of the block
      */
-    private String blockTime;
+    private Integer blockTime;
 }

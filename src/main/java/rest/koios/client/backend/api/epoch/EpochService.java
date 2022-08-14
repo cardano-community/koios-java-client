@@ -36,7 +36,7 @@ public interface EpochService {
      * @return Result of {@link EpochInfo} detailed summary
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<EpochInfo> getEpochInformationByEpoch(Long epochNo) throws ApiException;
+    Result<EpochInfo> getEpochInformationByEpoch(Integer epochNo) throws ApiException;
 
     /**
      * Epoch Information
@@ -74,7 +74,7 @@ public interface EpochService {
      * @return Result of {@link EpochParams} protocol parameters
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<EpochParams> getEpochParametersByEpoch(Long epochNo) throws ApiException;
+    Result<EpochParams> getEpochParametersByEpoch(Integer epochNo) throws ApiException;
 
     /**
      * Epoch's Protocol Parameters

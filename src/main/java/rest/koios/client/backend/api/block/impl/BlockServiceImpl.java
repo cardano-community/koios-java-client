@@ -29,10 +29,10 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     /**
      * Block Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public BlockServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public BlockServiceImpl(BaseService baseService) {
+        super(baseService);
         blockApi = getRetrofit().create(BlockApi.class);
     }
 

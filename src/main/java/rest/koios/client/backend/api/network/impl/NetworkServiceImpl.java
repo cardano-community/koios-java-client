@@ -25,10 +25,10 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     /**
      * Network Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public NetworkServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public NetworkServiceImpl(BaseService baseService) {
+        super(baseService);
         networkApi = getRetrofit().create(NetworkApi.class);
     }
 
@@ -55,7 +55,7 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     }
 
     @Override
-    public Result<Totals> getHistoricalTokenomicStatsByEpoch(Long epochNo) throws ApiException {
+    public Result<Totals> getHistoricalTokenomicStatsByEpoch(Integer epochNo) throws ApiException {
         validateEpoch(epochNo);
         Call<List<Totals>> call = networkApi.getHistoricalTokenomicStatsByEpoch(epochNo);
         try {

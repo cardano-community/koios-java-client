@@ -23,7 +23,7 @@ public interface NetworkApi {
     Call<List<Genesis>> getGenesisInfo();
 
     @GET("totals")
-    Call<List<Totals>> getHistoricalTokenomicStatsByEpoch(@Query("_epoch_no") Long epochNo);
+    Call<List<Totals>> getHistoricalTokenomicStatsByEpoch(@Query("_epoch_no") Integer epochNo);
 
     @GET("totals")
     Call<List<Totals>> getHistoricalTokenomicStats(@QueryMap Map<String, String> paramsMap);

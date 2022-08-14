@@ -42,12 +42,12 @@ public class BlockInfo {
     /**
      * Block size in bytes
      */
-    private Long blockSize = null;
+    private Integer blockSize = null;
 
     /**
-     * Timestamp of the block
+     * UNIX timestamp of the block
      */
-    private String blockTime = null;
+    private Long blockTime = null;
 
     /**
      * Number of transactions in the block
@@ -97,7 +97,7 @@ public class BlockInfo {
     /**
      * Number of Confirmations
      */
-    private Long numConfirmations;
+    private Integer numConfirmations;
 
     /**
      * Parent Block Hash

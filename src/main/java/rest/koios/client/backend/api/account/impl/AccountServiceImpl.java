@@ -23,10 +23,10 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     /**
      * Account Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public AccountServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AccountServiceImpl(BaseService baseService) {
+        super(baseService);
         accountApi = getRetrofit().create(AccountApi.class);
     }
 
@@ -54,7 +54,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<AccountRewards> getAccountRewardsByEpoch(String stakeAddress, Long epochNo) throws ApiException {
+    public Result<AccountRewards> getAccountRewardsByEpoch(String stakeAddress, Integer epochNo) throws ApiException {
         validateBech32(stakeAddress);
         validateEpoch(epochNo);
         Call<List<AccountRewards>> call = accountApi.getAccountRewardsByEpoch(stakeAddress, epochNo);

@@ -25,10 +25,10 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     /**
      * Epoch Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public EpochServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public EpochServiceImpl(BaseService baseService) {
+        super(baseService);
         epochApi = getRetrofit().create(EpochApi.class);
     }
 
@@ -45,7 +45,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
-    public Result<EpochInfo> getEpochInformationByEpoch(Long epochNo) throws ApiException {
+    public Result<EpochInfo> getEpochInformationByEpoch(Integer epochNo) throws ApiException {
         validateEpoch(epochNo);
         Call<List<EpochInfo>> call = epochApi.getEpochInformationByEpoch(epochNo);
         try {
@@ -80,7 +80,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
-    public Result<EpochParams> getEpochParametersByEpoch(Long epochNo) throws ApiException {
+    public Result<EpochParams> getEpochParametersByEpoch(Integer epochNo) throws ApiException {
         validateEpoch(epochNo);
         Call<List<EpochParams>> call = epochApi.getEpochParametersByEpoch(epochNo);
         try {

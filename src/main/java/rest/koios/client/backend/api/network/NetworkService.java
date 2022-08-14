@@ -49,7 +49,7 @@ public interface NetworkService {
      * @return Result of {@link Totals} with supply/reserves/utxo/fees/treasury stats
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<Totals> getHistoricalTokenomicStatsByEpoch(Long epochNo) throws ApiException;
+    Result<Totals> getHistoricalTokenomicStatsByEpoch(Integer epochNo) throws ApiException;
 
     /**
      * Get historical tokenomic stats with Filtering, Pagination, Ordering Options

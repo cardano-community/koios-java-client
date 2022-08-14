@@ -1,10 +1,16 @@
 package rest.koios.client.backend.api.epoch.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import rest.koios.client.backend.api.epoch.helper.CostModelsDeserializer;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * Epoch Parameters
@@ -17,15 +23,9 @@ import java.math.BigDecimal;
 public class EpochParams {
 
     /**
-     * The cost per UTxO size
-     */
-    private Integer coinsPerUtxoSize = null;
-
-    /**
      * Epoch number
      */
-    private Long epochNo = null;
-
+    private Integer epochNo = null;
 
     /**
      * Extra Entropy
@@ -60,12 +60,12 @@ public class EpochParams {
     /**
      * The amount (in lovelace) required for a deposit to register a stake address
      */
-    private Integer keyDeposit = null;
+    private String keyDeposit = null;
 
     /**
      * The amount (in lovelace) required for a deposit to register a stake pool
      */
-    private Integer poolDeposit = null;
+    private String poolDeposit = null;
 
     /**
      * The maximum number of epochs in the future that a pool retirement is allowed to be scheduled for
@@ -80,22 +80,22 @@ public class EpochParams {
     /**
      * The pledge influence on pool rewards
      */
-    private Double influence = null;
+    private BigDecimal influence = null;
 
     /**
      * The monetary expansion rate
      */
-    private Double monetaryExpandRate = null;
+    private BigDecimal monetaryExpandRate = null;
 
     /**
      * The treasury growth rate
      */
-    private Double treasuryGrowthRate = null;
+    private BigDecimal treasuryGrowthRate = null;
 
     /**
      * The decentralisation parameter (1 fully centralised, 0 fully decentralised)
      */
-    private Double decentralisation = null;
+    private BigDecimal decentralisation = null;
 
     /**
      * The hash of 32-byte string of extra random-ness added into the protocol's entropy pool
@@ -115,12 +115,12 @@ public class EpochParams {
     /**
      * The minimum value of a UTxO entry
      */
-    private Integer minUtxoValue = null;
+    private String minUtxoValue = null;
 
     /**
      * The minimum pool cost
      */
-    private Integer minPoolCost = null;
+    private String minPoolCost = null;
 
     /**
      * The nonce value for this epoch
@@ -135,42 +135,43 @@ public class EpochParams {
     /**
      * The per language cost models
      */
-    private String costModels = null;
+    @JsonDeserialize(using = CostModelsDeserializer.class)
+    private Map<String, Map<String, Long>> costModels = null;
 
     /**
      * The per word cost of script memory usage
      */
-    private Double priceMem = null;
+    private BigDecimal priceMem = null;
 
     /**
      * The cost of script execution step usage
      */
-    private Double priceStep = null;
+    private BigDecimal priceStep = null;
 
     /**
      * The maximum number of execution memory allowed to be used in a single transaction
      */
-    private BigDecimal maxTxExMem = null;
+    private String maxTxExMem = null;
 
     /**
      * The maximum number of execution steps allowed to be used in a single transaction
      */
-    private BigDecimal maxTxExSteps = null;
+    private String maxTxExSteps = null;
 
     /**
      * The maximum number of execution memory allowed to be used in a single block
      */
-    private BigDecimal maxBlockExMem = null;
+    private String maxBlockExMem = null;
 
     /**
      * The maximum number of execution steps allowed to be used in a single block
      */
-    private BigDecimal maxBlockExSteps = null;
+    private String maxBlockExSteps = null;
 
     /**
      * The maximum Val size
      */
-    private BigDecimal maxValSize = null;
+    private String maxValSize = null;
 
     /**
      * The percentage of the tx fee which must be provided as collateral when including non-native scripts
@@ -183,7 +184,13 @@ public class EpochParams {
     private Integer maxCollateralInputs = null;
 
     /**
+     * The cost per UTxO size
+     */
+    private String coinsPerUtxoSize = null;
+
+    /**
      * The cost per UTxO word
      */
-    private Integer coinsPerUtxoWord = null;
+    @Deprecated
+    private String coinsPerUtxoWord = null;
 }

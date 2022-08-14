@@ -24,10 +24,10 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     /**
      * Asset Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public AssetServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AssetServiceImpl(BaseService baseService) {
+        super(baseService);
         assetApi = getRetrofit().create(AssetApi.class);
     }
 

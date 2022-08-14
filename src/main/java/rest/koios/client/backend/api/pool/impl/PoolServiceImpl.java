@@ -26,10 +26,10 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     /**
      * Pool Service Implementation Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseService Base Service
      */
-    public PoolServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public PoolServiceImpl(BaseService baseService) {
+        super(baseService);
         poolApi = getRetrofit().create(PoolApi.class);
     }
 
@@ -59,7 +59,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException {
+    public Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException {
         validateEpoch(epochNo);
         validateBech32(poolBech32);
         Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsListByEpoch(poolBech32, epochNo, optionsToParamMap(options));
@@ -84,7 +84,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException {
+    public Result<List<PoolBlock>> getPoolBlocksByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException {
         validateEpoch(epochNo);
         validateBech32(poolBech32);
         Call<List<PoolBlock>> call = poolApi.getPoolBlocksByEpoch(poolBech32, epochNo, optionsToParamMap(options));
@@ -109,7 +109,7 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Long epochNo, Options options) throws ApiException {
+    public Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException {
         validateBech32(poolBech32);
         validateEpoch(epochNo);
         Call<List<PoolHistory>> call = poolApi.getPoolHistoryByEpoch(poolBech32, epochNo, optionsToParamMap(options));

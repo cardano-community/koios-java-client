@@ -55,7 +55,7 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountRewardsTest() throws ApiException {
-        Long epochNo = 180L;
+        int epochNo = 180;
         String stakeAddress = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
         Result<AccountRewards> accountRewardsResult = accountService.getAccountRewardsByEpoch(stakeAddress, epochNo);
         Assertions.assertTrue(accountRewardsResult.isSuccessful());
@@ -78,7 +78,7 @@ class AccountServiceTestnetIntegrationTest {
     @Test
     void getAccountRewardsBadRequestBadAddressTest() {
         String stakeAddress = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountRewardsByEpoch(stakeAddress, 180L));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountRewardsByEpoch(stakeAddress, 180));
         assertInstanceOf(ApiException.class, exception);
     }
 
