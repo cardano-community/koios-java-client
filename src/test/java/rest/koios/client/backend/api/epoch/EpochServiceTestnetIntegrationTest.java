@@ -46,25 +46,6 @@ class EpochServiceTestnetIntegrationTest {
     }
 
     @Test
-    void getEpochInformationLimitOffsetAndOrderTest() throws ApiException {
-        Options options = Options.builder().option(Limit.of(10)).option(Order.by("epoch_no",SortType.DESC)).build();
-        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
-        Assertions.assertTrue(epochInformationResult.isSuccessful());
-        Assertions.assertNotNull(epochInformationResult.getValue());
-        log.info(epochInformationResult.getValue().toString());
-        assertEquals(10, epochInformationResult.getValue().size());
-
-        Options options2 = Options.builder().option(Limit.of(5)).option(Offset.of(5L)).option(Order.by("epoch_no",SortType.DESC)).build();
-        Result<List<EpochInfo>> epochInformationResult2 = epochService.getEpochInformation(options2);
-        Assertions.assertTrue(epochInformationResult2.isSuccessful());
-        log.info(epochInformationResult2.getValue().toString());
-        Assertions.assertNotNull(epochInformationResult2.getValue());
-        assertEquals(5, epochInformationResult2.getValue().size());
-
-        Assertions.assertTrue(epochInformationResult.getValue().containsAll(epochInformationResult2.getValue()));
-    }
-
-    @Test
     void getSpecificEpochInformationTest() throws ApiException {
         Options options = Options.builder().option(Order.by("epoch_no", SortType.DESC)).option(Limit.of(1)).build();
         Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
