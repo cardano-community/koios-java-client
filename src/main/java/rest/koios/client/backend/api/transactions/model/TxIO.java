@@ -45,6 +45,21 @@ public class TxIO {
     private String value;
 
     /**
+     * Hash of datum (if any) connected to UTxO
+     */
+    private String datumHash;
+
+    /**
+     * Allows datums to be attached to UTxO (CIP-32)
+     */
+    private InlineDatum inlineDatum;
+
+    /**
+     * Allow reference scripts to be used to satisfy script requirements during validation, rather than requiring the spending transaction to do so. (CIP-33)
+     */
+    private ReferenceScript referenceScript;
+
+    /**
      * An array of assets included in input/output UTxO
      */
     private List<TxAsset> assetList;

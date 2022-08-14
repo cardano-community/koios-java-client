@@ -42,7 +42,7 @@ public class BlockInfo {
     /**
      * Block size in bytes
      */
-    private Long blockSize = null;
+    private Integer blockSize = null;
 
     /**
      * UNIX timestamp of the block
@@ -97,7 +97,7 @@ public class BlockInfo {
     /**
      * Number of Confirmations
      */
-    private Long numConfirmations;
+    private Integer numConfirmations;
 
     /**
      * Parent Block Hash

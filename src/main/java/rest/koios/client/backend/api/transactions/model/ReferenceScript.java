@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -8,32 +9,37 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset included in input/output UTxO
+ * Reference Script
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class TxAsset {
+public class ReferenceScript {
 
     /**
-     * Asset Policy ID (hex)
+     * Hash of referenced script
      */
-    private String policyId;
+    private String hash;
 
     /**
-     * Asset Name (hex)
+     * Size in bytes
      */
-    private String assetName;
+    private Integer size;
 
     /**
-     * The CIP14 fingerprint of the asset
+     * Type of script
      */
-    private String fingerprint;
+    private String type;
 
     /**
-     * Sum of assets for input/output UTxO
+     * Script bytes (hex)
      */
-    private String quantity;
+    private String bytes;
+
+    /**
+     * Value (json)
+     */
+    private JsonNode value;
 }

@@ -80,22 +80,22 @@ public class EpochParams {
     /**
      * The pledge influence on pool rewards
      */
-    private Double influence = null;
+    private BigDecimal influence = null;
 
     /**
      * The monetary expansion rate
      */
-    private Double monetaryExpandRate = null;
+    private BigDecimal monetaryExpandRate = null;
 
     /**
      * The treasury growth rate
      */
-    private Double treasuryGrowthRate = null;
+    private BigDecimal treasuryGrowthRate = null;
 
     /**
      * The decentralisation parameter (1 fully centralised, 0 fully decentralised)
      */
-    private Double decentralisation = null;
+    private BigDecimal decentralisation = null;
 
     /**
      * The hash of 32-byte string of extra random-ness added into the protocol's entropy pool
@@ -141,37 +141,37 @@ public class EpochParams {
     /**
      * The per word cost of script memory usage
      */
-    private Double priceMem = null;
+    private BigDecimal priceMem = null;
 
     /**
      * The cost of script execution step usage
      */
-    private Double priceStep = null;
+    private BigDecimal priceStep = null;
 
     /**
      * The maximum number of execution memory allowed to be used in a single transaction
      */
-    private BigDecimal maxTxExMem = null;
+    private String maxTxExMem = null;
 
     /**
      * The maximum number of execution steps allowed to be used in a single transaction
      */
-    private BigDecimal maxTxExSteps = null;
+    private String maxTxExSteps = null;
 
     /**
      * The maximum number of execution memory allowed to be used in a single block
      */
-    private BigDecimal maxBlockExMem = null;
+    private String maxBlockExMem = null;
 
     /**
      * The maximum number of execution steps allowed to be used in a single block
      */
-    private BigDecimal maxBlockExSteps = null;
+    private String maxBlockExSteps = null;
 
     /**
      * The maximum Val size
      */
-    private BigDecimal maxValSize = null;
+    private String maxValSize = null;
 
     /**
      * The percentage of the tx fee which must be provided as collateral when including non-native scripts

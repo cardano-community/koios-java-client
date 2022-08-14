@@ -42,7 +42,7 @@ public class Block {
     /**
      * Block size in bytes
      */
-    private Long blockSize = null;
+    private Integer blockSize = null;
 
     /**
      * UNIX timestamp of the block

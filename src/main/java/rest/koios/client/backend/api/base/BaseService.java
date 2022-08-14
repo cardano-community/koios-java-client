@@ -74,7 +74,7 @@ public class BaseService {
             retriesCount = Math.max(Integer.parseInt(strRetries), 1);
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient).addConverterFactory(JacksonConverterFactory
                 .create(objectMapper)).build();
     }

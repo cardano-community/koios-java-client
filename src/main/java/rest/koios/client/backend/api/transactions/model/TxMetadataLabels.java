@@ -2,9 +2,10 @@ package rest.koios.client.backend.api.transactions.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
-
-import java.math.BigInteger;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Transaction Metadata Labels
@@ -19,5 +20,5 @@ public class TxMetadataLabels {
     /**
      * A distinct known metalabel
      **/
-    private BigInteger metalabel = null;
+    private String key = null;
 }

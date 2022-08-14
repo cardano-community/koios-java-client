@@ -20,39 +20,39 @@ import java.util.List;
 public class TxInfo {
 
     /**
-     * Hash of Transaction for which details are being shown
+     * Hash identifier of the transaction
      */
     private String txHash = null;
 
     /**
-     * Hash of Block in which transaction was included
+     * Hash of the Block
      */
     private String blockHash = null;
 
     /**
-     * Block number on chain where transaction was included
+     * Block height
      */
     private Integer blockHeight = null;
 
     /**
-     * Epoch number
+     * Epoch number of the block
      */
     private Integer epoch = null;
 
     /**
-     * Slot number within epoch
+     * Slot number of the block in epoch
      */
     private Integer epochSlot = null;
 
     /**
-     * Overall slot number (slots from genesis block of chain)
+     * Absolute slot number of the block
      */
     private Integer absoluteSlot = null;
 
     /**
      * UNIX timestamp of the transaction
      */
-    private Long txTimestamp = null;
+    private Integer txTimestamp = null;
 
     /**
      * Index of transaction within block
@@ -77,7 +77,7 @@ public class TxInfo {
     /**
      * Total Deposits included in transaction (for example, if it is registering a pool/key)
      */
-    private Integer deposit = null;
+    private String deposit = null;
 
     /**
      * Slot before which transaction cannot be validated (if supplied, else null)
@@ -90,9 +90,19 @@ public class TxInfo {
     private Integer invalidAfter = null;
 
     /**
-     * An array of collateral inputs needed when dealing with smart contracts (same json schema as inputs)
+     * List of collateral inputs needed when dealing with smart contracts (same json schema as inputs)
      */
-    private List<TxIO> collaterals = null;
+    private List<TxIO> collateralInputs = null;
+
+    /**
+     * List of collateral outputs
+     */
+    private List<TxIO> collateralOutputs = null;
+
+    /**
+     * Reference Inputs
+     */
+    private List<TxIO> referenceInputs;
 
     /**
      * An array with details about inputs used in a transaction

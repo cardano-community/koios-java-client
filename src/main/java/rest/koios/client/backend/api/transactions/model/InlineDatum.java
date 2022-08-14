@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -8,32 +9,22 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset included in input/output UTxO
+ * Inline Datum
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class TxAsset {
+public class InlineDatum {
 
     /**
-     * Asset Policy ID (hex)
+     * Datum (hex)
      */
-    private String policyId;
+    private String bytes;
 
     /**
-     * Asset Name (hex)
+     * Value (json)
      */
-    private String assetName;
-
-    /**
-     * The CIP14 fingerprint of the asset
-     */
-    private String fingerprint;
-
-    /**
-     * Sum of assets for input/output UTxO
-     */
-    private String quantity;
+    private JsonNode value;
 }

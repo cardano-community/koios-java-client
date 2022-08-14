@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * Minting Transaction
  */
@@ -23,7 +25,17 @@ public class MintingTx {
     private String txHash;
 
     /**
+     * UNIX timestamp of the block
+     */
+    private Integer blockTime;
+
+    /**
      * Quantity minted/burned (negative numbers indicate burn transactions)
      */
     private String quantity;
+
+    /**
+     * Minting Transaction Metadata
+     */
+    private List<MintingTxMetadata> metadata;
 }
