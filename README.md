@@ -17,7 +17,7 @@
 </a>
 <br/>
 <br/>
-<img src="https://raw.githubusercontent.com/cardano-community/koios-java-client/main/.github/logo.png" style="height: 120px;" alt="Koios"/>
+<img src="https://raw.githubusercontent.com/cardano-community/koios-java-client/main/.github/logo.png" alt="Koios"/>
 </p>
 
 ## What is Koios?
