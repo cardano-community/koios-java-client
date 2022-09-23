@@ -237,6 +237,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.0.7      |       1.14        |
 |     1.0.6      |       1.13        |
 </details>
 
