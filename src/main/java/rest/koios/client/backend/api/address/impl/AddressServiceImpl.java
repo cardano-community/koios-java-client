@@ -3,8 +3,8 @@ package rest.koios.client.backend.api.address.impl;
 import rest.koios.client.backend.api.TxHash;
 import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.api.AddressApi;
+import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
-import rest.koios.client.backend.api.address.model.AssetInfo;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
@@ -38,13 +38,15 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public Result<AddressInfo> getAddressInformation(String address) throws ApiException {
-        return getAddressInformation(address, SortType.DESC);
+        return getAddressInformation(List.of(address), SortType.DESC, null);
     }
 
     @Override
-    public Result<AddressInfo> getAddressInformation(String address, SortType utxoSortType) throws ApiException {
-        validateBech32(address);
-        Call<List<AddressInfo>> call = addressApi.getAddressInformation(address);
+    public Result<AddressInfo> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException {
+        for (String address : addressList) {
+            validateBech32(address);
+        }
+        Call<List<AddressInfo>> call = addressApi.getAddressInformation(buildBody("_addresses", addressList, null), optionsToParamMap(options));
         try {
             Response<List<AddressInfo>> response = (Response) execute(call);
             Result<AddressInfo> result = processResponseGetOne(response);
@@ -83,11 +85,13 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     }
 
     @Override
-    public Result<List<AssetInfo>> getAddressAssets(String address, Options options) throws ApiException {
-        validateBech32(address);
-        Call<List<AssetInfo>> call = addressApi.getAddressAssets(address, optionsToParamMap(options));
+    public Result<List<AddressAsset>> getAddressAssets(List<String> addressList, Options options) throws ApiException {
+        for (String address : addressList) {
+            validateBech32(address);
+        }
+        Call<List<AddressAsset>> call = addressApi.getAddressAssets(buildBody("_addresses", addressList, null), optionsToParamMap(options));
         try {
-            Response<List<AssetInfo>> response = (Response) execute(call);
+            Response<List<AddressAsset>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
@@ -119,7 +123,9 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     private Map<String,Object> buildBody(String arrayObjString, List<String> list, Integer afterBlockHeight) {
         Map<String,Object> bodyMap = new HashMap<>();
         bodyMap.put(arrayObjString,list);
-        bodyMap.put("_after_block_height", afterBlockHeight);
+        if (afterBlockHeight != null) {
+            bodyMap.put("_after_block_height", afterBlockHeight);
+        }
         return bodyMap;
     }
 }

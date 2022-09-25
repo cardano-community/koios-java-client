@@ -86,9 +86,11 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public Result<List<BlockTxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException {
-        validateHexFormat(blockHash);
-        Call<List<BlockTxHash>> call = blockApi.getBlockTransactions(blockHash, optionsToParamMap(options));
+    public Result<List<BlockTxHash>> getBlockTransactions(List<String> blockHashes, Options options) throws ApiException {
+        for (String blockHash : blockHashes) {
+            validateHexFormat(blockHash);
+        }
+        Call<List<BlockTxHash>> call = blockApi.getBlockTransactions(buildBody(blockHashes), optionsToParamMap(options));
         try {
             Response<List<BlockTxHash>> response = (Response) execute(call);
             return processResponse(response);

@@ -1,8 +1,8 @@
 package rest.koios.client.backend.api.address;
 
 import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
-import rest.koios.client.backend.api.address.model.AssetInfo;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
@@ -35,12 +35,13 @@ public interface AddressService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param address      Cardano payment address in bech32 format (required)
+     * @param addressList  Array of Cardano payment address(es) in bech32 format
      * @param utxoSortType UTxO sort Parameter by Block Height. DESC or ASC.
+     * @param options      Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AddressInfo} with Balance, Stake Address, UTxO set associated with the specified address.
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<AddressInfo> getAddressInformation(String address, SortType utxoSortType) throws ApiException;
+    Result<AddressInfo> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException;
 
     /**
      * Address Transactions with Filtering, Pagination, Ordering Options
@@ -78,12 +79,12 @@ public interface AddressService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param address Cardano payment address in bech32 format (required)
-     * @param options Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link AssetInfo} Included in specified address
+     * @param addressList Array of Cardano payment address(es) in bech32 format
+     * @param options     Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link AddressAsset} Included in specified address
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetInfo>> getAddressAssets(String address, Options options) throws ApiException;
+    Result<List<AddressAsset>> getAddressAssets(List<String> addressList, Options options) throws ApiException;
 
     /**
      * Transactions from payment credentials with Filtering, Pagination, Ordering Options

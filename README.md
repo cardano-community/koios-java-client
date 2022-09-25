@@ -183,7 +183,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the list of all asset transaction hashes (newest first)</td>
         </tr>
         <tr>
-            <td rowspan="8">Pool</td>
+            <td rowspan="10">Pool</td>
             <td>Pool List</td>
             <td>A list of all currently registered/retiring (not retired) pools</td>
         </tr>
@@ -192,8 +192,16 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Current pool statuses and details for a specified list of pool ids</td>
         </tr>
         <tr>
+            <td>Pool Stake Snapshot</td>
+            <td>Returns Mark, Set and Go stake snapshots for the selected pool, useful for leaderlog calculation</td>
+        </tr>
+        <tr>
             <td>Pool Delegators List</td>
-            <td>Return information about delegators by a given pool and optional epoch (current if omitted)</td>
+            <td>Return information about live delegators for a given pool.</td>
+        </tr>
+        <tr>
+            <td>Pool Delegators History</td>
+            <td>Return information about active delegators (incl. history) for a given pool and epoch number - current epoch if not provided.</td>
         </tr>
         <tr>
             <td>Pool Blocks</td>
@@ -232,7 +240,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 </table>
 </details>
 
-<details>
+<details open>
 <summary>Version Compatability Chart</summary>
   
 | Koios Instance | Koios Java Client |
@@ -250,13 +258,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.13</version>
+    <version>1.14</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.13'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.14'
 ```
 
 ### Get Koios Backend Service

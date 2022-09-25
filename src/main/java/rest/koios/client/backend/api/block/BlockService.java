@@ -67,15 +67,15 @@ public interface BlockService {
 
     /**
      * Block Transactions with Filtering, Pagination, Ordering Options
-     * Get a list of all transactions included in a provided block
+     * Get a list of all transactions included in provided blocks
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param blockHash Block Hash in hex format (required)
+     * @param blockHashes List of Block Hashes in hex format (required)
      * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link BlockTxHash} Included Transaction of a specific block
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<BlockTxHash>> getBlockTransactions(String blockHash, Options options) throws ApiException;
+    Result<List<BlockTxHash>> getBlockTransactions(List<String> blockHashes, Options options) throws ApiException;
 }

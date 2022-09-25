@@ -25,7 +25,12 @@ public class PoolDelegator {
     private String amount;
 
     /**
-     * Epoch number
+     * Epoch number in which the delegation becomes active
      */
     private Integer activeEpochNo;
+
+    /**
+     * Latest transaction hash used for delegation by the account
+     */
+    private String latestDelegationHash;
 }

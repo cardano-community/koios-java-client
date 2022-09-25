@@ -52,7 +52,7 @@ class PlutusScriptServiceMainnetIntegrationTest {
     @Test
     void getScriptRedeemersTest() throws ApiException {
         String scriptHash = "d8480dc869b94b80e81ec91b0abe307279311fe0e7001a9488f61ff8";
-        Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, null);
+        Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, Options.EMPTY);
         Assertions.assertTrue(scriptRedeemersResult.isSuccessful());
         Assertions.assertNotNull(scriptRedeemersResult.getValue());
         log.info(scriptRedeemersResult.getValue().toString());
@@ -61,7 +61,7 @@ class PlutusScriptServiceMainnetIntegrationTest {
     @Test
     void getScriptRedeemersBadRequestTest() {
         String scriptHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> scriptService.getScriptRedeemers(scriptHash, null));
+        ApiException exception = assertThrows(ApiException.class, () -> scriptService.getScriptRedeemers(scriptHash, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }

@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.address.model;
+package rest.koios.client.backend.api.pool.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,32 +8,27 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset Information
+ * Pool Delegator History
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetInfo {
+public class PoolDelegatorHistory {
 
     /**
-     * Asset Policy ID (hex)
+     * Cardano staking address (reward account) in bech32 format
      */
-    private String policyId;
+    private String stakeAddress;
 
     /**
-     * Asset Name (hex)
+     * Current delegator live stake (in lovelace)
      */
-    private String assetName;
+    private String amount;
 
     /**
-     * Sum of assets for output UTxO
+     * Epoch number for the delegation history
      */
-    private String quantity;
-
-    /**
-     * The CIP14 fingerprint of the asset
-     */
-    private String fingerprint;
+    private Integer epochNo;
 }

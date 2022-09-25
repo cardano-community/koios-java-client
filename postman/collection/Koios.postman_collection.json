@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "a0c6e0fb-04a6-4f63-9dd1-ba7020e7d659",
 		"name": "Koios",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10030155"
 	},
 	"item": [
 		{
@@ -212,10 +213,19 @@
 						{
 							"name": "Block Transactions",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_block_hashes\": [\r\n    \"{{block_hash}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/block_txs?_block_hash={{block_hash}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/block_txs",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -229,7 +239,8 @@
 									"query": [
 										{
 											"key": "_block_hash",
-											"value": "{{block_hash}}"
+											"value": "{{block_hash}}",
+											"disabled": true
 										}
 									]
 								}
@@ -427,10 +438,19 @@
 						{
 							"name": "Address Information",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_addresses\": [\r\n    \"{{address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/address_info?_address={{address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/address_info",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -444,7 +464,8 @@
 									"query": [
 										{
 											"key": "_address",
-											"value": "{{address}}"
+											"value": "{{address}}",
+											"disabled": true
 										}
 									]
 								}
@@ -521,10 +542,19 @@
 						{
 							"name": "Address Assets",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_addresses\": [\r\n    \"{{address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/address_assets?_address={{address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/address_assets",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -538,7 +568,13 @@
 									"query": [
 										{
 											"key": "_address",
-											"value": "{{address}}"
+											"value": "{{address}}",
+											"disabled": true
+										},
+										{
+											"key": "_address",
+											"value": "addr1qx9dhfl9x3yzzp99kswdpht9nvcpmz2h0tcsg88xlwjfd5fymsxepualy220shsw0d5t0hhfqxj0w3darh4kpwvn3qmqk0ht25",
+											"disabled": true
 										}
 									]
 								}
@@ -581,10 +617,19 @@
 						{
 							"name": "Account Information",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_info?_address={{stake_address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_info",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -598,7 +643,13 @@
 									"query": [
 										{
 											"key": "_address",
-											"value": "{{stake_address}}"
+											"value": "{{stake_address}}",
+											"disabled": true
+										},
+										{
+											"key": "_address",
+											"value": "stake1uymwkz2zln400574dur7drxfppvjaqmca6w98k0qmlr74ng2f5qcl",
+											"disabled": true
 										}
 									]
 								}
@@ -608,10 +659,19 @@
 						{
 							"name": "Account Rewards",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_rewards?_stake_address={{stake_address}}&_epoch_no={{epoch_no}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_rewards",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -625,11 +685,13 @@
 									"query": [
 										{
 											"key": "_stake_address",
-											"value": "{{stake_address}}"
+											"value": "{{stake_address}}",
+											"disabled": true
 										},
 										{
 											"key": "_epoch_no",
-											"value": "{{epoch_no}}"
+											"value": "{{epoch_no}}",
+											"disabled": true
 										}
 									]
 								}
@@ -639,10 +701,19 @@
 						{
 							"name": "Account Updates (History)",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_updates?_stake_address={{stake_address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_updates",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -656,7 +727,8 @@
 									"query": [
 										{
 											"key": "_stake_address",
-											"value": "{{stake_address}}"
+											"value": "{{stake_address}}",
+											"disabled": true
 										}
 									]
 								}
@@ -666,10 +738,19 @@
 						{
 							"name": "Account Addresses",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_addresses?_address={{stake_address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_addresses",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -683,7 +764,13 @@
 									"query": [
 										{
 											"key": "_address",
-											"value": "{{stake_address}}"
+											"value": "{{stake_address}}",
+											"disabled": true
+										},
+										{
+											"key": "_address",
+											"value": "stake1uymwkz2zln400574dur7drxfppvjaqmca6w98k0qmlr74ng2f5qcl",
+											"disabled": true
 										}
 									]
 								}
@@ -693,10 +780,19 @@
 						{
 							"name": "Account Assets",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_assets?_address={{stake_address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_assets",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -710,7 +806,8 @@
 									"query": [
 										{
 											"key": "_address",
-											"value": "{{stake_address}}"
+											"value": "{{stake_address}}",
+											"disabled": true
 										}
 									]
 								}
@@ -720,10 +817,19 @@
 						{
 							"name": "Account History",
 							"request": {
-								"method": "GET",
+								"method": "POST",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_history?_address={{stake_address}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_history",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -737,7 +843,8 @@
 									"query": [
 										{
 											"key": "_address",
-											"value": "{{stake_address}}"
+											"value": "{{stake_address}}",
+											"disabled": true
 										}
 									]
 								}
@@ -884,6 +991,11 @@
 										{
 											"key": "_asset_policy",
 											"value": "{{policy_id}}"
+										},
+										{
+											"key": "_asset_policy",
+											"value": "19d1709041ab9bb5741d0862c5b1a0f677b5612867b20403d372a29b",
+											"disabled": true
 										}
 									]
 								}
@@ -1009,12 +1121,39 @@
 							"response": []
 						},
 						{
+							"name": "Pool Stake Snapshot",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_stake_snapshot?_pool_bech32={{pool_bech32}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"pool_stake_snapshot"
+									],
+									"query": [
+										{
+											"key": "_pool_bech32",
+											"value": "{{pool_bech32}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Pool Delegators List",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_delegators?_pool_bech32={{pool_bech32}}&_epoch_no={{epoch_no}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_delegators?_pool_bech32={{pool_bech32}}",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -1024,6 +1163,33 @@
 										"{{path}}",
 										"v0",
 										"pool_delegators"
+									],
+									"query": [
+										{
+											"key": "_pool_bech32",
+											"value": "{{pool_bech32}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pool Delegators History",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_delegators_history?_pool_bech32={{pool_bech32}}&_epoch_no={{epoch_no}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"pool_delegators_history"
 									],
 									"query": [
 										{
@@ -1076,7 +1242,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_history?_pool_bech32={{pool_bech32}}&_epoch_no={{epoch_no}}",
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/pool_history?_pool_bech32={{pool_bech32}}",
 									"protocol": "{{schema}}",
 									"host": [
 										"{{koios_host}}",
@@ -1094,7 +1260,8 @@
 										},
 										{
 											"key": "_epoch_no",
-											"value": "{{epoch_no}}"
+											"value": "{{epoch_no}}",
+											"disabled": true
 										}
 									]
 								}
@@ -1122,6 +1289,11 @@
 										{
 											"key": "_pool_bech32",
 											"value": "{{pool_bech32}}"
+										},
+										{
+											"key": "_pool_bech32",
+											"value": "pool15s7w4spg5ee7n7rprhs0dq78plw2mhjkpu5v97uvl27gz2way7z",
+											"disabled": true
 										}
 									]
 								}

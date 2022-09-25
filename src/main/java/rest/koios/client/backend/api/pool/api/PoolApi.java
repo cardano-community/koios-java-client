@@ -32,15 +32,15 @@ public interface PoolApi {
     Call<List<PoolInfo>> getPoolInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
-     * Return information about delegators by a given pool and optional epoch (current if omitted)
+     * Pool Stake Snapshot
+     * Returns Mark, Set and Go stake snapshots for the selected pool, useful for leaderlog calculation
      *
      * @param poolBech32 Pool ID in bech32 format
-     * @param epochNo    Epoch Number to fetch details for
-     * @param paramsMap  Options and Filters Map
-     * @return List of {@link PoolDelegator}
+     * @param paramsMap Options and Filters Map
+     * @return List of {@link PoolStakeSnapshot}
      */
-    @GET("pool_delegators")
-    Call<List<PoolDelegator>> getPoolDelegatorsListByEpoch(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
+    @GET("pool_stake_snapshot")
+    Call<List<PoolStakeSnapshot>> getPoolStakeSnapshot(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Return information about delegators by a given pool and for current epoch
@@ -51,6 +51,17 @@ public interface PoolApi {
      */
     @GET("pool_delegators")
     Call<List<PoolDelegator>> getPoolDelegatorsList(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Return information about active delegators (incl. history) for a given pool and epoch number - current epoch if not provided.
+     *
+     * @param poolBech32 Pool ID in bech32 format
+     * @param epochNo    Epoch Number to fetch details for
+     * @param paramsMap  Options and Filters Map
+     * @return List of {@link PoolDelegatorHistory}
+     */
+    @GET("pool_delegators_history")
+    Call<List<PoolDelegatorHistory>> getPoolDelegatorsHistory(@Query("_pool_bech32") String poolBech32, @Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Return information about blocks minted by a given pool for epoch specified by epochNo

@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.block.model;
+package rest.koios.client.backend.api.account.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -7,23 +7,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
- * Block Tx Hash
+ * Account Asset
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BlockTxHash {
+public class AccountAssets {
 
     /**
-     * Hash of the block
+     * Cardano staking address (reward account) in bech32 format
      */
-    private String blockHash;
+    private String stakeAddress;
 
     /**
-     * Hash identifier of the transaction
+     * List of Assets
      */
-    private String txHash;
+    private List<AccountAsset> assets;
 }

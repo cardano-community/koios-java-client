@@ -15,6 +15,11 @@ import lombok.*;
 public class AccountInfo {
 
     /**
+     * Cardano staking address (reward account) in bech32 format
+     */
+    private String stakeAddress;
+
+    /**
      * Account Status
      */
     private String status;
