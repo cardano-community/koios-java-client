@@ -38,7 +38,7 @@ class NetworkServiceMainnetIntegrationTest {
         log.info(tipResult.getValue().toString());
     }
 
-    @Test
+//    @Test
     void getGenesisInfoTest() throws ApiException {
         Result<Genesis> genesisResult = networkService.getGenesisInfo();
         Assertions.assertTrue(genesisResult.isSuccessful());
