@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class OptionsTest {
+class OptionsTest {
 
     private AddressService addressService;
 
@@ -27,7 +27,7 @@ public class OptionsTest {
     }
 
     @Test
-    public void MixedOptionsTest() throws ApiException {
+    void MixedOptionsTest() throws ApiException {
         String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
 
         Options options = Options.builder()
@@ -44,12 +44,12 @@ public class OptionsTest {
         log.info(transactionsResult.getValue().toString());
         assertEquals(8, transactionsResult.getValue().size());
         assertEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
-        assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
+        assertNotEquals(0, transactionsResult.getValue().get(0).getBlockHeight());
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
     }
 
     @Test
-    public void MixedWithLogicalOperatorOptionsTest() throws ApiException {
+    void MixedWithLogicalOperatorOptionsTest() throws ApiException {
         String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
 
         Options options = Options.builder()
@@ -67,12 +67,12 @@ public class OptionsTest {
         log.info(transactionsResult.getValue().toString());
         assertEquals(8, transactionsResult.getValue().size());
         assertEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
-        assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
+        assertNotEquals(0, transactionsResult.getValue().get(0).getBlockHeight());
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
     }
 
     @Test
-    public void MixedWithNotOperatorOptionsTest() throws ApiException {
+    void MixedWithNotOperatorOptionsTest() throws ApiException {
         String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
 
         Options options = Options.builder()
@@ -91,12 +91,12 @@ public class OptionsTest {
         log.info(transactionsResult.getValue().toString());
         assertEquals(7, transactionsResult.getValue().size());
         assertEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
-        assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
+        assertNotEquals(0, transactionsResult.getValue().get(0).getBlockHeight());
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
     }
 
     @Test
-    public void MixedWithLogicalNotOperatorOptionsTest() throws ApiException {
+    void MixedWithLogicalNotOperatorOptionsTest() throws ApiException {
         String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
 
         Options options = Options.builder()
@@ -114,7 +114,7 @@ public class OptionsTest {
         log.info(transactionsResult.getValue().toString());
         assertEquals(50, transactionsResult.getValue().size());
         assertNotEquals("389867cb7a962b370764c1c255c54e72abc9073983e9b17d5aabcb3fe043b8c3", transactionsResult.getValue().get(0).getTxHash());
-        assertTrue(transactionsResult.getValue().get(0).getBlockHeight() != 0);
+        assertNotEquals(0, transactionsResult.getValue().get(0).getBlockHeight());
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());
     }
 }

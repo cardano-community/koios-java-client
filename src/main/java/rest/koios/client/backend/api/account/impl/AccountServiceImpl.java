@@ -44,28 +44,28 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<AccountInfo> getAccountInformation(List<String> addressList) throws ApiException {
+    public Result<List<AccountInfo>> getAccountInformation(List<String> addressList, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
-        Call<List<AccountInfo>> call = accountApi.getAccountInformation(buildBody("_stake_addresses", addressList, null));
+        Call<List<AccountInfo>> call = accountApi.getAccountInformation(buildBody("_stake_addresses", addressList, null), optionsToParamMap(options));
         try {
             Response<List<AccountInfo>> response = (Response) execute(call);
-            return processResponseGetOne(response);
+            return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
     }
 
     @Override
-    public Result<List<AccountRewards>> getAccountRewards(List<String> addressList, Integer epochNo) throws ApiException {
+    public Result<List<AccountRewards>> getAccountRewards(List<String> addressList, Integer epochNo, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         if (epochNo != null) {
             validateEpoch(epochNo);
         }
-        Call<List<AccountRewards>> call = accountApi.getAccountRewards(buildBody("_stake_addresses", addressList, epochNo));
+        Call<List<AccountRewards>> call = accountApi.getAccountRewards(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
         try {
             Response<List<AccountRewards>> response = (Response) execute(call);
             return processResponse(response);
@@ -75,14 +75,14 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Integer epochNo) throws ApiException {
+    public Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Integer epochNo, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         if (epochNo != null) {
             validateEpoch(epochNo);
         }
-        Call<List<AccountUpdates>> call = accountApi.getAccountUpdates(buildBody("_stake_addresses", addressList, epochNo));
+        Call<List<AccountUpdates>> call = accountApi.getAccountUpdates(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
         try {
             Response<List<AccountUpdates>> response = (Response) execute(call);
             return processResponse(response);
@@ -92,14 +92,14 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Integer epochNo) throws ApiException {
+    public Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Integer epochNo, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         if (epochNo != null) {
             validateEpoch(epochNo);
         }
-        Call<List<AccountAddress>> call = accountApi.getAccountAddresses(buildBody("_stake_addresses", addressList, epochNo));
+        Call<List<AccountAddress>> call = accountApi.getAccountAddresses(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
         try {
             Response<List<AccountAddress>> response = (Response) execute(call);
             return processResponse(response);
@@ -109,14 +109,14 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountAssets>> getAccountAssets(List<String> addressList, Integer epochNo) throws ApiException {
+    public Result<List<AccountAssets>> getAccountAssets(List<String> addressList, Integer epochNo, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         if (epochNo != null) {
             validateEpoch(epochNo);
         }
-        Call<List<AccountAssets>> call = accountApi.getAccountAssets(buildBody("_stake_addresses", addressList, epochNo));
+        Call<List<AccountAssets>> call = accountApi.getAccountAssets(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
         try {
             Response<List<AccountAssets>> response = (Response) execute(call);
             return processResponse(response);
@@ -126,14 +126,14 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountHistory>> getAccountHistory(List<String> addressList, Integer epochNo) throws ApiException {
+    public Result<List<AccountHistory>> getAccountHistory(List<String> addressList, Integer epochNo, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         if (epochNo != null) {
             validateEpoch(epochNo);
         }
-        Call<List<AccountHistory>> call = accountApi.getAccountHistory(buildBody("_stake_addresses", addressList, epochNo));
+        Call<List<AccountHistory>> call = accountApi.getAccountHistory(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
         try {
             Response<List<AccountHistory>> response = (Response) execute(call);
             return processResponse(response);

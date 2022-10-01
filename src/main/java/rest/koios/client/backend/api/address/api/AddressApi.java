@@ -17,7 +17,8 @@ import java.util.Map;
 public interface AddressApi {
 
     /**
-     * Get address info - balance, associated stake address (if any) and UTxO set for given addresses
+     * Get address info
+     * balance, associated stake address (if any) and UTxO set for given addresses
      *
      * @param requestBody Array of Cardano payment address(es) in bech32 format
      * @param paramsMap   Options and Filters Map
@@ -26,6 +27,14 @@ public interface AddressApi {
     @POST("address_info")
     Call<List<AddressInfo>> getAddressInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
+    /**
+     * Address Transactions
+     * Get the transaction hash list of input address array, optionally filtering after specified block height (inclusive)
+     *
+     * @param requestBody Array of Cardano payment address(es) in bech32 format
+     * @param paramsMap Options and Filters Map
+     * @return List of {@link TxHash}
+     */
     @POST("address_txs")
     Call<List<TxHash>> getAddressTransactions(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
