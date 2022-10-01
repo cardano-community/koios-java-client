@@ -23,7 +23,7 @@ public class BlockTxHash {
     private String blockHash;
 
     /**
-     * Hash identifier of the transaction
+     * Array of Hash identifiers of the transaction
      */
-    private String txHash;
+    private String[] txHashes;
 }
