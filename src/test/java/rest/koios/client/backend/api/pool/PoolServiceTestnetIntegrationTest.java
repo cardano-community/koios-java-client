@@ -53,7 +53,7 @@ class PoolServiceTestnetIntegrationTest {
         assertInstanceOf(ApiException.class, exception);
     }
 
-    @Test
+//    @Test
     void getPoolStakeSnapshotTest() throws ApiException {
         String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
         Result<List<PoolStakeSnapshot>> poolInfosResult = poolService.getPoolStakeSnapshot(poolBech32, Options.EMPTY);
