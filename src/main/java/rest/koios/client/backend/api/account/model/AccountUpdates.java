@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  * Account Updates
  */
@@ -18,13 +20,12 @@ import lombok.ToString;
 public class AccountUpdates {
 
     /**
-     * Allowed: registration | delegation | withdrawal | deregistration
-     * Type of certificate submitted
+     * Cardano staking address (reward account) in bech32 format
      */
-    private String actionType;
+    private String stakeAddress;
 
     /**
-     * Hash identifier of the transaction
+     * List of Account Updates
      */
-    private String txHash;
+    private List<AccountUpdate> updates;
 }

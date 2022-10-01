@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
- * Account Asset
+ * Account Asset Inner
  */
 @Getter
 @Setter
@@ -18,17 +20,12 @@ import lombok.ToString;
 public class AccountAsset {
 
     /**
-     * Asset Policy ID (hex)
+     *  Asset Policy ID (hex)
      */
-    private String assetPolicy;
+    private String policyId;
 
     /**
-     * Asset Name (hex)
+     * List of Assets
      */
-    private String assetName;
-
-    /**
-     * Sum of assets for UTxO
-     */
-    private String quantity;
+    private List<AssetInner> assets;
 }

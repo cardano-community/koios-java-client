@@ -2,7 +2,12 @@ package rest.koios.client.backend.api.account.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
 
 /**
  * Account History
@@ -17,20 +22,10 @@ public class AccountHistory {
     /**
      * Cardano staking address (reward account) in bech32 format
      */
-    private String stakeAddress = null;
+    private String stakeAddress;
 
     /**
-     * Bech32 representation of pool ID
+     * List of Account History
      */
-    private String poolId = null;
-
-    /**
-     * Epoch number
-     */
-    private Integer epochNo = null;
-
-    /**
-     * Active stake amount (in lovelaces)
-     */
-    private String activeStake = null;
+    private List<AccountHistoryInner> history;
 }

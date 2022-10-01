@@ -43,7 +43,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetsAddressListTest() throws ApiException {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414d";
-        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddressList(assetPolicy, assetNameHex, null);
+        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY);
         Assertions.assertTrue(assetAddressesResult.isSuccessful());
         Assertions.assertNotNull(assetAddressesResult.getValue());
         log.info(assetAddressesResult.getValue().toString());
@@ -53,7 +53,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetsAddressListBadRequestTest() {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414dasdsadsa";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddressList(assetPolicy, assetNameHex, null));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -91,7 +91,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetHistoryTest() throws ApiException {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414d";
-        Result<List<AssetHistory>> assetHistoriesResult = assetService.getAssetHistory(assetPolicy, assetNameHex, null);
+        Result<List<AssetHistory>> assetHistoriesResult = assetService.getAssetHistory(assetPolicy, assetNameHex, Options.EMPTY);
         Assertions.assertTrue(assetHistoriesResult.isSuccessful());
         Assertions.assertNotNull(assetHistoriesResult.getValue());
         log.info(assetHistoriesResult.getValue().toString());
@@ -101,7 +101,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetHistoryBadRequestTest() {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414dasdsadsa";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetHistory(assetPolicy, assetNameHex, null));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetHistory(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -143,7 +143,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetTxsTest() throws ApiException {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414d";
-        Result<List<TxHash>> assetTxsResult = assetService.getAssetTransactionHistory(assetPolicy, assetNameHex, null);
+        Result<List<TxHash>> assetTxsResult = assetService.getAssetTransactionHistory(assetPolicy, assetNameHex, Options.EMPTY);
         Assertions.assertTrue(assetTxsResult.isSuccessful());
         Assertions.assertNotNull(assetTxsResult.getValue());
         log.info(assetTxsResult.getValue().toString());
@@ -153,7 +153,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetTxsBadRequestTest() {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414dasdsadsa";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetTransactionHistory(assetPolicy, assetNameHex, null));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetTransactionHistory(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }

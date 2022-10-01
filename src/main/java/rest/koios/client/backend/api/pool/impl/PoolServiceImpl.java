@@ -59,12 +59,11 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
-    public Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException {
-        validateEpoch(epochNo);
+    public Result<List<PoolStakeSnapshot>> getPoolStakeSnapshot(String poolBech32, Options options) throws ApiException {
         validateBech32(poolBech32);
-        Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsListByEpoch(poolBech32, epochNo, optionsToParamMap(options));
+        Call<List<PoolStakeSnapshot>> call = poolApi.getPoolStakeSnapshot(poolBech32, optionsToParamMap(options));
         try {
-            Response<List<PoolDelegator>> response = (Response) execute(call);
+            Response<List<PoolStakeSnapshot>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
@@ -77,6 +76,21 @@ public class PoolServiceImpl extends BaseService implements PoolService {
         Call<List<PoolDelegator>> call = poolApi.getPoolDelegatorsList(poolBech32, optionsToParamMap(options));
         try {
             Response<List<PoolDelegator>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<PoolDelegatorHistory>> getPoolDelegatorsHistory(String poolBech32, Integer epochNo, Options options) throws ApiException {
+        if (epochNo != null) {
+            validateEpoch(epochNo);
+        }
+        validateBech32(poolBech32);
+        Call<List<PoolDelegatorHistory>> call = poolApi.getPoolDelegatorsHistory(poolBech32, epochNo, optionsToParamMap(options));
+        try {
+            Response<List<PoolDelegatorHistory>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

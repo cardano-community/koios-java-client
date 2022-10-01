@@ -7,33 +7,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
- * Asset Information
+ * Address Asset
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetInfo {
+public class AddressAsset {
 
     /**
-     * Asset Policy ID (hex)
+     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
      */
-    private String policyId;
+    private String address;
 
     /**
-     * Asset Name (hex)
+     * An array of assets on the UTxO
      */
-    private String assetName;
-
-    /**
-     * Sum of assets for output UTxO
-     */
-    private String quantity;
-
-    /**
-     * The CIP14 fingerprint of the asset
-     */
-    private String fingerprint;
+    private List<AssetInfo> assets;
 }

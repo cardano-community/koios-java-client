@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public class Options {
 
     private final List<Option> options;
+    public static final Options EMPTY = null;
 
     /**
      * Options Default Constructor

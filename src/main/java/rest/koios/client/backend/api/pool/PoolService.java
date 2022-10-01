@@ -40,19 +40,18 @@ public interface PoolService {
     Result<List<PoolInfo>> getPoolInformation(List<String> poolIds, Options options) throws ApiException;
 
     /**
-     * Pool Delegators List By Epoch with Filtering, Pagination, Ordering Options
-     * Return information about delegators by a given pool and epoch
+     * Pool Stake Snapshot with Filtering, Pagination, Ordering Options
+     * Returns Mark, Set and Go stake snapshots for the selected pool, useful for leaderlog calculation
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
-     * @param epochNo    Epoch Number to fetch details for
-     * @param options Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link PoolDelegator}
+     * @param options    Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolStakeSnapshot}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PoolDelegator>> getPoolDelegatorsListByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException;
+    Result<List<PoolStakeSnapshot>> getPoolStakeSnapshot(String poolBech32, Options options) throws ApiException;
 
     /**
      * Pool Delegators List for Current Epoch with Filtering, Pagination, Ordering Options
@@ -67,6 +66,21 @@ public interface PoolService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PoolDelegator>> getPoolDelegatorsList(String poolBech32, Options options) throws ApiException;
+
+    /**
+     * Pool Delegators History
+     * Return information about active delegators (incl. history) for a given pool and epoch number - current epoch if not provided.
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param poolBech32 Pool ID in bech32 format (required)
+     * @param epochNo    Epoch Number to fetch details for (optional)
+     * @param options    Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolDelegatorHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolDelegatorHistory>> getPoolDelegatorsHistory(String poolBech32, Integer epochNo, Options options) throws ApiException;
 
     /**
      * Pool Blocks by Epoch with Filtering, Pagination, Ordering Options
@@ -106,7 +120,7 @@ public interface PoolService {
      *
      * @param poolBech32 Pool ID in bech32 format (required)
      * @param epochNo    Epoch Number to fetch details for (required)
-     * @param options Filtering and Pagination options (optional)
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of {@link PoolHistory}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
@@ -120,7 +134,7 @@ public interface PoolService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param poolBech32 Pool ID in bech32 format (required)
-     * @param options Filtering and Pagination options (optional)
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PoolHistory}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */

@@ -17,6 +17,11 @@ import java.util.Set;
 public class AddressInfo {
 
     /**
+     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
+     */
+    private String address;
+
+    /**
      * Balance of Address for which details are being shown
      */
     private String balance;

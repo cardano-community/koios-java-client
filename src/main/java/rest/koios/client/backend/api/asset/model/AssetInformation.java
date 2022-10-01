@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 /**
  * Asset Information
  */
@@ -57,7 +55,7 @@ public class AssetInformation {
     /**
      * Minting Transaction Metadata
      */
-    private List<MintingTxMetadata> mintingTxMetadata;
+    private MintingTxMetadata mintingTxMetadata;
 
     /**
      * Asset metadata registered on the Cardano Token Registry

@@ -107,6 +107,11 @@ public class PoolInfo {
     private String activeStake;
 
     /**
+     * Pool relative active stake share
+     */
+    private Long sigma;
+
+    /**
      * Total pool blocks on chain
      */
     private Integer blockCount;

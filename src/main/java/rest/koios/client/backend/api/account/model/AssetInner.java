@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.address.model;
+package rest.koios.client.backend.api.account.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,32 +8,27 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Asset Information
+ * Asset Inner
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetInfo {
+public class AssetInner {
 
     /**
-     * Asset Policy ID (hex)
-     */
-    private String policyId;
-
-    /**
-     * Asset Name (hex)
+     * Asset Name (ASCII)
      */
     private String assetName;
 
     /**
-     * Sum of assets for output UTxO
+     * Asset Policy ID (hex)
      */
-    private String quantity;
+    private String assetPolicy;
 
     /**
-     * The CIP14 fingerprint of the asset
+     * Asset quantity owned by account
      */
-    private String fingerprint;
+    private String balance;
 }

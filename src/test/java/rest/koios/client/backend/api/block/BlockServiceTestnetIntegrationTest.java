@@ -77,7 +77,7 @@ class BlockServiceTestnetIntegrationTest {
     @Test
     void getBlocksInformationTest() throws ApiException {
         String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
-        Result<List<BlockInfo>> blockInformationResult = blockService.getBlocksInformation(List.of(hash),null);
+        Result<List<BlockInfo>> blockInformationResult = blockService.getBlocksInformation(List.of(hash),Options.EMPTY);
         Assertions.assertTrue(blockInformationResult.isSuccessful());
         Assertions.assertNotNull(blockInformationResult.getValue());
         log.info(blockInformationResult.getValue().toString());
@@ -86,14 +86,14 @@ class BlockServiceTestnetIntegrationTest {
     @Test
     void getBlocksInformationBadRequestTest() {
         String hash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlocksInformation(List.of(hash),null));
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlocksInformation(List.of(hash),Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getBlockTransactionsTest() throws ApiException {
         String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
-        Result<List<BlockTxHash>> blockTransactionsResult = blockService.getBlockTransactions(hash, null);
+        Result<List<BlockTxHash>> blockTransactionsResult = blockService.getBlockTransactions(List.of(hash), Options.EMPTY);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());
         log.info(blockTransactionsResult.getValue().toString());
@@ -102,7 +102,7 @@ class BlockServiceTestnetIntegrationTest {
     @Test
     void getBlockTransactionsBadRequestTest() {
         String hash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactions(hash, null));
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactions(List.of(hash), Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }
