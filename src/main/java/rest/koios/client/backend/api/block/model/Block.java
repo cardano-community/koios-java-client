@@ -22,7 +22,7 @@ public class Block {
     /**
      * Epoch number of the block
      */
-    private Integer epoch = null;
+    private Integer epochNo = null;
 
     /**
      * Absolute slot number of the block

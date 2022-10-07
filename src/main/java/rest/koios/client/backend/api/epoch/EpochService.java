@@ -2,6 +2,7 @@ package rest.koios.client.backend.api.epoch;
 
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
 import rest.koios.client.backend.factory.options.Options;
@@ -32,7 +33,7 @@ public interface EpochService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param epochNo Epoch Number to fetch details for (optional)
+     * @param epochNo Epoch Number to fetch details for
      * @return Result of {@link EpochInfo} detailed summary
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
@@ -70,7 +71,7 @@ public interface EpochService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param epochNo Epoch Number to fetch details for (optional)
+     * @param epochNo Epoch Number to fetch details for
      * @return Result of {@link EpochParams} protocol parameters
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
@@ -88,4 +89,30 @@ public interface EpochService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<EpochParams>> getEpochParameters(Options options) throws ApiException;
+
+    /**
+     * Epoch's Block Protocols By Epoch
+     * Get the information about block protocol distribution in epoch
+     * <p><b>200</b> - Array of distinct block protocol versions counts in epoch
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param epochNo Epoch Number to fetch details for
+     * @return Result of {@link EpochParams} protocol parameters
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<EpochBlockProtocols> getEpochBlockProtocolsByEpoch(Integer epochNo) throws ApiException;
+
+    /**
+     * Epoch's Block Protocols
+     * Get the information about block protocol distribution in epoch
+     * <p><b>200</b> - Array of distinct block protocol versions counts in epoch
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link EpochParams} protocol parameters for each epoch
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<EpochBlockProtocols>> getEpochBlockProtocols(Options options) throws ApiException;
 }

@@ -5,6 +5,7 @@ import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.epoch.EpochService;
 import rest.koios.client.backend.api.epoch.api.EpochApi;
+import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
 import rest.koios.client.backend.factory.options.Limit;
@@ -96,6 +97,29 @@ public class EpochServiceImpl extends BaseService implements EpochService {
         Call<List<EpochParams>> call = epochApi.getEpochParameters(optionsToParamMap(options));
         try {
             Response<List<EpochParams>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<EpochBlockProtocols> getEpochBlockProtocolsByEpoch(Integer epochNo) throws ApiException {
+        validateEpoch(epochNo);
+        Call<List<EpochBlockProtocols>> call = epochApi.getEpochBlockProtocolsByEpoch(epochNo);
+        try {
+            Response<List<EpochBlockProtocols>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<EpochBlockProtocols>> getEpochBlockProtocols(Options options) throws ApiException {
+        Call<List<EpochBlockProtocols>> call = epochApi.getEpochBlockProtocols(optionsToParamMap(options));
+        try {
+            Response<List<EpochBlockProtocols>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
