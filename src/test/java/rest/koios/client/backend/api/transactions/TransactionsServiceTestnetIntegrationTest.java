@@ -89,6 +89,7 @@ class TransactionsServiceTestnetIntegrationTest {
         assertInstanceOf(ApiException.class, exception);
     }
 
+    @Test
     void getTransactionMetadataLabelsLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<TxMetadataLabels>> transactionMetadataLabelsResult = transactionsService.getTransactionMetadataLabels(options);

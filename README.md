@@ -61,13 +61,17 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the circulating utxo, treasury, rewards, supply and reserves in lovelace for specified epoch, all epochs if empty</td>
         </tr>
         <tr>
-            <td rowspan="2">Epoch</td>
+            <td rowspan="3">Epoch</td>
             <td>Epoch Information</td>
             <td>Get the epoch information, all epochs if no epoch specified</td>
         </tr>
         <tr>
             <td>Epoch's Protocol Parameters</td>
             <td>Get the protocol parameters for specific epoch, returns information about all epochs if no epoch specified</td>
+        </tr>
+        <tr>
+            <td>Epoch's Block Protocols</td>
+            <td>Get the information about block protocol distribution in epoch</td>
         </tr>
         <tr>
             <td rowspan="3">Block</td>
@@ -245,6 +249,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.0.8      |      1.15.0       |
 |     1.0.7      |      1.14.1       |
 |     1.0.6      |       1.13        |
 </details>
@@ -258,13 +263,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.14.1</version>
+    <version>1.15.0</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.14.1'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.15.0'
 ```
 
 ### Get Koios Backend Service

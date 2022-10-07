@@ -141,6 +141,33 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Epoch's Block Protocols",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/epoch_block_protocols?_epoch_no={{epoch_no}}",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"epoch_block_protocols"
+									],
+									"query": [
+										{
+											"key": "_epoch_no",
+											"value": "{{epoch_no}}"
+										}
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},

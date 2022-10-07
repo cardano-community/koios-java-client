@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -127,7 +128,7 @@ public class TxInfo {
     /**
      * Metadata present with-in a transaction (if any)
      */
-    private List<Metadata> metadata = null;
+    private JsonNode metadata = null;
 
     /**
      * Certificates present with-in a transaction (if any)
