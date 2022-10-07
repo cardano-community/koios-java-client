@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.asset.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -33,9 +34,9 @@ public class PolicyAsset {
     private String fingerprint;
 
     /**
-     * Minting Transaction Metadata
+     * A JSON array containing details about metadata within transaction
      */
-    private MintingTxMetadata mintingTxMetadata;
+    private JsonNode mintingTxMetadata;
 
     /**
      * Asset metadata registered on the Cardano Token Registry
