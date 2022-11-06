@@ -1,6 +1,6 @@
 package rest.koios.client.backend.api.asset.api;
 
-import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
 import retrofit2.Call;
 import retrofit2.http.GET;

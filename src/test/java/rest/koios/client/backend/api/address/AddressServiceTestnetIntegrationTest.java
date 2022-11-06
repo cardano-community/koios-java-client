@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.Result;
@@ -15,8 +15,7 @@ import rest.koios.client.backend.factory.options.Options;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -31,7 +30,7 @@ class AddressServiceTestnetIntegrationTest {
 
     @Test
     void getAddressInformationTest() throws ApiException {
-        String address = "addr_test1qz0xcyfuwkf6a2c8g0mhjdaxxvtuw2u04dqjx7tt2gwaq5522z65y7wauh6rryspdn7xrg5u7nkf5ung6qk5dn3a7u8syvce7n";
+        String address = "addr_test1qpealqrtq7enryrqgagz0vfr9pwazay93gt88qzz65wjxkwlz9e76aqsnrz8dvr874sf65h974zfjsw3tfx74l8wfamsvraz4s";
         Result<AddressInfo> addressInformationResult = addressService.getAddressInformation(address);
         Assertions.assertTrue(addressInformationResult.isSuccessful());
         Assertions.assertNotNull(addressInformationResult.getValue());

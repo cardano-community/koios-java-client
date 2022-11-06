@@ -1,6 +1,7 @@
 package rest.koios.client.backend.api.address.impl;
 
-import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.address.model.AddressUtxo;
+import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.api.AddressApi;
 import rest.koios.client.backend.api.address.model.AddressAsset;
@@ -14,10 +15,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Address Service Implementation
@@ -50,11 +48,13 @@ public class AddressServiceImpl extends BaseService implements AddressService {
         try {
             Response<List<AddressInfo>> response = (Response) execute(call);
             Result<AddressInfo> result = processResponseGetOne(response);
-            //Sort
-            if (utxoSortType == SortType.DESC) {
-                result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()).descendingSet());
-            } else {
-                result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
+            if (result.isSuccessful()) {
+                //Sort
+                if (utxoSortType == SortType.DESC) {
+                    result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()).descendingSet());
+                } else {
+                    result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
+                }
             }
             return result;
         } catch (IOException e) {

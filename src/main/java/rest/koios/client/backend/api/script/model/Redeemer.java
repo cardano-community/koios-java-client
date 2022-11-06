@@ -1,10 +1,12 @@
 package rest.koios.client.backend.api.script.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
-
-import java.math.BigInteger;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Redeemer
@@ -39,7 +41,7 @@ public class Redeemer {
     /**
      * The budget in fees to run a script - the fees depend on the ExUnits and the current prices
      */
-    private BigInteger fee;
+    private String fee;
 
     /**
      * What kind pf validation this redeemer is used for, it can be one of 'spend', 'mint', 'cert', 'reward'
@@ -54,5 +56,5 @@ public class Redeemer {
     /**
      * The actual data in json format
      */
-    private Object datumValue;
+    private JsonNode datumValue;
 }

@@ -1,6 +1,6 @@
 package rest.koios.client.backend.api.address;
 
-import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.Result;

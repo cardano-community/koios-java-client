@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.transactions.model;
+package rest.koios.client.backend.api.common;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -9,17 +9,32 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Inline Datum
+ * Reference Script
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class InlineDatum {
+public class ReferenceScript {
 
     /**
-     * Datum (hex)
+     * Hash of referenced script
+     */
+    private String hash;
+
+    /**
+     * Size in bytes
+     */
+    private Integer size;
+
+    /**
+     * Type of script
+     */
+    private String type;
+
+    /**
+     * Script bytes (hex)
      */
     private String bytes;
 

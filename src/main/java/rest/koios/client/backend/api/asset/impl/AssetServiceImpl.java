@@ -1,6 +1,6 @@
 package rest.koios.client.backend.api.asset.impl;
 
-import rest.koios.client.backend.api.TxHash;
+import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.AssetService;
 import rest.koios.client.backend.api.asset.api.AssetApi;
 import rest.koios.client.backend.api.asset.model.*;

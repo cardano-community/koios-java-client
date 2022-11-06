@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import rest.koios.client.backend.api.common.InlineDatum;
+import rest.koios.client.backend.api.common.ReferenceScript;
 
 import java.util.List;
 

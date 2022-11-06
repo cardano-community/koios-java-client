@@ -61,7 +61,7 @@ class BlockServiceMainnetIntegrationTest {
     @Test
     void getBlockListFilterTest() throws ApiException {
         Options options = Options.builder()
-                .option(Filter.of("epoch", FilterType.EQ, "250"))
+                .option(Filter.of("epoch_no", FilterType.EQ, "250"))
                 .option(Filter.of("epoch_slot", FilterType.LT, "180")).build();
         Result<List<Block>> blockListResult = blockService.getBlockList(options);
         Assertions.assertTrue(blockListResult.isSuccessful());
