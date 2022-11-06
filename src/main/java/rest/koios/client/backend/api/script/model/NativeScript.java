@@ -31,9 +31,4 @@ public class NativeScript {
      * Type of the script
      */
     private NativeScriptType type;
-
-    /**
-     * Script
-     */
-    private Script script;
 }

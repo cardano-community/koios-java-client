@@ -101,6 +101,8 @@ public class BaseService {
         if (response.isSuccessful()) {
             if (response.body() != null && !response.body().isEmpty()) {
                 return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body().get(0)).code(response.code()).build();
+            } else if (response.body() != null) {
+                return (Result<T>) Result.builder().successful(false).response("Response Body is Empty").code(404).build();
             } else {
                 return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
             }

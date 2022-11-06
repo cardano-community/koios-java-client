@@ -42,5 +42,5 @@ public class PoolBlock {
     /**
      * Timestamp of the block
      */
-    private String blockTime;
+    private Integer blockTime;
 }

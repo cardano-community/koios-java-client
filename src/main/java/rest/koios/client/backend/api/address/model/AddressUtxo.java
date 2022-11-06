@@ -3,8 +3,8 @@ package rest.koios.client.backend.api.address.model;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
-import rest.koios.client.backend.api.transactions.model.InlineDatum;
-import rest.koios.client.backend.api.transactions.model.ReferenceScript;
+import rest.koios.client.backend.api.common.InlineDatum;
+import rest.koios.client.backend.api.common.ReferenceScript;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class AddressUtxo implements Comparable<AddressUtxo> {
     /**
      * Timestamp of the block
      */
-    private String blockTime;
+    private Integer blockTime;
 
     /**
      * Total sum on the output address

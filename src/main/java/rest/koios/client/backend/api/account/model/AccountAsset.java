@@ -10,7 +10,7 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * Account Asset Inner
+ * Account Asset
  */
 @Getter
 @Setter
