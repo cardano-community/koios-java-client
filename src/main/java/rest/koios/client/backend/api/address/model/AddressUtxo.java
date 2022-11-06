@@ -14,6 +14,7 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class AddressUtxo implements Comparable<AddressUtxo> {
@@ -65,6 +66,10 @@ public class AddressUtxo implements Comparable<AddressUtxo> {
 
     @Override
     public int compareTo(AddressUtxo other) {
-        return getBlockHeight().compareTo(other.getBlockHeight());
+        int comparison1 = getBlockHeight().compareTo(other.getBlockHeight());
+        if (comparison1 == 0) {
+            return getTxIndex().compareTo(other.getTxIndex());
+        }
+        return comparison1;
     }
 }
