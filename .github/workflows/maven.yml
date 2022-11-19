@@ -45,7 +45,6 @@ jobs:
           name: testnet-tests-jacoco
           path: exportJacoco/jacoco-testnet.exec
 
-
     merge-jacoco-report:
       name: Jacoco Merge Results
       needs:
