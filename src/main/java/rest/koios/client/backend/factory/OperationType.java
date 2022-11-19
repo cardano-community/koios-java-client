@@ -17,9 +17,17 @@ public enum OperationType {
      */
     KOIOS_TESTNET("https://testnet.koios.rest/api/"),
     /**
-     * Guildnet
+     * GuildNet
      */
-    KOIOS_GUILD("https://guild.koios.rest/api/");
+    KOIOS_GUILD("https://guild.koios.rest/api/"),
+    /**
+     * Preview
+     */
+    KOIOS_PREVIEW("https://preview.koios.rest/api/"),
+    /**
+     * PreProd
+     */
+    KOIOS_PREPROD("https://preprod.koios.rest/api/");
 
     private final String baseUrl;
 
