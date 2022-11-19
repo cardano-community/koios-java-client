@@ -69,6 +69,44 @@ public class BackendFactory {
     }
 
     /**
+     * Get Preview Network BackendService for Koios (Latest Version)
+     *
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosPreviewService() {
+        return getKoiosPreviewService(ApiVersion.VERSION_0);
+    }
+
+    /**
+     * Get Preview Network BackendService for Koios By Version
+     *
+     * @param apiVersion API Version
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosPreviewService(ApiVersion apiVersion) {
+        return new BackendServiceImpl(OperationType.KOIOS_PREVIEW, apiVersion);
+    }
+
+    /**
+     * Get Preprod Network BackendService for Koios (Latest Version)
+     *
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosPreprodService() {
+        return getKoiosPreprodService(ApiVersion.VERSION_0);
+    }
+
+    /**
+     * Get Preprod Network BackendService for Koios By Version
+     *
+     * @param apiVersion API Version
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosPreprodService(ApiVersion apiVersion) {
+        return new BackendServiceImpl(OperationType.KOIOS_PREPROD, apiVersion);
+    }
+
+    /**
      * Get BackendService for Koios
      *
      * @param baseUrl base URL for Koios
