@@ -1,63 +1,77 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
 name: build
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   schedule:
     - cron: '0 0 * * *'
 
 jobs:
-  build:
-
+  mainnet:
+    name: Mainnet
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
-
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
-
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-
-    - name: Generate JaCoCo Badge
-      uses: cicirello/jacoco-badge-generator@v2
-      with:
-        jacoco-csv-file: target/site/jacoco/jacoco.csv
-        badges-directory: .github/badges
-        generate-branches-badge: false
-        coverage-badge-filename: jacoco.svg
-        generate-coverage-endpoint: true
-        coverage-endpoint-filename: jacoco.json
-        generate-summary: true
-        summary-filename: coverage-summary.json
-        coverage-label: Coverage
-
-    - name: Log Coverage Percentage
+    - name: Run Tests
       run: |
-        echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-        echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
-
-    - name: Commit and push the badge (if it changed)
-      uses: EndBug/add-and-commit@v7
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        default_author: github_actions
-        message: 'Commit Coverage Report'
-        add: '*.json'
-
-    - name: Upload JaCoCo coverage report
+        mvn '-Dtest=*Mainnet*' verify -Djacoco.destFile=exportJacoco/jacoco-mainnet.exec
+    - name: Upload Jacoco Results
       uses: actions/upload-artifact@v2
       with:
-        name: jacoco-report
-        path: target/site/jacoco/
+        name: mainnet-tests-jacoco
+        path: exportJacoco/jacoco-mainnet.exec
+
+  testnet:
+    name: Testnet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+      - name: Run tests
+        run: |
+          mvn '-Dtest=*Testnet*' verify -Djacoco.destFile=exportJacoco/jacoco-testnet.exec
+      - name: Upload Jacoco Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: testnet-tests-jacoco
+          path: exportJacoco/jacoco-testnet.exec
+
+
+    merge-jacoco-report:
+      name: Jacoco Merge Results
+      needs:
+        - mainnet
+        - testnet
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-java@v1
+          with:
+            java-version: '11'
+        - uses: actions/download-artifact@v2
+          with:
+            name: mainnet-tests-jacoco
+            path: target/
+        - uses: actions/download-artifact@v2
+          with:
+            name: testnet-tests-jacoco
+            path: target/
+        - name: merge results
+          run: |
+            mvn jacoco:merge package jacoco:report verify -DskipTests=true
+        - name: Upload jacoco coverage despite the check result
+          if: ${{ always() }}
+          uses: actions/upload-artifact@v2
+          with:
+            name: coverage-results-report
+            path: target/site/jacoco/
+            if-no-files-found: error
