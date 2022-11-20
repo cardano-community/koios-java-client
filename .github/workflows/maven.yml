@@ -21,7 +21,7 @@ jobs:
         cache: maven
     - name: Run Tests
       run: |
-        mvn '-Dtest=*Mainnet*' verify -Djacoco.destFile=exportJacoco/jacoco-mainnet.exec
+        mvn '-Dtest=*Mainnet*' -B package -Djacoco.destFile=exportJacoco/jacoco-mainnet.exec
     - name: Upload Jacoco Results
       uses: actions/upload-artifact@v2
       with:
@@ -38,7 +38,7 @@ jobs:
           java-version: '11'
       - name: Run tests
         run: |
-          mvn '-Dtest=*Preview*' verify -Djacoco.destFile=exportJacoco/jacoco-preview.exec
+          mvn '-Dtest=*Preview*' -B package -Djacoco.destFile=exportJacoco/jacoco-preview.exec
       - name: Upload Jacoco Results
         uses: actions/upload-artifact@v2
         with:
