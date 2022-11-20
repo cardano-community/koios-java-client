@@ -5,6 +5,7 @@ import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.script.ScriptService;
 import rest.koios.client.backend.api.script.api.ScriptApi;
+import rest.koios.client.backend.api.script.model.DatumInfo;
 import rest.koios.client.backend.api.script.model.NativeScript;
 import rest.koios.client.backend.api.script.model.PlutusScript;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
@@ -13,7 +14,9 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Script Service Implementation
@@ -64,5 +67,25 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Result<List<DatumInfo>> getDatumInformation(List<String> datumHashes, Options options) throws ApiException {
+        for (String datumHash : datumHashes) {
+            validateHexFormat(datumHash);
+        }
+        Call<List<DatumInfo>> call = scriptApi.getDatumInformation(buildBody("_datum_hashes", datumHashes), optionsToParamMap(options));
+        try {
+            Response<List<DatumInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    private Map<String, Object> buildBody(String arrayObjString, List<String> list) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put(arrayObjString, list);
+        return bodyMap;
     }
 }

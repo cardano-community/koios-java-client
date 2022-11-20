@@ -32,12 +32,26 @@ public interface AccountService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param addressList Array of Cardano stake address(es) in bech32 format (required)
+     * @param stakeAddresses List of Cardano stake address(es) in bech32 format (required)
      * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AccountInfo} per the specified payment or staking address
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AccountInfo>> getAccountInformation(List<String> addressList, Options options) throws ApiException;
+    Result<List<AccountInfo>> getAccountInformation(List<String> stakeAddresses, Options options) throws ApiException;
+
+    /**
+     * Account Information (Cached)
+     * Get the cached account information for given stake addresses (accounts)
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param stakeAddresses List of Cardano stake address(es) in bech32 format (required)
+     * @param options        Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link AccountInfo} per the specified payment or staking address
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<AccountInfo>> getCachedAccountInformation(List<String> stakeAddresses, Options options) throws ApiException;
 
     /**
      * Account Rewards

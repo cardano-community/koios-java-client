@@ -138,13 +138,17 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the transaction hash list of input payment credential array, optionally filtering after specified block height (inclusive)</td>
         </tr>
         <tr>
-            <td rowspan="7">Account</td>
+            <td rowspan="8">Account</td>
             <td>Account List</td>
             <td>Get a list of all accounts</td>
         </tr>
         <tr>
             <td>Account Information</td>
             <td>Get the account info of any (payment or staking) address</td>
+        </tr>
+        <tr>
+            <td>Account Information (Cached)</td>
+            <td>Get the cached account information for given stake addresses (accounts)</td>
         </tr>
         <tr>
             <td>Account Rewards</td>
@@ -237,7 +241,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Metadata (on & off-chain) for all currently registered/retiring (not retired) pools</td>
         </tr>
         <tr>
-            <td rowspan="3">Script</td>
+            <td rowspan="4">Script</td>
             <td>Native Script List</td>
             <td>List of all existing native script hashes along with their creation transaction hashes</td>
         </tr>
@@ -249,6 +253,10 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Script Redeemers</td>
             <td>List of all redeemers for a given script hash</td>
         </tr>
+        <tr>
+            <td>Datum Information</td>
+            <td>List of datum information for given datum hashes</td>
+        </tr>
     </tbody>
 </table>
 </details>
@@ -258,6 +266,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.0.9      |      1.16.0       |
 |     1.0.8      |      1.15.2       |
 |     1.0.7      |      1.14.1       |
 |     1.0.6      |       1.13        |
@@ -272,13 +281,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.15.2</version>
+    <version>1.16.0</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.15.2'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.16.0'
 ```
 
 ### Get Koios Backend Service
@@ -318,14 +327,14 @@ ScriptService scriptService = backendService.getScriptService();
 ### Advanced Query Example (Preview)
 #### Querying a Descending Order of All Address Transactions since Block No. #3168087 to Block No. #3168097 (inclusive), Limited to Maximum of 10 Results.
 ```java 
-String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";
+String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
 
 Options options = Options.builder()
         .option(Limit.of(10))
         .option(Offset.of(0))
         .option(Order.by("block_height", SortType.DESC))
-        .option(Filter.of("block_height", FilterType.GTE, "3168087"))
-        .option(Filter.of("block_height", FilterType.LTE, "3168097")).build();
+        .option(Filter.of("block_height", FilterType.GTE, "42248"))
+        .option(Filter.of("block_height", FilterType.LTE, "69447")).build();
 
 Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(List.of(address), options);
 ```
@@ -349,10 +358,13 @@ mvn clean install
 * [Bloxbean - Cardano Client Library](https://github.com/bloxbean/cardano-client-lib)
 * [ISR - Israeli Cardano Community](https://www.cardano-israel.com/)
 * [MusicBox - CNFT Project](https://www.musicboxnft.com/)
+* [Adabox - Decentralized All in One Hub](https://adabox.io/) 
 <hr/>
 
 <p style="text-align: center">
     <a href="CONTRIBUTING.md">:triangular_ruler: Contributing</a>
       |
     <a href="SPONSORS.md">:gift_heart: Sponsors</a>
+      |
+    <a href="https://discord.gg/J5NeDGxMGP"><img src=".github/discord.svg" alt="Discord">Discord (#koios-java-client)</a>
 </p>

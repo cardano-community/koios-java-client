@@ -44,11 +44,25 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountInfo>> getAccountInformation(List<String> addressList, Options options) throws ApiException {
-        for (String address : addressList) {
+    public Result<List<AccountInfo>> getAccountInformation(List<String> stakeAddresses, Options options) throws ApiException {
+        for (String address : stakeAddresses) {
             validateBech32(address);
         }
-        Call<List<AccountInfo>> call = accountApi.getAccountInformation(buildBody("_stake_addresses", addressList, null), optionsToParamMap(options));
+        Call<List<AccountInfo>> call = accountApi.getAccountInformation(buildBody("_stake_addresses", stakeAddresses, null), optionsToParamMap(options));
+        try {
+            Response<List<AccountInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<AccountInfo>> getCachedAccountInformation(List<String> stakeAddresses, Options options) throws ApiException {
+        for (String address : stakeAddresses) {
+            validateBech32(address);
+        }
+        Call<List<AccountInfo>> call = accountApi.getCachedAccountInformation(buildBody("_stake_addresses", stakeAddresses, null), optionsToParamMap(options));
         try {
             Response<List<AccountInfo>> response = (Response) execute(call);
             return processResponse(response);
