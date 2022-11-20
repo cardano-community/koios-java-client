@@ -30,6 +30,11 @@ public class AssetHistory {
     private String assetName = null;
 
     /**
+     * The CIP14 fingerprint of the asset
+     */
+    private String fingerprint = null;
+
+    /**
      * List of all mint/burn transactions for an asset
      */
     private List<MintingTx> mintingTxs = null;

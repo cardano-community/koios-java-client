@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class BlockServiceTestnetIntegrationTest {
+class BlockServicePreviewIntegrationTest {
 
     private BlockService blockService;
 
     @BeforeAll
     public void setup() {
-        blockService = BackendFactory.getKoiosTestnetService().getBlockService();
+        blockService = BackendFactory.getKoiosPreviewService().getBlockService();
     }
 
     @Test
@@ -60,7 +60,7 @@ class BlockServiceTestnetIntegrationTest {
 
     @Test
     void getBlockInformationTest() throws ApiException {
-        String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
+        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
         Result<BlockInfo> blockInformationResult = blockService.getBlockInformation(hash);
         Assertions.assertTrue(blockInformationResult.isSuccessful());
         Assertions.assertNotNull(blockInformationResult.getValue());
@@ -76,7 +76,7 @@ class BlockServiceTestnetIntegrationTest {
 
     @Test
     void getBlocksInformationTest() throws ApiException {
-        String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
+        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
         Result<List<BlockInfo>> blockInformationResult = blockService.getBlocksInformation(List.of(hash),Options.EMPTY);
         Assertions.assertTrue(blockInformationResult.isSuccessful());
         Assertions.assertNotNull(blockInformationResult.getValue());
@@ -92,7 +92,7 @@ class BlockServiceTestnetIntegrationTest {
 
     @Test
     void getBlockTransactionsTest() throws ApiException {
-        String hash = "50a63ac54ccceb7de3f145e440b93842a7c2c2dab62e9fbd3bd1414585b483e9";
+        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
         Result<List<BlockTxHash>> blockTransactionsResult = blockService.getBlockTransactions(List.of(hash), Options.EMPTY);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());

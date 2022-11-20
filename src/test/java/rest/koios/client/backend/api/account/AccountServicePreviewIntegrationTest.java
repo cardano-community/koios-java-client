@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AccountServiceTestnetIntegrationTest {
+class AccountServicePreviewIntegrationTest {
 
     private AccountService accountService;
 
     @BeforeAll
     public void setup() {
-        accountService = BackendFactory.getKoiosTestnetService().getAccountService();
+        accountService = BackendFactory.getKoiosPreviewService().getAccountService();
     }
 
     @Test
@@ -39,7 +39,7 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountInformationTest() throws ApiException {
-        String address = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        String address = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
         Result<List<AccountInfo>> accountInformationResult = accountService.getAccountInformation(List.of(address), Options.EMPTY);
         Assertions.assertTrue(accountInformationResult.isSuccessful());
         Assertions.assertNotNull(accountInformationResult.getValue());
@@ -55,8 +55,8 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountRewardsTest() throws ApiException {
-        int epochNo = 180;
-        String stakeAddress = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        int epochNo = 21;
+        String stakeAddress = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
         Result<List<AccountRewards>> accountRewardsResult = accountService.getAccountRewards(List.of(stakeAddress), epochNo, Options.EMPTY);
         Assertions.assertTrue(accountRewardsResult.isSuccessful());
         Assertions.assertNotNull(accountRewardsResult.getValue());
@@ -73,7 +73,7 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountUpdatesTest() throws ApiException {
-        String stakeAddress = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        String stakeAddress = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
         Result<List<AccountUpdates>> accountUpdatesResult = accountService.getAccountUpdates(List.of(stakeAddress), null, Options.EMPTY);
         Assertions.assertTrue(accountUpdatesResult.isSuccessful());
         Assertions.assertNotNull(accountUpdatesResult.getValue());
@@ -89,7 +89,7 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountAddressesTest() throws ApiException {
-        String address = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        String address = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
         Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(List.of(address), null, Options.EMPTY);
         Assertions.assertTrue(accountAddressesResult.isSuccessful());
         Assertions.assertNotNull(accountAddressesResult.getValue());
@@ -105,7 +105,7 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountAssetsTest() throws ApiException {
-        String address = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        String address = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
         Result<List<AccountAssets>> accountAssetsResult = accountService.getAccountAssets(List.of(address), null, Options.EMPTY);
         Assertions.assertTrue(accountAssetsResult.isSuccessful());
         Assertions.assertNotNull(accountAssetsResult.getValue());
@@ -121,7 +121,7 @@ class AccountServiceTestnetIntegrationTest {
 
     @Test
     void getAccountHistoryTest() throws ApiException {
-        String address = "stake_test1uq02x8kk9kcee2uhlw69srl78s2rdu83z6tgjcxceufd7asvp5p2z";
+        String address = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
         Result<List<AccountHistory>> accountHistoryResult = accountService.getAccountHistory(List.of(address),null, Options.EMPTY);
         Assertions.assertTrue(accountHistoryResult.isSuccessful());
         Assertions.assertNotNull(accountHistoryResult.getValue());

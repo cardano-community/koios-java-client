@@ -278,9 +278,14 @@ compile group: 'io.github.cardano-community', name: 'koios-java-client', version
 BackendService backendService = BackendFactory.getKoiosMainnetService();
 ```
 
-- Testnet
+- Preview
 ```java 
-BackendService backendService = BackendFactory.getKoiosTestnetService();
+BackendService backendService = BackendFactory.getKoiosPreviewService();
+```
+
+- Preprod
+```java 
+BackendService backendService = BackendFactory.getKoiosPreprodService();
 ```
 
 - Guildnet
@@ -301,7 +306,7 @@ PoolService poolService = backendService.getPoolService();
 ScriptService scriptService = backendService.getScriptService();
 ```
 
-### Advanced Query Example (Testnet)
+### Advanced Query Example (Preview)
 #### Querying a Descending Order of All Address Transactions since Block No. #3168087 to Block No. #3168097 (inclusive), Limited to Maximum of 10 Results.
 ```java 
 String address = "addr_test1qzx9hu8j4ah3auytk0mwcupd69hpc52t0cw39a65ndrah86djs784u92a3m5w475w3w35tyd6v3qumkze80j8a6h5tuqq5xe8y";

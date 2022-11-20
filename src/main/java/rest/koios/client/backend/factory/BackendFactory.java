@@ -31,25 +31,6 @@ public class BackendFactory {
     }
 
     /**
-     * Get Testnet BackendService for Koios (Latest Version)
-     *
-     * @return {@link BackendService}
-     */
-    public static BackendService getKoiosTestnetService() {
-        return getKoiosTestnetService(ApiVersion.VERSION_0);
-    }
-
-    /**
-     * Get Testnet BackendService for Koios By Version
-     *
-     * @param apiVersion API Version
-     * @return {@link BackendService}
-     */
-    public static BackendService getKoiosTestnetService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_TESTNET, apiVersion);
-    }
-
-    /**
      * Get Guild Network BackendService for Koios (Latest Version)
      *
      * @return {@link BackendService}

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import rest.koios.client.backend.api.common.Asset;
 import rest.koios.client.backend.api.common.InlineDatum;
 import rest.koios.client.backend.api.common.ReferenceScript;
 
@@ -64,5 +65,5 @@ public class TxIO {
     /**
      * An array of assets included in input/output UTxO
      */
-    private List<TxAsset> assetList;
+    private List<Asset> assetList;
 }

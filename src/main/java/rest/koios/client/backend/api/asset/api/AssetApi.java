@@ -34,5 +34,5 @@ public interface AssetApi {
     Call<List<AssetSummary>> getAssetSummary(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
 
     @GET("asset_txs")
-    Call<List<TxHash>> getAssetTransactionHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
+    Call<List<TxHash>> getAssetTransactionHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @Query("_after_block_height") Integer afterBlockHeight, @Query("_history") Boolean history, @QueryMap Map<String, String> paramsMap);
 }

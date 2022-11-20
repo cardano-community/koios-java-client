@@ -19,18 +19,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AddressServiceTestnetIntegrationTest {
+class AddressServicePreviewIntegrationTest {
 
     private AddressService addressService;
 
     @BeforeAll
     public void setup() {
-        addressService = BackendFactory.getKoiosTestnetService().getAddressService();
+        addressService = BackendFactory.getKoiosPreviewService().getAddressService();
     }
 
     @Test
     void getAddressInformationTest() throws ApiException {
-        String address = "addr_test1qpealqrtq7enryrqgagz0vfr9pwazay93gt88qzz65wjxkwlz9e76aqsnrz8dvr874sf65h974zfjsw3tfx74l8wfamsvraz4s";
+        String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
         Result<AddressInfo> addressInformationResult = addressService.getAddressInformation(address);
         Assertions.assertTrue(addressInformationResult.isSuccessful());
         Assertions.assertNotNull(addressInformationResult.getValue());
@@ -46,7 +46,7 @@ class AddressServiceTestnetIntegrationTest {
 
     @Test
     void getAddressTransactionsTest() throws ApiException {
-        String address = "addr_test1qz0xcyfuwkf6a2c8g0mhjdaxxvtuw2u04dqjx7tt2gwaq5522z65y7wauh6rryspdn7xrg5u7nkf5ung6qk5dn3a7u8syvce7n";
+        String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
         Result<List<TxHash>> txHashesResult = addressService.getAddressTransactions(List.of(address),250, Options.EMPTY);
         Assertions.assertTrue(txHashesResult.isSuccessful());
         Assertions.assertNotNull(txHashesResult.getValue());
@@ -59,17 +59,18 @@ class AddressServiceTestnetIntegrationTest {
         ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(badAddress),250, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
 
-        String address = "addr_test1qz0xcyfuwkf6a2c8g0mhjdaxxvtuw2u04dqjx7tt2gwaq5522z65y7wauh6rryspdn7xrg5u7nkf5ung6qk5dn3a7u8syvce7n";
+        String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
         exception = assertThrows(ApiException.class, () -> addressService.getAddressTransactions(List.of(address),-5, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAddressAssetsTest() throws ApiException {
-        String address = "addr_test1qz0xcyfuwkf6a2c8g0mhjdaxxvtuw2u04dqjx7tt2gwaq5522z65y7wauh6rryspdn7xrg5u7nkf5ung6qk5dn3a7u8syvce7n";
+        String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
         Result<List<AddressAsset>> assetInfosResult = addressService.getAddressAssets(List.of(address), Options.EMPTY);
         Assertions.assertTrue(assetInfosResult.isSuccessful());
         Assertions.assertNotNull(assetInfosResult.getValue());
+        Assertions.assertFalse(assetInfosResult.getValue().isEmpty());
         log.info(assetInfosResult.getValue().toString());
     }
 
@@ -82,7 +83,7 @@ class AddressServiceTestnetIntegrationTest {
 
     @Test
     void getTransactionsByPaymentCredentialsTest() throws ApiException {
-        String paymentCredentials = "d38191f836e65ae4a8072ba07fa3b0bd6256ffed4a95895008ba5f1b";
+        String paymentCredentials = "33c378cee41b2e15ac848f7f6f1d2f78155ab12d93b713de898d855f";
         Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),250, Options.EMPTY);
         Assertions.assertTrue(txHashesResult.isSuccessful());
         Assertions.assertNotNull(txHashesResult.getValue());
@@ -95,7 +96,7 @@ class AddressServiceTestnetIntegrationTest {
         ApiException exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(badPaymentCredentials),250, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
 
-        String paymentCredentials = "d38191f836e65ae4a8072ba07fa3b0bd6256ffed4a95895008ba5f1b";
+        String paymentCredentials = "33c378cee41b2e15ac848f7f6f1d2f78155ab12d93b713de898d855f";
         exception = assertThrows(ApiException.class, () -> addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),-5, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }

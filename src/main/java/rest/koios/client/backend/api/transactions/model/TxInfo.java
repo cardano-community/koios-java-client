@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import rest.koios.client.backend.api.common.Asset;
 
 import java.util.List;
 
@@ -123,7 +124,7 @@ public class TxInfo {
     /**
      * Array of minted assets with-in a transaction (if any)
      */
-    private List<TxAsset> assetsMinted = null;
+    private List<Asset> assetsMinted = null;
 
     /**
      * Metadata present with-in a transaction (if any)

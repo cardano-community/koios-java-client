@@ -20,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PlutusScriptServiceTestnetIntegrationTest {
+class PlutusScriptServicePreviewIntegrationTest {
 
     private ScriptService scriptService;
 
     @BeforeAll
     public void setup() {
-        scriptService = BackendFactory.getKoiosTestnetService().getScriptService();
+        scriptService = BackendFactory.getKoiosPreviewService().getScriptService();
     }
 
     @Test
@@ -51,7 +51,7 @@ class PlutusScriptServiceTestnetIntegrationTest {
 
     @Test
     void getScriptRedeemersTest() throws ApiException {
-        String scriptHash = "0cc40ebefcdd1a32dc96ec4b548075779c28f6842b487d56bf54fd29";
+        String scriptHash = "8d73f125395466f1d68570447e4f4b87cd633c6728f3802b2dcfca20";
         Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, Options.EMPTY);
         Assertions.assertTrue(scriptRedeemersResult.isSuccessful());
         Assertions.assertNotNull(scriptRedeemersResult.getValue());
