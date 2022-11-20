@@ -18,13 +18,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PoolServiceTestnetIntegrationTest {
+class PoolServicePreviewIntegrationTest {
 
     private PoolService poolService;
 
     @BeforeAll
     public void setup() {
-        poolService = BackendFactory.getKoiosTestnetService().getPoolService();
+        poolService = BackendFactory.getKoiosPreviewService().getPoolService();
     }
 
     @Test
@@ -39,7 +39,7 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolInformationTest() throws ApiException {
-        String poolId = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolId = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Result<List<PoolInfo>> poolInfosResult = poolService.getPoolInformation(List.of(poolId), Options.EMPTY);
         Assertions.assertTrue(poolInfosResult.isSuccessful());
         Assertions.assertNotNull(poolInfosResult.getValue());
@@ -53,9 +53,9 @@ class PoolServiceTestnetIntegrationTest {
         assertInstanceOf(ApiException.class, exception);
     }
 
-//    @Test
+    @Test
     void getPoolStakeSnapshotTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Result<List<PoolStakeSnapshot>> poolInfosResult = poolService.getPoolStakeSnapshot(poolBech32, Options.EMPTY);
         Assertions.assertTrue(poolInfosResult.isSuccessful());
         Assertions.assertNotNull(poolInfosResult.getValue());
@@ -71,7 +71,7 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolDelegatorsHistoryTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Result<List<PoolDelegatorHistory>> poolDelegatorsResult = poolService.getPoolDelegatorsHistory(poolBech32, 180, Options.EMPTY);
         Assertions.assertTrue(poolDelegatorsResult.isSuccessful());
         Assertions.assertNotNull(poolDelegatorsResult.getValue());
@@ -87,7 +87,7 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolBlocksTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Result<List<PoolBlock>> poolBlocksResult = poolService.getPoolBlocksByEpoch(poolBech32, 180, Options.EMPTY);
         Assertions.assertTrue(poolBlocksResult.isSuccessful());
         Assertions.assertNotNull(poolBlocksResult.getValue());
@@ -96,7 +96,7 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolBlocksLimitTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<PoolBlock>> poolBlocksResult = poolService.getPoolBlocks(poolBech32, options);
         Assertions.assertTrue(poolBlocksResult.isSuccessful());
@@ -114,8 +114,8 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolHistoryByEpochTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
-        Integer epochNo = 180;
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
+        Integer epochNo = 24;
         Result<PoolHistory> poolHistoryResult = poolService.getPoolHistoryByEpoch(poolBech32, epochNo,Options.EMPTY);
         Assertions.assertTrue(poolHistoryResult.isSuccessful());
         Assertions.assertNotNull(poolHistoryResult.getValue());
@@ -124,7 +124,7 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolHistoryLimitTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<PoolHistory>> poolHistoryResult = poolService.getPoolHistory(poolBech32, options);
         Assertions.assertTrue(poolHistoryResult.isSuccessful());
@@ -142,7 +142,7 @@ class PoolServiceTestnetIntegrationTest {
 
     @Test
     void getPoolUpdatesTest() throws ApiException {
-        String poolBech32 = "pool1rcsezjrma577f06yp40lsz76uvwh7gne35afx3zrq2ktx50f8t8";
+        String poolBech32 = "pool10c40pnzz3e00kuej05xfcs2ptkekhys48q7qc4jjcsysypj46qv";
         Result<List<PoolUpdate>> poolUpdatesResult = poolService.getPoolUpdatesByPoolBech32(poolBech32, Options.EMPTY);
         Assertions.assertTrue(poolUpdatesResult.isSuccessful());
         Assertions.assertNotNull(poolUpdatesResult.getValue());

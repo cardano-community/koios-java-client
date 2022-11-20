@@ -107,10 +107,15 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<TxHash>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException {
+    public Result<List<TxHash>> getAssetTransactions(String assetPolicy, String assetName, Options options) throws ApiException {
+        return getAssetTransactions(assetPolicy, assetName, 0, false, options);
+    }
+
+    @Override
+    public Result<List<TxHash>> getAssetTransactions(String assetPolicy, String assetName, Integer afterBlockHeight, boolean history, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
-        Call<List<TxHash>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName, optionsToParamMap(options));
+        Call<List<TxHash>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName, afterBlockHeight, history, optionsToParamMap(options));
         try {
             Response<List<TxHash>> response = (Response) execute(call);
             return processResponse(response);

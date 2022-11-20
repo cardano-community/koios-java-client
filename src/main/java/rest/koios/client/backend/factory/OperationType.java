@@ -13,10 +13,6 @@ public enum OperationType {
      */
     KOIOS_MAINNET("https://api.koios.rest/api/"),
     /**
-     * Testnet
-     */
-    KOIOS_TESTNET("https://testnet.koios.rest/api/"),
-    /**
      * GuildNet
      */
     KOIOS_GUILD("https://guild.koios.rest/api/"),

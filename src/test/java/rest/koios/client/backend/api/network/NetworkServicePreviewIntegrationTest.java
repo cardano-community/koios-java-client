@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class NetworkServiceTestnetIntegrationTest {
+class NetworkServicePreviewIntegrationTest {
 
     private NetworkService networkService;
 
     @BeforeAll
     public void setup() {
-        networkService = BackendFactory.getKoiosTestnetService().getNetworkService();
+        networkService = BackendFactory.getKoiosPreviewService().getNetworkService();
     }
 
     @Test
@@ -49,7 +49,7 @@ class NetworkServiceTestnetIntegrationTest {
 
     @Test
     void getHistoricalTokenomicStatsTest() throws ApiException {
-        Integer epochNo = 180;
+        Integer epochNo = 25;
         Result<Totals> historicalTokenomicStatsResult = networkService.getHistoricalTokenomicStatsByEpoch(epochNo);
         Assertions.assertTrue(historicalTokenomicStatsResult.isSuccessful());
         Assertions.assertNotNull(historicalTokenomicStatsResult.getValue());

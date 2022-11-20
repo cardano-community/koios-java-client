@@ -28,8 +28,8 @@ jobs:
         name: mainnet-tests-jacoco
         path: exportJacoco/jacoco-mainnet.exec
 
-  testnet:
-    name: Testnet
+  preview:
+    name: Preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -38,18 +38,18 @@ jobs:
           java-version: '11'
       - name: Run tests
         run: |
-          mvn '-Dtest=*Testnet*' verify -Djacoco.destFile=exportJacoco/jacoco-testnet.exec
+          mvn '-Dtest=*Preview*' verify -Djacoco.destFile=exportJacoco/jacoco-preview.exec
       - name: Upload Jacoco Results
         uses: actions/upload-artifact@v2
         with:
-          name: testnet-tests-jacoco
-          path: exportJacoco/jacoco-testnet.exec
+          name: preview-tests-jacoco
+          path: exportJacoco/jacoco-preview.exec
 
   merge-jacoco-report:
     name: Jacoco Merge Results
     needs:
       - mainnet
-      - testnet
+      - preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -62,7 +62,7 @@ jobs:
           path: target/
       - uses: actions/download-artifact@v2
         with:
-          name: testnet-tests-jacoco
+          name: preview-tests-jacoco
           path: target/
       - name: merge results
         run: |

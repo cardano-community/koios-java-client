@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import rest.koios.client.backend.api.common.Asset;
 
 import java.util.List;
 
@@ -27,5 +28,5 @@ public class AddressAsset {
     /**
      * An array of assets on the UTxO
      */
-    private List<AssetInfo> assets;
+    private List<Asset> assetList;
 }

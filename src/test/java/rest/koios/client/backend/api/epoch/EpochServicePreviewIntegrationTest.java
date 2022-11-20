@@ -18,18 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class EpochServiceTestnetIntegrationTest {
+class EpochServicePreviewIntegrationTest {
 
     private EpochService epochService;
 
     @BeforeAll
     public void setup() {
-        epochService = BackendFactory.getKoiosTestnetService().getEpochService();
+        epochService = BackendFactory.getKoiosPreviewService().getEpochService();
     }
 
     @Test
     void getEpochInformationTest() throws ApiException {
-        Integer epochNo = 180;
+        Integer epochNo = 26;
         Result<EpochInfo> epochInformationResult = epochService.getEpochInformationByEpoch(epochNo);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
@@ -57,7 +57,7 @@ class EpochServiceTestnetIntegrationTest {
 
     @Test
     void getEpochParametersTest() throws ApiException {
-        Integer epochNo = 180;
+        Integer epochNo = 26;
         Result<EpochParams> epochParametersResult = epochService.getEpochParametersByEpoch(epochNo);
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());

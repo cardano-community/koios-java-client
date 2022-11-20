@@ -98,7 +98,7 @@ public interface AssetService {
     Result<AssetSummary> getAssetSummary(String assetPolicy, String assetName) throws ApiException;
 
     /**
-     * Asset Transaction History with Filtering, Pagination, Ordering Options
+     * Asset Transactions with Filtering, Pagination, Ordering Options
      * Get the list of all asset transaction hashes (newest first)
      * <p><b>200</b> - Success!
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
@@ -110,5 +110,22 @@ public interface AssetService {
      * @return Result of Type List of {@link TxHash}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxHash>> getAssetTransactionHistory(String assetPolicy, String assetName, Options options) throws ApiException;
+    Result<List<TxHash>> getAssetTransactions(String assetPolicy, String assetName, Options options) throws ApiException;
+
+    /**
+     * Asset Transactions with Filtering, Pagination, Ordering Options
+     * Get the list of all asset transaction hashes (newest first)
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param assetPolicy      Asset Policy ID in hexadecimal format (hex) (required)
+     * @param assetName        Asset Name in hexadecimal format (hex) (required)
+     * @param afterBlockHeight Block height for specifying time delta
+     * @param history          Include all historical transactions, setting to false includes only the non-empty ones
+     * @param options          Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link TxHash}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<TxHash>> getAssetTransactions(String assetPolicy, String assetName, Integer afterBlockHeight, boolean history, Options options) throws ApiException;
 }

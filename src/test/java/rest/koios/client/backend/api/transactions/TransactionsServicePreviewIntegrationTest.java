@@ -18,21 +18,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class TransactionsServiceTestnetIntegrationTest {
+class TransactionsServicePreviewIntegrationTest {
 
     private TransactionsService transactionsService;
 
     @BeforeAll
     public void setup() {
-        transactionsService = BackendFactory.getKoiosTestnetService().getTransactionsService();
+        transactionsService = BackendFactory.getKoiosPreviewService().getTransactionsService();
     }
 
     @Test
     void getTransactionInformationTest() throws ApiException {
-        String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
-        String txHash2 = "f34708f17ccdab75a234818ce48c062537e251a0ffa4c7ee53d43a60983d9d4c";
-        String txHash3 = "c610c446428b12d9649ab4476c1d0924c78ce09dd14455cc7aeeef651c01d65b";
-        String txHash4 = "54f18534036cf3bd307e8a4dc636a3729b5731b826aed44f3f03df5593beedda";
+        String txHash = "7395c56ce76d7e6e1155ba71cc2a9dc9b37d58d162dbc1eb9fb35267bb76054d";
+        String txHash2 = "6ad56edea7cad7b61236c9f054cb402146c2d901e7b7901e4ae4a75cccf20aed";
+        String txHash3 = "5011f52c08416a3728c4b7d41401bcf22e4c6b6d68c8b099e3d3bf710bd0a2e9";
+        String txHash4 = "8071a8b0793c2a8b2416e01d524ffd847eae5ac845a520065268e16114f58a4e";
         Result<List<TxInfo>> transactionInformationResult = transactionsService.getTransactionInformation(List.of(txHash, txHash2, txHash3, txHash4), Options.EMPTY);
         Assertions.assertTrue(transactionInformationResult.isSuccessful());
         Assertions.assertNotNull(transactionInformationResult.getValue());
@@ -41,7 +41,7 @@ class TransactionsServiceTestnetIntegrationTest {
 
     @Test
     void getTransactionInformation2Test() throws ApiException {
-        String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
+        String txHash = "7395c56ce76d7e6e1155ba71cc2a9dc9b37d58d162dbc1eb9fb35267bb76054d";
         Result<TxInfo> transactionInformationResult = transactionsService.getTransactionInformation(txHash);
         Assertions.assertTrue(transactionInformationResult.isSuccessful());
         Assertions.assertNotNull(transactionInformationResult.getValue());
@@ -57,7 +57,7 @@ class TransactionsServiceTestnetIntegrationTest {
 
     @Test
     void getTransactionUTxOsTest() throws ApiException {
-        String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
+        String txHash = "7395c56ce76d7e6e1155ba71cc2a9dc9b37d58d162dbc1eb9fb35267bb76054d";
         Result<List<TxUtxo>> transactionUTxOsResult = transactionsService.getTransactionUTxOs(List.of(txHash), Options.EMPTY);
         Assertions.assertTrue(transactionUTxOsResult.isSuccessful());
         Assertions.assertNotNull(transactionUTxOsResult.getValue());
@@ -73,7 +73,7 @@ class TransactionsServiceTestnetIntegrationTest {
 
     @Test
     void getTransactionMetadataTest() throws ApiException {
-        String txHash = "d55882183427330369f8e5f09ec714257a2fe2d6ffa29f158a7cb9aae056d1ee";
+        String txHash = "7395c56ce76d7e6e1155ba71cc2a9dc9b37d58d162dbc1eb9fb35267bb76054d";
         Result<List<TxMetadata>> transactionMetadataResult = transactionsService.getTransactionMetadata(List.of(txHash), Options.EMPTY);
         Assertions.assertTrue(transactionMetadataResult.isSuccessful());
         Assertions.assertNotNull(transactionMetadataResult.getValue());
@@ -108,7 +108,7 @@ class TransactionsServiceTestnetIntegrationTest {
 
     @Test
     void getTransactionStatusTest() throws ApiException {
-        String txHash = "6b2623d83581cdc387f104fd3619a8a613bd3b07c2bc8919246ece80d924e370";
+        String txHash = "7395c56ce76d7e6e1155ba71cc2a9dc9b37d58d162dbc1eb9fb35267bb76054d";
         Result<List<TxStatus>> transactionStatusResult = transactionsService.getTransactionStatus(List.of(txHash), Options.EMPTY);
         Assertions.assertTrue(transactionStatusResult.isSuccessful());
         Assertions.assertNotNull(transactionStatusResult.getValue());

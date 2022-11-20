@@ -71,6 +71,7 @@ class AddressServiceMainnetIntegrationTest {
         Result<List<AddressAsset>> assetInfosResult = addressService.getAddressAssets(List.of(address), Options.EMPTY);
         Assertions.assertTrue(assetInfosResult.isSuccessful());
         Assertions.assertNotNull(assetInfosResult.getValue());
+        Assertions.assertFalse(assetInfosResult.getValue().isEmpty());
         log.info(assetInfosResult.getValue().toString());
     }
 

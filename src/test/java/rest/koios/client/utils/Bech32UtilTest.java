@@ -3,10 +3,10 @@ package rest.koios.client.utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class Bech32UtilTest {
+class Bech32UtilTest {
 
     @Test
-    public void invalidCharsTest() {
+    void invalidCharsTest() {
         Assertions.assertFalse(Bech32Util.hasValidChars(null));
 
         Assertions.assertFalse(Bech32Util.hasValidChars(""));
