@@ -75,7 +75,6 @@ class AssetServiceMainnetIntegrationTest {
         Result<AssetInformation> assetInformationResult = assetService.getAssetInformation(assetPolicy, assetNameHex);
         Assertions.assertTrue(assetInformationResult.isSuccessful());
         Assertions.assertNotNull(assetInformationResult.getValue());
-        Assertions.assertNotNull(assetInformationResult.getValue().getTokenRegistryMetadata());
         log.info(assetInformationResult.getValue().toString());
     }
 
