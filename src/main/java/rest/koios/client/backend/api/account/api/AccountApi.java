@@ -32,6 +32,16 @@ public interface AccountApi {
     Call<List<AccountInfo>> getAccountInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * Get Account Information (Cached)
+     *
+     * @param requestBody Array of Cardano stake address(es) in bech32 format
+     * @param paramsMap Query Params
+     * @return Account info of any (payment or staking) address
+     */
+    @POST("account_info_cached")
+    Call<List<AccountInfo>> getCachedAccountInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Get Account Rewards
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format

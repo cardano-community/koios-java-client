@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class BlockServicePreviewIntegrationTest {
+class BlockServicePreprodIntegrationTest {
 
     private BlockService blockService;
 
     @BeforeAll
     public void setup() {
-        blockService = BackendFactory.getKoiosPreviewService().getBlockService();
+        blockService = BackendFactory.getKoiosPreprodService().getBlockService();
     }
 
     @Test
@@ -41,7 +41,7 @@ class BlockServicePreviewIntegrationTest {
 
     @Test
     void getSpecificBlockTest() throws ApiException {
-        Result<List<Block>> blockResult = blockService.getBlockList(Options.builder().option(Filter.of("block_height", FilterType.EQ, "108021")).build());
+        Result<List<Block>> blockResult = blockService.getBlockList(Options.builder().option(Filter.of("block_height", FilterType.EQ, "300113")).build());
         log.info(blockResult.toString());
         Assertions.assertTrue(blockResult.isSuccessful());
         Assertions.assertNotNull(blockResult.getValue());
@@ -60,7 +60,7 @@ class BlockServicePreviewIntegrationTest {
 
     @Test
     void getBlockInformationTest() throws ApiException {
-        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
+        String hash = "065b9f0a52b3d3897160a065a7fe2bcb64b2bf635937294ade457de6a7bfd2a4";
         Result<BlockInfo> blockInformationResult = blockService.getBlockInformation(hash);
         Assertions.assertTrue(blockInformationResult.isSuccessful());
         Assertions.assertNotNull(blockInformationResult.getValue());
@@ -76,7 +76,7 @@ class BlockServicePreviewIntegrationTest {
 
     @Test
     void getBlocksInformationTest() throws ApiException {
-        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
+        String hash = "065b9f0a52b3d3897160a065a7fe2bcb64b2bf635937294ade457de6a7bfd2a4";
         Result<List<BlockInfo>> blockInformationResult = blockService.getBlocksInformation(List.of(hash),Options.EMPTY);
         Assertions.assertTrue(blockInformationResult.isSuccessful());
         Assertions.assertNotNull(blockInformationResult.getValue());
@@ -92,7 +92,7 @@ class BlockServicePreviewIntegrationTest {
 
     @Test
     void getBlockTransactionsTest() throws ApiException {
-        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
+        String hash = "065b9f0a52b3d3897160a065a7fe2bcb64b2bf635937294ade457de6a7bfd2a4";
         Result<List<BlockTxHash>> blockTransactionsResult = blockService.getBlockTransactions(List.of(hash), Options.EMPTY);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());

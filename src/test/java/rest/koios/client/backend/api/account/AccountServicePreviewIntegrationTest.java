@@ -54,6 +54,23 @@ class AccountServicePreviewIntegrationTest {
     }
 
     @Test
+    void getAccountInformationCachedTest() throws ApiException {
+        String address1 = "stake_test1upv7n2x0lxepkyx8ux2gjt74ecaa39tjgaccxl6hw5fwzngpzf5zt";
+        String address2 = "stake_test1up6wqzrw2h9vvjy5zfkjn0dwtymy5r29zyhf8fyhm6fat9c2am5hl";
+        Result<List<AccountInfo>> accountInformationResult = accountService.getCachedAccountInformation(List.of(address1, address2), Options.EMPTY);
+        Assertions.assertTrue(accountInformationResult.isSuccessful());
+        Assertions.assertNotNull(accountInformationResult.getValue());
+        log.info(accountInformationResult.getValue().toString());
+    }
+
+    @Test
+    void getAccountInformationCachedBadRequestTest() {
+        String address = "a123sd";
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getCachedAccountInformation(List.of(address), Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
     void getAccountRewardsTest() throws ApiException {
         int epochNo = 21;
         String stakeAddress = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";

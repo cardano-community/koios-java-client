@@ -21,13 +21,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class PlutusScriptServicePreviewIntegrationTest {
+class PlutusScriptServicePreprodIntegrationTest {
 
     private ScriptService scriptService;
 
     @BeforeAll
     public void setup() {
-        scriptService = BackendFactory.getKoiosPreviewService().getScriptService();
+        scriptService = BackendFactory.getKoiosPreprodService().getScriptService();
     }
 
     @Test
@@ -52,7 +52,7 @@ class PlutusScriptServicePreviewIntegrationTest {
 
     @Test
     void getScriptRedeemersTest() throws ApiException {
-        String scriptHash = "8d73f125395466f1d68570447e4f4b87cd633c6728f3802b2dcfca20";
+        String scriptHash = "2ab32ec22330adf91e42905b008a1aa84ea7af7dc2dc85592497527c";
         Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, Options.EMPTY);
         Assertions.assertTrue(scriptRedeemersResult.isSuccessful());
         Assertions.assertNotNull(scriptRedeemersResult.getValue());
@@ -68,8 +68,8 @@ class PlutusScriptServicePreviewIntegrationTest {
 
     @Test
     void getDatumInformationTest() throws ApiException {
-        String hash1 = "6181b3dc623cd8812caf027a3507e9b3095388a7cf3db65983e1fddd3a84c88c";
-        String hash2 = "f8ae55ff89e1f5366f23e16bcaf2073252337b96031a02d79e41d653b5f0a978";
+        String hash1 = "5571e2c3549f15934a38382d1318707a86751fb70827f4cbd29b104480f1be9b";
+        String hash2 = "5f7212f546d7e7308ce99b925f05538db19981f4ea3084559c0b28a363245826";
         Result<List<DatumInfo>> datumInformationResult = scriptService.getDatumInformation(List.of(hash1, hash2), Options.EMPTY);
         Assertions.assertTrue(datumInformationResult.isSuccessful());
         Assertions.assertNotNull(datumInformationResult.getValue());

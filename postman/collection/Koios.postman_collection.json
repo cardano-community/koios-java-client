@@ -684,6 +684,36 @@
 							"response": []
 						},
 						{
+							"name": "Account Information (Cached)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_stake_addresses\": [\r\n      \"{{stake_address}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/account_info_cached",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"account_info_cached"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Account Rewards",
 							"request": {
 								"method": "POST",
@@ -1447,6 +1477,36 @@
 											"key": "_script_hash",
 											"value": "{{script_hash}}"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Datum Information",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"_datum_hashes\": [\r\n    \"{{datum_hash}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{koios_host}}.{{koios_domain}}/{{path}}/v0/datum_info",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{koios_host}}",
+										"{{koios_domain}}"
+									],
+									"path": [
+										"{{path}}",
+										"v0",
+										"datum_info"
 									]
 								}
 							},

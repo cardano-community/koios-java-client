@@ -2,6 +2,7 @@ package rest.koios.client.backend.api.script;
 
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.script.model.DatumInfo;
 import rest.koios.client.backend.api.script.model.NativeScript;
 import rest.koios.client.backend.api.script.model.PlutusScript;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
@@ -53,4 +54,19 @@ public interface ScriptService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<ScriptRedeemer>> getScriptRedeemers(String scriptHash, Options options) throws ApiException;
+
+    /**
+     * Datum Information with Filtering, Pagination, Ordering Options
+     * List of datum information for given datum hashes
+     * <p><b>200</b> - List of datum information for given datum hashes
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param datumHashes List of Cardano datum hashes (required)
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of all {@link DatumInfo} for a given script hash
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<DatumInfo>> getDatumInformation(List<String> datumHashes, Options options) throws ApiException;
 }

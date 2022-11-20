@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.script.model.DatumInfo;
 import rest.koios.client.backend.api.script.model.NativeScript;
 import rest.koios.client.backend.api.script.model.PlutusScript;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
@@ -62,6 +63,23 @@ class PlutusScriptServiceMainnetIntegrationTest {
     void getScriptRedeemersBadRequestTest() {
         String scriptHash = "test";
         ApiException exception = assertThrows(ApiException.class, () -> scriptService.getScriptRedeemers(scriptHash, Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getDatumInformationTest() throws ApiException {
+        String hash1 = "818ee3db3bbbd04f9f2ce21778cac3ac605802a4fcb00c8b3a58ee2dafc17d46";
+        String hash2 = "45b0cfc220ceec5b7c1c62c4d4193d38e4eba48e8815729ce75f9c0ab0e4c1c0";
+        Result<List<DatumInfo>> datumInformationResult = scriptService.getDatumInformation(List.of(hash1, hash2), Options.EMPTY);
+        Assertions.assertTrue(datumInformationResult.isSuccessful());
+        Assertions.assertNotNull(datumInformationResult.getValue());
+        log.info(datumInformationResult.getValue().toString());
+    }
+
+    @Test
+    void getDatumInformationBadRequestTest() {
+        String scriptHash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> scriptService.getDatumInformation(List.of(scriptHash), Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }
