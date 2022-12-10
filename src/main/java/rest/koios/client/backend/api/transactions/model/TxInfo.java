@@ -84,12 +84,12 @@ public class TxInfo {
     /**
      * Slot before which transaction cannot be validated (if supplied, else null)
      */
-    private Integer invalidBefore = null;
+    private String invalidBefore = null;
 
     /**
      * Slot after which transaction cannot be validated
      */
-    private Integer invalidAfter = null;
+    private String invalidAfter = null;
 
     /**
      * List of collateral inputs needed when dealing with smart contracts (same json schema as inputs)
