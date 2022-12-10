@@ -117,6 +117,7 @@ public class BaseService {
      * @param response the Response to process
      * @param <T>      Type Of Response
      * @return Result of Response
+     * @throws IOException upon null Response Error Body
      */
     protected <T> Result<T> processResponse(Response<T> response) throws IOException {
         if (response.isSuccessful())

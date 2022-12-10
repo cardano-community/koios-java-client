@@ -60,6 +60,7 @@ public interface BlockService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param blockHashes List of Block Hashes in hex format (required)
+     * @param options Filtering and Pagination options (optional)
      * @return Result of {@link BlockInfo} of a specific block
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
