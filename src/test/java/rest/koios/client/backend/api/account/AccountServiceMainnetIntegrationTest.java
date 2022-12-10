@@ -91,7 +91,7 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountUpdatesTest() throws ApiException {
         String stakeAddress = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountUpdates>> accountUpdatesResult = accountService.getAccountUpdates(List.of(stakeAddress), null, Options.EMPTY);
+        Result<List<AccountUpdates>> accountUpdatesResult = accountService.getAccountUpdates(List.of(stakeAddress), Options.EMPTY);
         Assertions.assertTrue(accountUpdatesResult.isSuccessful());
         Assertions.assertNotNull(accountUpdatesResult.getValue());
         log.info(accountUpdatesResult.getValue().toString());
@@ -100,14 +100,14 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountUpdatesBadRequestTest() {
         String stakeAddress = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountUpdates(List.of(stakeAddress), null, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountUpdates(List.of(stakeAddress), Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
     @Test
     void getAccountAddressesTest() throws ApiException {
         String address = "stake1u8yxtugdv63wxafy9d00nuz6hjyyp4qnggvc9a3vxh8yl0ckml2uz";
-        Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(List.of(address), null, Options.EMPTY);
+        Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(List.of(address), Options.EMPTY);
         Assertions.assertTrue(accountAddressesResult.isSuccessful());
         Assertions.assertNotNull(accountAddressesResult.getValue());
         log.info(accountAddressesResult.getValue().toString());
@@ -116,7 +116,7 @@ class AccountServiceMainnetIntegrationTest {
     @Test
     void getAccountAddressesBadRequestTest() {
         String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAddresses(List.of(address), null, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAddresses(List.of(address), Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 

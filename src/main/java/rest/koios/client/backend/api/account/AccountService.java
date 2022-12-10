@@ -76,12 +76,11 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param addressList Array of Cardano stake address(es) in bech32 format (required)
-     * @param epochNo     Only fetch information for a specific epoch (optional)
      * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AccountUpdates}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Integer epochNo, Options options) throws ApiException;
+    Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Options options) throws ApiException;
 
     /**
      * Account Addresses
@@ -91,12 +90,11 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param addressList Array of Cardano stake address(es) in bech32 format (required)
-     * @param epochNo     Only fetch information for a specific epoch (optional)
      * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AccountAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Integer epochNo, Options options) throws ApiException;
+    Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Options options) throws ApiException;
 
     /**
      * Account Assets

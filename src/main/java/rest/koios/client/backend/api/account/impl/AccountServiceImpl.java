@@ -89,14 +89,11 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Integer epochNo, Options options) throws ApiException {
+    public Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
-        if (epochNo != null) {
-            validateEpoch(epochNo);
-        }
-        Call<List<AccountUpdates>> call = accountApi.getAccountUpdates(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
+        Call<List<AccountUpdates>> call = accountApi.getAccountUpdates(buildBody("_stake_addresses", addressList, null), optionsToParamMap(options));
         try {
             Response<List<AccountUpdates>> response = (Response) execute(call);
             return processResponse(response);
@@ -106,14 +103,11 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Integer epochNo, Options options) throws ApiException {
+    public Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
-        if (epochNo != null) {
-            validateEpoch(epochNo);
-        }
-        Call<List<AccountAddress>> call = accountApi.getAccountAddresses(buildBody("_stake_addresses", addressList, epochNo), optionsToParamMap(options));
+        Call<List<AccountAddress>> call = accountApi.getAccountAddresses(buildBody("_stake_addresses", addressList, null), optionsToParamMap(options));
         try {
             Response<List<AccountAddress>> response = (Response) execute(call);
             return processResponse(response);
