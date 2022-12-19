@@ -49,7 +49,7 @@ public class BaseService {
      * @param baseUrl Base URL
      */
     public BaseService(String baseUrl) {
-        bucket = Bucket.builder().addLimit(Bandwidth.classic(100, Refill.intervally(100, Duration.ofSeconds(10)))).build();
+        bucket = Bucket.builder().addLimit(Bandwidth.simple(100, Duration.ofSeconds(10))).build();
         int readTimeoutSec = getReadTimeoutSec();
         log.info("Set Read Timeout to {} Seconds", readTimeoutSec);
         int connectTimeoutSec = getConnectTimeoutSec();
