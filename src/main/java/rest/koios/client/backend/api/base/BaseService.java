@@ -140,7 +140,10 @@ public class BaseService {
             while (tryCount <= retriesCount) {
                 try {
                     Response<Object> response = (Response<Object>) call.clone().execute();
-                    if (response.code() != 504) {
+                    if (response.code() == 429) {
+                        log.warn("429 Too Many Requests. Retrying in 1 sec...");
+                        tryCount = retry(tryCount);
+                    } else if (response.code() != 504) {
                         return response;
                     } else {
                         log.warn(response.message());
