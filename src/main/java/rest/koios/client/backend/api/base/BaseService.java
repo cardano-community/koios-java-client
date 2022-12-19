@@ -137,12 +137,13 @@ public class BaseService {
     public Response<Object> execute(Call<?> call) throws ApiException, IOException {
         if (getBucket().tryConsume(1)) {
             int tryCount = 1;
+            int sleepTimeMillis = 1000;
             while (tryCount <= retriesCount) {
                 try {
                     Response<Object> response = (Response<Object>) call.clone().execute();
                     if (response.code() == 429) {
-                        log.warn("429 Too Many Requests. Retrying in 1 sec...");
-                        sleep(1000);
+                        log.warn("429 Too Many Requests. Retrying in {} sec...", sleepTimeMillis * tryCount / 1000);
+                        sleep(sleepTimeMillis * tryCount);
                         tryCount = retry(tryCount);
                     } else if (response.code() != 504) {
                         return response;
@@ -172,7 +173,7 @@ public class BaseService {
     private int retry(int tryCount) {
         tryCount++;
         if (tryCount < retriesCount) {
-            log.info("Retrying... ("+tryCount+"/"+ retriesCount +")");
+            log.info("Retrying... (" + tryCount + "/" + retriesCount + ")");
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
