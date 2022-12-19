@@ -173,7 +173,7 @@ public class BaseService {
         tryCount++;
         if (tryCount < retriesCount) {
             log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", 1000 * tryCount / 1000);
-            sleep(1000 * tryCount);
+            sleep(2000 * tryCount);
         }
         return tryCount;
     }
