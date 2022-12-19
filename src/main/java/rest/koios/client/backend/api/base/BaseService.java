@@ -135,36 +135,35 @@ public class BaseService {
      * @throws IOException  if an error occurs while attempting to invoke the API
      */
     public Response<Object> execute(Call<?> call) throws ApiException, IOException {
-        if (getBucket().tryConsume(1)) {
-            int tryCount = 1;
-            int sleepTimeMillis = 2000;
-            while (tryCount <= retriesCount) {
+        int tryCount = 1;
+        while (tryCount <= retriesCount) {
+            if (getBucket().tryConsume(1)) {
                 try {
                     Response<Object> response = (Response<Object>) call.clone().execute();
                     if (response.code() == 429) {
-                        log.warn("429 Too Many Requests. Retrying in {} sec...", sleepTimeMillis * tryCount / 1000);
-                        sleep(sleepTimeMillis * tryCount);
+                        log.warn("429 Too Many Requests.");
                         tryCount = retry(tryCount);
-                    } else if (response.code() != 504) {
-                        return response;
-                    } else {
+                    } else if (response.code() == 504) {
                         log.warn(response.message());
                         tryCount = retry(tryCount);
+                    } else {
+                        return response;
                     }
                 } catch (SocketTimeoutException e) {
                     log.warn(e.getMessage());
                     tryCount = retry(tryCount);
                 }
+            } else {
+                throw new ApiException("HTTP Error (429) - Too Many Requests.");
             }
-            throw new ApiException("Retry Count Exceeded ("+tryCount+"/"+retriesCount+").");
-        } else {
-            throw new ApiException("HTTP Error (429) - Too Many Requests.");
         }
+        throw new ApiException("Retry Count Exceeded (" + tryCount + "/" + retriesCount + ").");
+
     }
 
     private void sleep(int timeMillis) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(timeMillis);
         } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
         }
@@ -173,12 +172,8 @@ public class BaseService {
     private int retry(int tryCount) {
         tryCount++;
         if (tryCount < retriesCount) {
-            log.info("Retrying... (" + tryCount + "/" + retriesCount + ")");
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
+            log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", 1000 * tryCount / 1000);
+            sleep(1000 * tryCount);
         }
         return tryCount;
     }
