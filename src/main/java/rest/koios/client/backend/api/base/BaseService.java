@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -36,6 +35,7 @@ public class BaseService {
     private final Retrofit retrofit;
     private final Bucket bucket;
     private int retriesCount = 5;
+    private static final int SLEEP_TIME_MILLIS = 2000;
 
     public BaseService(BaseService baseService) {
         this.retrofit = baseService.getRetrofit();
@@ -172,8 +172,8 @@ public class BaseService {
     private int retry(int tryCount) {
         tryCount++;
         if (tryCount < retriesCount) {
-            log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", 1000 * tryCount / 1000);
-            sleep(2000 * tryCount);
+            log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", SLEEP_TIME_MILLIS * tryCount / 1000);
+            sleep(SLEEP_TIME_MILLIS * tryCount);
         }
         return tryCount;
     }

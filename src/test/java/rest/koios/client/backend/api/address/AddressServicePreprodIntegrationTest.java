@@ -67,7 +67,7 @@ class AddressServicePreprodIntegrationTest {
 
     @Test
     void getAddressAssetsTest() throws ApiException {
-        String address = "addr_test1qzr0g2kvyknzhyez3aatyjwpaw5z5n65cwfxc5ctcqq28ed3hcc035r9r76tkxehlr9wdla9twe02dpv843nru6czj6qycpamy";
+        String address = "addr_test1zrgfhr82d6nlv8as6x7sg9rur6x7ke3rdgu2t4y37phzxpd3hcc035r9r76tkxehlr9wdla9twe02dpv843nru6czj6qxzlq5e";
         Result<List<AddressAsset>> assetInfosResult = addressService.getAddressAssets(List.of(address), Options.EMPTY);
         Assertions.assertTrue(assetInfosResult.isSuccessful());
         Assertions.assertNotNull(assetInfosResult.getValue());
