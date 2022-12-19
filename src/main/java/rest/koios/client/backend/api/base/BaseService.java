@@ -142,6 +142,7 @@ public class BaseService {
                     Response<Object> response = (Response<Object>) call.clone().execute();
                     if (response.code() == 429) {
                         log.warn("429 Too Many Requests. Retrying in 1 sec...");
+                        sleep(1000);
                         tryCount = retry(tryCount);
                     } else if (response.code() != 504) {
                         return response;
@@ -157,6 +158,14 @@ public class BaseService {
             throw new ApiException("Retry Count Exceeded.");
         } else {
             throw new ApiException("HTTP Error (429) - Too Many Requests.");
+        }
+    }
+
+    private void sleep(int timeMillis) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage(), e);
         }
     }
 
