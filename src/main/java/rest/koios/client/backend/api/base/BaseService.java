@@ -137,7 +137,7 @@ public class BaseService {
     public Response<Object> execute(Call<?> call) throws ApiException, IOException {
         if (getBucket().tryConsume(1)) {
             int tryCount = 1;
-            int sleepTimeMillis = 1000;
+            int sleepTimeMillis = 2000;
             while (tryCount <= retriesCount) {
                 try {
                     Response<Object> response = (Response<Object>) call.clone().execute();
@@ -156,7 +156,7 @@ public class BaseService {
                     tryCount = retry(tryCount);
                 }
             }
-            throw new ApiException("Retry Count Exceeded.");
+            throw new ApiException("Retry Count Exceeded ("+tryCount+"/"+retriesCount+").");
         } else {
             throw new ApiException("HTTP Error (429) - Too Many Requests.");
         }
