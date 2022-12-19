@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+env:
+  KOIOS_JAVA_LIB_LOGGING: true
+
 jobs:
   preview:
     name: Preview
