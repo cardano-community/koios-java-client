@@ -325,7 +325,7 @@ ScriptService scriptService = backendService.getScriptService();
 ```
 
 ### Advanced Query Example (Preview)
-#### Querying a Descending Order of All Address Transactions since Block No. #3168087 to Block No. #3168097 (inclusive), Limited to Maximum of 10 Results.
+#### Querying a Descending Order of All Address Transactions since Block No. #42248 to Block No. #69447 (inclusive), Limited to Maximum of 10 Results.
 ```java 
 String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
 
