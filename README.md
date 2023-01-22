@@ -266,7 +266,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
-|     1.0.9      |      1.16.1       |
+|     1.0.9      |      1.16.2       |
 |     1.0.8      |      1.15.2       |
 |     1.0.7      |      1.14.1       |
 |     1.0.6      |       1.13        |
@@ -281,13 +281,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.16.1</version>
+    <version>1.16.2</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.16.1'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.16.2'
 ```
 
 ### Get Koios Backend Service
