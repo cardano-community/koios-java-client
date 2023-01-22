@@ -212,7 +212,7 @@ public class BaseService {
      * @throws ApiException if an error occurs while attempting to validate hex string
      */
     protected void validateHexFormat(String hex) throws ApiException {
-        if (!hex.matches("^[\\da-fA-F]+$")) {
+        if (!hex.isEmpty() && !hex.matches("^[\\da-fA-F]+$")) {
             throw new ApiException("Invalid Hexadecimal String Format");
         }
     }
