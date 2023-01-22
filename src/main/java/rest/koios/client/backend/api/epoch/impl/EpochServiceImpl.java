@@ -8,6 +8,8 @@ import rest.koios.client.backend.api.epoch.api.EpochApi;
 import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
+import rest.koios.client.backend.api.network.api.NetworkApi;
+import rest.koios.client.backend.api.network.model.Tip;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
@@ -22,6 +24,7 @@ import java.util.List;
 public class EpochServiceImpl extends BaseService implements EpochService {
 
     private final EpochApi epochApi;
+    private final NetworkApi networkApi;
 
     /**
      * Epoch Service Implementation Constructor
@@ -31,18 +34,25 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     public EpochServiceImpl(BaseService baseService) {
         super(baseService);
         epochApi = getRetrofit().create(EpochApi.class);
+        networkApi = getRetrofit().create(NetworkApi.class);
     }
 
     @Override
     public Result<EpochInfo> getLatestEpochInfo() throws ApiException {
-        Options options = Options.builder().option(Limit.of(1)).build();
-        Call<List<EpochInfo>> call = epochApi.getEpochInformation(optionsToParamMap(options));
+        Integer epochNo;
+        Call<List<Tip>> tipCall = networkApi.getChainTip();
         try {
-            Response<List<EpochInfo>> response = (Response) execute(call);
-            return processResponseGetOne(response);
+            Response<List<Tip>> tipResponse = (Response) execute(tipCall);
+            Result<Tip> tipResult = processResponseGetOne(tipResponse);
+            if (tipResult.isSuccessful() && tipResult.getValue() != null && tipResult.getValue().getEpochNo() != null) {
+                epochNo = tipResult.getValue().getEpochNo();
+            } else {
+                throw new ApiException("Missing EpochNo Value from Tip Response: "+tipResult);
+            }
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
+        return getEpochInformationByEpoch(epochNo);
     }
 
     @Override
