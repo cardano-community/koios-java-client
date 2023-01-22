@@ -82,9 +82,9 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<PolicyAsset>> getAssetPolicyInformation(String assetPolicy) throws ApiException {
+    public Result<List<PolicyAsset>> getAssetPolicyInformation(String assetPolicy, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
-        Call<List<PolicyAsset>> call = assetApi.getAssetPolicyInformation(assetPolicy);
+        Call<List<PolicyAsset>> call = assetApi.getAssetPolicyInformation(assetPolicy, optionsToParamMap(options));
         try {
             Response<List<PolicyAsset>> response = (Response) execute(call);
             return processResponse(response);

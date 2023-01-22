@@ -64,10 +64,11 @@ public interface AssetService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
+     * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PolicyAsset}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<PolicyAsset>> getAssetPolicyInformation(String assetPolicy) throws ApiException;
+    Result<List<PolicyAsset>> getAssetPolicyInformation(String assetPolicy, Options options) throws ApiException;
 
     /**
      * Asset Information
