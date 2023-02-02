@@ -39,20 +39,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<EpochInfo> getLatestEpochInfo() throws ApiException {
-        Integer epochNo;
-        Call<List<Tip>> tipCall = networkApi.getChainTip();
-        try {
-            Response<List<Tip>> tipResponse = (Response) execute(tipCall);
-            Result<Tip> tipResult = processResponseGetOne(tipResponse);
-            if (tipResult.isSuccessful() && tipResult.getValue() != null && tipResult.getValue().getEpochNo() != null) {
-                epochNo = tipResult.getValue().getEpochNo();
-            } else {
-                throw new ApiException("Missing EpochNo Value from Tip Response: "+tipResult);
-            }
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
-        return getEpochInformationByEpoch(epochNo);
+        return getEpochInformationByEpoch(getEpochNoFromTip());
     }
 
     @Override
@@ -80,14 +67,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<EpochParams> getLatestEpochParameters() throws ApiException {
-        Options options = Options.builder().option(Limit.of(1)).build();
-        Call<List<EpochParams>> call = epochApi.getEpochParameters(optionsToParamMap(options));
-        try {
-            Response<List<EpochParams>> response = (Response) execute(call);
-            return processResponseGetOne(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return getEpochParametersByEpoch(getEpochNoFromTip());
     }
 
     @Override
@@ -134,5 +114,22 @@ public class EpochServiceImpl extends BaseService implements EpochService {
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
+    }
+
+    private Integer getEpochNoFromTip() throws ApiException {
+        Integer epochNo;
+        Call<List<Tip>> tipCall = networkApi.getChainTip();
+        try {
+            Response<List<Tip>> tipResponse = (Response) execute(tipCall);
+            Result<Tip> tipResult = processResponseGetOne(tipResponse);
+            if (tipResult.isSuccessful() && tipResult.getValue() != null && tipResult.getValue().getEpochNo() != null) {
+                epochNo = tipResult.getValue().getEpochNo();
+            } else {
+                throw new ApiException("Missing EpochNo Value from Tip Response: "+tipResult);
+            }
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+        return epochNo;
     }
 }

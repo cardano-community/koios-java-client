@@ -18,6 +18,7 @@ class BaseServiceTest {
         Assertions.assertDoesNotThrow(() -> baseService.validateHexFormat(""));
         Assertions.assertDoesNotThrow(() -> baseService.validateHexFormat("0123456789abcdef"));
         Assertions.assertThrows(ApiException.class, () -> baseService.validateHexFormat("asdf"));
+        Assertions.assertThrows(NullPointerException.class, () -> baseService.validateHexFormat(null));
     }
 
     @Test
