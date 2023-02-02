@@ -150,7 +150,7 @@ class AssetServicePreviewIntegrationTest {
         String assetName = "DimensionBox #0063";
         String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
         Result<List<TxHash>> assetTxsResult = assetService.getAssetTransactions(assetPolicy, assetNameHex, Options.EMPTY);
-        Assertions.assertEquals("30004c3d78ae326b303709d60c6461471755c40d3c1ff10a10b29d4972bb56a6", assetTxsResult.getValue().get(0).getTxHash());
+        Assertions.assertEquals("f9f89c42f99c3bba9c1cf66981cdd4feb1bd275220edf5fe4f8e5ca8e9cf442b", assetTxsResult.getValue().get(0).getTxHash());
         Assertions.assertTrue(assetTxsResult.isSuccessful());
         Assertions.assertNotNull(assetTxsResult.getValue());
         log.info(assetTxsResult.getValue().toString());
