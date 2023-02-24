@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import rest.koios.client.backend.api.asset.model.AssetInformation;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Bech32Util;
@@ -109,6 +110,10 @@ public class BaseService {
         } else {
             return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
         }
+    }
+
+    protected <T> Result<T> badRequestResult(String responseText) {
+        return (Result<T>) Result.builder().successful(false).response(responseText).code(400).build();
     }
 
     /**

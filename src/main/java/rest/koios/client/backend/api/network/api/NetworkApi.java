@@ -1,6 +1,7 @@
 package rest.koios.client.backend.api.network.api;
 
 import rest.koios.client.backend.api.network.model.Genesis;
+import rest.koios.client.backend.api.network.model.ParamUpdateProposal;
 import rest.koios.client.backend.api.network.model.Tip;
 import rest.koios.client.backend.api.network.model.Totals;
 import retrofit2.Call;
@@ -27,4 +28,7 @@ public interface NetworkApi {
 
     @GET("totals")
     Call<List<Totals>> getHistoricalTokenomicStats(@QueryMap Map<String, String> paramsMap);
+
+    @GET("param_updates")
+    Call<List<ParamUpdateProposal>> getParamUpdateProposals(@QueryMap Map<String, String> paramsMap);
 }

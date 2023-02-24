@@ -16,11 +16,9 @@ import java.util.Map;
  */
 public interface EpochApi {
 
-    @GET("epoch_info")
-    Call<List<EpochInfo>> getEpochInformationByEpoch(@Query("_epoch_no") Integer epochNo);
 
     @GET("epoch_info")
-    Call<List<EpochInfo>> getEpochInformation(@QueryMap Map<String, String> paramsMap);
+    Call<List<EpochInfo>> getEpochInformation(@Query("_epoch_no") Integer epochNo, @Query("_include_next_epoch") boolean includeNextEpoch, @QueryMap Map<String, String> paramsMap);
 
     @GET("epoch_params")
     Call<List<EpochParams>> getEpochParametersByEpoch(@Query("_epoch_no") Integer epochNo);

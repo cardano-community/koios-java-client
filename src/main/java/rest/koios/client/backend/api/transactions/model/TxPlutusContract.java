@@ -46,9 +46,4 @@ public class TxPlutusContract {
      * Plutus Script Input
      */
     private PlutusScriptInput input;
-
-    /**
-     * Plutus Script Output
-     */
-    private PlutusScriptOutput output;
 }

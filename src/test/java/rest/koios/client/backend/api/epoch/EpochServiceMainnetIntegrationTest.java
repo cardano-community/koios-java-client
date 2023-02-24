@@ -49,7 +49,7 @@ class EpochServiceMainnetIntegrationTest {
     @Test
     void getEpochInformationLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
-        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
+        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(false, options);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         log.info(epochInformationResult.getValue().toString());
         Assertions.assertNotNull(epochInformationResult.getValue());

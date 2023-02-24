@@ -6,6 +6,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.api.network.api.NetworkApi;
 import rest.koios.client.backend.api.network.model.Genesis;
+import rest.koios.client.backend.api.network.model.ParamUpdateProposal;
 import rest.koios.client.backend.api.network.model.Tip;
 import rest.koios.client.backend.api.network.model.Totals;
 import rest.koios.client.backend.factory.options.Options;
@@ -71,6 +72,17 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
         Call<List<Totals>> call = networkApi.getHistoricalTokenomicStats(optionsToParamMap(options));
         try {
             Response<List<Totals>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<ParamUpdateProposal>> getParamUpdateProposals(Options options) throws ApiException {
+        Call<List<ParamUpdateProposal>> call = networkApi.getParamUpdateProposals(optionsToParamMap(options));
+        try {
+            Response<List<ParamUpdateProposal>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

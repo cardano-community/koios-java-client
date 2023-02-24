@@ -16,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,13 +40,8 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<EpochInfo> getLatestEpochInfo() throws ApiException {
-        return getEpochInformationByEpoch(getEpochNoFromTip());
-    }
-
-    @Override
-    public Result<EpochInfo> getEpochInformationByEpoch(Integer epochNo) throws ApiException {
-        validateEpoch(epochNo);
-        Call<List<EpochInfo>> call = epochApi.getEpochInformationByEpoch(epochNo);
+        Options options = Options.builder().option(Limit.of(1)).build();
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(null, false, optionsToParamMap(options));
         try {
             Response<List<EpochInfo>> response = (Response) execute(call);
             return processResponseGetOne(response);
@@ -55,8 +51,20 @@ public class EpochServiceImpl extends BaseService implements EpochService {
     }
 
     @Override
-    public Result<List<EpochInfo>> getEpochInformation(Options options) throws ApiException {
-        Call<List<EpochInfo>> call = epochApi.getEpochInformation(optionsToParamMap(options));
+    public Result<EpochInfo> getEpochInformationByEpoch(Integer epochNo) throws ApiException {
+        validateEpoch(epochNo);
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(epochNo, false, Collections.emptyMap());
+        try {
+            Response<List<EpochInfo>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<EpochInfo>> getEpochInformation(boolean includeNextEpoch, Options options) throws ApiException {
+        Call<List<EpochInfo>> call = epochApi.getEpochInformation(null, includeNextEpoch, optionsToParamMap(options));
         try {
             Response<List<EpochInfo>> response = (Response) execute(call);
             return processResponse(response);
@@ -67,7 +75,14 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<EpochParams> getLatestEpochParameters() throws ApiException {
-        return getEpochParametersByEpoch(getEpochNoFromTip());
+        Options options = Options.builder().option(Limit.of(1)).build();
+        Call<List<EpochParams>> call = epochApi.getEpochParameters(optionsToParamMap(options));
+        try {
+            Response<List<EpochParams>> response = (Response) execute(call);
+            return processResponseGetOne(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -114,22 +129,5 @@ public class EpochServiceImpl extends BaseService implements EpochService {
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
-    }
-
-    private Integer getEpochNoFromTip() throws ApiException {
-        Integer epochNo;
-        Call<List<Tip>> tipCall = networkApi.getChainTip();
-        try {
-            Response<List<Tip>> tipResponse = (Response) execute(tipCall);
-            Result<Tip> tipResult = processResponseGetOne(tipResponse);
-            if (tipResult.isSuccessful() && tipResult.getValue() != null && tipResult.getValue().getEpochNo() != null) {
-                epochNo = tipResult.getValue().getEpochNo();
-            } else {
-                throw new ApiException("Missing EpochNo Value from Tip Response: "+tipResult);
-            }
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
-        return epochNo;
     }
 }

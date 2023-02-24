@@ -48,7 +48,7 @@ class EpochServicePreviewIntegrationTest {
     @Test
     void getSpecificEpochInformationTest() throws ApiException {
         Options options = Options.builder().option(Order.by("epoch_no", SortType.DESC)).option(Limit.of(1)).build();
-        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
+        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(false, options);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
@@ -70,6 +70,7 @@ class EpochServicePreviewIntegrationTest {
         Result<EpochParams> epochParametersResult = epochService.getLatestEpochParameters();
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());
+        Assertions.assertNotNull(epochParametersResult.getValue().getCoinsPerUtxoSize());
         log.info(epochParametersResult.getValue().toString());
     }
 

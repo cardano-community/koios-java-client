@@ -109,7 +109,7 @@ class AccountServicePreprodIntegrationTest {
     @Test
     void getAccountAddressesTest() throws ApiException {
         String address = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
-        Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(List.of(address), Options.EMPTY);
+        Result<List<AccountAddress>> accountAddressesResult = accountService.getAccountAddresses(List.of(address), false, false, Options.EMPTY);
         Assertions.assertTrue(accountAddressesResult.isSuccessful());
         Assertions.assertNotNull(accountAddressesResult.getValue());
         log.info(accountAddressesResult.getValue().toString());
@@ -118,7 +118,7 @@ class AccountServicePreprodIntegrationTest {
     @Test
     void getAccountAddressesBadRequestTest() {
         String address = "a123sd";
-        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAddresses(List.of(address), Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountAddresses(List.of(address), false, false, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 

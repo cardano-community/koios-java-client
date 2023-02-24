@@ -33,11 +33,26 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param stakeAddresses List of Cardano stake address(es) in bech32 format (required)
-     * @param options     Filtering and Pagination options (optional)
+     * @param options        Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AccountInfo} per the specified payment or staking address
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<AccountInfo>> getAccountInformation(List<String> stakeAddresses, Options options) throws ApiException;
+
+    /**
+     * Account UTxOs
+     * Get a list of all UTxOs for a given stake address (account)
+     * <p><b>200</b> - List of account UTxOs associated with stake address
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param stakeAddress Cardano staking address (reward account) in bech32 format
+     * @param options      Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link AccountUTxO} associated with stake address
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<AccountUTxO>> getAccountUTxOs(String stakeAddress, Options options) throws ApiException;
 
     /**
      * Account Information (Cached)
@@ -85,16 +100,19 @@ public interface AccountService {
     /**
      * Account Addresses
      * Get all addresses associated with given staking accounts
-     * <p><b>200</b> - Success!
+     * <p><b>200</b> - List of payment addresses
+     * <p><b>400</b> - The server cannot process the request due to invalid input
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param addressList Array of Cardano stake address(es) in bech32 format (required)
+     * @param firstOnly   Only return the first result
+     * @param empty       Include zero quantity entries
      * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of {@link AccountAddress}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, Options options) throws ApiException;
+    Result<List<AccountAddress>> getAccountAddresses(List<String> addressList, boolean firstOnly, boolean empty, Options options) throws ApiException;
 
     /**
      * Account Assets

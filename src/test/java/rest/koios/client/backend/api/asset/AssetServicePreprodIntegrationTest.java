@@ -44,7 +44,7 @@ class AssetServicePreprodIntegrationTest {
         String assetPolicy = "80de4ee0ffde8ba05726707f2adba0e65963eff5aaba164af358e71b";
         String assetName = "StabilityPool_Test";
         String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
-        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY);
+        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY);
         Assertions.assertTrue(assetAddressesResult.isSuccessful());
         Assertions.assertNotNull(assetAddressesResult.getValue());
         log.info(assetAddressesResult.getValue().toString());
@@ -54,7 +54,7 @@ class AssetServicePreprodIntegrationTest {
     void getAssetsAddressListBadRequestTest() {
         String assetPolicy = "80de4ee0ffde8ba05726707f2adba0e65963eff5aaba164af358e71b";
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -111,7 +111,7 @@ class AssetServicePreprodIntegrationTest {
     @Test
     void getAssetPolicyInformationTest() throws ApiException {
         String assetPolicy = "80de4ee0ffde8ba05726707f2adba0e65963eff5aaba164af358e71b";
-        Result<List<PolicyAsset>> assetPolicyInfoResult = assetService.getAssetPolicyInformation(assetPolicy, Options.EMPTY);
+        Result<List<PolicyAssetInfo>> assetPolicyInfoResult = assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY);
         Assertions.assertTrue(assetPolicyInfoResult.isSuccessful());
         Assertions.assertNotNull(assetPolicyInfoResult.getValue());
         log.info(assetPolicyInfoResult.getValue().toString());
@@ -120,7 +120,7 @@ class AssetServicePreprodIntegrationTest {
     @Test
     void getAssetPolicyInformationBadRequestTest() {
         String assetPolicy = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetPolicyInformation(assetPolicy, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 

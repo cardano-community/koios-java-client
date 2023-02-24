@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.asset.model;
+package rest.koios.client.backend.api.network.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -9,32 +9,37 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Policy Asset
+ * ParamUpdateProposal
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PolicyAsset {
+public class ParamUpdateProposal {
 
     /**
-     * Asset Name (hex)
+     * Hash identifier of the transaction
      */
-    private String assetName;
+    private String txHash;
 
     /**
-     * The CIP14 fingerprint of the asset
+     * Block height
      */
-    private String fingerprint;
+    private Integer blockHeight;
 
     /**
-     * Total Supply
+     * UNIX timestamp of the block
      */
-    private String totalSupply;
+    private Integer blockTime;
 
     /**
-     * Asset decimals
+     * Epoch number
      */
-    private Integer decimals;
+    private Integer epochNo;
+
+    /**
+     * JSON encoded data with details about the parameter update
+     */
+    private JsonNode data;
 }
