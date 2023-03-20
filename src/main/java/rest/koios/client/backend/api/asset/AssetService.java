@@ -91,7 +91,7 @@ public interface AssetService {
 
     /**
      * Asset Information (Bulk)
-     * Get the information of a list of assets including first minting & token registry metadata
+     * Get the information of a list of assets including first minting &amp; token registry metadata
      * <p><b>200</b> - List of detailed asset information
      * <p><b>400</b> - The server cannot process the request due to invalid input
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
