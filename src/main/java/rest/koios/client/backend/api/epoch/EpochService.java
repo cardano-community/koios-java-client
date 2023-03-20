@@ -29,7 +29,8 @@ public interface EpochService {
     /**
      * Epoch Information by Specific Epoch
      * Get the epoch information
-     * <p><b>200</b> - Array of detailed summary for each epoch
+     * <p><b>200</b> - detailed summary for specified epoch
+     * <p><b>400</b> - The server cannot process the request due to invalid input
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
@@ -43,14 +44,16 @@ public interface EpochService {
      * Epoch Information
      * Get the epoch information for all epochs
      * <p><b>200</b> - Array of detailed summary for each epoch
+     * <p><b>400</b> - The server cannot process the request due to invalid input
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
-     * @param options Filtering and Pagination options (optional)
+     * @param options          Filtering and Pagination options (optional)
+     * @param includeNextEpoch Include information about nearing but not yet started epoch, to get access to active stake snapshot information if available
      * @return Result of Type List of {@link EpochInfo} detailed summary for each epoch
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<EpochInfo>> getEpochInformation(Options options) throws ApiException;
+    Result<List<EpochInfo>> getEpochInformation(boolean includeNextEpoch, Options options) throws ApiException;
 
     /**
      * Latest Epoch's Protocol Parameters

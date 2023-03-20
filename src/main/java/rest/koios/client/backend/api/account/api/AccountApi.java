@@ -25,17 +25,27 @@ public interface AccountApi {
      * Get Account Information
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return Account info of any (payment or staking) address
      */
     @POST("account_info")
     Call<List<AccountInfo>> getAccountInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * Get Account UTxOs
+     *
+     * @param stakeAddress Cardano staking address (reward account) in bech32 format
+     * @param paramsMap    Query Params
+     * @return List of account UTxOs associated with stake address
+     */
+    @GET("account_utxos")
+    Call<List<AccountUTxO>> getAccountUTxOs(@Query("_stake_address") String stakeAddress, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Get Account Information (Cached)
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return Account info of any (payment or staking) address
      */
     @POST("account_info_cached")
@@ -45,7 +55,7 @@ public interface AccountApi {
      * Get Account Rewards
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return Full rewards history (including MIR) for a stake address, or certain epoch if specified
      */
     @POST("account_rewards")
@@ -55,7 +65,7 @@ public interface AccountApi {
      * Get Account Updates
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return Account updates (registration, deregistration, delegation and withdrawals)
      */
     @POST("account_updates")
@@ -65,7 +75,7 @@ public interface AccountApi {
      * Get Account Addresses
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return All addresses associated with an account
      */
     @POST("account_addresses")
@@ -75,7 +85,7 @@ public interface AccountApi {
      * Get Account Assets
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return Native asset balance of an account
      */
     @POST("account_assets")
@@ -85,7 +95,7 @@ public interface AccountApi {
      * Get Account History
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
-     * @param paramsMap Query Params
+     * @param paramsMap   Query Params
      * @return Staking history of an account
      */
     @POST("account_history")

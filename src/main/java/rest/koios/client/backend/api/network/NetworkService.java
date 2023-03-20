@@ -3,6 +3,7 @@ package rest.koios.client.backend.api.network;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.network.model.Genesis;
+import rest.koios.client.backend.api.network.model.ParamUpdateProposal;
 import rest.koios.client.backend.api.network.model.Tip;
 import rest.koios.client.backend.api.network.model.Totals;
 import rest.koios.client.backend.factory.options.Options;
@@ -63,4 +64,18 @@ public interface NetworkService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<Totals>> getHistoricalTokenomicStats(Options options) throws ApiException;
+
+    /**
+     * Param Update Proposals with Filtering, Pagination, Ordering Options
+     * Get all parameter update proposals submitted to the chain starting Shelley era
+     * <p><b>200</b> - List of unique param update proposals submitted on chain
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of unique {@link ParamUpdateProposal} submitted on chain
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<ParamUpdateProposal>> getParamUpdateProposals(Options options) throws ApiException;
 }

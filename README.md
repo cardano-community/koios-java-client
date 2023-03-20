@@ -57,7 +57,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
     </thead>
     <tbody>
         <tr>
-            <td rowspan="3">Network</td>
+            <td rowspan="4">Network</td>
             <td>Chain Tip</td>
             <td>Get the tip info about the latest block seen by chain</td>
         </tr>
@@ -68,6 +68,10 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         <tr>
             <td>Get historical tokenomic stats</td>
             <td>Get the circulating utxo, treasury, rewards, supply and reserves in lovelace for specified epoch, all epochs if empty</td>
+        </tr>
+        <tr>
+            <td>Param Update Proposals</td>
+            <td>Get all parameter update proposals submitted to the chain starting Shelley era</td>
         </tr>
         <tr>
             <td rowspan="3">Epoch</td>
@@ -138,13 +142,17 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the transaction hash list of input payment credential array, optionally filtering after specified block height (inclusive)</td>
         </tr>
         <tr>
-            <td rowspan="8">Account</td>
+            <td rowspan="9">Stake Account</td>
             <td>Account List</td>
             <td>Get a list of all accounts</td>
         </tr>
         <tr>
             <td>Account Information</td>
             <td>Get the account info of any (payment or staking) address</td>
+        </tr>
+        <tr>
+            <td>Account UTxOs</td>
+            <td>Get a list of all UTxOs for a given stake address (account)</td>
         </tr>
         <tr>
             <td>Account Information (Cached)</td>
@@ -171,32 +179,48 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the staking history of an account</td>
         </tr>
         <tr>
-            <td rowspan="7">Asset</td>
+            <td rowspan="11">Asset</td>
             <td>Asset List</td>
             <td>Get the list of all native assets (paginated)</td>
         </tr>
         <tr>
-            <td>Asset Address List</td>
+            <td>Asset Addresses</td>
             <td>Get the list of all addresses holding a given asset</td>
+        </tr>
+        <tr>
+            <td>NFT Address</td>
+            <td>Get the address where specified NFT currently reside on</td>
         </tr>
         <tr>
             <td>Asset Information</td>
             <td>Get the information of an asset including first minting & token registry metadata</td>
         </tr>
         <tr>
+            <td>Asset Information (Bulk)</td>
+            <td>Get the information of a list of assets including first minting & token registry metadata</td>
+        </tr>
+        <tr>
             <td>Asset History</td>
             <td>Get the mint/burn history of an asset</td>
         </tr>
         <tr>
-            <td>Asset Policy Information</td>
+            <td>Policy Asset Address List</td>
+            <td>Get the list of addresses with quantity for each asset on the given policy.</td>
+        </tr>
+        <tr>
+            <td>Policy Asset Information</td>
             <td>Get the information for all assets under the same policy</td>
+        </tr>
+        <tr>
+            <td>Policy Asset List</td>
+            <td>Get the list of asset under the given policy (including balances)</td>
         </tr>
         <tr>
             <td>Asset Summary</td>
             <td>Get the summary of an asset (total transactions exclude minting/total wallets include only wallets with asset balance)</td>
         </tr>
         <tr>
-            <td>Asset Transaction History</td>
+            <td>Asset Transactions</td>
             <td>Get the list of all asset transaction hashes (newest first)</td>
         </tr>
         <tr>
@@ -266,6 +290,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.0.10     |      1.17.0       |
 |     1.0.9      |      1.16.3       |
 |     1.0.8      |      1.15.2       |
 |     1.0.7      |      1.14.1       |
@@ -281,13 +306,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.16.3</version>
+    <version>1.17.0</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.16.3'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.17.0'
 ```
 
 ### Get Koios Backend Service

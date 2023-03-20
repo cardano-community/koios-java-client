@@ -51,7 +51,7 @@ class EpochServicePreprodIntegrationTest {
     @Test
     void getSpecificEpochInformationTest() throws ApiException {
         Options options = Options.builder().option(Order.by("epoch_no", SortType.DESC)).option(Limit.of(1)).build();
-        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(options);
+        Result<List<EpochInfo>> epochInformationResult = epochService.getEpochInformation(false, options);
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());

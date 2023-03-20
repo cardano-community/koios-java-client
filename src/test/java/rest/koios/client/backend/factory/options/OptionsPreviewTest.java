@@ -100,7 +100,7 @@ class OptionsPreviewTest {
         String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
 
         Options options = Options.builder()
-                .option(Limit.of(50))
+                .option(Limit.of(20))
                 .option(Offset.of(0))
                 .option(Order.by("block_height", SortType.DESC))
                 .option(NotOperatorFilter.of(LogicalOperatorFilter.of(LogicalOperatorFilterType.AND,
@@ -112,7 +112,7 @@ class OptionsPreviewTest {
         assertTrue(transactionsResult.isSuccessful());
         assertNotNull(transactionsResult.getValue());
         log.info(transactionsResult.getValue().toString());
-        assertEquals(13, transactionsResult.getValue().size());
+        assertEquals(20, transactionsResult.getValue().size());
         assertNotEquals("8a1f7811d7c3c46c3421e5b6515239c8cd7cce21c371bb0d5c107d0296fab29d", transactionsResult.getValue().get(0).getTxHash());
         assertNotEquals(0, transactionsResult.getValue().get(0).getBlockHeight());
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());

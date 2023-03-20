@@ -44,7 +44,7 @@ class AssetServicePreviewIntegrationTest {
         String assetPolicy = "9a50f458ebffb4c3f9d6f9f3d45426b2de6cf2512254f4bfa3d8f410";
         String assetName = "DimensionBox #0063";
         String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
-        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY);
+        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY);
         Assertions.assertTrue(assetAddressesResult.isSuccessful());
         Assertions.assertNotNull(assetAddressesResult.getValue());
         log.info(assetAddressesResult.getValue().toString());
@@ -54,7 +54,7 @@ class AssetServicePreviewIntegrationTest {
     void getAssetsAddressListBadRequestTest() {
         String assetPolicy = "9a50f458ebffb4c3f9d6f9f3d45426b2de6cf2512254f4bfa3d8f410";
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -111,7 +111,7 @@ class AssetServicePreviewIntegrationTest {
     @Test
     void getAssetPolicyInformationTest() throws ApiException {
         String assetPolicy = "9a50f458ebffb4c3f9d6f9f3d45426b2de6cf2512254f4bfa3d8f410";
-        Result<List<PolicyAsset>> assetPolicyInfoResult = assetService.getAssetPolicyInformation(assetPolicy, Options.EMPTY);
+        Result<List<PolicyAssetInfo>> assetPolicyInfoResult = assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY);
         Assertions.assertTrue(assetPolicyInfoResult.isSuccessful());
         Assertions.assertNotNull(assetPolicyInfoResult.getValue());
         log.info(assetPolicyInfoResult.getValue().toString());
@@ -120,7 +120,7 @@ class AssetServicePreviewIntegrationTest {
     @Test
     void getAssetPolicyInformationBadRequestTest() {
         String assetPolicy = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetPolicyInformation(assetPolicy, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -150,7 +150,7 @@ class AssetServicePreviewIntegrationTest {
         String assetName = "DimensionBox #0063";
         String assetNameHex = String.format("%x", new BigInteger(1, assetName.getBytes()));
         Result<List<TxHash>> assetTxsResult = assetService.getAssetTransactions(assetPolicy, assetNameHex, Options.EMPTY);
-        Assertions.assertEquals("f9f89c42f99c3bba9c1cf66981cdd4feb1bd275220edf5fe4f8e5ca8e9cf442b", assetTxsResult.getValue().get(0).getTxHash());
+        Assertions.assertEquals("601d8ca24d22b235106af326b8b4415548adb33a93e239546aab69810ac6831d", assetTxsResult.getValue().get(0).getTxHash());
         Assertions.assertTrue(assetTxsResult.isSuccessful());
         Assertions.assertNotNull(assetTxsResult.getValue());
         log.info(assetTxsResult.getValue().toString());

@@ -43,7 +43,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetsAddressListTest() throws ApiException {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414d";
-        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY);
+        Result<List<AssetAddress>> assetAddressesResult = assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY);
         Assertions.assertTrue(assetAddressesResult.isSuccessful());
         Assertions.assertNotNull(assetAddressesResult.getValue());
         log.info(assetAddressesResult.getValue().toString());
@@ -53,7 +53,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetsAddressListBadRequestTest() {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414dasdsadsa";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddressList(assetPolicy, assetNameHex, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 
@@ -107,7 +107,7 @@ class AssetServiceMainnetIntegrationTest {
     @Test
     void getAssetPolicyInformationTest() throws ApiException {
         String assetPolicy = "14696a4676909f4e3cb1f2e60e2e08e5abed70caf5c02699be971139";
-        Result<List<PolicyAsset>> assetPolicyInfoResult = assetService.getAssetPolicyInformation(assetPolicy, Options.EMPTY);
+        Result<List<PolicyAssetInfo>> assetPolicyInfoResult = assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY);
         Assertions.assertTrue(assetPolicyInfoResult.isSuccessful());
         Assertions.assertNotNull(assetPolicyInfoResult.getValue());
         log.info(assetPolicyInfoResult.getValue().toString());
@@ -116,7 +116,7 @@ class AssetServiceMainnetIntegrationTest {
     @Test
     void getAssetPolicyInformationBadRequestTest() {
         String assetPolicy = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetPolicyInformation(assetPolicy, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 

@@ -32,5 +32,5 @@ public class PoolDelegator {
     /**
      * Latest transaction hash used for delegation by the account
      */
-    private String latestDelegationHash;
+    private String latestDelegationTxHash;
 }

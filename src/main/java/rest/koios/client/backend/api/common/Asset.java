@@ -30,6 +30,11 @@ public class Asset {
     private String fingerprint;
 
     /**
+     * Asset decimals
+     */
+    private Integer decimals;
+
+    /**
      * Sum of assets for output UTxO
      */
     private String quantity;
