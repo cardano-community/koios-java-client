@@ -8,7 +8,7 @@ import java.lang.reflect.Modifier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Bech32UtilTest {
+class Bech32PreviewUtilTest {
 
     @Test
     void invalidCharsTest() {
