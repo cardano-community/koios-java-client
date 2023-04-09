@@ -39,6 +39,11 @@ public class PolicyAssetInfo {
     private String mintingTxHash;
 
     /**
+     * Total Supply
+     */
+    private String totalSupply;
+
+    /**
      * Count of total mint transactions
      */
     private Integer mintCnt;
