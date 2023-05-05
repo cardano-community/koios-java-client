@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import rest.koios.client.backend.api.asset.model.AssetInformation;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Bech32Util;
@@ -224,7 +223,7 @@ public class BaseService {
 
     protected Map<String, String> optionsToParamMap(Options options) {
         Map<String, String> paramsMap = Collections.emptyMap();
-        if (options != null && !options.getOptions().isEmpty()) {
+        if (options != null && !options.getOptionList().isEmpty()) {
             paramsMap = options.toMap();
         }
         return paramsMap;

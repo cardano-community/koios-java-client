@@ -13,23 +13,23 @@ import java.util.stream.Collectors;
 @Getter
 public class Options {
 
-    private final List<Option> options;
+    private final List<Option> optionList;
     public static final Options EMPTY = null;
 
     /**
      * Options Default Constructor
      */
     public Options() {
-        options = new ArrayList<>();
+        optionList = new ArrayList<>();
     }
 
     /**
      * Options Constructor
      *
-     * @param options list of options
+     * @param optionList list of options
      */
-    public Options(List<Option> options) {
-        this.options = options;
+    public Options(List<Option> optionList) {
+        this.optionList = optionList;
     }
 
     /**
@@ -38,21 +38,21 @@ public class Options {
      * @return Map of Options
      */
     public Map<String, String> toMap() {
-        List<Option> optionList = new ArrayList<>();
+        List<Option> optionArrayList = new ArrayList<>();
         List<Option> filters = new ArrayList<>();
-        for (Option option : options) {
+        for (Option option : this.optionList) {
             if (option.getOptionType() == OptionType.FILTER) {
                 filters.add(option);
             } else {
-                optionList.add(option);
+                optionArrayList.add(option);
             }
         }
         if (filters.size() >= 2) {
-            optionList.add(LogicalOperatorFilter.of(LogicalOperatorFilterType.AND,filters.toArray(new Option[0])));
+            optionArrayList.add(LogicalOperatorFilter.of(LogicalOperatorFilterType.AND,filters.toArray(new Option[0])));
         } else if (filters.size() == 1) {
-            optionList.add(filters.get(0));
+            optionArrayList.add(filters.get(0));
         }
-        return optionList.stream().collect(Collectors.toMap(Option::getOptionTypeValue, Option::getValue));
+        return optionArrayList.stream().collect(Collectors.toMap(Option::getOptionTypeValue, Option::getValue));
     }
 
     /**
