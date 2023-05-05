@@ -17,6 +17,16 @@ public interface AssetApi {
     Call<List<Asset>> getAssetList(@QueryMap Map<String, String> paramsMap);
 
     /**
+     * Asset Token Registry
+     * Get a list of assets registered via token registry on github
+     *
+     * @param paramsMap Query Params
+     * @return List of token registry information (registered via github) for each asset
+     */
+    @GET("asset_token_registry")
+    Call<List<AssetTokenRegistry>> getAssetTokenRegistry(@QueryMap Map<String, String> paramsMap);
+
+    /**
      * Get Asset Addresses
      *
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex)

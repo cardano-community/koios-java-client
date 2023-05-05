@@ -28,6 +28,19 @@ public interface AssetService {
     Result<List<Asset>> getAssetList(Options options) throws ApiException;
 
     /**
+     * Asset Token Registry
+     * Get a list of assets registered via token registry on github
+     * <p><b>200</b> - Array of token registry information for each asset
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Array of token registry information for each asset
+     */
+    Result<List<AssetTokenRegistry>> getAssetTokenRegistry(Options options) throws ApiException;
+
+    /**
      * Assets Addresses with Filtering, Pagination, Ordering Options
      * Get a list of all addresses for a given asset
      * <p><b>200</b> - List of payment addresses holding the given token (including balances)

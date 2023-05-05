@@ -12,6 +12,8 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.filters.Filter;
+import rest.koios.client.backend.factory.options.filters.FilterType;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -37,6 +39,20 @@ class AssetServiceMainnetIntegrationTest {
         Assertions.assertNotNull(assetsResult.getValue());
         log.info(assetsResult.getValue().toString());
         assertEquals(10, assetsResult.getValue().size());
+    }
+
+    @Test
+    void getAssetTokenRegistryFilteredTest() throws ApiException {
+        Options options = Options.builder()
+                .option(Filter.of("policy_id", FilterType.EQ, "4d038d08e68f53d21462e8982a5334c6ffbf65e7ae7eb064c568dd1e"))
+                .option(Filter.of("asset_name",FilterType.EQ, "464f524745"))
+                .build();
+        Result<List<AssetTokenRegistry>> assetsResult = assetService.getAssetTokenRegistry(options);
+        Assertions.assertTrue(assetsResult.isSuccessful());
+        Assertions.assertNotNull(assetsResult.getValue());
+        log.info(assetsResult.getValue().toString());
+        assertEquals(1, assetsResult.getValue().size());
+        assertEquals("FORGE", assetsResult.getValue().get(0).getTicker());
     }
 
     @Test

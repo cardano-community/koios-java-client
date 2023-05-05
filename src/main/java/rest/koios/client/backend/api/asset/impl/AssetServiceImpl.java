@@ -47,6 +47,17 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
+    public Result<List<AssetTokenRegistry>> getAssetTokenRegistry(Options options) throws ApiException {
+        Call<List<AssetTokenRegistry>> call = assetApi.getAssetTokenRegistry(optionsToParamMap(options));
+        try {
+            Response<List<AssetTokenRegistry>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<List<AssetAddress>> getAssetsAddresses(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
