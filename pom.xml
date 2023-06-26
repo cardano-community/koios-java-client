@@ -20,7 +20,7 @@
         <slf4j-api.version>2.0.7</slf4j-api.version>
         <slf4j-reload4j.version>2.0.7</slf4j-reload4j.version>
         <commons-collections4.version>4.4</commons-collections4.version>
-        <swagger-annotations.version>2.2.9</swagger-annotations.version>
+        <swagger-annotations.version>2.2.13</swagger-annotations.version>
         <lombok.version>1.18.26</lombok.version>
         <bcprov-jdk15to18.version>1.73</bcprov-jdk15to18.version>
         <bucket4j-core.version>7.6.0</bucket4j-core.version>
