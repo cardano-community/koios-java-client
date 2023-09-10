@@ -28,10 +28,10 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     /**
      * Script Service Implementation Constructor
      *
-     * @param baseService Base Service
+     * @param baseUrl Base Url
      */
-    public ScriptServiceImpl(BaseService baseService) {
-        super(baseService);
+    public ScriptServiceImpl(String baseUrl) {
+        super(baseUrl);
         scriptApi = getRetrofit().create(ScriptApi.class);
     }
 

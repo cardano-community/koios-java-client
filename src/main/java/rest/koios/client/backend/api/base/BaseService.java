@@ -36,12 +36,7 @@ public class BaseService {
     private final Bucket bucket;
     private int retriesCount = 5;
     private static final int SLEEP_TIME_MILLIS = 2000;
-
-    public BaseService(BaseService baseService) {
-        this.retrofit = baseService.getRetrofit();
-        this.bucket = baseService.getBucket();
-        this.retriesCount = baseService.getRetriesCount();
-    }
+    private boolean retryOnTimeout = true;
 
     /**
      * Base Service Constructor
@@ -51,9 +46,7 @@ public class BaseService {
     public BaseService(String baseUrl) {
         bucket = Bucket.builder().addLimit(Bandwidth.simple(100, Duration.ofSeconds(10))).build();
         int readTimeoutSec = getReadTimeoutSec();
-        log.info("Set Read Timeout to {} Seconds", readTimeoutSec);
         int connectTimeoutSec = getConnectTimeoutSec();
-        log.info("Set Connect Timeout to {} Seconds", connectTimeoutSec);
         boolean logging = Boolean.parseBoolean(System.getenv("KOIOS_JAVA_LIB_LOGGING"));
         OkHttpClient okHttpClient;
         if (logging) {
@@ -72,6 +65,10 @@ public class BaseService {
         String strRetries = System.getenv("KOIOS_JAVA_LIB_RETRIES_COUNT");
         if (strRetries != null && !strRetries.isEmpty()) {
             retriesCount = Math.max(Integer.parseInt(strRetries), 1);
+        }
+        String retryOnTimeoutEnv = System.getenv("KOIOS_JAVA_LIB_RETRY_ON_TIMEOUT");
+        if (retryOnTimeoutEnv != null && !Boolean.parseBoolean(retryOnTimeoutEnv)) {
+            retryOnTimeout = false;
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -155,7 +152,11 @@ public class BaseService {
                     }
                 } catch (SocketTimeoutException e) {
                     log.warn(e.getMessage());
-                    tryCount = retry(tryCount);
+                    if (retryOnTimeout) {
+                        tryCount = retry(tryCount);
+                    } else {
+                        throw new ApiException("Timeout Error");
+                    }
                 }
             } else {
                 throw new ApiException("HTTP Error (429) - Too Many Requests.");

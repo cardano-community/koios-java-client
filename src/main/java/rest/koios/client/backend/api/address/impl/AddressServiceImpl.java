@@ -1,7 +1,5 @@
 package rest.koios.client.backend.api.address.impl;
 
-import rest.koios.client.backend.api.address.model.AddressUtxo;
-import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.api.AddressApi;
 import rest.koios.client.backend.api.address.model.AddressAsset;
@@ -9,13 +7,17 @@ import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.SortType;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
 /**
  * Address Service Implementation
@@ -27,10 +29,10 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     /**
      * Address Service Implementation Constructor
      *
-     * @param baseService Base Service
+     * @param baseUrl Base Url
      */
-    public AddressServiceImpl(BaseService baseService) {
-        super(baseService);
+    public AddressServiceImpl(String baseUrl) {
+        super(baseUrl);
         addressApi = getRetrofit().create(AddressApi.class);
     }
 

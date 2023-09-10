@@ -26,10 +26,10 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     /**
      * Network Service Implementation Constructor
      *
-     * @param baseService Base Service
+     * @param baseUrl Base Url
      */
-    public NetworkServiceImpl(BaseService baseService) {
-        super(baseService);
+    public NetworkServiceImpl(String baseUrl) {
+        super(baseUrl);
         networkApi = getRetrofit().create(NetworkApi.class);
     }
 
