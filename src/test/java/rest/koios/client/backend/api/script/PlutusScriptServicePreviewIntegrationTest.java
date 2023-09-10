@@ -41,6 +41,17 @@ class PlutusScriptServicePreviewIntegrationTest {
     }
 
     @Test
+    void getNativeScriptByScriptHashTest() throws ApiException {
+        String scriptHash = "6c969320597b755454ff3653ad09725d590c570827a129aeb4385526";
+        Result<NativeScript> scriptResult = scriptService.getNativeScript(scriptHash);
+        Assertions.assertTrue(scriptResult.isSuccessful());
+        Assertions.assertNotNull(scriptResult.getValue());
+        log.info(scriptResult.getValue().toString());
+        assertEquals(scriptHash, scriptResult.getValue().getScriptHash());
+        assertEquals("e5602443710892625b8526d2499b29d25b8f5d830eb5bb374323fdb74e17a674", scriptResult.getValue().getCreationTxHash());
+    }
+
+    @Test
     void getPlutusScriptListLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<PlutusScript>> scriptListResult = scriptService.getPlutusScriptList(options);
