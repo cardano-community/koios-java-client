@@ -1,16 +1,14 @@
 package rest.koios.client.backend.api.epoch.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import rest.koios.client.backend.api.epoch.helper.CostModelsDeserializer;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * Epoch Parameters
@@ -135,8 +133,7 @@ public class EpochParams {
     /**
      * The per language cost models
      */
-    @JsonDeserialize(using = CostModelsDeserializer.class)
-    private Map<String, Map<String, Long>> costModels = null;
+    private JsonNode costModels = null;
 
     /**
      * The per word cost of script memory usage
