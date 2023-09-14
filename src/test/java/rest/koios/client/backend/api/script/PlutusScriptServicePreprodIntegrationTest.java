@@ -64,7 +64,7 @@ class PlutusScriptServicePreprodIntegrationTest {
     @Test
     void getScriptRedeemersTest() throws ApiException {
         String scriptHash = "2ab32ec22330adf91e42905b008a1aa84ea7af7dc2dc85592497527c";
-        Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, Options.EMPTY);
+        Result<List<ScriptRedeemer>> scriptRedeemersResult = scriptService.getScriptRedeemers(scriptHash, Options.builder().option(Limit.of(10)).build());
         Assertions.assertTrue(scriptRedeemersResult.isSuccessful());
         Assertions.assertNotNull(scriptRedeemersResult.getValue());
         log.info(scriptRedeemersResult.getValue().toString());
