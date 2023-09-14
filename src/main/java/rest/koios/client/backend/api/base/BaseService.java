@@ -2,8 +2,6 @@ package rest.koios.client.backend.api.base;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.bucket4j.Bandwidth;
-import io.github.bucket4j.Bucket;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
@@ -18,7 +16,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
-import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +30,6 @@ import java.util.concurrent.TimeUnit;
 public class BaseService {
 
     private final Retrofit retrofit;
-    private final Bucket bucket;
     private int retriesCount = 5;
     private static final int SLEEP_TIME_MILLIS = 2000;
     private boolean retryOnTimeout = true;
@@ -138,28 +134,24 @@ public class BaseService {
     public Response<Object> execute(Call<?> call) throws ApiException, IOException {
         int tryCount = 1;
         while (tryCount <= retriesCount) {
-            if (getBucket().tryConsume(1)) {
-                try {
-                    Response<Object> response = (Response<Object>) call.clone().execute();
-                    if (response.code() == 429) {
-                        log.warn("429 Too Many Requests.");
-                        tryCount = retry(tryCount);
-                    } else if (response.code() == 504) {
-                        log.warn(response.message());
-                        tryCount = retry(tryCount);
-                    } else {
-                        return response;
-                    }
-                } catch (SocketTimeoutException e) {
-                    log.warn(e.getMessage());
-                    if (retryOnTimeout) {
-                        tryCount = retry(tryCount);
-                    } else {
-                        throw new ApiException("Timeout Error");
-                    }
+            try {
+                Response<Object> response = (Response<Object>) call.clone().execute();
+                if (response.code() == 429) {
+                    log.warn("429 Too Many Requests.");
+                    tryCount = retry(tryCount);
+                } else if (response.code() == 504) {
+                    log.warn(response.message());
+                    tryCount = retry(tryCount);
+                } else {
+                    return response;
                 }
-            } else {
-                throw new ApiException("HTTP Error (429) - Too Many Requests.");
+            } catch (SocketTimeoutException e) {
+                log.warn(e.getMessage());
+                if (retryOnTimeout) {
+                    tryCount = retry(tryCount);
+                } else {
+                    throw new ApiException("Timeout Error");
+                }
             }
         }
         throw new ApiException("Retry Count Exceeded (" + tryCount + "/" + retriesCount + ").");
