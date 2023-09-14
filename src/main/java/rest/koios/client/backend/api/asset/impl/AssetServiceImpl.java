@@ -29,9 +29,10 @@ public class AssetServiceImpl extends BaseService implements AssetService {
      * Asset Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public AssetServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AssetServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         assetApi = getRetrofit().create(AssetApi.class);
     }
 

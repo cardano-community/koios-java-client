@@ -30,9 +30,10 @@ public class BlockServiceImpl extends BaseService implements BlockService {
      * Block Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public BlockServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public BlockServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         blockApi = getRetrofit().create(BlockApi.class);
     }
 

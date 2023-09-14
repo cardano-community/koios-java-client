@@ -17,17 +17,27 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosMainnetService() {
-        return getKoiosMainnetService(ApiVersion.VERSION_0);
+        return getKoiosMainnetService(null);
+    }
+
+    /**
+     * Get Mainnet BackendService for Koios (Latest Version)
+     *
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosMainnetService(String apiToken) {
+        return getKoiosMainnetService(ApiVersion.VERSION_0, apiToken);
     }
 
     /**
      * Get Mainnet BackendService for Koios By Version
      *
      * @param apiVersion API Version
+     * @param apiToken   Authorization Bearer JWT Token
      * @return {@link BackendService}
      */
-    public static BackendService getKoiosMainnetService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_MAINNET, apiVersion);
+    public static BackendService getKoiosMainnetService(ApiVersion apiVersion, String apiToken) {
+        return new BackendServiceImpl(OperationType.KOIOS_MAINNET, apiVersion, apiToken);
     }
 
     /**
@@ -36,7 +46,17 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosGuildService() {
-        return getKoiosGuildService(ApiVersion.VERSION_0);
+        return getKoiosGuildService(ApiVersion.VERSION_0, null);
+    }
+
+    /**
+     * Get Guild Network BackendService for Koios (Latest Version)
+     *
+     * @param apiToken Authorization Bearer JWT Token
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosGuildService(String apiToken) {
+        return getKoiosGuildService(ApiVersion.VERSION_0, apiToken);
     }
 
     /**
@@ -45,8 +65,8 @@ public class BackendFactory {
      * @param apiVersion API Version
      * @return {@link BackendService}
      */
-    public static BackendService getKoiosGuildService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_GUILD, apiVersion);
+    public static BackendService getKoiosGuildService(ApiVersion apiVersion, String apiToken) {
+        return new BackendServiceImpl(OperationType.KOIOS_GUILD, apiVersion, apiToken);
     }
 
     /**
@@ -55,17 +75,28 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosPreviewService() {
-        return getKoiosPreviewService(ApiVersion.VERSION_0);
+        return getKoiosPreviewService(null);
+    }
+
+    /**
+     * Get Preview Network BackendService for Koios (Latest Version)
+     *
+     * @param apiToken Authorization Bearer JWT Token
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosPreviewService(String apiToken) {
+        return getKoiosPreviewService(ApiVersion.VERSION_0, apiToken);
     }
 
     /**
      * Get Preview Network BackendService for Koios By Version
      *
      * @param apiVersion API Version
+     * @param apiToken   Authorization Bearer JWT Token
      * @return {@link BackendService}
      */
-    public static BackendService getKoiosPreviewService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_PREVIEW, apiVersion);
+    public static BackendService getKoiosPreviewService(ApiVersion apiVersion, String apiToken) {
+        return new BackendServiceImpl(OperationType.KOIOS_PREVIEW, apiVersion, apiToken);
     }
 
     /**
@@ -74,17 +105,28 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosPreprodService() {
-        return getKoiosPreprodService(ApiVersion.VERSION_0);
+        return getKoiosPreprodService(null);
+    }
+
+    /**
+     * Get Preprod Network BackendService for Koios (Latest Version)
+     *
+     * @param apiToken Authorization Bearer JWT Token
+     * @return {@link BackendService}
+     */
+    public static BackendService getKoiosPreprodService(String apiToken) {
+        return getKoiosPreprodService(ApiVersion.VERSION_0, apiToken);
     }
 
     /**
      * Get Preprod Network BackendService for Koios By Version
      *
      * @param apiVersion API Version
+     * @param apiToken   Authorization Bearer JWT Token
      * @return {@link BackendService}
      */
-    public static BackendService getKoiosPreprodService(ApiVersion apiVersion) {
-        return new BackendServiceImpl(OperationType.KOIOS_PREPROD, apiVersion);
+    public static BackendService getKoiosPreprodService(ApiVersion apiVersion, String apiToken) {
+        return new BackendServiceImpl(OperationType.KOIOS_PREPROD, apiVersion, apiToken);
     }
 
     /**
@@ -94,6 +136,17 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getCustomRPCService(String baseUrl) {
-        return new BackendServiceImpl(baseUrl);
+        return getCustomRPCService(baseUrl, null);
+    }
+
+    /**
+     * Get BackendService for Koios
+     *
+     * @param baseUrl  base URL for Koios
+     * @param apiToken Authorization Bearer JWT Token
+     * @return {@link BackendService}
+     */
+    public static BackendService getCustomRPCService(String baseUrl, String apiToken) {
+        return new BackendServiceImpl(baseUrl, apiToken);
     }
 }

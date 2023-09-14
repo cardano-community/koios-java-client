@@ -49,16 +49,25 @@ public class BackendServiceImpl implements BackendService {
      * @param baseUrl baseUrl
      */
     public BackendServiceImpl(String baseUrl) {
+        this(baseUrl, null);
+    }
+
+    /**
+     * Backend Service Implementation Constructor
+     *
+     * @param baseUrl baseUrl
+     */
+    public BackendServiceImpl(String baseUrl, String apiToken) {
         log.info("Koios URL: " + baseUrl);
-        this.networkService = new NetworkServiceImpl(baseUrl);
-        this.epochService = new EpochServiceImpl(baseUrl);
-        this.blockService = new BlockServiceImpl(baseUrl);
-        this.transactionsService = new TransactionsServiceImpl(baseUrl);
-        this.addressService = new AddressServiceImpl(baseUrl);
-        this.accountService = new AccountServiceImpl(baseUrl);
-        this.assetService = new AssetServiceImpl(baseUrl);
-        this.poolService = new PoolServiceImpl(baseUrl);
-        this.scriptService = new ScriptServiceImpl(baseUrl);
+        this.networkService = new NetworkServiceImpl(baseUrl, apiToken);
+        this.epochService = new EpochServiceImpl(baseUrl, apiToken);
+        this.blockService = new BlockServiceImpl(baseUrl, apiToken);
+        this.transactionsService = new TransactionsServiceImpl(baseUrl, apiToken);
+        this.addressService = new AddressServiceImpl(baseUrl, apiToken);
+        this.accountService = new AccountServiceImpl(baseUrl, apiToken);
+        this.assetService = new AssetServiceImpl(baseUrl, apiToken);
+        this.poolService = new PoolServiceImpl(baseUrl, apiToken);
+        this.scriptService = new ScriptServiceImpl(baseUrl, apiToken);
     }
 
     /**
@@ -66,8 +75,9 @@ public class BackendServiceImpl implements BackendService {
      *
      * @param operationType Operation Type
      * @param apiVersion    API Version
+     * @param apiToken      Authorization Bearer JWT Token
      */
-    public BackendServiceImpl(OperationType operationType, ApiVersion apiVersion) {
-        this(operationType.getBaseUrl()+apiVersion.getVersion()+"/");
+    public BackendServiceImpl(OperationType operationType, ApiVersion apiVersion, String apiToken) {
+        this(operationType.getBaseUrl() + apiVersion.getVersion() + "/", apiToken);
     }
 }

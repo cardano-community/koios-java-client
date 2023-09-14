@@ -31,9 +31,10 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
      * Script Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public ScriptServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public ScriptServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         scriptApi = getRetrofit().create(ScriptApi.class);
     }
 

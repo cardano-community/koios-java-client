@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.jetbrains.annotations.NotNull;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Bech32Util;
@@ -33,6 +36,7 @@ public class BaseService {
     private int retriesCount = 5;
     private static final int SLEEP_TIME_MILLIS = 2000;
     private boolean retryOnTimeout = true;
+    private final String apiToken;
 
     /**
      * Base Service Constructor
@@ -40,23 +44,42 @@ public class BaseService {
      * @param baseUrl Base URL
      */
     public BaseService(String baseUrl) {
-        bucket = Bucket.builder().addLimit(Bandwidth.simple(100, Duration.ofSeconds(10))).build();
+        this(baseUrl, null);
+    }
+
+    /**
+     * Base Service Constructor
+     *
+     * @param baseUrl Base URL
+     * @param apiToken Authorization Bearer JWT Token
+     */
+    public BaseService(String baseUrl, String apiToken) {
+        this.apiToken = apiToken;
         int readTimeoutSec = getReadTimeoutSec();
         int connectTimeoutSec = getConnectTimeoutSec();
         boolean logging = Boolean.parseBoolean(System.getenv("KOIOS_JAVA_LIB_LOGGING"));
-        OkHttpClient okHttpClient;
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        okHttpClientBuilder.readTimeout(readTimeoutSec, TimeUnit.SECONDS)
+                .connectTimeout(connectTimeoutSec, TimeUnit.SECONDS);
         if (logging) {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            okHttpClient = new OkHttpClient.Builder()
-                    .readTimeout(readTimeoutSec, TimeUnit.SECONDS)
-                    .connectTimeout(connectTimeoutSec, TimeUnit.SECONDS)
-                    .addInterceptor(interceptor).build();
-        } else {
-            okHttpClient = new OkHttpClient.Builder()
-                    .readTimeout(readTimeoutSec, TimeUnit.SECONDS)
-                    .connectTimeout(connectTimeoutSec, TimeUnit.SECONDS)
-                    .build();
+            okHttpClientBuilder.addInterceptor(interceptor).build();
+        }
+        if (apiToken != null && !apiToken.isEmpty()) {
+            okHttpClientBuilder.addInterceptor(new Interceptor() {
+                @NotNull
+                @Override
+                public okhttp3.Response intercept(@NotNull Chain chain) throws IOException {
+                    Request original = chain.request();
+
+                    Request request = original.newBuilder()
+                            .header("Authorization", "Bearer "+apiToken)
+                            .method(original.method(), original.body())
+                            .build();
+                    return chain.proceed(request);
+                }
+            });
         }
         String strRetries = System.getenv("KOIOS_JAVA_LIB_RETRIES_COUNT");
         if (strRetries != null && !strRetries.isEmpty()) {
@@ -68,7 +91,7 @@ public class BaseService {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient).addConverterFactory(JacksonConverterFactory
+        retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(okHttpClientBuilder.build()).addConverterFactory(JacksonConverterFactory
                 .create(objectMapper)).build();
     }
 

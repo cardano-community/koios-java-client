@@ -27,9 +27,10 @@ public class PoolServiceImpl extends BaseService implements PoolService {
      * Pool Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public PoolServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public PoolServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         poolApi = getRetrofit().create(PoolApi.class);
     }
 

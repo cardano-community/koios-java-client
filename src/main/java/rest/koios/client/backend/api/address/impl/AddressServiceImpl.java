@@ -30,9 +30,10 @@ public class AddressServiceImpl extends BaseService implements AddressService {
      * Address Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public AddressServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AddressServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         addressApi = getRetrofit().create(AddressApi.class);
     }
 

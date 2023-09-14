@@ -26,9 +26,10 @@ public class AccountServiceImpl extends BaseService implements AccountService {
      * Account Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public AccountServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public AccountServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         accountApi = getRetrofit().create(AccountApi.class);
     }
 

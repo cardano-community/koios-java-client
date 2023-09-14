@@ -43,7 +43,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Pagination (Limit and Offset) Supported
 - Horizontal Filtering Supported
 - Sorting Supported
-- Rate Control
+- API Token Supported
 - Inner Retry Mechanism upon Timeouts
 <details open>
 <summary>Supported REST Services</summary>

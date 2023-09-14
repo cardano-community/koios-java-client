@@ -8,7 +8,6 @@ import rest.koios.client.backend.api.epoch.api.EpochApi;
 import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
-import rest.koios.client.backend.api.network.api.NetworkApi;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
@@ -24,17 +23,16 @@ import java.util.List;
 public class EpochServiceImpl extends BaseService implements EpochService {
 
     private final EpochApi epochApi;
-    private final NetworkApi networkApi;
 
     /**
      * Epoch Service Implementation Constructor
      *
      * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public EpochServiceImpl(String baseUrl) {
-        super(baseUrl);
+    public EpochServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         epochApi = getRetrofit().create(EpochApi.class);
-        networkApi = getRetrofit().create(NetworkApi.class);
     }
 
     @Override
