@@ -9,7 +9,6 @@ import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.impl.AddressServiceImpl;
 import rest.koios.client.backend.api.asset.AssetService;
 import rest.koios.client.backend.api.asset.impl.AssetServiceImpl;
-import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.impl.BlockServiceImpl;
 import rest.koios.client.backend.api.epoch.EpochService;
@@ -50,26 +49,25 @@ public class BackendServiceImpl implements BackendService {
      * @param baseUrl baseUrl
      */
     public BackendServiceImpl(String baseUrl) {
-        log.info("Koios URL: " + baseUrl);
-        BaseService baseService = new BaseService(baseUrl);
-        this.networkService = new NetworkServiceImpl(baseService);
-        this.epochService = new EpochServiceImpl(baseService);
-        this.blockService = new BlockServiceImpl(baseService);
-        this.transactionsService = new TransactionsServiceImpl(baseService);
-        this.addressService = new AddressServiceImpl(baseService);
-        this.accountService = new AccountServiceImpl(baseService);
-        this.assetService = new AssetServiceImpl(baseService);
-        this.poolService = new PoolServiceImpl(baseService);
-        this.scriptService = new ScriptServiceImpl(baseService);
+        this(baseUrl, null);
     }
 
     /**
      * Backend Service Implementation Constructor
      *
-     * @param operationType Operation Type
+     * @param baseUrl baseUrl
      */
-    private BackendServiceImpl(OperationType operationType) {
-        this(operationType, ApiVersion.VERSION_0);
+    public BackendServiceImpl(String baseUrl, String apiToken) {
+        log.info("Koios URL: " + baseUrl);
+        this.networkService = new NetworkServiceImpl(baseUrl, apiToken);
+        this.epochService = new EpochServiceImpl(baseUrl, apiToken);
+        this.blockService = new BlockServiceImpl(baseUrl, apiToken);
+        this.transactionsService = new TransactionsServiceImpl(baseUrl, apiToken);
+        this.addressService = new AddressServiceImpl(baseUrl, apiToken);
+        this.accountService = new AccountServiceImpl(baseUrl, apiToken);
+        this.assetService = new AssetServiceImpl(baseUrl, apiToken);
+        this.poolService = new PoolServiceImpl(baseUrl, apiToken);
+        this.scriptService = new ScriptServiceImpl(baseUrl, apiToken);
     }
 
     /**
@@ -77,8 +75,9 @@ public class BackendServiceImpl implements BackendService {
      *
      * @param operationType Operation Type
      * @param apiVersion    API Version
+     * @param apiToken      Authorization Bearer JWT Token
      */
-    public BackendServiceImpl(OperationType operationType, ApiVersion apiVersion) {
-        this(operationType.getBaseUrl()+apiVersion.getVersion()+"/");
+    public BackendServiceImpl(OperationType operationType, ApiVersion apiVersion, String apiToken) {
+        this(operationType.getBaseUrl() + apiVersion.getVersion() + "/", apiToken);
     }
 }

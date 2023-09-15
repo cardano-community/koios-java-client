@@ -29,6 +29,19 @@ public interface ScriptService {
     Result<List<NativeScript>> getNativeScriptList(Options options) throws ApiException;
 
     /**
+     * Native Script by Script Hash
+     * Get Specific native script by script hash along with their creation transaction hashes
+     * <p><b>200</b> - native script and creation tx hash pairs
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param scriptHash Hash of a script
+     * @return Result of Type {@link NativeScript}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<NativeScript> getNativeScript(String scriptHash) throws ApiException;
+
+    /**
      * Plutus Script List with Filtering, Pagination, Ordering Options
      * List of all existing Plutus script hashes along with their creation transaction hashes
      * <p><b>200</b> - List of script and creation tx hash pairs

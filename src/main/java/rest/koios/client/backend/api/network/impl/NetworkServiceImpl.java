@@ -26,10 +26,11 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     /**
      * Network Service Implementation Constructor
      *
-     * @param baseService Base Service
+     * @param baseUrl Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public NetworkServiceImpl(BaseService baseService) {
-        super(baseService);
+    public NetworkServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         networkApi = getRetrofit().create(NetworkApi.class);
     }
 

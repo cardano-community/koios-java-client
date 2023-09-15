@@ -10,6 +10,8 @@ import rest.koios.client.backend.api.script.model.NativeScript;
 import rest.koios.client.backend.api.script.model.PlutusScript;
 import rest.koios.client.backend.api.script.model.ScriptRedeemer;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.filters.Filter;
+import rest.koios.client.backend.factory.options.filters.FilterType;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -28,10 +30,11 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     /**
      * Script Service Implementation Constructor
      *
-     * @param baseService Base Service
+     * @param baseUrl  Base Url
+     * @param apiToken Authorization Bearer JWT Token
      */
-    public ScriptServiceImpl(BaseService baseService) {
-        super(baseService);
+    public ScriptServiceImpl(String baseUrl, String apiToken) {
+        super(baseUrl, apiToken);
         scriptApi = getRetrofit().create(ScriptApi.class);
     }
 
@@ -41,6 +44,19 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
         try {
             Response<List<NativeScript>> response = (Response) execute(call);
             return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<NativeScript> getNativeScript(String scriptHash) throws ApiException {
+        Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(Options.builder()
+                .option(Filter.of("script_hash", FilterType.EQ, scriptHash))
+                .build()));
+        try {
+            Response<List<NativeScript>> response = (Response) execute(call);
+            return processResponseGetOne(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }

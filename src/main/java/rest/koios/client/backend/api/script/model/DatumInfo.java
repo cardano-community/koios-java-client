@@ -29,7 +29,7 @@ public class DatumInfo {
     private JsonNode value;
 
     /**
-     * Datum bytes (hex)
+     * Datum bytes (hex) (CBOR)
      */
     private String bytes;
 }

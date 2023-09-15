@@ -43,7 +43,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Pagination (Limit and Offset) Supported
 - Horizontal Filtering Supported
 - Sorting Supported
-- Rate Control
+- API Token Supported
 - Inner Retry Mechanism upon Timeouts
 <details open>
 <summary>Supported REST Services</summary>
@@ -294,7 +294,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
-|     1.0.10     |      1.17.2       |
+|     1.0.10     |      1.17.3       |
 |     1.0.9      |      1.16.3       |
 |     1.0.8      |      1.15.2       |
 |     1.0.7      |      1.14.1       |
@@ -310,7 +310,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.17.2</version>
+    <version>1.17.3</version>
 </dependency>
 ```
 
@@ -375,6 +375,7 @@ Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(
 | KOIOS_JAVA_LIB_RETRIES_COUNT       | integer | Sets the max retry count upon request timeout                  |    5    |
 | KOIOS_JAVA_LIB_READ_TIMEOUT_SEC    | integer | Sets the default read timeout for new connections (seconds)    |   60    |
 | KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC | integer | Sets the default connect timeout for new connections (seconds) |   60    |
+| KOIOS_JAVA_LIB_RETRY_ON_TIMEOUT    | boolean | Sets whether to retry upon request timeout                     |  true   |
 
 ## Clone & Build with Maven
 ```shell
