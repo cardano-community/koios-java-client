@@ -30,7 +30,7 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     /**
      * Script Service Implementation Constructor
      *
-     * @param baseUrl Base Url
+     * @param baseUrl  Base Url
      * @param apiToken Authorization Bearer JWT Token
      */
     public ScriptServiceImpl(String baseUrl, String apiToken) {
@@ -52,8 +52,8 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     @Override
     public Result<NativeScript> getNativeScript(String scriptHash) throws ApiException {
         Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(Options.builder()
-                        .option(Filter.of("script_hash", FilterType.EQ, scriptHash))
-                        .build()));
+                .option(Filter.of("script_hash", FilterType.EQ, scriptHash))
+                .build()));
         try {
             Response<List<NativeScript>> response = (Response) execute(call);
             return processResponseGetOne(response);
