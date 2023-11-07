@@ -168,6 +168,34 @@ public interface PoolService {
     Result<List<PoolUpdate>> getPoolUpdates(Options options) throws ApiException;
 
     /**
+     * Pool Registrations with Filtering, Pagination, Ordering Options
+     * Return all pool registrations initiated in the requested epoch
+     * <p><b>200</b> - List of pool registrations
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param epochNo Epoch Number to fetch details for
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolStatus}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolStatus>> getPoolRegistrations(Integer epochNo, Options options) throws ApiException;
+
+    /**
+     * Pool Retirements with Filtering, Pagination, Ordering Options
+     * Return all pool retirements initiated in the requested epoch
+     * <p><b>200</b> - List of pool retirements
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param epochNo Epoch Number to fetch details for
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolStatus}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolStatus>> getPoolRetirements(Integer epochNo, Options options) throws ApiException;
+
+    /**
      * Pool Relays with Filtering, Pagination, Ordering Options
      * A list of registered relays for all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Success!

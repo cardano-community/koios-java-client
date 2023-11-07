@@ -1,9 +1,6 @@
 package rest.koios.client.backend.api.network.api;
 
-import rest.koios.client.backend.api.network.model.Genesis;
-import rest.koios.client.backend.api.network.model.ParamUpdateProposal;
-import rest.koios.client.backend.api.network.model.Tip;
-import rest.koios.client.backend.api.network.model.Totals;
+import rest.koios.client.backend.api.network.model.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -31,4 +28,10 @@ public interface NetworkApi {
 
     @GET("param_updates")
     Call<List<ParamUpdateProposal>> getParamUpdateProposals(@QueryMap Map<String, String> paramsMap);
+
+    @GET("reserve_withdrawals")
+    Call<List<Withdrawal>> getReserveWithdrawals(@QueryMap Map<String, String> paramsMap);
+
+    @GET("treasury_withdrawals")
+    Call<List<Withdrawal>> getTreasuryWithdrawals(@QueryMap Map<String, String> paramsMap);
 }

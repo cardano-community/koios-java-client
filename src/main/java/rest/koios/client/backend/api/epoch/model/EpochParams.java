@@ -1,16 +1,14 @@
 package rest.koios.client.backend.api.epoch.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import rest.koios.client.backend.api.epoch.helper.CostModelsDeserializer;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 /**
  * Epoch Parameters
@@ -26,11 +24,6 @@ public class EpochParams {
      * Epoch number
      */
     private Integer epochNo = null;
-
-    /**
-     * Extra Entropy
-     */
-    private String extraEntropy;
 
     /**
      * The 'a' parameter to calculate the minimum transaction fee
@@ -98,9 +91,9 @@ public class EpochParams {
     private BigDecimal decentralisation = null;
 
     /**
-     * The hash of 32-byte string of extra random-ness added into the protocol's entropy pool
+     * Extra Entropy
      */
-    private String entropy = null;
+    private String extraEntropy;
 
     /**
      * The protocol major version
@@ -135,8 +128,7 @@ public class EpochParams {
     /**
      * The per language cost models
      */
-    @JsonDeserialize(using = CostModelsDeserializer.class)
-    private Map<String, Map<String, Long>> costModels = null;
+    private JsonNode costModels = null;
 
     /**
      * The per word cost of script memory usage
@@ -187,10 +179,4 @@ public class EpochParams {
      * The cost per UTxO size
      */
     private String coinsPerUtxoSize = null;
-
-    /**
-     * The cost per UTxO word
-     */
-    @Deprecated
-    private String coinsPerUtxoWord = null;
 }

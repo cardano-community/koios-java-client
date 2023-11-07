@@ -172,6 +172,28 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
+    public Result<List<PoolStatus>> getPoolRegistrations(Integer epochNo, Options options) throws ApiException {
+        Call<List<PoolStatus>> call = poolApi.getPoolRegistrations(epochNo, optionsToParamMap(options));
+        try {
+            Response<List<PoolStatus>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<PoolStatus>> getPoolRetirements(Integer epochNo, Options options) throws ApiException {
+        Call<List<PoolStatus>> call = poolApi.getPoolRetirements(epochNo, optionsToParamMap(options));
+        try {
+            Response<List<PoolStatus>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<List<PoolRelay>> getPoolRelays(Options options) throws ApiException {
         Call<List<PoolRelay>> call = poolApi.getPoolRelays(optionsToParamMap(options));
         try {

@@ -15,12 +15,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetAddress {
-
-    /**
-     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
-     */
-    private String paymentAddress;
+public class AssetAddress extends PaymentAddress {
 
     /**
      * Asset balance on the payment address

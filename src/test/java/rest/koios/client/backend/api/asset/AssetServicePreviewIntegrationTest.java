@@ -5,13 +5,15 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.utils.Tuple;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -40,6 +42,15 @@ class AssetServicePreviewIntegrationTest {
     }
 
     @Test
+    void getPolicyAssetListTest() throws ApiException {
+        String assetPolicy = "065270479316f1d92e00f7f9f095ebeaac9d009c878dc35ce36d3404";
+        Result<List<PolicyAsset>> policyAssetListResult = assetService.getPolicyAssetList(assetPolicy, Options.EMPTY);
+        Assertions.assertTrue(policyAssetListResult.isSuccessful());
+        Assertions.assertNotNull(policyAssetListResult.getValue());
+        log.info(policyAssetListResult.getValue().toString());
+    }
+
+    @Test
     void getAssetsAddressListTest() throws ApiException {
         String assetPolicy = "9a50f458ebffb4c3f9d6f9f3d45426b2de6cf2512254f4bfa3d8f410";
         String assetName = "DimensionBox #0063";
@@ -56,6 +67,16 @@ class AssetServicePreviewIntegrationTest {
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getNFTAddressTest() throws ApiException {
+        String assetPolicy = "005b8ca355aec6125531ebea89bf9ef8df90121ea5717f0c55027e35";
+        String assetNameHex = "4d43";
+        Result<List<PaymentAddress>> assetAddressesResult = assetService.getNFTAddress(assetPolicy, assetNameHex, Options.EMPTY);
+        Assertions.assertTrue(assetAddressesResult.isSuccessful());
+        Assertions.assertNotNull(assetAddressesResult.getValue());
+        log.info(assetAddressesResult.getValue().toString());
     }
 
     @Test
@@ -87,6 +108,26 @@ class AssetServicePreviewIntegrationTest {
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetInformation(assetPolicy, assetNameHex));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAssetInformationBulkTest() throws ApiException {
+        List<Tuple<String, String>> tupleList = List.of(new Tuple<>("065270479316f1d92e00f7f9f095ebeaac9d009c878dc35ce36d3404", "433374"),
+                new Tuple<>("189e2c53985411addb8df0f3e09f70e343da69f06746c408aba672a8", "15fc257714a51769e192761d674db2ee2e80137428e522f9b914debb5f785301"));
+        Result<AssetInformation> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
+        Assertions.assertTrue(assetInformationBulkResult.isSuccessful());
+        Assertions.assertNotNull(assetInformationBulkResult.getValue());
+        log.info(assetInformationBulkResult.getValue().toString());
+    }
+
+    @Test
+    void getAssetUTxOsTest() throws ApiException {
+        List<Tuple<String, String>> tupleList = List.of(new Tuple<>("065270479316f1d92e00f7f9f095ebeaac9d009c878dc35ce36d3404", "433374"),
+                new Tuple<>("189e2c53985411addb8df0f3e09f70e343da69f06746c408aba672a8", "15fc257714a51769e192761d674db2ee2e80137428e522f9b914debb5f785301"));
+        Result<List<UTxO>> utxosResult = assetService.getAssetUTxOs(tupleList, true, Options.EMPTY);
+        Assertions.assertTrue(utxosResult.isSuccessful());
+        Assertions.assertNotNull(utxosResult.getValue());
+        log.info(utxosResult.getValue().toString());
     }
 
     @Test

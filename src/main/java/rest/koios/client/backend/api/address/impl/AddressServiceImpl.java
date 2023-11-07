@@ -1,13 +1,14 @@
 package rest.koios.client.backend.api.address.impl;
 
-import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.api.AddressApi;
+import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.SortType;
 import retrofit2.Call;
@@ -60,6 +61,34 @@ public class AddressServiceImpl extends BaseService implements AddressService {
                 }
             }
             return result;
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<UTxO>> getAddressUTxOs(List<String> addresses, boolean extended, Options options) throws ApiException {
+        for (String address : addresses) {
+            validateBech32(address);
+        }
+        Call<List<UTxO>> call = addressApi.getAddressUTxOs(buildBodyUTxOs(addresses, extended), optionsToParamMap(options));
+        try {
+            Response<List<UTxO>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<UTxO>> getUTxOsFromPaymentCredentials(List<String> paymentCredentials, boolean extended, Options options) throws ApiException {
+        for (String address : paymentCredentials) {
+            validateHexFormat(address);
+        }
+        Call<List<UTxO>> call = addressApi.getUTxOsFromPaymentCredentials(buildBodyUTxOsFromPaymentCredentials(paymentCredentials, extended), optionsToParamMap(options));
+        try {
+            Response<List<UTxO>> response = (Response) execute(call);
+            return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
@@ -129,6 +158,20 @@ public class AddressServiceImpl extends BaseService implements AddressService {
         if (afterBlockHeight != null) {
             bodyMap.put("_after_block_height", afterBlockHeight);
         }
+        return bodyMap;
+    }
+
+    private Map<String, Object> buildBodyUTxOs(List<String> addresses, boolean extended) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_addresses", addresses);
+        bodyMap.put("_extended", extended);
+        return bodyMap;
+    }
+
+    private Map<String, Object> buildBodyUTxOsFromPaymentCredentials(List<String> paymentCredentials, boolean extended) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_payment_credentials", paymentCredentials);
+        bodyMap.put("_extended", extended);
         return bodyMap;
     }
 }

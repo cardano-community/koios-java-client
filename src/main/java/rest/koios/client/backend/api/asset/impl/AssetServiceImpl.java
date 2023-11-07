@@ -1,11 +1,12 @@
 package rest.koios.client.backend.api.asset.impl;
 
-import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.AssetService;
 import rest.koios.client.backend.api.asset.api.AssetApi;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.TxHash;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Tuple;
@@ -72,17 +73,12 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
-    public Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName, Options options) throws ApiException {
-        return this.getAssetsAddresses(assetPolicy, assetName, options);
-    }
-
-    @Override
-    public Result<List<AssetAddress>> getNFTAddress(String assetPolicy, String assetName, Options options) throws ApiException {
+    public Result<List<PaymentAddress>> getNFTAddress(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
-        Call<List<AssetAddress>> call = assetApi.getNFTAddress(assetPolicy, assetName, optionsToParamMap(options));
+        Call<List<PaymentAddress>> call = assetApi.getNFTAddress(assetPolicy, assetName, optionsToParamMap(options));
         try {
-            Response<List<AssetAddress>> response = (Response) execute(call);
+            Response<List<PaymentAddress>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
@@ -121,6 +117,24 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
+    public Result<List<UTxO>> getAssetUTxOs(List<Tuple<String, String>> assetList, Boolean extended, Options options) throws ApiException {
+        if (assetList == null) {
+            return badRequestResult("The server cannot process the request due to invalid input");
+        }
+        for (Tuple<String, String> tuple : assetList) {
+            validateHexFormat(tuple._1);
+            validateHexFormat(tuple._2);
+        }
+        Call<List<UTxO>> call = assetApi.getAssetUTxOs(buildBodyUTxOs(assetList, extended), optionsToParamMap(options));
+        try {
+            Response<List<UTxO>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<List<AssetHistory>> getAssetHistory(String assetPolicy, String assetName, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
@@ -143,11 +157,6 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public Result<List<PolicyAssetInfo>> getAssetPolicyInformation(String assetPolicy, Options options) throws ApiException {
-        return getPolicyAssetInformation(assetPolicy, options);
     }
 
     @Override
@@ -203,6 +212,20 @@ public class AssetServiceImpl extends BaseService implements AssetService {
             lists.add(tupleList);
         });
         bodyMap.put(arrayObjString, lists);
+        return bodyMap;
+    }
+
+    private Map<String, Object> buildBodyUTxOs(List<Tuple<String, String>> list, boolean extended) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        List<List<String>> lists = new ArrayList<>();
+        list.forEach(tuple -> {
+            List<String> tupleList = new ArrayList<>();
+            tupleList.add(tuple._1);
+            tupleList.add(tuple._2);
+            lists.add(tupleList);
+        });
+        bodyMap.put("_asset_list", lists);
+        bodyMap.put("_extended", extended);
         return bodyMap;
     }
 }

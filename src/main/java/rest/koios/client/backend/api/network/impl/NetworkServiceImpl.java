@@ -3,12 +3,9 @@ package rest.koios.client.backend.api.network.impl;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.api.network.api.NetworkApi;
-import rest.koios.client.backend.api.network.model.Genesis;
-import rest.koios.client.backend.api.network.model.ParamUpdateProposal;
-import rest.koios.client.backend.api.network.model.Tip;
-import rest.koios.client.backend.api.network.model.Totals;
+import rest.koios.client.backend.api.network.model.*;
+import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -84,6 +81,28 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
         Call<List<ParamUpdateProposal>> call = networkApi.getParamUpdateProposals(optionsToParamMap(options));
         try {
             Response<List<ParamUpdateProposal>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<Withdrawal>> getReserveWithdrawals(Options options) throws ApiException {
+        Call<List<Withdrawal>> call = networkApi.getReserveWithdrawals(optionsToParamMap(options));
+        try {
+            Response<List<Withdrawal>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<Withdrawal>> getTreasuryWithdrawals(Options options) throws ApiException {
+        Call<List<Withdrawal>> call = networkApi.getTreasuryWithdrawals(optionsToParamMap(options));
+        try {
+            Response<List<Withdrawal>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

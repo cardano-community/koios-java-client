@@ -126,6 +126,26 @@ public interface PoolApi {
     Call<List<PoolUpdate>> getPoolUpdates(@QueryMap Map<String, String> paramsMap);
 
     /**
+     * Pool Registrations
+     * Return all pool registrations initiated in the requested epoch
+     *
+     * @param paramsMap Options and Filters Map
+     * @return List of {@link PoolStatus}
+     */
+    @GET("pool_registrations")
+    Call<List<PoolStatus>> getPoolRegistrations(@Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Pool Retirements
+     * Return all pool retirements initiated in the requested epoch
+     *
+     * @param paramsMap Options and Filters Map
+     * @return List of {@link PoolStatus}
+     */
+    @GET("pool_retirements")
+    Call<List<PoolStatus>> getPoolRetirements(@Query("_epoch_no") Integer epochNo, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * A list of registered relays for all currently registered/retiring (not retired) pools
      *
      * @param paramsMap Options and Filters Map

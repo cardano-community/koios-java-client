@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.network.model.Genesis;
-import rest.koios.client.backend.api.network.model.Tip;
-import rest.koios.client.backend.api.network.model.Totals;
+import rest.koios.client.backend.api.network.model.*;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
@@ -54,7 +52,7 @@ class NetworkServiceMainnetIntegrationTest {
         Assertions.assertTrue(historicalTokenomicStatsResult.isSuccessful());
         Assertions.assertNotNull(historicalTokenomicStatsResult.getValue());
         log.info(historicalTokenomicStatsResult.getValue().toString());
-        Assertions.assertEquals(epochNo,historicalTokenomicStatsResult.getValue().getEpochNo());
+        Assertions.assertEquals(epochNo, historicalTokenomicStatsResult.getValue().getEpochNo());
     }
 
     @Test
@@ -64,12 +62,42 @@ class NetworkServiceMainnetIntegrationTest {
         Assertions.assertTrue(historicalTokenomicStatsResult.isSuccessful());
         Assertions.assertNotNull(historicalTokenomicStatsResult.getValue());
         log.info(historicalTokenomicStatsResult.getValue().toString());
-        Assertions.assertEquals(10,historicalTokenomicStatsResult.getValue().size());
+        Assertions.assertEquals(10, historicalTokenomicStatsResult.getValue().size());
     }
 
     @Test
     void getHistoricalTokenomicStatsBadRequestTest() {
         ApiException exception = assertThrows(ApiException.class, () -> networkService.getHistoricalTokenomicStatsByEpoch(-5));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getParamUpdateProposalsTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        Result<List<ParamUpdateProposal>> paramUpdateProposalsResult = networkService.getParamUpdateProposals(options);
+        Assertions.assertTrue(paramUpdateProposalsResult.isSuccessful());
+        Assertions.assertNotNull(paramUpdateProposalsResult.getValue());
+        log.info(paramUpdateProposalsResult.getValue().toString());
+        Assertions.assertEquals(10, paramUpdateProposalsResult.getValue().size());
+    }
+
+    @Test
+    void getReserveWithdrawalsTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        Result<List<Withdrawal>> withdrawalsResult = networkService.getReserveWithdrawals(options);
+        Assertions.assertTrue(withdrawalsResult.isSuccessful());
+        Assertions.assertNotNull(withdrawalsResult.getValue());
+        log.info(withdrawalsResult.getValue().toString());
+        Assertions.assertEquals(10, withdrawalsResult.getValue().size());
+    }
+
+    @Test
+    void getTreasuryWithdrawalsTest() throws ApiException {
+        Options options = Options.builder().option(Limit.of(10)).build();
+        Result<List<Withdrawal>> withdrawalsResult = networkService.getTreasuryWithdrawals(options);
+        Assertions.assertTrue(withdrawalsResult.isSuccessful());
+        Assertions.assertNotNull(withdrawalsResult.getValue());
+        log.info(withdrawalsResult.getValue().toString());
+        Assertions.assertEquals(10, withdrawalsResult.getValue().size());
     }
 }

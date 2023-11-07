@@ -68,6 +68,11 @@ public class PoolHistory {
     private String delegRewards;
 
     /**
+     * Total amount of rewards earned by members (delegator - owner) in that epoch (in lovelaces)
+     */
+    private String memberRewards;
+
+    /**
      * Annualized ROS (return on staking) for delegators for this epoch
      */
     private Double epochRos;

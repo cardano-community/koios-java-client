@@ -5,15 +5,17 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.filters.Filter;
 import rest.koios.client.backend.factory.options.filters.FilterType;
+import rest.koios.client.utils.Tuple;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -39,6 +41,15 @@ class AssetServiceMainnetIntegrationTest {
         Assertions.assertNotNull(assetsResult.getValue());
         log.info(assetsResult.getValue().toString());
         assertEquals(10, assetsResult.getValue().size());
+    }
+
+    @Test
+    void getPolicyAssetListTest() throws ApiException {
+        String assetPolicy = "750900e4999ebe0d58f19b634768ba25e525aaf12403bfe8fe130501";
+        Result<List<PolicyAsset>> policyAssetListResult = assetService.getPolicyAssetList(assetPolicy, Options.EMPTY);
+        Assertions.assertTrue(policyAssetListResult.isSuccessful());
+        Assertions.assertNotNull(policyAssetListResult.getValue());
+        log.info(policyAssetListResult.getValue().toString());
     }
 
     @Test
@@ -74,6 +85,16 @@ class AssetServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getNFTAddressTest() throws ApiException {
+        String assetPolicy = "f0ff48bbb7bbe9d59a40f1ce90e9e9d0ff5002ec48f232b49ca0fb9a";
+        String assetNameHex = "68616e646c65";
+        Result<List<PaymentAddress>> assetAddressesResult = assetService.getNFTAddress(assetPolicy, assetNameHex, Options.EMPTY);
+        Assertions.assertTrue(assetAddressesResult.isSuccessful());
+        Assertions.assertNotNull(assetAddressesResult.getValue());
+        log.info(assetAddressesResult.getValue().toString());
+    }
+
+    @Test
     void getAssetInformationTest() throws ApiException {
         String assetPolicy = "d3501d9531fcc25e3ca4b6429318c2cc374dbdbcf5e99c1c1e5da1ff";
         String assetNameHex = "444f4e545350414d";
@@ -100,6 +121,26 @@ class AssetServiceMainnetIntegrationTest {
         String assetNameHex = "444f4e545350414dasdsadsa";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetInformation(assetPolicy, assetNameHex));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAssetInformationBulkTest() throws ApiException {
+        List<Tuple<String, String>> tupleList = List.of(new Tuple<>("750900e4999ebe0d58f19b634768ba25e525aaf12403bfe8fe130501", "424f4f4b"),
+                new Tuple<>("f0ff48bbb7bbe9d59a40f1ce90e9e9d0ff5002ec48f232b49ca0fb9a", "6b6f696f732e72657374"));
+        Result<AssetInformation> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
+        Assertions.assertTrue(assetInformationBulkResult.isSuccessful());
+        Assertions.assertNotNull(assetInformationBulkResult.getValue());
+        log.info(assetInformationBulkResult.getValue().toString());
+    }
+
+    @Test
+    void getAssetUTxOsTest() throws ApiException {
+        List<Tuple<String, String>> tupleList = List.of(new Tuple<>("750900e4999ebe0d58f19b634768ba25e525aaf12403bfe8fe130501", "424f4f4b"),
+                new Tuple<>("f0ff48bbb7bbe9d59a40f1ce90e9e9d0ff5002ec48f232b49ca0fb9a", "6b6f696f732e72657374"));
+        Result<List<UTxO>> utxosResult = assetService.getAssetUTxOs(tupleList, true, Options.EMPTY);
+        Assertions.assertTrue(utxosResult.isSuccessful());
+        Assertions.assertNotNull(utxosResult.getValue());
+        log.info(utxosResult.getValue().toString());
     }
 
     @Test

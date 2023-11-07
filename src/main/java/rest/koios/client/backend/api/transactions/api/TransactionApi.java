@@ -1,6 +1,7 @@
 package rest.koios.client.backend.api.transactions.api;
 
 import okhttp3.RequestBody;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.transactions.model.*;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -14,6 +15,16 @@ import java.util.Map;
 public interface TransactionApi {
 
     /**
+     * Get UTxO set for requested UTxO references
+     *
+     * @param requestBody Json Body containing Array of Cardano utxo references in the form "hash#index"
+     * @param paramsMap   Filtering Options Query Parameters
+     * @return detailed information about transaction(s)
+     */
+    @POST("utxo_info")
+    Call<List<UTxO>> getUTxOInfo(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Get Transaction Information
      *
      * @param requestBody Json Body containing Array of Cardano Transaction hashes
@@ -22,16 +33,6 @@ public interface TransactionApi {
      */
     @POST("tx_info")
     Call<List<TxInfo>> getTransactionInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
-
-    /**
-     * Get Transaction UTxOs
-     *
-     * @param requestBody Json Body containing Array of Cardano Transaction hashes
-     * @param paramsMap   Filtering Options Query Parameters
-     * @return UTxO set (inputs/outputs) of transactions.
-     */
-    @POST("tx_utxos")
-    Call<List<TxUtxo>> getTransactionUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Get Transaction Metadata

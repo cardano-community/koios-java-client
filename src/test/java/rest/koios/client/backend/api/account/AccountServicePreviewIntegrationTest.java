@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.account.model.*;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
@@ -71,6 +72,38 @@ class AccountServicePreviewIntegrationTest {
     }
 
     @Test
+    void getAccountUTxOsTest() throws ApiException {
+        List<String> stakeAddresses = List.of("stake_test1urqntq4wexjylnrdnp97qq79qkxxvrsa9lcnwr7ckjd6w0cr04y4p", "stake_test1up6wqzrw2h9vvjy5zfkjn0dwtymy5r29zyhf8fyhm6fat9c2am5hl");
+        Result<List<UTxO>> utxosResult = accountService.getAccountUTxOs(stakeAddresses, true, Options.EMPTY);
+        Assertions.assertTrue(utxosResult.isSuccessful());
+        Assertions.assertNotNull(utxosResult.getValue());
+        log.info(utxosResult.getValue().toString());
+    }
+
+    @Test
+    void getAccountUTxOsBadRequestTest() {
+        List<String> stakeAddresses = List.of("asd", "stake_test1urqntq4wexjylnrdnp97qq79qkxxvrsa9lcnwr7ckjd6w0cr04y4p");
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountUTxOs(stakeAddresses, true, Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAccountTxsTest() throws ApiException {
+        String stakeAddress = "stake_test1uzs5rxys8qy5jnr9g0mkj860ms5n92nrykmrgyumpf2ytmsejj4m6";
+        Result<List<AccountTx>> accountTxsResult = accountService.getAccountTxs(stakeAddress, null, Options.EMPTY);
+        Assertions.assertTrue(accountTxsResult.isSuccessful());
+        Assertions.assertNotNull(accountTxsResult.getValue());
+        log.info(accountTxsResult.getValue().toString());
+    }
+
+    @Test
+    void getAccountTxsBadRequestTest() {
+        String stakeAddress = "stake_test1uzs5rxys8qy5jnr9g0mkj860ms5n92nrykmrgyumpf2ytmsejj4m6";
+        ApiException exception = assertThrows(ApiException.class, () -> accountService.getAccountTxs(stakeAddress, -2, Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
     void getAccountRewardsTest() throws ApiException {
         int epochNo = 21;
         String stakeAddress = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
@@ -123,7 +156,7 @@ class AccountServicePreviewIntegrationTest {
     @Test
     void getAccountAssetsTest() throws ApiException {
         String address = "stake_test1uzcmuv8c6pj3ld9mrvml3jhxl7j4hvh4xskr6ce37dvpfdqjmdvh8";
-        Result<List<AccountAssets>> accountAssetsResult = accountService.getAccountAssets(List.of(address), null, Options.EMPTY);
+        Result<List<AccountAsset>> accountAssetsResult = accountService.getAccountAssets(List.of(address), null, Options.EMPTY);
         Assertions.assertTrue(accountAssetsResult.isSuccessful());
         Assertions.assertNotNull(accountAssetsResult.getValue());
         log.info(accountAssetsResult.getValue().toString());

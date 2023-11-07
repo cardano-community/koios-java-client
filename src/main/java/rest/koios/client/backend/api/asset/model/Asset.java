@@ -20,7 +20,12 @@ public class Asset {
     private String policyId;
 
     /**
-     * AssetNames Object
+     * Asset Name (hex)
      */
-    private AssetNames assetNames;
+    private String assetName;
+
+    /**
+     * The CIP14 fingerprint of the asset
+     */
+    private String fingerprint;
 }

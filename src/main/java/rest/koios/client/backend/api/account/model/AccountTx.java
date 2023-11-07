@@ -1,6 +1,5 @@
-package rest.koios.client.backend.api.common;
+package rest.koios.client.backend.api.account.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -9,22 +8,32 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Inline Datum
+ * Account Tx
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class InlineDatum {
+public class AccountTx {
 
     /**
-     * Datum (hex)
+     * Hash identifier of the transaction
      */
-    private String bytes;
+    private String txHash;
 
     /**
-     * Value (json)
+     * Epoch number of the block
      */
-    private JsonNode value;
+    private Integer epochNo;
+
+    /**
+     * Block height
+     */
+    private Integer blockHeight;
+
+    /**
+     * UNIX timestamp of the block
+     */
+    private Integer blockTime;
 }

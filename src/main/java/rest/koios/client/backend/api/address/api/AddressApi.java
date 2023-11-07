@@ -1,8 +1,9 @@
 package rest.koios.client.backend.api.address.api;
 
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
+import rest.koios.client.backend.api.base.common.UTxO;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -28,11 +29,32 @@ public interface AddressApi {
     Call<List<AddressInfo>> getAddressInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * Get Address UTxOs
+     *
+     * @param requestBody Json Body containing List of Cardano payment address(es) in bech32 format
+     * @param paramsMap   Query Params
+     * @return List of complete UTxO information
+     */
+    @POST("address_utxos")
+    Call<List<UTxO>> getAddressUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * UTxOs from payment credentials
+     * Get UTxO details for requested payment credentials
+     *
+     * @param requestBody Json Body containing List of Cardano payment credential(s) in hex format
+     * @param paramsMap   Query Params
+     * @return List of complete UTxO information
+     */
+    @POST("credential_utxos")
+    Call<List<UTxO>> getUTxOsFromPaymentCredentials(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Address Transactions
      * Get the transaction hash list of input address array, optionally filtering after specified block height (inclusive)
      *
      * @param requestBody Array of Cardano payment address(es) in bech32 format
-     * @param paramsMap Options and Filters Map
+     * @param paramsMap   Options and Filters Map
      * @return List of {@link TxHash}
      */
     @POST("address_txs")

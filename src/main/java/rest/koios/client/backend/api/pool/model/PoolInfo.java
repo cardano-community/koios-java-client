@@ -2,9 +2,12 @@ package rest.koios.client.backend.api.pool.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Pool Information
@@ -27,7 +30,7 @@ public class PoolInfo {
     private String poolIdHex;
 
     /**
-     * Block number on chain where transaction was included
+     * Epoch number in which the update becomes active
      */
     private Integer activeEpochNo;
 
@@ -59,12 +62,12 @@ public class PoolInfo {
     /**
      * List of Pool (co)owner address
      */
-    private ArrayList<String> owners;
+    private List<String> owners;
 
     /**
      * List of Pool Relays
      */
-    private ArrayList<Relay> relays;
+    private List<Relay> relays;
 
     /**
      * Pool metadata URL

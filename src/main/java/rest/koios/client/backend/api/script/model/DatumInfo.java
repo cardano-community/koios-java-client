@@ -21,7 +21,12 @@ public class DatumInfo {
     /**
      * The Hash of the Plutus Data
      */
-    private String hash;
+    private String datumHash;
+
+    /**
+     * Hash of the script creation transaction
+     */
+    private String creationTxHash;
 
     /**
      * The actual data in json format
@@ -29,7 +34,7 @@ public class DatumInfo {
     private JsonNode value;
 
     /**
-     * Datum bytes (hex) (CBOR)
+     * Script bytes (cborSeq)
      */
     private String bytes;
 }

@@ -1,18 +1,19 @@
 package rest.koios.client.backend.api.script.model;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Plutus Script
+ * Script Information
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class PlutusScript {
+public class ScriptInfo {
 
     /**
      * Hash of a script
@@ -25,9 +26,19 @@ public class PlutusScript {
     private String creationTxHash;
 
     /**
-     * Type of the script
+     * Type of the script: plutusV1 | plutusV2 | timelock | multisig
      */
     private NativeScriptType type;
+
+    /**
+     * Script JSON Object;
+     */
+    private JsonNode value;
+
+    /**
+     * Script bytes (cborSeq)
+     */
+    private String bytes;
 
     /**
      * The size of the CBOR serialised script (in bytes)

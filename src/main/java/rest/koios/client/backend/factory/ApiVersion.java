@@ -9,9 +9,9 @@ import lombok.Getter;
 public enum ApiVersion {
 
     /**
-     * Version 0
+     * Version 1
      */
-    VERSION_0("v0");
+    VERSION_1("v1");
 
     private final String version;
 

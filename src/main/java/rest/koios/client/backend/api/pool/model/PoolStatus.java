@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.block.model;
+package rest.koios.client.backend.api.pool.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,19 +8,19 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Block Tx Hash
+ * Pool Status
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class BlockTxHash {
+public class PoolStatus {
 
     /**
-     * Hash of the block
+     * Pool ID (bech32 format)
      */
-    private String blockHash;
+    private String poolIdBech32;
 
     /**
      * Hash identifier of the transaction
@@ -28,9 +28,9 @@ public class BlockTxHash {
     private String txHash;
 
     /**
-     * Epoch number of the block
+     * Hash of the block
      */
-    private Integer epochNo;
+    private String blockHash;
 
     /**
      * Block height
@@ -38,7 +38,17 @@ public class BlockTxHash {
     private Integer blockHeight;
 
     /**
-     * UNIX timestamp of the block
+     * Epoch number
      */
-    private Integer blockTime;
+    private Integer epochNo;
+
+    /**
+     * Slot number of the block in epoch
+     */
+    private Integer epochSlot;
+
+    /**
+     * Epoch number in which the update becomes active
+     */
+    private Integer activeEpochNo;
 }

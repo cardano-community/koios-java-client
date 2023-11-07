@@ -1,6 +1,5 @@
 package rest.koios.client.backend.api.script.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -34,7 +33,7 @@ public class NativeScript {
     private NativeScriptType type;
 
     /**
-     * Script
+     * The size of the CBOR serialised script (in bytes)
      */
-    private JsonNode script;
+    private Integer size;
 }

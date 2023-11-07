@@ -1,6 +1,7 @@
 package rest.koios.client.backend.api.transactions;
 
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.transactions.model.*;
 import rest.koios.client.backend.factory.options.Options;
@@ -11,6 +12,20 @@ import java.util.List;
  * Transaction Service
  */
 public interface TransactionsService {
+
+    /**
+     * UTxO Info
+     * Get UTxO set for requested UTxO references
+     * <p><b>200</b> - List of UTxO details
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param utxoRefs List of Cardano utxo references in the form "hash#index"
+     * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<UTxO>> getUTxOInfo(List<String> utxoRefs, boolean extended) throws ApiException;
+
 
     /**
      * Transaction Information for Specific Transaction
@@ -38,20 +53,6 @@ public interface TransactionsService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, Options options) throws ApiException;
-
-    /**
-     * Transaction UTxOs
-     * Get UTxO set (inputs/outputs) of transactions.
-     * <p><b>200</b> - Array of inputs and outputs for given transaction(s)
-     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
-     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     *
-     * @param txHashes List of Cardano Transaction hashes
-     * @param options Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link TxUtxo} inputs and outputs for given transaction(s)
-     * @throws ApiException if an error occurs while attempting to invoke the API
-     */
-    Result<List<TxUtxo>> getTransactionUTxOs(List<String> txHashes, Options options) throws ApiException;
 
     /**
      * Transaction Metadata

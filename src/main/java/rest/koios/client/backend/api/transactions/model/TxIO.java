@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import rest.koios.client.backend.api.common.Asset;
-import rest.koios.client.backend.api.common.InlineDatum;
-import rest.koios.client.backend.api.common.ReferenceScript;
+import rest.koios.client.backend.api.base.common.Asset;
+import rest.koios.client.backend.api.base.common.InlineDatum;
+import rest.koios.client.backend.api.base.common.ReferenceScript;
 
 import java.util.List;
 

@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Options;
@@ -43,6 +44,34 @@ class AddressServiceMainnetIntegrationTest {
         String address = "a123sd";
         ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressInformation(address));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAddressUTxOsTest() throws ApiException {
+        List<String> addresses = List.of("addr1qy2jt0qpqz2z2z9zx5w4xemekkce7yderz53kjue53lpqv90lkfa9sgrfjuz6uvt4uqtrqhl2kj0a9lnr9ndzutx32gqleeckv",
+                "addr1q9xvgr4ehvu5k5tmaly7ugpnvekpqvnxj8xy50pa7kyetlnhel389pa4rnq6fmkzwsaynmw0mnldhlmchn2sfd589fgsz9dd0y");
+        Result<List<UTxO>> addressUTxOsResult = addressService.getAddressUTxOs(addresses, true, Options.EMPTY);
+        Assertions.assertTrue(addressUTxOsResult.isSuccessful());
+        Assertions.assertNotNull(addressUTxOsResult.getValue());
+        log.info(addressUTxOsResult.getValue().toString());
+    }
+
+    @Test
+    void getAddressUTxOsBadRequestTest() {
+        List<String> addresses = List.of("asdf123",
+                "addr1q9xvgr4ehvu5k5tmaly7ugpnvekpqvnxj8xy50pa7kyetlnhel389pa4rnq6fmkzwsaynmw0mnldhlmchn2sfd589fgsz9dd0y");
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressUTxOs(addresses, false, Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getUTxOsFromPaymentCredentialsTest() throws ApiException {
+        List<String> addresses = List.of("025b0a8f85cb8a46e1dda3fae5d22f07e2d56abb4019a2129c5d6c52",
+                "13f6870c5e4f3b242463e4dc1f2f56b02a032d3797d933816f15e555");
+        Result<List<UTxO>> addressUTxOsResult = addressService.getUTxOsFromPaymentCredentials(addresses, true, Options.EMPTY);
+        Assertions.assertTrue(addressUTxOsResult.isSuccessful());
+        Assertions.assertNotNull(addressUTxOsResult.getValue());
+        log.info(addressUTxOsResult.getValue().toString());
     }
 
     @Test
@@ -85,7 +114,7 @@ class AddressServiceMainnetIntegrationTest {
     @Test
     void getTransactionsByPaymentCredentialsTest() throws ApiException {
         String paymentCredentials = "025b0a8f85cb8a46e1dda3fae5d22f07e2d56abb4019a2129c5d6c52";
-        Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials), 250, Options.EMPTY);
+        Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials), Options.EMPTY);
         Assertions.assertTrue(txHashesResult.isSuccessful());
         Assertions.assertNotNull(txHashesResult.getValue());
         log.info(txHashesResult.getValue().toString());
