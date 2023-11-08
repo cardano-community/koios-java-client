@@ -16,7 +16,18 @@ import java.util.ArrayList;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class PoolRelay {
 
+    /**
+     * Pool ID (bech32 format)
+     */
     private String poolIdBech32;
 
+    /**
+     * Relays
+     */
     private ArrayList<Relay> relays;
+
+    /**
+     * Pool Status: registered | retiring | retired
+     */
+    private String poolStatus;
 }

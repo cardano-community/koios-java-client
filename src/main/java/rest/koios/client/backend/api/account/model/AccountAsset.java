@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import rest.koios.client.backend.api.common.Asset;
-
-import java.util.List;
+import rest.koios.client.backend.api.base.common.Asset;
 
 /**
  * Account Assets
@@ -18,15 +16,10 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AccountAssets {
+public class AccountAsset extends Asset {
 
     /**
      * Cardano staking address (reward account) in bech32 format
      */
     private String stakeAddress;
-
-    /**
-     * List of Assets
-     */
-    private List<Asset> assetList;
 }

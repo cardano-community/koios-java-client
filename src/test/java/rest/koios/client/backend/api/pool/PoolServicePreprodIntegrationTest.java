@@ -167,6 +167,24 @@ class PoolServicePreprodIntegrationTest {
     }
 
     @Test
+    void getPoolRegistrationsTest() throws ApiException {
+        Integer epochNo = 31;
+        Result<List<PoolStatus>> poolRegistrationsResult = poolService.getPoolRegistrations(epochNo, Options.EMPTY);
+        Assertions.assertTrue(poolRegistrationsResult.isSuccessful());
+        Assertions.assertNotNull(poolRegistrationsResult.getValue());
+        log.info(poolRegistrationsResult.getValue().toString());
+    }
+
+    @Test
+    void getPoolRetirementsTest() throws ApiException {
+        Integer epochNo = 31;
+        Result<List<PoolStatus>> poolRegistrationsResult = poolService.getPoolRetirements(epochNo, Options.EMPTY);
+        Assertions.assertTrue(poolRegistrationsResult.isSuccessful());
+        Assertions.assertNotNull(poolRegistrationsResult.getValue());
+        log.info(poolRegistrationsResult.getValue().toString());
+    }
+
+    @Test
     void getPoolRelaysLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<PoolRelay>> poolRelaysResult = poolService.getPoolRelays(options);

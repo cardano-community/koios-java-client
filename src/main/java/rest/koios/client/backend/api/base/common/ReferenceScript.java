@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.common;
+package rest.koios.client.backend.api.base.common;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;

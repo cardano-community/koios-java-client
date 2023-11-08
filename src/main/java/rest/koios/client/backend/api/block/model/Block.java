@@ -2,7 +2,10 @@ package rest.koios.client.backend.api.block.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Block
@@ -60,14 +63,14 @@ public class Block {
     private String vrfKey = null;
 
     /**
-     * Counter value of the operational certificate used to create this block
-     */
-    private Integer opCertCounter = null;
-
-    /**
      * Pool ID in bech32 format
      */
     private String pool = null;
+
+    /**
+     * Counter value of the operational certificate used to create this block
+     */
+    private Integer opCertCounter = null;
 
     /**
      * The protocol major version

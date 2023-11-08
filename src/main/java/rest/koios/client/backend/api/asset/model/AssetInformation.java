@@ -44,6 +44,11 @@ public class AssetInformation {
     private String mintingTxHash;
 
     /**
+     * Total supply for the asset
+     */
+    private String totalSupply;
+
+    /**
      * Count of total mint transactions
      */
     private Integer mintCnt;
@@ -54,7 +59,12 @@ public class AssetInformation {
     private Integer burnCnt;
 
     /**
-     * A JSON array containing details about metadata within transaction
+     * UNIX timestamp of the first asset mint
+     */
+    private Long creationTime;
+
+    /**
+     * Latest minting transaction metadata (aligns with CIP-25)
      */
     private JsonNode mintingTxMetadata;
 
@@ -64,12 +74,7 @@ public class AssetInformation {
     private TokenRegistryMetadata tokenRegistryMetadata;
 
     /**
-     * Total Supply
+     * CIP 68 metadata if present for asset
      */
-    private String totalSupply;
-
-    /**
-     * UNIX timestamp of the first asset mint
-     */
-    private Long creationTime;
+    private JsonNode cip68Metadata;
 }

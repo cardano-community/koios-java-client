@@ -19,7 +19,7 @@ public class ScriptRedeemer {
     /**
      * Hash of Transaction for which details are being shown
      */
-    private String scriptHash = null;
+    private String scriptHash;
 
     /**
      * List of {@link Redeemer}

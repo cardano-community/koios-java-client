@@ -1,9 +1,10 @@
 package rest.koios.client.backend.api.address;
 
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.SortType;
@@ -42,6 +43,36 @@ public interface AddressService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<AddressInfo> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException;
+
+    /**
+     * Address UTXOs
+     * Get UTxO set for given addresses
+     * <p><b>200</b> - List of address UTxOs
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param addresses List of Cardano payment address(es) in bech32 format
+     * @param extended  Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param options   Filtering and Pagination options (optional)
+     * @return Result of Type List of address {@link UTxO}s.
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<UTxO>> getAddressUTxOs(List<String> addresses, boolean extended, Options options) throws ApiException;
+
+    /**
+     * UTxOs from payment credentials
+     * Get UTxO details for requested payment credentials
+     * <p><b>200</b> - List of address UTxOs
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param paymentCredentials List of Cardano payment credential(s) in hex format
+     * @param extended           Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param options            Filtering and Pagination options (optional)
+     * @return Result of Type List of address {@link UTxO}s.
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<UTxO>> getUTxOsFromPaymentCredentials(List<String> paymentCredentials, boolean extended, Options options) throws ApiException;
 
     /**
      * Address Transactions with Filtering, Pagination, Ordering Options

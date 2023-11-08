@@ -54,22 +54,6 @@ class TransactionsServiceMainnetIntegrationTest {
     }
 
     @Test
-    void getTransactionUTxOsTest() throws ApiException {
-        String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
-        Result<List<TxUtxo>> transactionUTxOsResult = transactionsService.getTransactionUTxOs(List.of(txHash), Options.EMPTY);
-        Assertions.assertTrue(transactionUTxOsResult.isSuccessful());
-        Assertions.assertNotNull(transactionUTxOsResult.getValue());
-        log.info(transactionUTxOsResult.getValue().toString());
-    }
-
-    @Test
-    void getTransactionUTxOsBadRequestTest() {
-        String txHash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> transactionsService.getTransactionUTxOs(List.of(txHash), Options.EMPTY));
-        assertInstanceOf(ApiException.class, exception);
-    }
-
-    @Test
     void getTransactionMetadataTest() throws ApiException {
         String txHash = "0b8ba3bed976fa4913f19adc9f6dd9063138db5b4dd29cecde369456b5155e94";
         Result<List<TxMetadata>> transactionMetadataResult = transactionsService.getTransactionMetadata(List.of(txHash), Options.EMPTY);

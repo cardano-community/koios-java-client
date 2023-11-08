@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
 import rest.koios.client.backend.factory.BackendFactory;
@@ -37,7 +38,7 @@ class EpochServicePreprodIntegrationTest {
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
-        Assertions.assertEquals(epochNo, epochInformationResult.getValue().getEpochNo());
+        assertEquals(epochNo, epochInformationResult.getValue().getEpochNo());
     }
 
     @Test
@@ -65,7 +66,7 @@ class EpochServicePreprodIntegrationTest {
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());
         log.info(epochParametersResult.getValue().toString());
-        Assertions.assertEquals(epochNo, epochParametersResult.getValue().getEpochNo());
+        assertEquals(epochNo, epochParametersResult.getValue().getEpochNo());
     }
 
     @Test
@@ -84,5 +85,24 @@ class EpochServicePreprodIntegrationTest {
         Assertions.assertNotNull(epochParametersResult.getValue());
         log.info(epochParametersResult.getValue().toString());
         assertEquals(10, epochParametersResult.getValue().size());
+    }
+
+    @Test
+    void getEpochBlockProtocolsByEpochTest() throws ApiException {
+        Integer epochNo = 31;
+        Integer blocks = 8211;
+        Result<EpochBlockProtocols> epochBlockProtocolsResult = epochService.getEpochBlockProtocolsByEpoch(epochNo);
+        Assertions.assertTrue(epochBlockProtocolsResult.isSuccessful());
+        Assertions.assertNotNull(epochBlockProtocolsResult.getValue());
+        log.info(epochBlockProtocolsResult.getValue().toString());
+        assertEquals(blocks, epochBlockProtocolsResult.getValue().getBlocks());
+    }
+
+    @Test
+    void getEpochBlocksProtocolsTest() throws ApiException {
+        Result<List<EpochBlockProtocols>> epochBlockProtocolsResult = epochService.getEpochBlockProtocols(Options.EMPTY);
+        Assertions.assertTrue(epochBlockProtocolsResult.isSuccessful());
+        Assertions.assertNotNull(epochBlockProtocolsResult.getValue());
+        log.info(epochBlockProtocolsResult.getValue().toString());
     }
 }

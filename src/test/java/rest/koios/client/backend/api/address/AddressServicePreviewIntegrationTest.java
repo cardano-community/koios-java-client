@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Options;
@@ -42,6 +43,34 @@ class AddressServicePreviewIntegrationTest {
         String address = "a123sd";
         ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressInformation(address));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAddressUTxOsTest() throws ApiException {
+        List<String> addresses = List.of("addr_test1vpfwv0ezc5g8a4mkku8hhy3y3vp92t7s3ul8g778g5yegsgalc6gc",
+                "addr_test1vqneq3v0dqh3x3muv6ee3lt8e5729xymnxuavx6tndcjc2cv24ef9");
+        Result<List<UTxO>> addressUTxOsResult = addressService.getAddressUTxOs(addresses, true, Options.EMPTY);
+        Assertions.assertTrue(addressUTxOsResult.isSuccessful());
+        Assertions.assertNotNull(addressUTxOsResult.getValue());
+        log.info(addressUTxOsResult.getValue().toString());
+    }
+
+    @Test
+    void getAddressUTxOsBadRequestTest() {
+        List<String> addresses = List.of("asdf123",
+                "addr_test1vqneq3v0dqh3x3muv6ee3lt8e5729xymnxuavx6tndcjc2cv24ef9");
+        ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressUTxOs(addresses, false, Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getUTxOsFromPaymentCredentialsTest() throws ApiException {
+        List<String> addresses = List.of("33c378cee41b2e15ac848f7f6f1d2f78155ab12d93b713de898d855f",
+                "52e63f22c5107ed776b70f7b92248b02552fd08f3e747bc745099441");
+        Result<List<UTxO>> addressUTxOsResult = addressService.getUTxOsFromPaymentCredentials(addresses, true, Options.EMPTY);
+        Assertions.assertTrue(addressUTxOsResult.isSuccessful());
+        Assertions.assertNotNull(addressUTxOsResult.getValue());
+        log.info(addressUTxOsResult.getValue().toString());
     }
 
     @Test
@@ -84,7 +113,7 @@ class AddressServicePreviewIntegrationTest {
     @Test
     void getTransactionsByPaymentCredentialsTest() throws ApiException {
         String paymentCredentials = "33c378cee41b2e15ac848f7f6f1d2f78155ab12d93b713de898d855f";
-        Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials),250, Options.EMPTY);
+        Result<List<TxHash>> txHashesResult = addressService.getTransactionsByPaymentCredentials(List.of(paymentCredentials), Options.EMPTY);
         Assertions.assertTrue(txHashesResult.isSuccessful());
         Assertions.assertNotNull(txHashesResult.getValue());
         log.info(txHashesResult.getValue().toString());

@@ -37,8 +37,8 @@ public class BackendServiceImpl implements BackendService {
     private final EpochService epochService;
     private final BlockService blockService;
     private final TransactionsService transactionsService;
-    private final AddressService addressService;
     private final AccountService accountService;
+    private final AddressService addressService;
     private final AssetService assetService;
     private final PoolService poolService;
     private final ScriptService scriptService;
@@ -63,8 +63,8 @@ public class BackendServiceImpl implements BackendService {
         this.epochService = new EpochServiceImpl(baseUrl, apiToken);
         this.blockService = new BlockServiceImpl(baseUrl, apiToken);
         this.transactionsService = new TransactionsServiceImpl(baseUrl, apiToken);
-        this.addressService = new AddressServiceImpl(baseUrl, apiToken);
         this.accountService = new AccountServiceImpl(baseUrl, apiToken);
+        this.addressService = new AddressServiceImpl(baseUrl, apiToken);
         this.assetService = new AssetServiceImpl(baseUrl, apiToken);
         this.poolService = new PoolServiceImpl(baseUrl, apiToken);
         this.scriptService = new ScriptServiceImpl(baseUrl, apiToken);

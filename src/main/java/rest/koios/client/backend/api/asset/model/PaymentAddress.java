@@ -2,27 +2,23 @@ package rest.koios.client.backend.api.asset.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
-
-import java.util.ArrayList;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Asset Names
+ * Asset Address
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AssetNames {
+public class PaymentAddress {
 
     /**
-     * Asset Names (hex)
+     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
      */
-    private ArrayList<String> hex;
-
-    /**
-     * Asset Names (ASCII)
-     */
-    private ArrayList<String> ascii;
+    private String paymentAddress;
 }

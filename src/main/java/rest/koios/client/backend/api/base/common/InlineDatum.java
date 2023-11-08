@@ -1,25 +1,30 @@
-package rest.koios.client.backend.api.address.model;
+package rest.koios.client.backend.api.base.common;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import rest.koios.client.backend.api.base.common.Asset;
 
 /**
- * Address Asset
+ * Inline Datum
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class AddressAsset extends Asset {
+public class InlineDatum {
 
     /**
-     * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
+     * Datum bytes (hex)
      */
-    private String address;
+    private String bytes;
+
+    /**
+     * Value (json)
+     */
+    private JsonNode value;
 }

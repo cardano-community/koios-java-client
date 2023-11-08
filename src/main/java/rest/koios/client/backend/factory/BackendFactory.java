@@ -26,7 +26,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosMainnetService(String apiToken) {
-        return getKoiosMainnetService(ApiVersion.VERSION_0, apiToken);
+        return getKoiosMainnetService(ApiVersion.VERSION_1, apiToken);
     }
 
     /**
@@ -46,7 +46,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosGuildService() {
-        return getKoiosGuildService(ApiVersion.VERSION_0, null);
+        return getKoiosGuildService(ApiVersion.VERSION_1, null);
     }
 
     /**
@@ -56,7 +56,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosGuildService(String apiToken) {
-        return getKoiosGuildService(ApiVersion.VERSION_0, apiToken);
+        return getKoiosGuildService(ApiVersion.VERSION_1, apiToken);
     }
 
     /**
@@ -85,7 +85,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosPreviewService(String apiToken) {
-        return getKoiosPreviewService(ApiVersion.VERSION_0, apiToken);
+        return getKoiosPreviewService(ApiVersion.VERSION_1, apiToken);
     }
 
     /**
@@ -115,7 +115,7 @@ public class BackendFactory {
      * @return {@link BackendService}
      */
     public static BackendService getKoiosPreprodService(String apiToken) {
-        return getKoiosPreprodService(ApiVersion.VERSION_0, apiToken);
+        return getKoiosPreprodService(ApiVersion.VERSION_1, apiToken);
     }
 
     /**

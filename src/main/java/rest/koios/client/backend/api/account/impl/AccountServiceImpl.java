@@ -5,6 +5,7 @@ import rest.koios.client.backend.api.account.api.AccountApi;
 import rest.koios.client.backend.api.account.model.*;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
@@ -59,18 +60,6 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountUTxO>> getAccountUTxOs(String stakeAddress, Options options) throws ApiException {
-        validateBech32(stakeAddress);
-        Call<List<AccountUTxO>> call = accountApi.getAccountUTxOs(stakeAddress, optionsToParamMap(options));
-        try {
-            Response<List<AccountUTxO>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
-    }
-
-    @Override
     public Result<List<AccountInfo>> getCachedAccountInformation(List<String> stakeAddresses, Options options) throws ApiException {
         for (String address : stakeAddresses) {
             validateBech32(address);
@@ -78,6 +67,38 @@ public class AccountServiceImpl extends BaseService implements AccountService {
         Call<List<AccountInfo>> call = accountApi.getCachedAccountInformation(buildBody("_stake_addresses", stakeAddresses, null, null, null), optionsToParamMap(options));
         try {
             Response<List<AccountInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<UTxO>> getAccountUTxOs(List<String> stakeAddresses, boolean extended, Options options) throws ApiException {
+        for (String stakeAddress : stakeAddresses) {
+            validateBech32(stakeAddress);
+        }
+        Call<List<UTxO>> call = accountApi.getAccountUTxOs(buildBodyUTxOs(stakeAddresses, extended), optionsToParamMap(options));
+        try {
+            Response<List<UTxO>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<AccountTx>> getAccountTxs(String stakeAddress, Integer afterBlockHeight, Options options) throws ApiException {
+        validateBech32(stakeAddress);
+        if (afterBlockHeight == null) {
+            afterBlockHeight = 0;
+        }
+        if (afterBlockHeight < 0) {
+            throw new ApiException("Non Positive \"afterBlockHeight\" Value");
+        }
+        Call<List<AccountTx>> call = accountApi.getAccountTxs(stakeAddress, afterBlockHeight, optionsToParamMap(options));
+        try {
+            Response<List<AccountTx>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
@@ -130,16 +151,16 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
-    public Result<List<AccountAssets>> getAccountAssets(List<String> addressList, Integer epochNo, Options options) throws ApiException {
+    public Result<List<AccountAsset>> getAccountAssets(List<String> addressList, Integer epochNo, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         if (epochNo != null) {
             validateEpoch(epochNo);
         }
-        Call<List<AccountAssets>> call = accountApi.getAccountAssets(buildBody("_stake_addresses", addressList, epochNo, null, null), optionsToParamMap(options));
+        Call<List<AccountAsset>> call = accountApi.getAccountAssets(buildBody("_stake_addresses", addressList, epochNo, null, null), optionsToParamMap(options));
         try {
-            Response<List<AccountAssets>> response = (Response) execute(call);
+            Response<List<AccountAsset>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
@@ -175,6 +196,13 @@ public class AccountServiceImpl extends BaseService implements AccountService {
         if (empty != null) {
             bodyMap.put("_empty", empty);
         }
+        return bodyMap;
+    }
+
+    private Map<String, Object> buildBodyUTxOs(List<String> stakeAddresses, boolean extended) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_stake_addresses", stakeAddresses);
+        bodyMap.put("_extended", extended);
         return bodyMap;
     }
 }

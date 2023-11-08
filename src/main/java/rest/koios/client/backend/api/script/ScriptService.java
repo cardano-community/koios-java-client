@@ -1,11 +1,9 @@
 package rest.koios.client.backend.api.script;
 
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.script.model.DatumInfo;
-import rest.koios.client.backend.api.script.model.NativeScript;
-import rest.koios.client.backend.api.script.model.PlutusScript;
-import rest.koios.client.backend.api.script.model.ScriptRedeemer;
+import rest.koios.client.backend.api.script.model.*;
 import rest.koios.client.backend.factory.options.Options;
 
 import java.util.List;
@@ -14,6 +12,19 @@ import java.util.List;
  * Script Service
  */
 public interface ScriptService {
+
+    /**
+     * Native Script List with Filtering, Pagination, Ordering Options
+     * List of all existing native script hashes along with their creation transaction hashes
+     * <p><b>200</b> - List of script and creation tx hash pairs
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PlutusScript}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<ScriptInfo>> getScriptInformation(List<String> scriptHashes, Options options) throws ApiException;
 
     /**
      * Native Script List with Filtering, Pagination, Ordering Options
@@ -39,7 +50,7 @@ public interface ScriptService {
      * @return Result of Type {@link NativeScript}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<NativeScript> getNativeScript(String scriptHash) throws ApiException;
+    Result<NativeScript> getNativeScriptByScriptHash(String scriptHash) throws ApiException;
 
     /**
      * Plutus Script List with Filtering, Pagination, Ordering Options
@@ -62,11 +73,26 @@ public interface ScriptService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param scriptHash Script hash in hexadecimal format (hex) (required)
-     * @param options Filtering and Pagination options (optional)
+     * @param options    Filtering and Pagination options (optional)
      * @return Result of Type List of all {@link ScriptRedeemer} for a given script hash
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<ScriptRedeemer>> getScriptRedeemers(String scriptHash, Options options) throws ApiException;
+
+    /**
+     * Script UTXOs with Filtering, Pagination, Ordering Options
+     * List of all UTXOs for a given script hash
+     * <p><b>200</b> - List of UTXOs for a given script hash
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param scriptHash Script hash in hexadecimal format (hex) (required)
+     * @param extended   Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param options    Filtering and Pagination options (optional)
+     * @return Result of Type List of all {@link UTxO} for a given script hash
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<UTxO>> getScriptUTxOs(String scriptHash, Boolean extended, Options options) throws ApiException;
 
     /**
      * Datum Information with Filtering, Pagination, Ordering Options
@@ -77,7 +103,7 @@ public interface ScriptService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param datumHashes List of Cardano datum hashes (required)
-     * @param options Filtering and Pagination options (optional)
+     * @param options     Filtering and Pagination options (optional)
      * @return Result of Type List of all {@link DatumInfo} for a given script hash
      * @throws ApiException if an error occurs while attempting to invoke the API
      */

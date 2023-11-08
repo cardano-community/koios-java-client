@@ -6,11 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.script.model.DatumInfo;
-import rest.koios.client.backend.api.script.model.NativeScript;
-import rest.koios.client.backend.api.script.model.PlutusScript;
-import rest.koios.client.backend.api.script.model.ScriptRedeemer;
+import rest.koios.client.backend.api.script.model.*;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
@@ -31,6 +29,15 @@ class PlutusScriptServicePreviewIntegrationTest {
     }
 
     @Test
+    void getScriptInformationTest() throws ApiException {
+        List<String> scriptHashes = List.of("c6d963e8892916ab8753d3c342037cd122123c4dd783a07af21f8dac","c0c671fba483641a71bb92d3a8b7c52c90bf1c01e2b83116ad7d4536");
+        Result<List<ScriptInfo>> scriptInformationResult = scriptService.getScriptInformation(scriptHashes, Options.EMPTY);
+        Assertions.assertTrue(scriptInformationResult.isSuccessful());
+        Assertions.assertNotNull(scriptInformationResult.getValue());
+        log.info(scriptInformationResult.getValue().toString());
+    }
+
+    @Test
     void getNativeScriptListLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<NativeScript>> scriptListResult = scriptService.getNativeScriptList(options);
@@ -43,7 +50,7 @@ class PlutusScriptServicePreviewIntegrationTest {
     @Test
     void getNativeScriptByScriptHashTest() throws ApiException {
         String scriptHash = "6c969320597b755454ff3653ad09725d590c570827a129aeb4385526";
-        Result<NativeScript> scriptResult = scriptService.getNativeScript(scriptHash);
+        Result<NativeScript> scriptResult = scriptService.getNativeScriptByScriptHash(scriptHash);
         Assertions.assertTrue(scriptResult.isSuccessful());
         Assertions.assertNotNull(scriptResult.getValue());
         log.info(scriptResult.getValue().toString());
@@ -75,6 +82,15 @@ class PlutusScriptServicePreviewIntegrationTest {
         String scriptHash = "test";
         ApiException exception = assertThrows(ApiException.class, () -> scriptService.getScriptRedeemers(scriptHash, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getScriptUTxOsTest() throws ApiException {
+        String scriptHash = "f758cf422ca0cbed7d9d6fad1eb5a3c70537d62e661ad450dd2a3810";
+        Result<List<UTxO>> utxosResult = scriptService.getScriptUTxOs(scriptHash, false, Options.EMPTY);
+        Assertions.assertTrue(utxosResult.isSuccessful());
+        Assertions.assertNotNull(utxosResult.getValue());
+        log.info(utxosResult.getValue().toString());
     }
 
     @Test

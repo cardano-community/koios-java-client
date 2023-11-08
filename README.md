@@ -57,7 +57,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
     </thead>
     <tbody>
         <tr>
-            <td rowspan="4">Network</td>
+            <td rowspan="6">Network</td>
             <td>Chain Tip</td>
             <td>Get the tip info about the latest block seen by chain</td>
         </tr>
@@ -66,12 +66,20 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the Genesis parameters used to start specific era on chain</td>
         </tr>
         <tr>
-            <td>Get historical tokenomic stats</td>
+            <td>Historical tokenomic stats</td>
             <td>Get the circulating utxo, treasury, rewards, supply and reserves in lovelace for specified epoch, all epochs if empty</td>
         </tr>
         <tr>
             <td>Param Update Proposals</td>
             <td>Get all parameter update proposals submitted to the chain starting Shelley era</td>
+        </tr>
+        <tr>
+            <td>Reserve Withdrawals</td>
+            <td>List of all withdrawals from reserves against stake accounts</td>
+        </tr>
+        <tr>
+            <td>Treasury Withdrawals</td>
+            <td>List of all withdrawals from treasury against stake accounts</td>
         </tr>
         <tr>
             <td rowspan="3">Epoch</td>
@@ -101,12 +109,12 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         </tr>
         <tr>
             <td rowspan="6">Transactions</td>
-            <td>Transaction Information</td>
-            <td>Get detailed information about transaction(s)</td>
+            <td>UTxO Info</td>
+            <td>Get UTxO set for requested UTxO references</td>
         </tr>
         <tr>
-            <td>Transaction UTxOs</td>
-            <td>Get UTxO set (inputs/outputs) of transactions.</td>
+            <td>Transaction Information</td>
+            <td>Get detailed information about transaction(s)</td>
         </tr>
         <tr>
             <td>Transaction Metadata</td>
@@ -125,24 +133,32 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the number of block confirmations for a given transaction hash list</td>
         </tr>
         <tr>
-            <td rowspan="4">Address</td>
+            <td rowspan="6">Address</td>
             <td>Address Information</td>
             <td>Get address info - balance, associated stake address (if any) and UTxO set</td>
+        </tr>
+        <tr>
+            <td>Address UTxOs</td>
+            <td>Get UTxO set for given addresses</td>
+        </tr>
+        <tr>
+            <td>UTxOs from payment credentials</td>
+            <td>Get UTxO details for requested payment credentials</td>
         </tr>
         <tr>
             <td>Address Transactions</td>
             <td>Get the transaction hash list of input address array, optionally filtering after specified block height (inclusive)</td>
         </tr>
         <tr>
-            <td>Address Assets</td>
-            <td>Get the list of all the assets (policy, name and quantity) for a given address</td>
-        </tr>
-        <tr>
             <td>Transactions from payment credentials</td>
             <td>Get the transaction hash list of input payment credential array, optionally filtering after specified block height (inclusive)</td>
         </tr>
         <tr>
-            <td rowspan="9">Stake Account</td>
+            <td>Address Assets</td>
+            <td>Get the list of all the assets (policy, name and quantity) for a given address</td>
+        </tr>
+        <tr>
+            <td rowspan="10">Stake Account</td>
             <td>Account List</td>
             <td>Get a list of all accounts</td>
         </tr>
@@ -151,12 +167,16 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the account info of any (payment or staking) address</td>
         </tr>
         <tr>
-            <td>Account UTxOs</td>
-            <td>Get a list of all UTxOs for a given stake address (account)</td>
-        </tr>
-        <tr>
             <td>Account Information (Cached)</td>
             <td>Get the cached account information for given stake addresses (accounts)</td>
+        </tr>
+        <tr>
+            <td>Account UTxOs</td>
+            <td>Get a list of all UTxOs for given stake addresses (account)s</td>
+        </tr>
+        <tr>
+            <td>Account Txs</td>
+            <td>Get a list of all Txs for a given stake address (account)</td>
         </tr>
         <tr>
             <td>Account Rewards</td>
@@ -179,21 +199,17 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the staking history of an account</td>
         </tr>
         <tr>
-            <td rowspan="12">Asset</td>
+            <td rowspan="13">Asset</td>
             <td>Asset List</td>
             <td>Get the list of all native assets (paginated)</td>
         </tr>
         <tr>
+            <td>Policy Asset List</td>
+            <td>Get the list of asset under the given policy (including balances)</td>
+        </tr>
+        <tr>
             <td>Asset Token Registry</td>
             <td>Get a list of assets registered via token registry on github</td>
-        </tr>
-        <tr>
-            <td>Asset Addresses</td>
-            <td>Get the list of all addresses holding a given asset</td>
-        </tr>
-        <tr>
-            <td>NFT Address</td>
-            <td>Get the address where specified NFT currently reside on</td>
         </tr>
         <tr>
             <td>Asset Information</td>
@@ -204,8 +220,20 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the information of a list of assets including first minting & token registry metadata</td>
         </tr>
         <tr>
+            <td>Asset UTxOs</td>
+            <td>Get the UTXO information of a list of assets including</td>
+        </tr>
+        <tr>
             <td>Asset History</td>
             <td>Get the mint/burn history of an asset</td>
+        </tr>
+        <tr>
+            <td>Asset Addresses</td>
+            <td>Get the list of all addresses holding a given asset</td>
+        </tr>
+        <tr>
+            <td>NFT Address</td>
+            <td>Get the address where specified NFT currently reside on</td>
         </tr>
         <tr>
             <td>Policy Asset Address List</td>
@@ -216,10 +244,6 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the information for all assets under the same policy</td>
         </tr>
         <tr>
-            <td>Policy Asset List</td>
-            <td>Get the list of asset under the given policy (including balances)</td>
-        </tr>
-        <tr>
             <td>Asset Summary</td>
             <td>Get the summary of an asset (total transactions exclude minting/total wallets include only wallets with asset balance)</td>
         </tr>
@@ -228,7 +252,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the list of all asset transaction hashes (newest first)</td>
         </tr>
         <tr>
-            <td rowspan="10">Pool</td>
+            <td rowspan="12">Pool</td>
             <td>Pool List</td>
             <td>A list of all currently registered/retiring (not retired) pools</td>
         </tr>
@@ -261,6 +285,14 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Return all pool updates for all pools or only updates for specific pool if specified</td>
         </tr>
         <tr>
+            <td>Pool Registrations</td>
+            <td>Return all pool registrations initiated in the requested epoch</td>
+        </tr>
+        <tr>
+            <td>Pool Retirements</td>
+            <td>Return all pool retirements initiated in the requested epoch</td>
+        </tr>
+        <tr>
             <td>Pool Relays</td>
             <td>A list of registered relays for all currently registered/retiring (not retired) pools</td>
         </tr>
@@ -269,7 +301,11 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Metadata (on & off-chain) for all currently registered/retiring (not retired) pools</td>
         </tr>
         <tr>
-            <td rowspan="4">Script</td>
+            <td rowspan="6">Script</td>
+            <td>Script Information</td>
+            <td>List of script information for given script hashes</td>
+        </tr>
+        <tr>
             <td>Native Script List</td>
             <td>List of all existing native script hashes along with their creation transaction hashes</td>
         </tr>
@@ -280,6 +316,10 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         <tr>
             <td>Script Redeemers</td>
             <td>List of all redeemers for a given script hash</td>
+        </tr>
+        <tr>
+            <td>Script UTxOs</td>
+            <td>List of all UTXOs for a given script hash</td>
         </tr>
         <tr>
             <td>Datum Information</td>
@@ -294,6 +334,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.1.0      |      1.18.0       |
 |     1.0.10     |      1.17.3       |
 |     1.0.9      |      1.16.3       |
 |     1.0.8      |      1.15.2       |
@@ -310,13 +351,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.17.3</version>
+    <version>1.18.0</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.17.2'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.18.0'
 ```
 
 ### Get Koios Backend Service

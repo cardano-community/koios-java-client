@@ -1,11 +1,13 @@
 package rest.koios.client.backend.api.pool.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Pool Update
@@ -55,12 +57,12 @@ public class PoolUpdate {
     /**
      * Pool fixed cost per epoch
      */
-    private Long fixedCost;
+    private String fixedCost;
 
     /**
      * Pool pledge in lovelace
      */
-    private Long pledge;
+    private String pledge;
 
     /**
      * Pool reward address
@@ -70,12 +72,12 @@ public class PoolUpdate {
     /**
      * Pool (co)owner addresses
      */
-    private ArrayList<String> owners;
+    private List<String> owners;
 
     /**
      * Relays
      */
-    private ArrayList<Relay> relays;
+    private List<Relay> relays;
 
     /**
      * Pool metadata URL
@@ -90,13 +92,13 @@ public class PoolUpdate {
     /**
      * Historical metadata information
      */
-    private JsonNode metaJson;
+    private MetaJson metaJson;
 
     /**
      * Pool status
-     * Allowed: registered | retiring | retired
+     * Allowed: registration|deregistration
      */
-    private String poolStatus;
+    private String updateType;
 
     /**
      * Announced retiring epoch (nullable)

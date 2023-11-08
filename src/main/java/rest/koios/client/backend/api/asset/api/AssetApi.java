@@ -1,7 +1,8 @@
 package rest.koios.client.backend.api.asset.api;
 
-import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
+import rest.koios.client.backend.api.base.common.TxHash;
+import rest.koios.client.backend.api.base.common.UTxO;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -46,7 +47,7 @@ public interface AssetApi {
      * @return List of payment addresses holding the given token
      */
     @GET("asset_nft_address")
-    Call<List<AssetAddress>> getNFTAddress(String assetPolicy, String assetName, @QueryMap Map<String, String> paramsMap);
+    Call<List<PaymentAddress>> getNFTAddress(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 
     @GET("asset_info")
     Call<List<AssetInformation>> getAssetInformation(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
@@ -60,6 +61,16 @@ public interface AssetApi {
      */
     @POST("asset_info")
     Call<List<AssetInformation>> getAssetInformationBulk(@Body Map<String, Object> assetList, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Get Asset  UTxOs
+     *
+     * @param requestBody Json Body containing List of policy ID and asset names (hex)
+     * @param paramsMap   Query Params
+     * @return List of account UTxOs associated with stake address
+     */
+    @POST("asset_utxos")
+    Call<List<UTxO>> getAssetUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     @GET("asset_history")
     Call<List<AssetHistory>> getAssetHistory(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);

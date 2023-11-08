@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.utils.Tuple;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -40,6 +42,15 @@ class AssetServicePreprodIntegrationTest {
     }
 
     @Test
+    void getPolicyAssetListTest() throws ApiException {
+        String assetPolicy = "c6e65ba7878b2f8ea0ad39287d3e2fd256dc5c4160fc19bdf4c4d87e";
+        Result<List<PolicyAsset>> policyAssetListResult = assetService.getPolicyAssetList(assetPolicy, Options.EMPTY);
+        Assertions.assertTrue(policyAssetListResult.isSuccessful());
+        Assertions.assertNotNull(policyAssetListResult.getValue());
+        log.info(policyAssetListResult.getValue().toString());
+    }
+
+    @Test
     void getAssetsAddressListTest() throws ApiException {
         String assetPolicy = "80de4ee0ffde8ba05726707f2adba0e65963eff5aaba164af358e71b";
         String assetName = "StabilityPool_Test";
@@ -56,6 +67,16 @@ class AssetServicePreprodIntegrationTest {
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetsAddresses(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getNFTAddressTest() throws ApiException {
+        String assetPolicy = "002126e5e7cb2f5b6ac52ef2cdb9308ff58bf6e3b62e29df447cec72";
+        String assetNameHex = "74657374";
+        Result<List<PaymentAddress>> assetAddressesResult = assetService.getNFTAddress(assetPolicy, assetNameHex, Options.EMPTY);
+        Assertions.assertTrue(assetAddressesResult.isSuccessful());
+        Assertions.assertNotNull(assetAddressesResult.getValue());
+        log.info(assetAddressesResult.getValue().toString());
     }
 
     @Test
@@ -87,6 +108,26 @@ class AssetServicePreprodIntegrationTest {
         String assetNameHex = "53706f6f6b79426f782331asdsadsa";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetInformation(assetPolicy, assetNameHex));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAssetInformationBulkTest() throws ApiException {
+        List<Tuple<String, String>> tupleList = List.of(new Tuple<>("c6e65ba7878b2f8ea0ad39287d3e2fd256dc5c4160fc19bdf4c4d87e", "7447454e53"),
+                new Tuple<>("777e6b4903dab74963ae581d39875c5dac16c09bb1f511c0af1ddda8", "6141414441"));
+        Result<AssetInformation> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
+        Assertions.assertTrue(assetInformationBulkResult.isSuccessful());
+        Assertions.assertNotNull(assetInformationBulkResult.getValue());
+        log.info(assetInformationBulkResult.getValue().toString());
+    }
+
+    @Test
+    void getAssetUTxOsTest() throws ApiException {
+        List<Tuple<String, String>> tupleList = List.of(new Tuple<>("c6e65ba7878b2f8ea0ad39287d3e2fd256dc5c4160fc19bdf4c4d87e", "7447454e53"),
+                new Tuple<>("777e6b4903dab74963ae581d39875c5dac16c09bb1f511c0af1ddda8", "6141414441"));
+        Result<List<UTxO>> utxosResult = assetService.getAssetUTxOs(tupleList, true, Options.EMPTY);
+        Assertions.assertTrue(utxosResult.isSuccessful());
+        Assertions.assertNotNull(utxosResult.getValue());
+        log.info(utxosResult.getValue().toString());
     }
 
     @Test

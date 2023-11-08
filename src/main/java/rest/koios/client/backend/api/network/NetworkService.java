@@ -2,10 +2,7 @@ package rest.koios.client.backend.api.network;
 
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.network.model.Genesis;
-import rest.koios.client.backend.api.network.model.ParamUpdateProposal;
-import rest.koios.client.backend.api.network.model.Tip;
-import rest.koios.client.backend.api.network.model.Totals;
+import rest.koios.client.backend.api.network.model.*;
 import rest.koios.client.backend.factory.options.Options;
 
 import java.util.List;
@@ -78,4 +75,34 @@ public interface NetworkService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<ParamUpdateProposal>> getParamUpdateProposals(Options options) throws ApiException;
+
+    /**
+     * Reserve Withdrawals
+     * List of withdrawals from reserves against stake accounts
+     *
+     * <p><b>200</b> - List of withdrawals from reserves against stake accounts
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link Withdrawal} from reserves against stake accounts
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<Withdrawal>> getReserveWithdrawals(Options options) throws ApiException;
+
+    /**
+     * Treasury Withdrawals
+     * List of all withdrawals from treasury against stake accounts
+     *
+     * <p><b>200</b> - List of withdrawals from treasury against stake accounts
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link Withdrawal} from treasury against stake accounts
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<Withdrawal>> getTreasuryWithdrawals(Options options) throws ApiException;
 }

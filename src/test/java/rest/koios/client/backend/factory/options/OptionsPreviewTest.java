@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import rest.koios.client.backend.api.common.TxHash;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
@@ -89,7 +89,7 @@ class OptionsPreviewTest {
         assertTrue(transactionsResult.isSuccessful());
         assertNotNull(transactionsResult.getValue());
         log.info(transactionsResult.getValue().toString());
-        assertEquals(16, transactionsResult.getValue().size());
+        assertEquals(39, transactionsResult.getValue().size());
         assertEquals("8a1f7811d7c3c46c3421e5b6515239c8cd7cce21c371bb0d5c107d0296fab29d", transactionsResult.getValue().get(0).getTxHash());
         assertNotEquals(0, transactionsResult.getValue().get(0).getBlockHeight());
         assertNotNull(transactionsResult.getValue().get(0).getBlockTime());

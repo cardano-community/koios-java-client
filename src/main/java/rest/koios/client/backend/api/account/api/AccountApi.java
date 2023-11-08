@@ -1,6 +1,7 @@
 package rest.koios.client.backend.api.account.api;
 
 import rest.koios.client.backend.api.account.model.*;
+import rest.koios.client.backend.api.base.common.UTxO;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -32,16 +33,6 @@ public interface AccountApi {
     Call<List<AccountInfo>> getAccountInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
-     * Get Account UTxOs
-     *
-     * @param stakeAddress Cardano staking address (reward account) in bech32 format
-     * @param paramsMap    Query Params
-     * @return List of account UTxOs associated with stake address
-     */
-    @GET("account_utxos")
-    Call<List<AccountUTxO>> getAccountUTxOs(@Query("_stake_address") String stakeAddress, @QueryMap Map<String, String> paramsMap);
-
-    /**
      * Get Account Information (Cached)
      *
      * @param requestBody Array of Cardano stake address(es) in bech32 format
@@ -50,6 +41,27 @@ public interface AccountApi {
      */
     @POST("account_info_cached")
     Call<List<AccountInfo>> getCachedAccountInformation(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Get Account UTxOs
+     *
+     * @param requestBody Json Body containing List of Cardano stake address(es) in bech32 format
+     * @param paramsMap   Query Params
+     * @return List of account UTxOs associated with stake address
+     */
+    @POST("account_utxos")
+    Call<List<UTxO>> getAccountUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Get Account Txs
+     *
+     * @param paramsMap Query Params
+     * @param stakeAddress Cardano staking address (reward account) in bech32 format
+     * @param blockHeight Block height for specifying time delta
+     * @return List of Txs associated with stake address (account)
+     */
+    @GET("account_txs")
+    Call<List<AccountTx>> getAccountTxs(@Query("_stake_address") String stakeAddress, @Query("_after_block_height") Integer blockHeight, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Get Account Rewards
@@ -89,7 +101,7 @@ public interface AccountApi {
      * @return Native asset balance of an account
      */
     @POST("account_assets")
-    Call<List<AccountAssets>> getAccountAssets(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+    Call<List<AccountAsset>> getAccountAssets(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Get Account History

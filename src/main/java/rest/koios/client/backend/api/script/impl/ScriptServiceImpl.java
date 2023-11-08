@@ -2,13 +2,11 @@ package rest.koios.client.backend.api.script.impl;
 
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.script.ScriptService;
+import rest.koios.client.backend.api.script.model.*;
 import rest.koios.client.backend.api.script.api.ScriptApi;
-import rest.koios.client.backend.api.script.model.DatumInfo;
-import rest.koios.client.backend.api.script.model.NativeScript;
-import rest.koios.client.backend.api.script.model.PlutusScript;
-import rest.koios.client.backend.api.script.model.ScriptRedeemer;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.filters.Filter;
 import rest.koios.client.backend.factory.options.filters.FilterType;
@@ -39,6 +37,20 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     }
 
     @Override
+    public Result<List<ScriptInfo>> getScriptInformation(List<String> scriptHashes, Options options) throws ApiException {
+        for (String scriptHash : scriptHashes) {
+            validateHexFormat(scriptHash);
+        }
+        Call<List<ScriptInfo>> call = scriptApi.getScriptInformation(buildBody("_script_hashes", scriptHashes), optionsToParamMap(options));
+        try {
+            Response<List<ScriptInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<List<NativeScript>> getNativeScriptList(Options options) throws ApiException {
         Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(options));
         try {
@@ -50,7 +62,7 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
     }
 
     @Override
-    public Result<NativeScript> getNativeScript(String scriptHash) throws ApiException {
+    public Result<NativeScript> getNativeScriptByScriptHash(String scriptHash) throws ApiException {
         Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(Options.builder()
                 .option(Filter.of("script_hash", FilterType.EQ, scriptHash))
                 .build()));
@@ -79,6 +91,18 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
         Call<List<ScriptRedeemer>> call = scriptApi.getScriptRedeemers(scriptHash, optionsToParamMap(options));
         try {
             Response<List<ScriptRedeemer>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<UTxO>> getScriptUTxOs(String scriptHash, Boolean extended, Options options) throws ApiException {
+        validateHexFormat(scriptHash);
+        Call<List<UTxO>> call = scriptApi.getScriptUTxOs(scriptHash, extended, optionsToParamMap(options));
+        try {
+            Response<List<UTxO>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

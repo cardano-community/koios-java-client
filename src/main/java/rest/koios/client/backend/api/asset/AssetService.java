@@ -1,8 +1,9 @@
 package rest.koios.client.backend.api.asset;
 
-import rest.koios.client.backend.api.common.TxHash;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.TxHash;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Tuple;
@@ -57,22 +58,6 @@ public interface AssetService {
     Result<List<AssetAddress>> getAssetsAddresses(String assetPolicy, String assetName, Options options) throws ApiException;
 
     /**
-     * Assets Address List with Filtering, Pagination, Ordering Options
-     * Get a list of all addresses for a given asset
-     * <p><b>200</b> - Success!
-     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
-     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     *
-     * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
-     * @param assetName   Asset Name in hexadecimal format (hex) (required)
-     * @param options     Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link AssetAddress}
-     * @throws ApiException if an error occurs while attempting to invoke the API
-     */
-    @Deprecated(forRemoval = true)
-    Result<List<AssetAddress>> getAssetsAddressList(String assetPolicy, String assetName, Options options) throws ApiException;
-
-    /**
      * NFT Address
      * Get the address where specified NFT currently reside on.
      * <p><b>200</b> - Payment addresses currently holding the given NFT
@@ -83,10 +68,10 @@ public interface AssetService {
      * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
      * @param assetName   Asset Name in hexadecimal format (hex) (optional)
      * @param options     Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link AssetAddress} holding the given token
+     * @return Result of Type List of {@link PaymentAddress} holding the given token
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<AssetAddress>> getNFTAddress(String assetPolicy, String assetName, Options options) throws ApiException;
+    Result<List<PaymentAddress>> getNFTAddress(String assetPolicy, String assetName, Options options) throws ApiException;
 
     /**
      * Asset Information
@@ -118,6 +103,22 @@ public interface AssetService {
     Result<AssetInformation> getAssetInformationBulk(List<Tuple<String, String>> assetList, Options options) throws ApiException;
 
     /**
+     * Asset UTxOs
+     * Get the UTXO information of a list of assets
+     * <p><b>200</b> - List of UTxOs for given asset list
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param assetList List of Tuple of policy ID and asset names (hex)
+     * @param extended  Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param options   Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link UTxO} for given asset list
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<UTxO>> getAssetUTxOs(List<Tuple<String, String>> assetList, Boolean extended, Options options) throws ApiException;
+
+    /**
      * Asset History with Filtering, Pagination, Ordering Options
      * Get the mint/burn history of an asset
      * <p><b>200</b> - Array of asset mint/burn history
@@ -146,21 +147,6 @@ public interface AssetService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PolicyAssetInfo>> getPolicyAssetInformation(String assetPolicy, Options options) throws ApiException;
-
-    /**
-     * Asset Policy Information
-     * Get the information for all assets under the same policy
-     * <p><b>200</b> - Array of detailed information of assets under the same policy
-     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
-     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
-     *
-     * @param assetPolicy Asset Policy ID in hexadecimal format (hex) (required)
-     * @param options     Filtering and Pagination options (optional)
-     * @return Result of Type List of {@link PolicyAssetInfo}
-     * @throws ApiException if an error occurs while attempting to invoke the API
-     */
-    @Deprecated(forRemoval = true)
-    Result<List<PolicyAssetInfo>> getAssetPolicyInformation(String assetPolicy, Options options) throws ApiException;
 
     /**
      * Policy Asset List
