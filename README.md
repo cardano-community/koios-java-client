@@ -360,7 +360,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.18.0'
 ```
 
-### Get Koios Backend Service
+### Get Koios Backend Service (No API Token)
 - Mainnet
 ```java 
 BackendService backendService = BackendFactory.getKoiosMainnetService();
@@ -379,6 +379,16 @@ BackendService backendService = BackendFactory.getKoiosPreprodService();
 - Guildnet
 ```java 
 BackendService backendService = BackendFactory.getKoiosGuildService();
+```
+
+### Get Koios Backend Service (with API Token)
+
+Get Your API Token from Koios Website: https://www.koios.rest/
+
+- Mainnet
+```java 
+String apiToken = "<API_TOKEN>";
+BackendService backendService = BackendFactory.getKoiosMainnetService(apiToken);
 ```
 
 ### Get Koios Backend Services
