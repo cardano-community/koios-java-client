@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.transactions.model.*;
 import rest.koios.client.backend.factory.BackendFactory;
@@ -25,6 +26,16 @@ class TransactionsServicePreviewIntegrationTest {
     @BeforeAll
     public void setup() {
         transactionsService = BackendFactory.getKoiosPreviewService().getTransactionsService();
+    }
+
+    @Test
+    void getUTxOInfoTest() throws ApiException {
+        List<String> utxoRefs = List.of("206f6da5b0b0de45605a95f5ce7e172be9674550f7dde3838c45cbf24bab8b00#0",
+                "f1592b29b79ae85d753913dd25644c60925a4a0683979faa33832fead4b4bd9c#0");
+        Result<List<UTxO>> utxosResult = transactionsService.getUTxOInfo(utxoRefs, false);
+        Assertions.assertTrue(utxosResult.isSuccessful());
+        Assertions.assertNotNull(utxosResult.getValue());
+        log.info(utxosResult.getValue().toString());
     }
 
     @Test
