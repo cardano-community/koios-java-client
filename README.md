@@ -45,6 +45,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 - Sorting Supported
 - API Token Supported
 - Inner Retry Mechanism upon Timeouts
+- HTTP GZIP Compression Supported
 <details open>
 <summary>Supported REST Services</summary>
 <table>
@@ -334,7 +335,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
-|     1.1.0      |      1.18.0       |
+|     1.1.0      |      1.18.1       |
 |     1.0.10     |      1.17.3       |
 |     1.0.9      |      1.16.3       |
 |     1.0.8      |      1.15.2       |
@@ -351,13 +352,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.18.0</version>
+    <version>1.18.1</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.18.0'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.18.1'
 ```
 
 ### Get Koios Backend Service (No API Token)
@@ -427,6 +428,7 @@ Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(
 | KOIOS_JAVA_LIB_READ_TIMEOUT_SEC    | integer | Sets the default read timeout for new connections (seconds)    |   60    |
 | KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC | integer | Sets the default connect timeout for new connections (seconds) |   60    |
 | KOIOS_JAVA_LIB_RETRY_ON_TIMEOUT    | boolean | Sets whether to retry upon request timeout                     |  true   |
+| KOIOS_JAVA_LIB_GZIP_COMPRESSION    | boolean | Sets whether to use GZIP Compression                           |  true   |
 
 ## Clone & Build with Maven
 ```shell

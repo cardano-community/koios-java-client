@@ -10,6 +10,7 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.jetbrains.annotations.NotNull;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.base.interceptor.GzipInterceptor;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Bech32Util;
 import retrofit2.Call;
@@ -37,6 +38,7 @@ public class BaseService {
     private static final int SLEEP_TIME_MILLIS = 2000;
     private boolean retryOnTimeout = true;
     private final String apiToken;
+    private boolean gzipCompression = true;
 
     /**
      * Base Service Constructor
@@ -81,6 +83,14 @@ public class BaseService {
                 }
             });
         }
+
+        if (System.getenv("KOIOS_JAVA_LIB_GZIP_COMPRESSION") != null) {
+            gzipCompression = Boolean.parseBoolean(System.getenv("KOIOS_JAVA_LIB_GZIP_COMPRESSION"));
+        }
+        if (gzipCompression) {
+            okHttpClientBuilder.addInterceptor(new GzipInterceptor());
+        }
+
         String strRetries = System.getenv("KOIOS_JAVA_LIB_RETRIES_COUNT");
         if (strRetries != null && !strRetries.isEmpty()) {
             retriesCount = Math.max(Integer.parseInt(strRetries), 1);
