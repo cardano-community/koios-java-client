@@ -42,7 +42,7 @@ public interface AddressService {
      * @return Result of Type List of {@link AddressInfo} with Balance, Stake Address, UTxO set associated with the specified address.
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<AddressInfo> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException;
+    Result<List<AddressInfo>> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException;
 
     /**
      * Address UTXOs
