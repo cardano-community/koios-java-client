@@ -38,6 +38,8 @@ public class BaseService {
     private static final int SLEEP_TIME_MILLIS = 2000;
     private boolean retryOnTimeout = true;
     private final String apiToken;
+    private int readTimeoutSec = 300;
+    private int connectTimeoutSec = 300;
     private boolean gzipCompression = true;
 
     /**
@@ -57,8 +59,23 @@ public class BaseService {
      */
     public BaseService(String baseUrl, String apiToken) {
         this.apiToken = apiToken;
-        int readTimeoutSec = getReadTimeoutSec();
-        int connectTimeoutSec = getConnectTimeoutSec();
+
+        String strReadTimeoutSec = System.getenv("KOIOS_JAVA_LIB_READ_TIMEOUT_SEC");
+        if (strReadTimeoutSec != null && !strReadTimeoutSec.isEmpty()) {
+            int readTimeoutSec = Integer.parseInt(strReadTimeoutSec);
+            if (readTimeoutSec >= 1) {
+                this.readTimeoutSec = readTimeoutSec;
+            }
+        }
+
+        String strConnectTimeoutSec = System.getenv("KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC");
+        if (strConnectTimeoutSec != null && !strConnectTimeoutSec.isEmpty()) {
+            int connectTimeoutSec = Integer.parseInt(strConnectTimeoutSec);
+            if (connectTimeoutSec >= 1) {
+                this.connectTimeoutSec = connectTimeoutSec;
+            }
+        }
+
         boolean logging = Boolean.parseBoolean(System.getenv("KOIOS_JAVA_LIB_LOGGING"));
         OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder.readTimeout(readTimeoutSec, TimeUnit.SECONDS)
@@ -103,24 +120,6 @@ public class BaseService {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(okHttpClientBuilder.build()).addConverterFactory(JacksonConverterFactory
                 .create(objectMapper)).build();
-    }
-
-    private int getReadTimeoutSec() {
-        int readTimeoutSec = 60;
-        String strReadTimeoutSec = System.getenv("KOIOS_JAVA_LIB_READ_TIMEOUT_SEC");
-        if (strReadTimeoutSec != null && !strReadTimeoutSec.isEmpty()) {
-            readTimeoutSec = Integer.parseInt(strReadTimeoutSec);
-        }
-        return readTimeoutSec >= 1 ? readTimeoutSec : 60;
-    }
-
-    private int getConnectTimeoutSec() {
-        int connectTimeoutSec = 60;
-        String strReadTimeoutSec = System.getenv("KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC");
-        if (strReadTimeoutSec != null && !strReadTimeoutSec.isEmpty()) {
-            connectTimeoutSec = Integer.parseInt(strReadTimeoutSec);
-        }
-        return connectTimeoutSec >= 1 ? connectTimeoutSec : 60;
     }
 
     protected <T> Result<T> processResponseGetOne(Response<List<T>> response) throws IOException {

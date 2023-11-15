@@ -425,8 +425,8 @@ Result<List<TxHash>> transactionsResult = addressService.getAddressTransactions(
 |------------------------------------|:-------:|----------------------------------------------------------------|:-------:|
 | KOIOS_JAVA_LIB_LOGGING             | boolean | Toggle Logging                                                 |  false  |
 | KOIOS_JAVA_LIB_RETRIES_COUNT       | integer | Sets the max retry count upon request timeout                  |    5    |
-| KOIOS_JAVA_LIB_READ_TIMEOUT_SEC    | integer | Sets the default read timeout for new connections (seconds)    |   60    |
-| KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC | integer | Sets the default connect timeout for new connections (seconds) |   60    |
+| KOIOS_JAVA_LIB_READ_TIMEOUT_SEC    | integer | Sets the default read timeout for new connections (seconds)    |   300   |
+| KOIOS_JAVA_LIB_CONNECT_TIMEOUT_SEC | integer | Sets the default connect timeout for new connections (seconds) |   300   |
 | KOIOS_JAVA_LIB_RETRY_ON_TIMEOUT    | boolean | Sets whether to retry upon request timeout                     |  true   |
 | KOIOS_JAVA_LIB_GZIP_COMPRESSION    | boolean | Sets whether to use GZIP Compression                           |  true   |
 
