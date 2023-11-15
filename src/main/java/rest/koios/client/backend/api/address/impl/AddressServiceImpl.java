@@ -1,14 +1,14 @@
 package rest.koios.client.backend.api.address.impl;
 
-import rest.koios.client.backend.api.address.api.AddressApi;
 import rest.koios.client.backend.api.address.AddressService;
+import rest.koios.client.backend.api.address.api.AddressApi;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
+import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
-import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.SortType;
 import retrofit2.Call;
@@ -40,25 +40,37 @@ public class AddressServiceImpl extends BaseService implements AddressService {
 
     @Override
     public Result<AddressInfo> getAddressInformation(String address) throws ApiException {
-        return getAddressInformation(List.of(address), SortType.DESC, null);
+        validateBech32(address);
+        Call<List<AddressInfo>> call = addressApi.getAddressInformation(buildBody("_addresses", List.of(address), null), optionsToParamMap(Options.EMPTY));
+        try {
+            Response<List<AddressInfo>> response = (Response) execute(call);
+            Result<AddressInfo> result = processResponseGetOne(response);
+            if (result.isSuccessful()) {
+                result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
+            }
+            return result;
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
     }
 
     @Override
-    public Result<AddressInfo> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException {
+    public Result<List<AddressInfo>> getAddressInformation(List<String> addressList, SortType utxoSortType, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         Call<List<AddressInfo>> call = addressApi.getAddressInformation(buildBody("_addresses", addressList, null), optionsToParamMap(options));
         try {
             Response<List<AddressInfo>> response = (Response) execute(call);
-            Result<AddressInfo> result = processResponseGetOne(response);
+            Result<List<AddressInfo>> result = processResponse(response);
             if (result.isSuccessful()) {
-                //Sort
-                if (utxoSortType == SortType.DESC) {
-                    result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()).descendingSet());
-                } else {
-                    result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
-                }
+                result.getValue().forEach(addressInfo -> {
+                    if (utxoSortType == SortType.DESC) {
+                        addressInfo.setUtxoSet(new TreeSet<>(addressInfo.getUtxoSet()).descendingSet());
+                    } else {
+                        addressInfo.setUtxoSet(new TreeSet<>(addressInfo.getUtxoSet()));
+                    }
+                });
             }
             return result;
         } catch (IOException e) {

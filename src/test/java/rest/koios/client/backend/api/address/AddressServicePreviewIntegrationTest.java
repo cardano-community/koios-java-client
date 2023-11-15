@@ -13,6 +13,7 @@ import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.SortType;
 
 import java.util.List;
 
@@ -33,6 +34,16 @@ class AddressServicePreviewIntegrationTest {
     void getAddressInformationTest() throws ApiException {
         String address = "addr_test1qrvaadv0h7atv366u6966u4rft2svjlf5uajy8lkpsgdrc24rnskuetxz2u3m5ac22s3njvftxcl2fc8k8kjr088ge0qz98xmv";
         Result<AddressInfo> addressInformationResult = addressService.getAddressInformation(address);
+        Assertions.assertTrue(addressInformationResult.isSuccessful());
+        Assertions.assertNotNull(addressInformationResult.getValue());
+        log.info(addressInformationResult.getValue().toString());
+    }
+
+    @Test
+    void getAddressInformationTest2() throws ApiException {
+        List<String> addresses = List.of("addr_test1vpfwv0ezc5g8a4mkku8hhy3y3vp92t7s3ul8g778g5yegsgalc6gc",
+                "addr_test1vqneq3v0dqh3x3muv6ee3lt8e5729xymnxuavx6tndcjc2cv24ef9");
+        Result<List<AddressInfo>> addressInformationResult = addressService.getAddressInformation(addresses, SortType.ASC, Options.EMPTY);
         Assertions.assertTrue(addressInformationResult.isSuccessful());
         Assertions.assertNotNull(addressInformationResult.getValue());
         log.info(addressInformationResult.getValue().toString());
