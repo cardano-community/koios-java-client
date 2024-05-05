@@ -3,6 +3,7 @@ package rest.koios.client.backend.api.block.api;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
+import rest.koios.client.backend.api.transactions.model.TxInfo;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -45,4 +46,14 @@ public interface BlockApi {
      */
     @POST("block_txs")
     Call<List<BlockTxHash>> getBlockTransactions(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Get a list of all transactions included in provided blocks
+     *
+     * @param requestBody Array of Block Hash IDs
+     * @param paramsMap   Options and Filters Map
+     * @return List of {@link BlockTxHash}
+     */
+    @POST("block_tx_info")
+    Call<List<TxInfo>> getBlockTransactionsInfo(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 }

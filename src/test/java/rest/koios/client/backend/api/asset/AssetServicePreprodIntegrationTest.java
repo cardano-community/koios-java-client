@@ -80,6 +80,15 @@ class AssetServicePreprodIntegrationTest {
     }
 
     @Test
+    void getPolicyAssetAddressListTest() throws ApiException {
+        String assetPolicy = "002126e5e7cb2f5b6ac52ef2cdb9308ff58bf6e3b62e29df447cec72";
+        Result<List<AssetAddress>> assetAddressesResult = assetService.getPolicyAssetAddressList(assetPolicy, Options.EMPTY);
+        Assertions.assertTrue(assetAddressesResult.isSuccessful());
+        Assertions.assertNotNull(assetAddressesResult.getValue());
+        log.info(assetAddressesResult.getValue().toString());
+    }
+
+    @Test
     void getAssetInformationTest() throws ApiException {
         String assetPolicy = "80de4ee0ffde8ba05726707f2adba0e65963eff5aaba164af358e71b";
         String assetName = "StabilityPool_Test";
@@ -162,6 +171,22 @@ class AssetServicePreprodIntegrationTest {
     void getAssetPolicyInformationBadRequestTest() {
         String assetPolicy = "test";
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getPolicyAssetInformation(assetPolicy, Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getPolicyAssetMintsTest() throws ApiException {
+        String assetPolicy = "80de4ee0ffde8ba05726707f2adba0e65963eff5aaba164af358e71b";
+        Result<List<PolicyAssetMint>> policyAssetMintsResult = assetService.getPolicyAssetMints(assetPolicy, Options.EMPTY);
+        Assertions.assertTrue(policyAssetMintsResult.isSuccessful());
+        Assertions.assertNotNull(policyAssetMintsResult.getValue());
+        log.info(policyAssetMintsResult.getValue().toString());
+    }
+
+    @Test
+    void getPolicyAssetMintsBadRequestTest() {
+        String assetPolicy = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> assetService.getPolicyAssetMints(assetPolicy, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 

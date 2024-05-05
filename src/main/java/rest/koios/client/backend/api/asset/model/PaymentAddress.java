@@ -21,4 +21,9 @@ public class PaymentAddress {
      * A Cardano payment/base address (bech32 encoded) for transaction's input UTxO
      */
     private String paymentAddress;
+
+    /**
+     * Cardano staking address (reward account) in bech32 format
+     */
+    private String stakeAddress;
 }

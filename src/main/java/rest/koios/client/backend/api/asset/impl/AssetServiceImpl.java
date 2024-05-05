@@ -86,6 +86,18 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     }
 
     @Override
+    public Result<List<AssetAddress>> getPolicyAssetAddressList(String assetPolicy, Options options) throws ApiException {
+        validateHexFormat(assetPolicy);
+        Call<List<AssetAddress>> call = assetApi.getPolicyAssetAddressList(assetPolicy, optionsToParamMap(options));
+        try {
+            Response<List<AssetAddress>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
     public Result<AssetInformation> getAssetInformation(String assetPolicy, String assetName) throws ApiException {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
@@ -153,6 +165,18 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         Call<List<PolicyAssetInfo>> call = assetApi.getPolicyAssetInformation(assetPolicy, optionsToParamMap(options));
         try {
             Response<List<PolicyAssetInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public Result<List<PolicyAssetMint>> getPolicyAssetMints(String assetPolicy, Options options) throws ApiException {
+        validateHexFormat(assetPolicy);
+        Call<List<PolicyAssetMint>> call = assetApi.getPolicyAssetMints(assetPolicy, optionsToParamMap(options));
+        try {
+            Response<List<PolicyAssetMint>> response = (Response) execute(call);
             return processResponse(response);
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

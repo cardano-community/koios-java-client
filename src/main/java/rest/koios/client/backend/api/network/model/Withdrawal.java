@@ -51,4 +51,14 @@ public class Withdrawal {
      * Cardano staking address (reward account) in bech32 format
      **/
     private String stakeAddress;
+
+    /**
+     * Epoch where amount is earned
+     */
+    private Integer earnedEpoch;
+
+    /**
+     * Epoch where the earned amount can be spent
+     */
+    private Integer spendableEpoch;
 }

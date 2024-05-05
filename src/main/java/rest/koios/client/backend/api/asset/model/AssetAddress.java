@@ -18,6 +18,21 @@ import lombok.ToString;
 public class AssetAddress extends PaymentAddress {
 
     /**
+     * Asset Name (hex)
+     */
+    private String assetName;
+
+    /**
+     * A Cardano payment/base address (bech32 encoded)
+     */
+    private String paymentAddress;
+
+    /**
+     * Cardano staking address (reward account) in bech32 format
+     */
+    private String stakeAddress;
+
+    /**
      * Asset balance on the payment address
      */
     private String quantity;

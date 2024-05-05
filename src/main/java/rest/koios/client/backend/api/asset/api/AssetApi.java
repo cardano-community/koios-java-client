@@ -49,6 +49,16 @@ public interface AssetApi {
     @GET("asset_nft_address")
     Call<List<PaymentAddress>> getNFTAddress(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName, @QueryMap Map<String, String> paramsMap);
 
+    /**
+     * Policy Asset Address List
+     *
+     * @param assetPolicy Asset Policy ID in hexadecimal format (hex)
+     * @param paramsMap   Query Params
+     * @return List of addresses with quantity for each asset on the given policy
+     */
+    @GET("policy_asset_addresses")
+    Call<List<AssetAddress>> getPolicyAssetAddressList(@Query("_asset_policy") String assetPolicy, @QueryMap Map<String, String> paramsMap);
+
     @GET("asset_info")
     Call<List<AssetInformation>> getAssetInformation(@Query("_asset_policy") String assetPolicy, @Query("_asset_name") String assetName);
 
@@ -77,6 +87,9 @@ public interface AssetApi {
 
     @GET("policy_asset_info")
     Call<List<PolicyAssetInfo>> getPolicyAssetInformation(@Query("_asset_policy") String assetPolicy, @QueryMap Map<String, String> paramsMap);
+
+    @GET("policy_asset_mints")
+    Call<List<PolicyAssetMint>> getPolicyAssetMints(@Query("_asset_policy") String assetPolicy, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Get Policy Asset List

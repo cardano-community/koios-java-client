@@ -81,4 +81,9 @@ public class Block {
      * The protocol minor version
      */
     private Integer protoMinor;
+
+    /**
+     * Previous Hash of the current block
+     */
+    private String parentHash;
 }

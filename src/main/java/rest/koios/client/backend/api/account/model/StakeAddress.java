@@ -15,7 +15,17 @@ import lombok.*;
 public class StakeAddress {
 
     /**
-     * A Cardano staking address
+     * Cardano staking address (reward account) in bech32 format
      */
-    private String id;
+    private String stakeAddress;
+
+    /**
+     * Cardano staking address (reward account) in hex format
+     */
+    private String stakeAddressHex;
+
+    /**
+     * Script hash in case the stake address is locked by a script
+     */
+    private String scriptHash;
 }

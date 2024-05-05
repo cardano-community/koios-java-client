@@ -112,7 +112,7 @@ public class PoolInfo {
     /**
      * Pool relative active stake share
      */
-    private Long sigma;
+    private Double sigma;
 
     /**
      * Total pool blocks on chain

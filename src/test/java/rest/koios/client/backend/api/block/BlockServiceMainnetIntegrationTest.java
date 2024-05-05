@@ -10,6 +10,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
+import rest.koios.client.backend.api.transactions.model.TxInfo;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
@@ -115,6 +116,22 @@ class BlockServiceMainnetIntegrationTest {
     void getBlockTransactionsBadRequestTest() {
         String hash = "test";
         ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactions(List.of(hash), Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getBlockTransactionsInfoTest() throws ApiException {
+        String hash = "f6192a1aaa6d3d05b4703891a6b66cd757801c61ace86cbe5ab0d66e07f601ab";
+        Result<List<TxInfo>> blockTransactionsResult = blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, Options.EMPTY);
+        Assertions.assertTrue(blockTransactionsResult.isSuccessful());
+        Assertions.assertNotNull(blockTransactionsResult.getValue());
+        log.info(blockTransactionsResult.getValue().toString());
+    }
+
+    @Test
+    void getBlockTransactionsInfoBadRequestTest() {
+        String hash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }

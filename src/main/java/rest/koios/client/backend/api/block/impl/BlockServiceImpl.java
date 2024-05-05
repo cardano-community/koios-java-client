@@ -8,16 +8,14 @@ import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
+import rest.koios.client.backend.api.transactions.model.TxInfo;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import retrofit2.Call;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Block Service Implementation
@@ -98,6 +96,32 @@ public class BlockServiceImpl extends BaseService implements BlockService {
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Result<List<TxInfo>> getBlockTransactionsInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets, Boolean withdrawals, Boolean certs, Boolean scripts, Options options) throws ApiException {
+        for (String blockHash : blockHashes) {
+            validateHexFormat(blockHash);
+        }
+        Call<List<TxInfo>> call = blockApi.getBlockTransactionsInfo(buildBodyBlockTxInfo(blockHashes, inputs, metadata, assets, withdrawals, certs, scripts), optionsToParamMap(options));
+        try {
+            Response<List<TxInfo>> response = (Response) execute(call);
+            return processResponse(response);
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    private Map<String, Object> buildBodyBlockTxInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets, Boolean withdrawals, Boolean certs, Boolean scripts) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put("_block_hashes", blockHashes);
+        bodyMap.put("_inputs", Optional.ofNullable(inputs).orElse(false));
+        bodyMap.put("_metadata", Optional.ofNullable(metadata).orElse(false));
+        bodyMap.put("_assets", Optional.ofNullable(assets).orElse(false));
+        bodyMap.put("_withdrawals", Optional.ofNullable(withdrawals).orElse(false));
+        bodyMap.put("_certs", Optional.ofNullable(certs).orElse(false));
+        bodyMap.put("_scripts", Optional.ofNullable(scripts).orElse(false));
+        return bodyMap;
     }
 
     private Map<String, Object> buildBody(List<String> blockHashes) {

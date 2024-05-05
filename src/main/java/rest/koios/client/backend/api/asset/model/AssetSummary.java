@@ -38,4 +38,9 @@ public class AssetSummary {
      * Total number of payment addresses (not belonging to registered wallets) holding the given asset
      */
     private Long unstakedAddresses;
+
+    /**
+     * Total number of unique addresses holding the given asset
+     */
+    private Long addresses;
 }

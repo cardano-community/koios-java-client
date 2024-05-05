@@ -5,6 +5,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
+import rest.koios.client.backend.api.transactions.model.TxInfo;
 import rest.koios.client.backend.factory.options.Options;
 
 import java.util.List;
@@ -79,4 +80,26 @@ public interface BlockService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<BlockTxHash>> getBlockTransactions(List<String> blockHashes, Options options) throws ApiException;
+
+    /**
+     * Block Transactions (Detailed Info)
+     * Get detailed information about transaction(s) for requested blocks
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param blockHashes List of Block Hashes in hex format (required)
+     * @param inputs Controls whether to include transaction inputs in the result
+     * @param metadata Controls whether to include transaction metadata in the result
+     * @param assets Controls whether to include assets involved within transaction the result
+     * @param withdrawals Controls whether to include any stake account reward withdrawals in the
+     * @param certs Controls whether to include transaction certificates in the result
+     * @param scripts Controls whether to include any details regarding
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link TxInfo} Included Transactions of a specific block
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     *
+     */
+    Result<List<TxInfo>> getBlockTransactionsInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets,
+                                                 Boolean withdrawals, Boolean certs, Boolean scripts, Options options) throws ApiException;
 }
