@@ -21,7 +21,7 @@
         <slf4j-reload4j.version>2.0.9</slf4j-reload4j.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <lombok.version>1.18.30</lombok.version>
-        <bcprov-jdk15to18.version>1.77</bcprov-jdk15to18.version>
+        <bcprov-jdk15to18.version>1.78.1</bcprov-jdk15to18.version>
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
