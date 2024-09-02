@@ -34,7 +34,7 @@ public class TxInfo {
     /**
      * Block height
      */
-    private Integer blockHeight = null;
+    private Long blockHeight = null;
 
     /**
      * Epoch number of the block
@@ -49,12 +49,12 @@ public class TxInfo {
     /**
      * Absolute slot number of the block
      */
-    private Integer absoluteSlot = null;
+    private Long absoluteSlot = null;
 
     /**
      * UNIX timestamp of the transaction
      */
-    private Integer txTimestamp = null;
+    private Long txTimestamp = null;
 
     /**
      * Index of transaction within block
@@ -75,6 +75,11 @@ public class TxInfo {
      * Total Transaction fee (in lovelaces)
      */
     private String fee = null;
+
+    /**
+     * Total Donation to on-chain treasury (in numbers)
+     */
+    private String treasuryDonation;
 
     /**
      * Total Deposits included in transaction (for example, if it is registering a pool/key)
@@ -145,4 +150,14 @@ public class TxInfo {
      * Plutus contracts present in transaction (if any)
      */
     private List<TxPlutusContract> plutusContracts;
+
+    /**
+     * Governance votes in a transaction (if any)
+     */
+    private List<VotingProcedure> votingProcedures;
+
+    /**
+     * Governance proposals in a transaction (if any)
+     */
+    private List<ProposalProcedure> proposalProcedures;
 }

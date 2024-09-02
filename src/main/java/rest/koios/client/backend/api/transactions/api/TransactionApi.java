@@ -25,6 +25,16 @@ public interface TransactionApi {
     Call<List<UTxO>> getUTxOInfo(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * Get Raw Transaction (CBOR)
+     *
+     * @param requestBody Json Body containing Array of Cardano Transaction hashes
+     * @param paramsMap   Filtering Options Query Parameters
+     * @return detailed information about transaction(s)
+     */
+    @POST("tx_cbor")
+    Call<List<RawTx>> getRawTransaction(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Get Transaction Information
      *
      * @param requestBody Json Body containing Array of Cardano Transaction hashes

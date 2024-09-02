@@ -5,6 +5,7 @@ import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.asset.AssetService;
 import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.epoch.EpochService;
+import rest.koios.client.backend.api.governance.GovernanceService;
 import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.api.pool.PoolService;
 import rest.koios.client.backend.api.script.ScriptService;
@@ -69,4 +70,10 @@ public interface BackendService {
      * @return {@link ScriptService}
      */
     ScriptService getScriptService();
+
+    /**
+     * Get Governance Service
+     * @return {@link GovernanceService}
+     */
+    GovernanceService getGovernanceService();
 }

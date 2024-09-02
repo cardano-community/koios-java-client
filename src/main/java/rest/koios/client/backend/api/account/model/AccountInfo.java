@@ -20,47 +20,58 @@ public class AccountInfo {
     private String stakeAddress;
 
     /**
-     * Account Status
+     * Stake address status
+     * Allowed: registered | not registered
      */
     private String status;
 
     /**
-     * Delegated Pool
+     * Account's current delegation status to DRep ID in CIP-129 Bech32 format
+     */
+    private String delegatedDrep;
+
+    /**
+     * Delegated Pool ID (bech32 format)
      */
     private String delegatedPool;
 
     /**
-     * Account Balance
+     * Total balance of the account including UTxO, rewards and MIRs (in number)
      */
     private String totalBalance;
 
     /**
-     * Utxo Balance
+     * Total UTxO balance of the account
      */
     private String utxo;
 
     /**
-     * Rewards Balance
+     * Total rewards earned by the account
      */
     private String rewards;
 
     /**
-     * Withdrawals Amount
+     * Total rewards withdrawn by the account
      */
     private String withdrawals;
 
     /**
-     * Rewards Available Amount
+     * Total rewards available for withdrawal
      */
     private String rewardsAvailable;
 
     /**
-     * Reserves Amount
+     * Total deposit available for withdrawal
+     */
+    private String deposit;
+
+    /**
+     * Total reserves MIR value of the account
      */
     private String reserves;
 
     /**
-     * Treasury Amount
+     * Total treasury MIR value of the account
      */
     private String treasury;
 }

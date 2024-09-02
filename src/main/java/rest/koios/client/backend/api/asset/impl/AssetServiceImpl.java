@@ -11,9 +11,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.utils.Tuple;
 import retrofit2.Call;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +27,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     /**
      * Asset Service Implementation Constructor
      *
-     * @param baseUrl Base Url
+     * @param baseUrl  Base Url
      * @param apiToken Authorization Bearer JWT Token
      */
     public AssetServiceImpl(String baseUrl, String apiToken) {
@@ -40,23 +38,13 @@ public class AssetServiceImpl extends BaseService implements AssetService {
     @Override
     public Result<List<Asset>> getAssetList(Options options) throws ApiException {
         Call<List<Asset>> call = assetApi.getAssetList(optionsToParamMap(options));
-        try {
-            Response<List<Asset>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<AssetTokenRegistry>> getAssetTokenRegistry(Options options) throws ApiException {
         Call<List<AssetTokenRegistry>> call = assetApi.getAssetTokenRegistry(optionsToParamMap(options));
-        try {
-            Response<List<AssetTokenRegistry>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -64,12 +52,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<AssetAddress>> call = assetApi.getAssetsAddresses(assetPolicy, assetName, optionsToParamMap(options));
-        try {
-            Response<List<AssetAddress>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -77,24 +60,14 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<PaymentAddress>> call = assetApi.getNFTAddress(assetPolicy, assetName, optionsToParamMap(options));
-        try {
-            Response<List<PaymentAddress>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<AssetAddress>> getPolicyAssetAddressList(String assetPolicy, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         Call<List<AssetAddress>> call = assetApi.getPolicyAssetAddressList(assetPolicy, optionsToParamMap(options));
-        try {
-            Response<List<AssetAddress>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -102,16 +75,11 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<AssetInformation>> call = assetApi.getAssetInformation(assetPolicy, assetName);
-        try {
-            Response<List<AssetInformation>> response = (Response) execute(call);
-            return processResponseGetOne(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponseGetOne(call);
     }
 
     @Override
-    public Result<AssetInformation> getAssetInformationBulk(List<Tuple<String, String>> assetList, Options options) throws ApiException {
+    public Result<List<AssetInformation>> getAssetInformationBulk(List<Tuple<String, String>> assetList, Options options) throws ApiException {
         if (assetList == null) {
             return badRequestResult("The server cannot process the request due to invalid input");
         }
@@ -120,12 +88,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
             validateHexFormat(tuple._2);
         }
         Call<List<AssetInformation>> call = assetApi.getAssetInformationBulk(buildBody("_asset_list", assetList), optionsToParamMap(options));
-        try {
-            Response<List<AssetInformation>> response = (Response) execute(call);
-            return processResponseGetOne(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -138,12 +101,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
             validateHexFormat(tuple._2);
         }
         Call<List<UTxO>> call = assetApi.getAssetUTxOs(buildBodyUTxOs(assetList, extended), optionsToParamMap(options));
-        try {
-            Response<List<UTxO>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -151,48 +109,28 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<AssetHistory>> call = assetApi.getAssetHistory(assetPolicy, assetName, optionsToParamMap(options));
-        try {
-            Response<List<AssetHistory>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<PolicyAssetInfo>> getPolicyAssetInformation(String assetPolicy, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         Call<List<PolicyAssetInfo>> call = assetApi.getPolicyAssetInformation(assetPolicy, optionsToParamMap(options));
-        try {
-            Response<List<PolicyAssetInfo>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<PolicyAssetMint>> getPolicyAssetMints(String assetPolicy, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         Call<List<PolicyAssetMint>> call = assetApi.getPolicyAssetMints(assetPolicy, optionsToParamMap(options));
-        try {
-            Response<List<PolicyAssetMint>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<PolicyAsset>> getPolicyAssetList(String assetPolicy, Options options) throws ApiException {
         validateHexFormat(assetPolicy);
         Call<List<PolicyAsset>> call = assetApi.getPolicyAssetList(assetPolicy, optionsToParamMap(options));
-        try {
-            Response<List<PolicyAsset>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -200,12 +138,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<AssetSummary>> call = assetApi.getAssetSummary(assetPolicy, assetName);
-        try {
-            Response<List<AssetSummary>> response = (Response) execute(call);
-            return processResponseGetOne(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponseGetOne(call);
     }
 
     @Override
@@ -218,12 +151,7 @@ public class AssetServiceImpl extends BaseService implements AssetService {
         validateHexFormat(assetPolicy);
         validateHexFormat(assetName);
         Call<List<TxHash>> call = assetApi.getAssetTransactionHistory(assetPolicy, assetName, afterBlockHeight, history, optionsToParamMap(options));
-        try {
-            Response<List<TxHash>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     private Map<String, Object> buildBody(String arrayObjString, List<Tuple<String, String>> list) {

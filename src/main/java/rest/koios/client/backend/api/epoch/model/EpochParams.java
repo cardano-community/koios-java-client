@@ -179,4 +179,114 @@ public class EpochParams {
      * The cost per UTxO size
      */
     private String coinsPerUtxoSize = null;
+
+    /**
+     * Pool Voting threshold for motion of no-confidence.
+     */
+    private BigDecimal pvtMotionNoConfidence = null;
+
+    /**
+     * Pool Voting threshold for new committee/threshold (normal state).
+     */
+    private BigDecimal pvtCommitteeNormal = null;
+
+    /**
+     * Pool Voting threshold for new committee/threshold (state of no-confidence).
+     */
+    private BigDecimal pvtCommitteeNoConfidence = null;
+
+    /**
+     * Pool Voting threshold for hard-fork initiation.
+     */
+    private BigDecimal pvtHardForkInitiation = null;
+
+    /**
+     * DRep Vote threshold for motion of no-confidence.
+     */
+    private BigDecimal dvtMotionNoConfidence = null;
+
+    /**
+     * DRep Vote threshold for new committee/threshold (normal state).
+     */
+    private BigDecimal dvtCommitteeNormal = null;
+
+    /**
+     * DRep Vote threshold for new committee/threshold (state of no-confidence).
+     */
+    private BigDecimal dvtCommitteeNoConfidence = null;
+
+    /**
+     * DRep Vote threshold for update to the Constitution.
+     */
+    private BigDecimal dvtUpdateToConstitution = null;
+
+    /**
+     * DRep Vote threshold for hard-fork initiation.
+     */
+    private BigDecimal dvtHardForkInitiation = null;
+
+    /**
+     * DRep Vote threshold for protocol parameter changes, network group.
+     */
+    private BigDecimal dvtPPNetworkGroup = null;
+
+    /**
+     * DRep Vote threshold for protocol parameter changes, economic group.
+     */
+    private BigDecimal dvtPPEconomicGroup = null;
+
+    /**
+     * DRep Vote threshold for protocol parameter changes, technical group.
+     */
+    private BigDecimal dvtPPTechnicalGroup = null;
+
+    /**
+     * DRep Vote threshold for protocol parameter changes, governance group.
+     */
+    private BigDecimal dvtPPGovGroup = null;
+
+    /**
+     * DRep Vote threshold for treasury withdrawal.
+     */
+    private BigDecimal dvtTreasuryWithdrawal = null;
+
+    /**
+     * Minimal constitutional committee size.
+     */
+    private Integer committeeMinSize = null;
+
+    /**
+     * Constitutional committee term limits.
+     */
+    private Integer committeeMaxTermLength = null;
+
+    /**
+     * Governance action expiration.
+     */
+    private Integer govActionLifetime = null;
+
+    /**
+     * Governance action deposit.
+     */
+    private String govActionDeposit = null;
+
+    /**
+     * DRep deposit amount.
+     */
+    private String drepDeposit = null;
+
+    /**
+     * DRep activity period.
+     */
+    private Integer drepActivity = null;
+
+    /**
+     * Pool Voting threshold for protocol parameter changes, security group.
+     */
+    private BigDecimal pvtppSecurityGroup = null;
+
+    /**
+     * Minimum Fee for Reference Script cost per byte.
+     */
+    private BigDecimal minFeeRefScriptCostPerByte = null;
 }

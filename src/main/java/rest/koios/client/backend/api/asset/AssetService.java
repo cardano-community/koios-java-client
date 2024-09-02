@@ -115,7 +115,7 @@ public interface AssetService {
      * @return Result of Type List of {@link AssetInformation}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<AssetInformation> getAssetInformationBulk(List<Tuple<String, String>> assetList, Options options) throws ApiException;
+    Result<List<AssetInformation>> getAssetInformationBulk(List<Tuple<String, String>> assetList, Options options) throws ApiException;
 
     /**
      * Asset UTxOs

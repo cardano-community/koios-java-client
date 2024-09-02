@@ -55,6 +55,11 @@ public class PoolInfo {
     private String pledge;
 
     /**
+     * Pool's registration deposit in number
+     */
+    private String deposit;
+
+    /**
      * Pool reward address
      */
     private String rewardAddr;

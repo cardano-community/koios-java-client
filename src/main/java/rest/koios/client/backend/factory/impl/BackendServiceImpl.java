@@ -13,6 +13,8 @@ import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.impl.BlockServiceImpl;
 import rest.koios.client.backend.api.epoch.EpochService;
 import rest.koios.client.backend.api.epoch.impl.EpochServiceImpl;
+import rest.koios.client.backend.api.governance.GovernanceService;
+import rest.koios.client.backend.api.governance.impl.GovernanceServiceImpl;
 import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.api.network.impl.NetworkServiceImpl;
 import rest.koios.client.backend.api.pool.PoolService;
@@ -42,6 +44,7 @@ public class BackendServiceImpl implements BackendService {
     private final AssetService assetService;
     private final PoolService poolService;
     private final ScriptService scriptService;
+    private final GovernanceService governanceService;
 
     /**
      * Backend Service Implementation Constructor
@@ -58,7 +61,7 @@ public class BackendServiceImpl implements BackendService {
      * @param baseUrl baseUrl
      */
     public BackendServiceImpl(String baseUrl, String apiToken) {
-        log.info("Koios URL: " + baseUrl);
+        log.info("Koios URL: {}", baseUrl);
         this.networkService = new NetworkServiceImpl(baseUrl, apiToken);
         this.epochService = new EpochServiceImpl(baseUrl, apiToken);
         this.blockService = new BlockServiceImpl(baseUrl, apiToken);
@@ -68,6 +71,7 @@ public class BackendServiceImpl implements BackendService {
         this.assetService = new AssetServiceImpl(baseUrl, apiToken);
         this.poolService = new PoolServiceImpl(baseUrl, apiToken);
         this.scriptService = new ScriptServiceImpl(baseUrl, apiToken);
+        this.governanceService = new GovernanceServiceImpl(baseUrl, apiToken);
     }
 
     /**

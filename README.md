@@ -261,6 +261,63 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the list of all asset transaction hashes (newest first)</td>
         </tr>
         <tr>
+            <td rowspan="14">Governance</td>
+            <td>DReps Epoch Summary</td>
+            <td>Summary of voting power and DRep count for each epoch</td>
+        </tr>
+        <tr>
+            <td>DReps List</td>
+            <td>List of all active delegated representatives (DReps)</td>
+        </tr>
+        <tr>
+            <td>DReps Info</td>
+            <td>Get detailed information about requested delegated representatives (DReps)</td>
+        </tr>
+        <tr>
+            <td>DReps Metadata</td>
+            <td>List metadata for requested delegated representatives (DReps)</td>
+        </tr>
+        <tr>
+            <td>DReps Updates</td>
+            <td>List of updates for requested (or all) delegated representatives (DReps)</td>
+        </tr>
+        <tr>
+            <td>DReps Votes</td>
+            <td>List of all votes casted by requested delegated representative (DRep)</td>
+        </tr>
+        <tr>
+            <td>DReps Delegators</td>
+            <td>List of all delegators to requested delegated representative (DRep).</td>
+        </tr>
+        <tr>
+            <td>Committee Information</td>
+            <td>Information about active committee and its members</td>
+        </tr>
+        <tr>
+            <td>Committee Votes</td>
+            <td>List of all votes casted by given committee member or collective</td>
+        </tr>
+        <tr>
+            <td>Proposals List</td>
+            <td>List of all governance proposals</td>
+        </tr>
+        <tr>
+            <td>Voter's Proposal List</td>
+            <td>List of all governance proposals for specified DRep, SPO or Committee credential</td>
+        </tr>
+        <tr>
+            <td>Proposal Voting Summary</td>
+            <td>Summary of votes for given proposal</td>
+        </tr>
+        <tr>
+            <td>Proposal Votes</td>
+            <td>List of all votes cast on specified governance action</td>
+        </tr>
+        <tr>
+            <td>Pool Votes</td>
+            <td>List of all votes casted by a pool</td>
+        </tr>
+        <tr>
             <td rowspan="12">Pool</td>
             <td>Pool List</td>
             <td>A list of all currently registered/retiring (not retired) pools</td>
@@ -343,7 +400,8 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
-|     1.1.1      |      1.18.2       |
+|     1.2.0      |      1.19.0       |
+|     1.1.2      |      1.18.2       |
 |     1.0.10     |      1.17.3       |
 |     1.0.9      |      1.16.3       |
 |     1.0.8      |      1.15.2       |
@@ -360,13 +418,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.18.2</version>
+    <version>1.18.3</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.18.2'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.18.3'
 ```
 
 ### Get Koios Backend Service (No API Token)

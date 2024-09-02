@@ -12,9 +12,7 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.SortType;
 import retrofit2.Call;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +28,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     /**
      * Address Service Implementation Constructor
      *
-     * @param baseUrl Base Url
+     * @param baseUrl  Base Url
      * @param apiToken Authorization Bearer JWT Token
      */
     public AddressServiceImpl(String baseUrl, String apiToken) {
@@ -42,16 +40,11 @@ public class AddressServiceImpl extends BaseService implements AddressService {
     public Result<AddressInfo> getAddressInformation(String address) throws ApiException {
         validateBech32(address);
         Call<List<AddressInfo>> call = addressApi.getAddressInformation(buildBody("_addresses", List.of(address), null), optionsToParamMap(Options.EMPTY));
-        try {
-            Response<List<AddressInfo>> response = (Response) execute(call);
-            Result<AddressInfo> result = processResponseGetOne(response);
-            if (result.isSuccessful()) {
-                result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
-            }
-            return result;
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
+        Result<AddressInfo> result = processResponseGetOne(call);
+        if (result.isSuccessful()) {
+            result.getValue().setUtxoSet(new TreeSet<>(result.getValue().getUtxoSet()));
         }
+        return result;
     }
 
     @Override
@@ -60,22 +53,17 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateBech32(address);
         }
         Call<List<AddressInfo>> call = addressApi.getAddressInformation(buildBody("_addresses", addressList, null), optionsToParamMap(options));
-        try {
-            Response<List<AddressInfo>> response = (Response) execute(call);
-            Result<List<AddressInfo>> result = processResponse(response);
-            if (result.isSuccessful()) {
-                result.getValue().forEach(addressInfo -> {
-                    if (utxoSortType == SortType.DESC) {
-                        addressInfo.setUtxoSet(new TreeSet<>(addressInfo.getUtxoSet()).descendingSet());
-                    } else {
-                        addressInfo.setUtxoSet(new TreeSet<>(addressInfo.getUtxoSet()));
-                    }
-                });
-            }
-            return result;
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
+        Result<List<AddressInfo>> result = processResponse(call);
+        if (result.isSuccessful()) {
+            result.getValue().forEach(addressInfo -> {
+                if (utxoSortType == SortType.DESC) {
+                    addressInfo.setUtxoSet(new TreeSet<>(addressInfo.getUtxoSet()).descendingSet());
+                } else {
+                    addressInfo.setUtxoSet(new TreeSet<>(addressInfo.getUtxoSet()));
+                }
+            });
         }
+        return result;
     }
 
     @Override
@@ -84,12 +72,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateBech32(address);
         }
         Call<List<UTxO>> call = addressApi.getAddressUTxOs(buildBodyUTxOs(addresses, extended), optionsToParamMap(options));
-        try {
-            Response<List<UTxO>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -98,17 +81,12 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateHexFormat(address);
         }
         Call<List<UTxO>> call = addressApi.getUTxOsFromPaymentCredentials(buildBodyUTxOsFromPaymentCredentials(paymentCredentials, extended), optionsToParamMap(options));
-        try {
-            Response<List<UTxO>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<TxHash>> getAddressTransactions(List<String> addressList, Options options) throws ApiException {
-        return getAddressTransactions(addressList,0,options);
+        return getAddressTransactions(addressList, 0, options);
     }
 
     @Override
@@ -120,12 +98,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateBech32(address);
         }
         Call<List<TxHash>> call = addressApi.getAddressTransactions(buildBody("_addresses", addressList, afterBlockHeight), optionsToParamMap(options));
-        try {
-            Response<List<TxHash>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -134,12 +107,7 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateBech32(address);
         }
         Call<List<AddressAsset>> call = addressApi.getAddressAssets(buildBody("_addresses", addressList, null), optionsToParamMap(options));
-        try {
-            Response<List<AddressAsset>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -156,17 +124,12 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateHexFormat(paymentCredentials);
         }
         Call<List<TxHash>> call = addressApi.getTransactionsByPaymentCredentials(buildBody("_payment_credentials", paymentCredentialsList, afterBlockHeight), optionsToParamMap(options));
-        try {
-            Response<List<TxHash>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
-    private Map<String,Object> buildBody(String arrayObjString, List<String> list, Integer afterBlockHeight) {
-        Map<String,Object> bodyMap = new HashMap<>();
-        bodyMap.put(arrayObjString,list);
+    private Map<String, Object> buildBody(String arrayObjString, List<String> list, Integer afterBlockHeight) {
+        Map<String, Object> bodyMap = new HashMap<>();
+        bodyMap.put(arrayObjString, list);
         if (afterBlockHeight != null) {
             bodyMap.put("_after_block_height", afterBlockHeight);
         }

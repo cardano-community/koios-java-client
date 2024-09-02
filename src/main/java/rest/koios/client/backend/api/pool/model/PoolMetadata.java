@@ -33,9 +33,4 @@ public class PoolMetadata {
      * Metadata Json Object
      */
     private MetaJson metaJson;
-
-    /**
-     * Pool Status: registered | retiring | retired
-     */
-    private String poolStatus;
 }

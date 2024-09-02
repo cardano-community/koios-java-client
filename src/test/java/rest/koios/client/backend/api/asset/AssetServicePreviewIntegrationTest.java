@@ -123,7 +123,7 @@ class AssetServicePreviewIntegrationTest {
     void getAssetInformationBulkTest() throws ApiException {
         List<Tuple<String, String>> tupleList = List.of(new Tuple<>("065270479316f1d92e00f7f9f095ebeaac9d009c878dc35ce36d3404", "433374"),
                 new Tuple<>("189e2c53985411addb8df0f3e09f70e343da69f06746c408aba672a8", "15fc257714a51769e192761d674db2ee2e80137428e522f9b914debb5f785301"));
-        Result<AssetInformation> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
+        Result<List<AssetInformation>> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
         Assertions.assertTrue(assetInformationBulkResult.isSuccessful());
         Assertions.assertNotNull(assetInformationBulkResult.getValue());
         log.info(assetInformationBulkResult.getValue().toString());

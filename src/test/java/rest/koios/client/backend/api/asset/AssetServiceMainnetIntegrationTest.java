@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.platform.commons.util.StringUtils;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.base.Result;
@@ -12,13 +13,20 @@ import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
+import rest.koios.client.backend.factory.options.Offset;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.filters.Filter;
 import rest.koios.client.backend.factory.options.filters.FilterType;
+import rest.koios.client.utils.HexUtil;
 import rest.koios.client.utils.Tuple;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -136,7 +144,7 @@ class AssetServiceMainnetIntegrationTest {
     void getAssetInformationBulkTest() throws ApiException {
         List<Tuple<String, String>> tupleList = List.of(new Tuple<>("750900e4999ebe0d58f19b634768ba25e525aaf12403bfe8fe130501", "424f4f4b"),
                 new Tuple<>("f0ff48bbb7bbe9d59a40f1ce90e9e9d0ff5002ec48f232b49ca0fb9a", "6b6f696f732e72657374"));
-        Result<AssetInformation> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
+        Result<List<AssetInformation>> assetInformationBulkResult = assetService.getAssetInformationBulk(tupleList, Options.EMPTY);
         Assertions.assertTrue(assetInformationBulkResult.isSuccessful());
         Assertions.assertNotNull(assetInformationBulkResult.getValue());
         log.info(assetInformationBulkResult.getValue().toString());
@@ -237,4 +245,53 @@ class AssetServiceMainnetIntegrationTest {
         ApiException exception = assertThrows(ApiException.class, () -> assetService.getAssetTransactions(assetPolicy, assetNameHex, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
+
+
+    @Test
+    void getNFTArrivalDate() throws ApiException {
+        String assetPolicy = "2edd9753b85e908ac63c5ae7b3bb013ad871da4a450b5f21a5218c46";
+        List<PolicyAsset> policyAssets = getAllPolicyAssetList(assetPolicy);
+        policyAssets.forEach(policyAsset -> {
+            Result<List<PaymentAddress>> listResult;
+            try {
+                listResult = assetService.getNFTAddress(assetPolicy, policyAsset.getAssetName(), Options.EMPTY);
+                Assertions.assertTrue(listResult.isSuccessful());
+                List<PaymentAddress> paymentAddresses = listResult.getValue();
+                System.out.println(policyAsset.getFingerprint()+","+new String(HexUtil.decodeHexString(policyAsset.getAssetName()))+","+paymentAddresses);
+//                addresses.addAll(paymentAddresses.stream().map(PaymentAddress::toString).collect(Collectors.toList()));
+            } catch (ApiException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    public List<PolicyAsset> getAllPolicyAssetList(String assetPolicy) throws ApiException {
+        List<PolicyAsset> policyAssets = new ArrayList<>();
+        int page = 1;
+        Options options = Options.builder()
+                .option(Limit.of(1000))
+                .option(Offset.of(0))
+                .build();
+        Result<List<PolicyAsset>> policyAssetList = assetService.getPolicyAssetList(assetPolicy, options);
+        while (policyAssetList.isSuccessful()) {
+            policyAssets.addAll(policyAssetList.getValue());
+            if (policyAssetList.getValue().size() != 1000) {
+                break;
+            } else {
+                page++;
+                options = Options.builder()
+                        .option(Limit.of(1000))
+                        .option(Offset.of((long) (page - 1) * 1000))
+                        .build();
+                policyAssetList = assetService.getPolicyAssetList(assetPolicy, options);
+            }
+        }
+        if (!policyAssetList.isSuccessful()) {
+            return policyAssetList.getValue();
+        } else {
+            return policyAssets;
+        }
+    }
+
+
 }

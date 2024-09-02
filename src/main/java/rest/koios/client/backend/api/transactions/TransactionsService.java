@@ -26,6 +26,19 @@ public interface TransactionsService {
      */
     Result<List<UTxO>> getUTxOInfo(List<String> utxoRefs, boolean extended) throws ApiException;
 
+    /**
+     * Raw Transaction (CBOR)
+     * Get raw transaction(s) in CBOR format
+     * <p><b>200</b> - Raw Transaction(s) in CBOR format
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param txHashes List of Cardano Transaction hashes
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link RawTx} Raw Transaction(s) in CBOR format
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<RawTx>> getRawTransaction(List<String> txHashes, Options options) throws ApiException;
 
     /**
      * Transaction Information for Specific Transaction

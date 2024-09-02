@@ -35,11 +35,11 @@ public class BaseService {
 
     private final Retrofit retrofit;
     private int retriesCount = 5;
-    private static final int SLEEP_TIME_MILLIS = 2000;
     private boolean retryOnTimeout = true;
     private final String apiToken;
     private int readTimeoutSec = 300;
     private int connectTimeoutSec = 300;
+    private int sleepTimeSec = 60;
     private boolean gzipCompression = true;
 
     /**
@@ -54,7 +54,7 @@ public class BaseService {
     /**
      * Base Service Constructor
      *
-     * @param baseUrl Base URL
+     * @param baseUrl  Base URL
      * @param apiToken Authorization Bearer JWT Token
      */
     public BaseService(String baseUrl, String apiToken) {
@@ -93,7 +93,7 @@ public class BaseService {
                     Request original = chain.request();
 
                     Request request = original.newBuilder()
-                            .header("Authorization", "Bearer "+apiToken)
+                            .header("Authorization", "Bearer " + apiToken)
                             .method(original.method(), original.body())
                             .build();
                     return chain.proceed(request);
@@ -116,23 +116,33 @@ public class BaseService {
         if (retryOnTimeoutEnv != null && !Boolean.parseBoolean(retryOnTimeoutEnv)) {
             retryOnTimeout = false;
         }
+
+        String sleepTimeSecEnv = System.getenv("KOIOS_JAVA_LIB_RETRY_SLEEP_TIME_SEC");
+        if (sleepTimeSecEnv != null && !sleepTimeSecEnv.isEmpty()) {
+            sleepTimeSec = Math.max(Integer.parseInt(sleepTimeSecEnv), 60);
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         retrofit = new Retrofit.Builder().baseUrl(baseUrl).client(okHttpClientBuilder.build()).addConverterFactory(JacksonConverterFactory
                 .create(objectMapper)).build();
     }
 
-    protected <T> Result<T> processResponseGetOne(Response<List<T>> response) throws IOException {
-        if (response.isSuccessful()) {
-            if (response.body() != null && !response.body().isEmpty()) {
-                return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body().get(0)).code(response.code()).build();
-            } else if (response.body() != null) {
-                return (Result<T>) Result.builder().successful(false).response("Response Body is Empty").code(404).build();
+    protected <T> Result<T> processResponseGetOne(Call<List<T>> call) throws ApiException {
+        try {
+            Response<List<T>> response = (Response<List<T>>) execute(call);
+            if (response.isSuccessful()) {
+                if (response.body() != null && !response.body().isEmpty()) {
+                    return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body().get(0)).code(response.code()).build();
+                } else if (response.body() != null) {
+                    return (Result<T>) Result.builder().successful(false).response("Response Body is Empty").code(404).build();
+                } else {
+                    return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
+                }
             } else {
-                return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
+                return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
             }
-        } else {
-            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
         }
     }
 
@@ -143,16 +153,21 @@ public class BaseService {
     /**
      * processResponse
      *
-     * @param response the Response to process
-     * @param <T>      Type Of Response
+     * @param call the call to execute
+     * @param <T>  Type Of Response
      * @return Result of Response
-     * @throws IOException upon null Response Error Body
+     * @throws ApiException upon null Response Error Body
      */
-    protected <T> Result<T> processResponse(Response<T> response) throws IOException {
-        if (response.isSuccessful())
-            return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body()).code(response.code()).build();
-        else
-            return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
+    protected <T> Result<T> processResponse(Call<?> call) throws ApiException {
+        try {
+            Response<T> response = (Response<T>) execute(call);
+            if (response.isSuccessful())
+                return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body()).code(response.code()).build();
+            else
+                return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
+        } catch (IOException e) {
+            throw new ApiException(e.getMessage(), e);
+        }
     }
 
     /**
@@ -163,31 +178,35 @@ public class BaseService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      * @throws IOException  if an error occurs while attempting to invoke the API
      */
-    public Response<Object> execute(Call<?> call) throws ApiException, IOException {
+    public Response<?> execute(Call<?> call) throws ApiException, IOException {
         int tryCount = 1;
-        while (tryCount <= retriesCount) {
+        Response<?> response = null;
+        while (tryCount < retriesCount) {
             try {
-                Response<Object> response = (Response<Object>) call.clone().execute();
+                response = call.clone().execute();
                 if (response.code() == 429) {
                     log.warn("429 Too Many Requests.");
-                    tryCount = retry(tryCount);
+                    tryCount = retry(tryCount, response.code());
                 } else if (response.code() == 504) {
                     log.warn(response.message());
-                    tryCount = retry(tryCount);
+                    tryCount = retry(tryCount, response.code());
                 } else {
                     return response;
                 }
             } catch (SocketTimeoutException e) {
                 log.warn(e.getMessage());
                 if (retryOnTimeout) {
-                    tryCount = retry(tryCount);
+                    tryCount = retry(tryCount, null);
                 } else {
                     throw new ApiException("Timeout Error");
                 }
             }
         }
-        throw new ApiException("Retry Count Exceeded (" + tryCount + "/" + retriesCount + ").");
-
+        if (response != null) {
+            throw new ApiException("Retry Count Exceeded (" + tryCount + "/" + retriesCount + "). Reason: " + response);
+        } else {
+            throw new ApiException("Retry Count Exceeded (" + tryCount + "/" + retriesCount + ").");
+        }
     }
 
     private void sleep(int timeMillis) {
@@ -198,11 +217,15 @@ public class BaseService {
         }
     }
 
-    private int retry(int tryCount) {
+    private int retry(int tryCount, Integer responseCode) throws ApiException {
         tryCount++;
         if (tryCount < retriesCount) {
-            log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", SLEEP_TIME_MILLIS * tryCount / 1000);
-            sleep(SLEEP_TIME_MILLIS * tryCount);
+            log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", getSleepTimeSec() * tryCount);
+            sleep(getSleepTimeSec() * tryCount);
+        } else if (responseCode == null) {
+            throw new ApiException("Timeout Error");
+        } else if (responseCode == 429) {
+            throw new ApiException("429 Too Many Requests.");
         }
         return tryCount;
     }

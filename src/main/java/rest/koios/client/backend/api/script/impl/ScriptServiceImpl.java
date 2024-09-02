@@ -5,15 +5,13 @@ import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.common.UTxO;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.script.ScriptService;
-import rest.koios.client.backend.api.script.model.*;
 import rest.koios.client.backend.api.script.api.ScriptApi;
+import rest.koios.client.backend.api.script.model.*;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.filters.Filter;
 import rest.koios.client.backend.factory.options.filters.FilterType;
 import retrofit2.Call;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,23 +40,13 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
             validateHexFormat(scriptHash);
         }
         Call<List<ScriptInfo>> call = scriptApi.getScriptInformation(buildBody("_script_hashes", scriptHashes), optionsToParamMap(options));
-        try {
-            Response<List<ScriptInfo>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<NativeScript>> getNativeScriptList(Options options) throws ApiException {
         Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(options));
-        try {
-            Response<List<NativeScript>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -66,47 +54,27 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
         Call<List<NativeScript>> call = scriptApi.getNativeScriptList(optionsToParamMap(Options.builder()
                 .option(Filter.of("script_hash", FilterType.EQ, scriptHash))
                 .build()));
-        try {
-            Response<List<NativeScript>> response = (Response) execute(call);
-            return processResponseGetOne(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponseGetOne(call);
     }
 
     @Override
     public Result<List<PlutusScript>> getPlutusScriptList(Options options) throws ApiException {
         Call<List<PlutusScript>> call = scriptApi.getPlutusScriptList(optionsToParamMap(options));
-        try {
-            Response<List<PlutusScript>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<ScriptRedeemer>> getScriptRedeemers(String scriptHash, Options options) throws ApiException {
         validateHexFormat(scriptHash);
         Call<List<ScriptRedeemer>> call = scriptApi.getScriptRedeemers(scriptHash, optionsToParamMap(options));
-        try {
-            Response<List<ScriptRedeemer>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
     public Result<List<UTxO>> getScriptUTxOs(String scriptHash, Boolean extended, Options options) throws ApiException {
         validateHexFormat(scriptHash);
         Call<List<UTxO>> call = scriptApi.getScriptUTxOs(scriptHash, extended, optionsToParamMap(options));
-        try {
-            Response<List<UTxO>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     @Override
@@ -115,12 +83,7 @@ public class ScriptServiceImpl extends BaseService implements ScriptService {
             validateHexFormat(datumHash);
         }
         Call<List<DatumInfo>> call = scriptApi.getDatumInformation(buildBody("_datum_hashes", datumHashes), optionsToParamMap(options));
-        try {
-            Response<List<DatumInfo>> response = (Response) execute(call);
-            return processResponse(response);
-        } catch (IOException e) {
-            throw new ApiException(e.getMessage(), e);
-        }
+        return processResponse(call);
     }
 
     private Map<String, Object> buildBody(String arrayObjString, List<String> list) {

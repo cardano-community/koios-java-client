@@ -25,9 +25,4 @@ public class PoolRelay {
      * Relays
      */
     private ArrayList<Relay> relays;
-
-    /**
-     * Pool Status: registered | retiring | retired
-     */
-    private String poolStatus;
 }
