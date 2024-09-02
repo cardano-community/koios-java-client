@@ -113,9 +113,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get detailed information about transaction(s) for requested blocks</td>
         </tr>
         <tr>
-            <td rowspan="6">Transactions</td>
+            <td rowspan="7">Transactions</td>
             <td>UTxO Info</td>
             <td>Get UTxO set for requested UTxO references</td>
+        </tr>
+        <tr>
+            <td>Raw Transaction (CBOR)</td>
+            <td>Get raw transaction(s) in CBOR format</td>
         </tr>
         <tr>
             <td>Transaction Information</td>
