@@ -40,7 +40,7 @@ class TransactionsServiceMainnetIntegrationTest {
 
     @Test
     void getTransactionInformationTest() throws ApiException {
-        String txHash = "f144a8264acf4bdfe2e1241170969c930d64ab6b0996a4a45237b623f1dd670e";
+        String txHash = "8c549208e00ca8027e62429b3daf1bce9557104968870a7e6c0efc914364aaa5";
         String txHash2 = "f5eb5ecd1737ee254bbe94ba6ddb295d90d3e80c138c7ac4e26497ccaf34b00f";
         Result<List<TxInfo>> transactionInformationResult = transactionsService.getTransactionInformation(List.of(txHash, txHash2), Options.EMPTY);
         Assertions.assertTrue(transactionInformationResult.isSuccessful());

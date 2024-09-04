@@ -104,7 +104,7 @@ public class TxInfo {
     /**
      * List of collateral outputs
      */
-    private TxIO collateralOutput = null;
+    private CollateralOutput collateralOutput = null;
 
     /**
      * Reference Inputs
