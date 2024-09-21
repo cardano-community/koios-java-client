@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -23,12 +24,12 @@ public class TxCertificate {
     private Integer index;
 
     /**
-     * Type of certificate (could be delegation, stake_registration, stake_deregistraion, pool_update, pool_retire, param_proposal, reserve_MIR, treasury_MIR)
+     * Type of certificate (could be delegation, stake_registration, stake_deregistraion, pool_update, pool_retire, param_proposal, reserve_MIR, treasury_MIR, drep_registration, vote_delegation)
      */
     private String type;
 
     /**
      * A JSON array containing information from the certificate
      */
-    private TxCertificateInfo info;
+    private JsonNode info;
 }
