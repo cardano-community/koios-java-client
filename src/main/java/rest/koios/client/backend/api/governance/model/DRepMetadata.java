@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.governance.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -43,7 +44,7 @@ public class DRepMetadata {
     /**
      * The raw bytes of the payload (null if not applicable)
      */
-    private String json;
+    private JsonNode json;
 
     /**
      * A warning that occurred while validating the metadata (null if not applicable)
