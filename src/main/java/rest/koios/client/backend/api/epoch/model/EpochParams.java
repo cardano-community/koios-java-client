@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.epoch.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -228,21 +229,25 @@ public class EpochParams {
     /**
      * DRep Vote threshold for protocol parameter changes, network group.
      */
+    @JsonProperty("dvt_p_p_network_group")
     private BigDecimal dvtPPNetworkGroup = null;
 
     /**
      * DRep Vote threshold for protocol parameter changes, economic group.
      */
+    @JsonProperty("dvt_p_p_economic_group")
     private BigDecimal dvtPPEconomicGroup = null;
 
     /**
      * DRep Vote threshold for protocol parameter changes, technical group.
      */
+    @JsonProperty("dvt_p_p_technical_group")
     private BigDecimal dvtPPTechnicalGroup = null;
 
     /**
      * DRep Vote threshold for protocol parameter changes, governance group.
      */
+    @JsonProperty("dvt_p_p_gov_group")
     private BigDecimal dvtPPGovGroup = null;
 
     /**
