@@ -63,5 +63,5 @@ public class DRepInfo {
     /**
      * A hash of the contents of the metadata URL (null if not applicable)
      */
-    private String meatHash;
+    private String metaHash;
 }
