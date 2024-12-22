@@ -65,6 +65,11 @@ public class PoolInfo {
     private String rewardAddr;
 
     /**
+     * Reward address' current delegation status to DRep ID in CIP-129 Bech32 format
+     */
+    private String rewardAddrDelegatedDrep;
+
+    /**
      * List of Pool (co)owner address
      */
     private List<String> owners;
@@ -143,4 +148,9 @@ public class PoolInfo {
      * Pool live saturation (decimal format)
      */
     private Double liveSaturation;
+
+    /**
+     * Current voting power (lovelaces) of this stake pool
+     */
+    private String votingPower;
 }

@@ -58,6 +58,11 @@ public class ProposalVotingSummary {
     private Double drepNoPct;
 
     /**
+     * Number of active 'abstain' votes from dreps
+     */
+    private Integer drepAbstainVotesCast;
+
+    /**
      * Number of 'yes' votes casted by pools
      */
     private Integer poolYesVotesCast;
@@ -88,6 +93,31 @@ public class ProposalVotingSummary {
     private Double poolNoPct;
 
     /**
+     * Percentage of 'abstain' votes from pools
+     */
+    private Double poolAbstainVotesCast;
+
+    /**
+     * Number of non-voting SPO pool reward addresses delegating to 'always_abstain' drep
+     */
+    private Integer poolPassiveAlwaysAbstainVotesAssigned;
+
+    /**
+     * Combined power of non-voting SPO pool votes where reward addresses delegate to 'always_abstain'
+     */
+    private Integer poolPassiveAlwaysAbstainVotePower;
+
+    /**
+     * Number of non-voting SPO pool reward addresses delegating to 'always_no_confidence' drep
+     */
+    private Integer poolPassiveAlwaysNoConfidenceVotesAssigned;
+
+    /**
+     * Combined power of non-voting SPO pool votes where reward addresses delegate to
+     */
+    private Integer poolPassiveAlwaysNoConfidenceVotePower;
+
+    /**
      * Number of 'yes' votes casted by committee
      */
     private Integer committeeYesVotesCast;
@@ -106,4 +136,9 @@ public class ProposalVotingSummary {
      * Percentage of 'no' votes from committee
      */
     private Double committeeNoPct;
+
+    /**
+     * Percentage of 'abstain' votes from committee
+     */
+    private Double committeeAbstainVotesCast;
 }

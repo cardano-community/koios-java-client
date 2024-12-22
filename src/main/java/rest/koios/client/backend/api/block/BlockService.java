@@ -94,12 +94,13 @@ public interface BlockService {
      * @param assets Controls whether to include assets involved within transaction the result
      * @param withdrawals Controls whether to include any stake account reward withdrawals in the
      * @param certs Controls whether to include transaction certificates in the result
-     * @param scripts Controls whether to include any details regarding
+     * @param scripts Controls whether to include any details regarding collateral/reference/datum/script objects in the result
+     * @param byteCode Controls whether to include bytecode for associated reference/plutus scripts
      * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link TxInfo} Included Transactions of a specific block
      * @throws ApiException if an error occurs while attempting to invoke the API
      *
      */
     Result<List<TxInfo>> getBlockTransactionsInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets,
-                                                 Boolean withdrawals, Boolean certs, Boolean scripts, Options options) throws ApiException;
+                                                 Boolean withdrawals, Boolean certs, Boolean scripts, Boolean byteCode, Options options) throws ApiException;
 }

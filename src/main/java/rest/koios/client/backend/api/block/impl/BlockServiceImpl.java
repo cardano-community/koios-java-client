@@ -72,15 +72,19 @@ public class BlockServiceImpl extends BaseService implements BlockService {
     }
 
     @Override
-    public Result<List<TxInfo>> getBlockTransactionsInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets, Boolean withdrawals, Boolean certs, Boolean scripts, Options options) throws ApiException {
+    public Result<List<TxInfo>> getBlockTransactionsInfo(List<String> blockHashes, Boolean inputs, Boolean metadata,
+                                                         Boolean assets, Boolean withdrawals, Boolean certs,
+                                                         Boolean scripts, Boolean byteCode, Options options) throws ApiException {
         for (String blockHash : blockHashes) {
             validateHexFormat(blockHash);
         }
-        Call<List<TxInfo>> call = blockApi.getBlockTransactionsInfo(buildBodyBlockTxInfo(blockHashes, inputs, metadata, assets, withdrawals, certs, scripts), optionsToParamMap(options));
+        Call<List<TxInfo>> call = blockApi.getBlockTransactionsInfo(buildBodyBlockTxInfo(blockHashes, inputs, metadata, assets, withdrawals, certs, scripts, byteCode), optionsToParamMap(options));
         return processResponse(call);
     }
 
-    private Map<String, Object> buildBodyBlockTxInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets, Boolean withdrawals, Boolean certs, Boolean scripts) {
+    private Map<String, Object> buildBodyBlockTxInfo(List<String> blockHashes, Boolean inputs, Boolean metadata,
+                                                     Boolean assets, Boolean withdrawals, Boolean certs,
+                                                     Boolean scripts, Boolean byteCode) {
         Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("_block_hashes", blockHashes);
         bodyMap.put("_inputs", Optional.ofNullable(inputs).orElse(false));
@@ -89,6 +93,7 @@ public class BlockServiceImpl extends BaseService implements BlockService {
         bodyMap.put("_withdrawals", Optional.ofNullable(withdrawals).orElse(false));
         bodyMap.put("_certs", Optional.ofNullable(certs).orElse(false));
         bodyMap.put("_scripts", Optional.ofNullable(scripts).orElse(false));
+        bodyMap.put("_bytecode", Optional.ofNullable(byteCode).orElse(false));
         return bodyMap;
     }
 

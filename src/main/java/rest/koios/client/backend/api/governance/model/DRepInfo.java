@@ -58,10 +58,10 @@ public class DRepInfo {
     /**
      * A URL to a JSON payload of metadata (null if not applicable)
      */
-    private String url;
+    private String metaUrl;
 
     /**
      * A hash of the contents of the metadata URL (null if not applicable)
      */
-    private String hash;
+    private String meatHash;
 }

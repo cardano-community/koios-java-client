@@ -110,7 +110,7 @@ class BlockServicePreviewIntegrationTest {
     @Test
     void getBlockTransactionsInfoTest() throws ApiException {
         String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
-        Result<List<TxInfo>> blockTransactionsResult = blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, Options.EMPTY);
+        Result<List<TxInfo>> blockTransactionsResult = blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, true, Options.EMPTY);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());
         log.info(blockTransactionsResult.getValue().toString());
@@ -119,7 +119,7 @@ class BlockServicePreviewIntegrationTest {
     @Test
     void getBlockTransactionsInfoBadRequestTest() {
         String hash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, true, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }

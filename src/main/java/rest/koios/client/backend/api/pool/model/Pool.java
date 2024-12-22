@@ -90,6 +90,11 @@ public class Pool {
     private String poolStatus;
 
     /**
+     * Amount of delegated stake to this pool at the time of epoch snapshot
+     */
+    private String activeStake;
+
+    /**
      * Announced retiring epoch (nullable)
      */
     private Integer retiringEpoch;

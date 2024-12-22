@@ -52,7 +52,7 @@ class GovernanceServiceMainnetIntegrationTest {
 
     @Test
     void getDRepsMetadataTest() throws ApiException {
-        List<String> drepIds = List.of("drep17l6sywnwqu9aedd6aumev42w39ln5zfl9nw7j4ak6u8swyrwvz3", "drep1s9q5uyddsvza4uk2n9wswy90n8wx9d2jmrq4zgcvlyv055007av");
+        List<String> drepIds = List.of("drep1y2ltat8kjqrmnff3lkkpxy0j5tn66d3m0gy64dc92asft5g6dl9ws", "drep1s9q5uyddsvza4uk2n9wswy90n8wx9d2jmrq4zgcvlyv055007av");
         Result<List<DRepMetadata>> result = governanceService.getDRepsMetadata(drepIds, Options.EMPTY);
         Assertions.assertTrue(result.isSuccessful());
         Assertions.assertNotNull(result.getValue());
