@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.network;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.network.model.*;
@@ -75,6 +76,20 @@ public interface NetworkService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<ParamUpdateProposal>> getParamUpdateProposals(Options options) throws ApiException;
+
+    /**
+     * CLI Protocol Parameters
+     * Get Current Protocol Parameters as published by cardano-cli. Note that the output schema of this command is unfortunately fluid on cardano-node and may vary between CLI versions/era. Accordingly, the returned output for this endpoint is left as raw JSON (single row) and any filtering to output should be done on client-side
+     * <p><b>200</b> - Success!!
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering options (optional)
+     * @return Result of Current Protocol Parameters as raw JSON {@link JsonNode}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<JsonNode> getCliProtocolParameters(Options options) throws ApiException;
 
     /**
      * Reserve Withdrawals

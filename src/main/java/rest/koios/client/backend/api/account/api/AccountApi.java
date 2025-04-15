@@ -70,8 +70,19 @@ public interface AccountApi {
      * @param paramsMap   Query Params
      * @return Full rewards history (including MIR) for a stake address, or certain epoch if specified
      */
+    @Deprecated
     @POST("account_rewards")
     Call<List<AccountRewards>> getAccountRewards(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Account Reward History
+     *
+     * @param requestBody Array of Cardano stake address(es) in bech32 format
+     * @param paramsMap   Query Params
+     * @return Full rewards history (including MIR) for a stake address, or certain epoch if specified
+     */
+    @POST("account_reward_history")
+    Call<List<AccountRewardHistory>> getAccountRewardHistory(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Get Account Updates
@@ -80,8 +91,19 @@ public interface AccountApi {
      * @param paramsMap   Query Params
      * @return Account updates (registration, deregistration, delegation and withdrawals)
      */
+    @Deprecated
     @POST("account_updates")
     Call<List<AccountUpdates>> getAccountUpdates(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Account Update History
+     *
+     * @param requestBody Array of Cardano stake address(es) in bech32 format
+     * @param paramsMap   Query Params
+     * @return Account updates (registration, deregistration, delegation and withdrawals)
+     */
+    @POST("account_update_history")
+    Call<List<AccountUpdateHistory>> getAccountUpdateHistory(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
      * Get Account Addresses
@@ -110,6 +132,17 @@ public interface AccountApi {
      * @param paramsMap   Query Params
      * @return Staking history of an account
      */
+    @Deprecated
     @POST("account_history")
     Call<List<AccountHistory>> getAccountHistory(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Get Account Stake History
+     *
+     * @param requestBody List of Cardano stake address(es) in bech32 format
+     * @param paramsMap   Query Params
+     * @return List of active stake values per epoch
+     */
+    @POST("account_stake_history")
+    Call<List<AccountStakeHistory>> getAccountStakeHistory(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 }

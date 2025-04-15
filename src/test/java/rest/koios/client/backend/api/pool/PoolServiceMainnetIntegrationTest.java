@@ -15,7 +15,6 @@ import rest.koios.client.backend.factory.options.Options;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -125,6 +124,17 @@ class PoolServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getPoolOwnerHistoryTest() throws ApiException {
+        String poolBech32 = "pool100wj94uzf54vup2hdzk0afng4dhjaqggt7j434mtgm8v2gfvfgp";
+        String poolBech32_2 = "pool102s2nqtea2hf5q0s4amj0evysmfnhrn4apyyhd4azcmsclzm96m";
+        String poolBech32_3 = "pool102vsulhfx8ua2j9fwl2u7gv57fhhutc3tp6juzaefgrn7ae35wm";
+        Result<List<PoolOwnerHistory>> poolBlocksResult = poolService.getPoolOwnerHistory(List.of(poolBech32, poolBech32_2, poolBech32_3), Options.EMPTY);
+        Assertions.assertTrue(poolBlocksResult.isSuccessful());
+        Assertions.assertNotNull(poolBlocksResult.getValue());
+        log.info(poolBlocksResult.getValue().toString());
+    }
+
+    @Test
     void getPoolHistoryByEpochTest() throws ApiException {
         String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
         Integer epochNo = 294;
@@ -207,6 +217,14 @@ class PoolServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getPoolGroupsTest() throws ApiException {
+        Result<List<PoolGroup>> poolGroupsResult = poolService.getPoolGroups(Options.EMPTY);
+        Assertions.assertTrue(poolGroupsResult.isSuccessful());
+        Assertions.assertNotNull(poolGroupsResult.getValue());
+        log.info(poolGroupsResult.getValue().toString());
+    }
+
+    @Test
     void getPoolMetadataLimitTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<PoolMetadata>> poolMetadataResult = poolService.getPoolMetadata(options);
@@ -214,5 +232,13 @@ class PoolServiceMainnetIntegrationTest {
         Assertions.assertNotNull(poolMetadataResult.getValue());
         log.info(poolMetadataResult.getValue().toString());
         assertEquals(10, poolMetadataResult.getValue().size());
+    }
+
+    @Test
+    void getPoolCalidusKeysTest() throws ApiException {
+        Result<List<PoolCalidusKey>> poolCalidusKeysResult = poolService.getPoolCalidusKeys(Options.EMPTY);
+        Assertions.assertTrue(poolCalidusKeysResult.isSuccessful());
+        Assertions.assertNotNull(poolCalidusKeysResult.getValue());
+        log.info(poolCalidusKeysResult.getValue().toString());
     }
 }

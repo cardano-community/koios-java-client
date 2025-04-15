@@ -67,6 +67,17 @@ public interface GovernanceApi {
     Call<List<DRepUpdate>> getDRepsUpdates(@Query("_drep_id") String drepId, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * DReps Voting Power History
+     * History of DReps voting power against each (or requested) epoch
+     *
+     * @param drepId    DRep ID in bech32 format
+     * @param paramsMap Filtering Options Query Parameters
+     * @return List of all votes casted by requested delegated representative (DRep)
+     */
+    @GET("drep_voting_power_history")
+    Call<List<DRepVotingPowerHistory>> getDRepsVotingPowerHistory(@Query("_drep_id") String drepId, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * DReps Votes
      * List of all votes casted by requested delegated representative (DRep)
      *
@@ -74,6 +85,7 @@ public interface GovernanceApi {
      * @param paramsMap Filtering Options Query Parameters
      * @return List of all votes casted by requested delegated representative (DRep)
      */
+    @Deprecated
     @GET("drep_votes")
     Call<List<DRepVote>> getDRepsVotes(@Query("_drep_id") String drepId, @QueryMap Map<String, String> paramsMap);
 
@@ -123,12 +135,11 @@ public interface GovernanceApi {
      * Voter's Proposal List
      * List of all governance proposals for specified DRep, SPO or Committee credential
      *
-     * @param voterId   Voter ID (Drep, SPO, Committee Member) in Bech32 format (CIP-5 | CIP-129)
      * @param paramsMap Filtering Options Query Parameters
      * @return List of all governance action proposals
      */
     @GET("voter_proposal_list")
-    Call<List<Proposal>> getVoterProposal(@Query("_voter_id") String voterId, @QueryMap Map<String, String> paramsMap);
+    Call<List<Proposal>> getVoterProposal(@QueryMap Map<String, String> paramsMap);
 
     /**
      * Proposal Voting Summary
@@ -153,6 +164,25 @@ public interface GovernanceApi {
     Call<List<ProposalVote>> getProposalVotes(@Query("_proposal_id") String proposalId, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * Vote List
+     *
+     * @param paramsMap  Filtering Options Query Parameters
+     * @return List of all votes posted on-chain
+     */
+    @GET("vote_list")
+    Call<List<Vote>> getVoteList(@QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Pool's Voting Power History
+     *
+     * @param poolBech32 Pool ID in bech32 format
+     * @param paramsMap  Filtering Options Query Parameters
+     * @return History of Pool voting power against each (or requested) epoch
+     */
+    @GET("pool_voting_power_history")
+    Call<List<PoolsVotingPowerHistory>> getPoolsVotingPowerHistory(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Pool Votes
      * List of all votes casted by a pool
      *
@@ -160,6 +190,7 @@ public interface GovernanceApi {
      * @param paramsMap  Filtering Options Query Parameters
      * @return List of all votes casted by requested pool
      */
+    @Deprecated
     @GET("pool_votes")
     Call<List<PoolVote>> getPoolVotes(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 }

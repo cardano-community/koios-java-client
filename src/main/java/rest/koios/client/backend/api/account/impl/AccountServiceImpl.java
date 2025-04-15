@@ -91,11 +91,32 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
+    public Result<List<AccountRewardHistory>> getAccountRewardHistory(List<String> addressList, Integer epochNo, Options options) throws ApiException {
+        for (String address : addressList) {
+            validateBech32(address);
+        }
+        if (epochNo != null) {
+            validateEpoch(epochNo);
+        }
+        Call<List<AccountRewardHistory>> call = accountApi.getAccountRewardHistory(buildBody("_stake_addresses", addressList, epochNo, null, null), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
     public Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Options options) throws ApiException {
         for (String address : addressList) {
             validateBech32(address);
         }
         Call<List<AccountUpdates>> call = accountApi.getAccountUpdates(buildBody("_stake_addresses", addressList, null, null, null), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<AccountUpdateHistory>> getAccountUpdateHistory(List<String> addressList, Options options) throws ApiException {
+        for (String address : addressList) {
+            validateBech32(address);
+        }
+        Call<List<AccountUpdateHistory>> call = accountApi.getAccountUpdateHistory(buildBody("_stake_addresses", addressList, null, null, null), optionsToParamMap(options));
         return processResponse(call);
     }
 
@@ -129,6 +150,15 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             validateEpoch(epochNo);
         }
         Call<List<AccountHistory>> call = accountApi.getAccountHistory(buildBody("_stake_addresses", addressList, epochNo, null, null), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<AccountStakeHistory>> getAccountStakeHistory(List<String> addressList, Options options) throws ApiException {
+        for (String address : addressList) {
+            validateBech32(address);
+        }
+        Call<List<AccountStakeHistory>> call = accountApi.getAccountStakeHistory(buildBody("_stake_addresses", addressList, null, null, null), optionsToParamMap(options));
         return processResponse(call);
     }
 

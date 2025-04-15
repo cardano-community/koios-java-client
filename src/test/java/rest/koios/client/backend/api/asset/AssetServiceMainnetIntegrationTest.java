@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.platform.commons.util.StringUtils;
 import rest.koios.client.backend.api.asset.model.*;
 import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.base.Result;
@@ -21,12 +20,8 @@ import rest.koios.client.utils.HexUtil;
 import rest.koios.client.utils.Tuple;
 
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.StringJoiner;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 

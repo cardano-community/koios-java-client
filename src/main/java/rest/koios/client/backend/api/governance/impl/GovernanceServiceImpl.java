@@ -7,6 +7,8 @@ import rest.koios.client.backend.api.governance.GovernanceService;
 import rest.koios.client.backend.api.governance.api.GovernanceApi;
 import rest.koios.client.backend.api.governance.model.*;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.filters.Filter;
+import rest.koios.client.backend.factory.options.filters.FilterType;
 import retrofit2.Call;
 
 import java.util.HashMap;
@@ -62,6 +64,19 @@ public class GovernanceServiceImpl extends BaseService implements GovernanceServ
     }
 
     @Override
+    public Result<List<DRepVotingPowerHistory>> getDRepsVotingPowerHistory(String drepId, Integer epochNo, Options options) throws ApiException {
+        if (epochNo != null) {
+            validateEpoch(epochNo);
+            if (options == null) {
+                options = new Options();
+            }
+            options.getOptionList().add(Filter.of("epoch_no", FilterType.EQ, String.valueOf(epochNo)));
+        }
+        Call<List<DRepVotingPowerHistory>> call = governanceApi.getDRepsVotingPowerHistory(drepId, optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
     public Result<List<DRepVote>> getDRepsVotes(String drepId, Options options) throws ApiException {
         Call<List<DRepVote>> call = governanceApi.getDRepsVotes(drepId, optionsToParamMap(options));
         return processResponse(call);
@@ -93,7 +108,16 @@ public class GovernanceServiceImpl extends BaseService implements GovernanceServ
 
     @Override
     public Result<List<Proposal>> getVoterProposals(String voterId, Options options) throws ApiException {
-        Call<List<Proposal>> call = governanceApi.getVoterProposal(voterId, optionsToParamMap(options));
+        Map<String, String> paramsMap;
+        if (options == null) {
+            paramsMap = new HashMap<>();
+        } else {
+            paramsMap = optionsToParamMap(options);
+        }
+        if (voterId != null) {
+            paramsMap.put("_voter_id", voterId);
+        }
+        Call<List<Proposal>> call = governanceApi.getVoterProposal(paramsMap);
         return processResponse(call);
     }
 
@@ -106,6 +130,25 @@ public class GovernanceServiceImpl extends BaseService implements GovernanceServ
     @Override
     public Result<List<ProposalVote>> getProposalVotes(String proposalId, Options options) throws ApiException {
         Call<List<ProposalVote>> call = governanceApi.getProposalVotes(proposalId, optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<Vote>> getVoteList(Options options) throws ApiException {
+        Call<List<Vote>> call = governanceApi.getVoteList(optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<PoolsVotingPowerHistory>> getPoolsVotingPowerHistory(String poolBech32, Integer epochNo, Options options) throws ApiException {
+        if (epochNo != null) {
+            validateEpoch(epochNo);
+            if (options == null) {
+                options = new Options();
+            }
+            options.getOptionList().add(Filter.of("epoch_no", FilterType.EQ, String.valueOf(epochNo)));
+        }
+        Call<List<PoolsVotingPowerHistory>> call = governanceApi.getPoolsVotingPowerHistory(poolBech32, optionsToParamMap(options));
         return processResponse(call);
     }
 

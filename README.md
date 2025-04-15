@@ -42,7 +42,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
     </thead>
     <tbody>
         <tr>
-            <td rowspan="6">Network</td>
+            <td rowspan="7">Network</td>
             <td>Chain Tip</td>
             <td>Get the tip info about the latest block seen by chain</td>
         </tr>
@@ -57,6 +57,10 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         <tr>
             <td>Param Update Proposals</td>
             <td>Get all parameter update proposals submitted to the chain starting Shelley era</td>
+        </tr>
+        <tr>
+            <td>CLI Protocol Parameters</td>
+            <td>Get Current Protocol Parameters as published by cardano-cli.</td>
         </tr>
         <tr>
             <td>Reserve Withdrawals</td>
@@ -93,8 +97,8 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get a list of all transactions included in a provided block</td>
         </tr>
         <tr>
-            <td>Block Transactions (Detailed Info)</td>
-            <td>Get detailed information about transaction(s) for requested blocks</td>
+            <td>Block Transactions (Raw CBOR)</td>
+            <td>Get raw CBOR data for all transaction(s) within requested blocks</td>
         </tr>
         <tr>
             <td rowspan="7">Transactions</td>
@@ -126,13 +130,17 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the number of block confirmations for a given transaction hash list</td>
         </tr>
         <tr>
-            <td rowspan="6">Address</td>
+            <td rowspan="7">Address</td>
             <td>Address Information</td>
             <td>Get address info - balance, associated stake address (if any) and UTxO set</td>
         </tr>
         <tr>
             <td>Address UTxOs</td>
             <td>Get UTxO set for given addresses</td>
+        </tr>
+        <tr>
+            <td>Address Outputs</td>
+            <td>Basic transaction output info for given addresses</td>
         </tr>
         <tr>
             <td>UTxOs from payment credentials</td>
@@ -172,11 +180,11 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get a list of all Txs for a given stake address (account)</td>
         </tr>
         <tr>
-            <td>Account Rewards</td>
+            <td>Account Reward History</td>
             <td>Get the full rewards history (including MIR) for a stake address, or certain epoch if specified</td>
         </tr>
         <tr>
-            <td>Account Updates</td>
+            <td>Account Update History</td>
             <td>Get the account updates (registration, deregistration, delegation and withdrawals)</td>
         </tr>
         <tr>
@@ -188,11 +196,11 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the native asset balance of an account</td>
         </tr>
         <tr>
-            <td>Account History</td>
+            <td>Account Stake History</td>
             <td>Get the staking history of an account</td>
         </tr>
         <tr>
-            <td rowspan="14">Asset</td>
+            <td rowspan="13">Asset</td>
             <td>Asset List</td>
             <td>Get the list of all native assets (paginated)</td>
         </tr>
@@ -203,10 +211,6 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         <tr>
             <td>Asset Token Registry</td>
             <td>Get a list of assets registered via token registry on github</td>
-        </tr>
-        <tr>
-            <td>Asset Information</td>
-            <td>Get the information of an asset including first minting & token registry metadata</td>
         </tr>
         <tr>
             <td>Asset Information (Bulk)</td>
@@ -249,7 +253,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Get the list of all asset transaction hashes (newest first)</td>
         </tr>
         <tr>
-            <td rowspan="14">Governance</td>
+            <td rowspan="15">Governance</td>
             <td>DReps Epoch Summary</td>
             <td>Summary of voting power and DRep count for each epoch</td>
         </tr>
@@ -270,8 +274,8 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>List of updates for requested (or all) delegated representatives (DReps)</td>
         </tr>
         <tr>
-            <td>DReps Votes</td>
-            <td>List of all votes casted by requested delegated representative (DRep)</td>
+            <td>DReps Voting Power History</td>
+            <td>History of DReps voting power against each (or requested) epoch</td>
         </tr>
         <tr>
             <td>DReps Delegators</td>
@@ -302,11 +306,15 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>List of all votes cast on specified governance action</td>
         </tr>
         <tr>
-            <td>Pool Votes</td>
-            <td>List of all votes casted by a pool</td>
+            <td>Vote List</td>
+            <td>List of all votes posted on-chain</td>
         </tr>
         <tr>
-            <td rowspan="12">Pool</td>
+            <td>Pool's Voting Power History</td>
+            <td>History of Pool voting power against each (or requested) epoch</td>
+        </tr>
+        <tr>
+            <td rowspan="15">Pool</td>
             <td>Pool List</td>
             <td>A list of all currently registered/retiring (not retired) pools</td>
         </tr>
@@ -331,6 +339,10 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>Return information about blocks minted by a given pool in current epoch (or _epoch_no if provided)</td>
         </tr>
         <tr>
+            <td>Pool Owner History</td>
+            <td>List of Cardano pool IDs (bech32 format)</td>
+        </tr>
+        <tr>
             <td>Pool Stake, Block and Reward History</td>
             <td>Return information about pool stake, block and reward history in a given epoch _epoch_no (or all epochs that pool existed for, in descending order if no _epoch_no was provided)</td>
         </tr>
@@ -351,8 +363,16 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
             <td>A list of registered relays for all currently registered/retiring (not retired) pools</td>
         </tr>
         <tr>
+            <td>Pool Groups</td>
+            <td>List of all registered pool and their groups across sources from pool_groups repository. This is only relevant for mainnet</td>
+        </tr>
+        <tr>
             <td>Pool Metadata</td>
             <td>Metadata (on & off-chain) for all currently registered/retiring (not retired) pools</td>
+        </tr>
+        <tr>
+            <td>Pool Calidus Keys</td>
+            <td>List of valid calidus keys for all pools</td>
         </tr>
         <tr>
             <td rowspan="6">Script</td>
@@ -388,6 +408,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.3.2      |      1.21.0       |
 |     1.3.0      |      1.20.1       |
 |     1.2.0      |      1.19.3       |
 |     1.1.2      |      1.18.2       |
@@ -407,13 +428,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.20.1</version>
+    <version>1.21.0</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.20.1'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.21.0'
 ```
 
 ### Get Koios Backend Service (No API Token)

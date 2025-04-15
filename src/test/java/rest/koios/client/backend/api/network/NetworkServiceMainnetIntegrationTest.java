@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.network;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -79,6 +80,14 @@ class NetworkServiceMainnetIntegrationTest {
         Assertions.assertNotNull(paramUpdateProposalsResult.getValue());
         log.info(paramUpdateProposalsResult.getValue().toString());
         Assertions.assertEquals(10, paramUpdateProposalsResult.getValue().size());
+    }
+
+    @Test
+    void getCliProtocolParametersTest() throws ApiException {
+        Result<JsonNode> cliProtocolParametersResult = networkService.getCliProtocolParameters(Options.EMPTY);
+        Assertions.assertTrue(cliProtocolParametersResult.isSuccessful());
+        Assertions.assertNotNull(cliProtocolParametersResult.getValue());
+        log.info(cliProtocolParametersResult.getValue().toString());
     }
 
     @Test

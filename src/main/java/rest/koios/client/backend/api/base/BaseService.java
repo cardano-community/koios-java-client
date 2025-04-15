@@ -220,7 +220,7 @@ public class BaseService {
     private int retry(int tryCount, Integer responseCode) throws ApiException {
         tryCount++;
         if (tryCount < retriesCount) {
-            log.info("Retrying in {}s ... (" + tryCount + "/" + retriesCount + ")", getSleepTimeSec() * tryCount);
+            log.info("Retrying in {}s ... ({}/{})", getSleepTimeSec() * tryCount, tryCount, retriesCount);
             sleep(getSleepTimeSec() * tryCount);
         } else if (responseCode == null) {
             throw new ApiException("Timeout Error");

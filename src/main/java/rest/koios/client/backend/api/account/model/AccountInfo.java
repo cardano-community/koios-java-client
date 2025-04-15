@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.account.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -74,4 +75,10 @@ public class AccountInfo {
      * Total treasury MIR value of the account
      */
     private String treasury;
+
+    /**
+     * Total proposal refund for this account
+     */
+    @JsonProperty("proposal-refund")
+    private String proposalRefund;
 }

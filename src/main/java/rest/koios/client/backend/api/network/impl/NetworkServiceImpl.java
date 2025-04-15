@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.network.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
@@ -57,7 +58,12 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     @Override
     public Result<List<ParamUpdateProposal>> getParamUpdateProposals(Options options) throws ApiException {
         Call<List<ParamUpdateProposal>> call = networkApi.getParamUpdateProposals(optionsToParamMap(options));
-        ;
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<JsonNode> getCliProtocolParameters(Options options) throws ApiException {
+        Call<JsonNode> call = networkApi.getCliProtocolParameters(optionsToParamMap(options));
         return processResponse(call);
     }
 

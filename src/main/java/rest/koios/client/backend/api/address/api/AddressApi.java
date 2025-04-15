@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.address.api;
 
+import rest.koios.client.backend.api.address.model.AddressOutput;
 import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
@@ -37,6 +38,16 @@ public interface AddressApi {
      */
     @POST("address_utxos")
     Call<List<UTxO>> getAddressUTxOs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * Get Address Outputs
+     *
+     * @param requestBody Json Body containing List of Cardano payment address(es) in bech32 format
+     * @param paramsMap   Query Params
+     * @return List of complete UTxO information
+     */
+    @POST("address_outputs")
+    Call<List<AddressOutput>> getAddressOutputs(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
 
     /**
      * UTxOs from payment credentials

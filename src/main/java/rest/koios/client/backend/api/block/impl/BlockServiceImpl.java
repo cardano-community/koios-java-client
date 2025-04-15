@@ -7,6 +7,7 @@ import rest.koios.client.backend.api.block.BlockService;
 import rest.koios.client.backend.api.block.api.BlockApi;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
+import rest.koios.client.backend.api.block.model.BlockTxCbor;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
 import rest.koios.client.backend.api.transactions.model.TxInfo;
 import rest.koios.client.backend.factory.options.Limit;
@@ -68,6 +69,15 @@ public class BlockServiceImpl extends BaseService implements BlockService {
             validateHexFormat(blockHash);
         }
         Call<List<BlockTxHash>> call = blockApi.getBlockTransactions(buildBody(blockHashes), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<BlockTxCbor>> getBlockTransactionsCbor(List<String> blockHashes, Options options) throws ApiException {
+        for (String blockHash : blockHashes) {
+            validateHexFormat(blockHash);
+        }
+        Call<List<BlockTxCbor>> call = blockApi.getBlockTransactionsCbor(buildBody(blockHashes), optionsToParamMap(options));
         return processResponse(call);
     }
 

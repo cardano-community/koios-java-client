@@ -67,14 +67,27 @@ public interface GovernanceService {
     Result<List<DRepUpdate>> getDRepsUpdates(String drepId, Options options) throws ApiException;
 
     /**
+     * DReps Voting Power History
+     * History of DReps voting power against each (or requested) epoch
+     *
+     * @param drepId   DRep ID in bech32 format
+     * @param epochNo  Epoch Number to fetch details for
+     * @param options  Filtering Options (optional)
+     * @return History of DReps voting power against each (or requested) epoch
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<DRepVotingPowerHistory>> getDRepsVotingPowerHistory(String drepId, Integer epochNo, Options options) throws ApiException;
+
+    /**
      * DReps Votes
-     * List of all votes casted by requested delegated representative (DRep)
+     * List of all votes cast by requested delegated representative (DRep)
      *
      * @param drepId   DRep ID in bech32 format
      * @param options  Filtering Options (optional)
-     * @return List of all votes casted by requested delegated representative (DRep)
+     * @return List of all votes cast by requested delegated representative (DRep)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
+    @Deprecated
     Result<List<DRepVote>> getDRepsVotes(String drepId, Options options) throws ApiException;
 
     /**
@@ -100,11 +113,11 @@ public interface GovernanceService {
 
     /**
      * Committee Votes
-     * List of all votes casted by a given committee member or collective
+     * List of all votes cast by a given committee member or collective
      *
      * @param ccHotId  Committee member hot key ID in Bech32 format (CIP-5 | CIP-129)
      * @param options  Filtering Options (optional)
-     * @return List of all votes casted by a given committee member or collective
+     * @return List of all votes cast by a given committee member or collective
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<CommitteeVote>> getCommitteeVotes(String ccHotId, Options options) throws ApiException;
@@ -123,7 +136,7 @@ public interface GovernanceService {
      * Voter's Proposal List
      * List of all governance proposals for specified DRep, SPO or Committee credential
      *
-     * @param voterId   Voter ID (DRep, SPO, Committee Member) in Bech32 format (CIP-5 | CIP-129)
+     * @param voterId   Voter ID (DRep, SPO, Committee Member) in Bech32 format (CIP-5 | CIP-129) (optional)
      * @param options   Filtering Options (optional)
      * @return List of all governance action proposals for the specified voter
      * @throws ApiException if an error occurs while attempting to invoke the API
@@ -153,13 +166,36 @@ public interface GovernanceService {
     Result<List<ProposalVote>> getProposalVotes(String proposalId, Options options) throws ApiException;
 
     /**
+     * Vote List
+     * List of all votes posted on-chain
+     *
+     * @param options Filtering Options (optional)
+     * @return List of all votes posted on-chain
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<Vote>> getVoteList(Options options) throws ApiException;
+
+    /**
+     * Pool's Voting Power History
+     * History of Pool voting power against each (or requested) epoch
+     *
+     * @param poolBech32 Pool ID in bech32 format
+     * @param epochNo    Epoch Number to fetch details for
+     * @param options    Filtering Options (optional)
+     * @return List of all votes cast by the requested pool
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolsVotingPowerHistory>> getPoolsVotingPowerHistory(String poolBech32, Integer epochNo, Options options) throws ApiException;
+
+    /**
      * Pool Votes
-     * List of all votes casted by a pool
+     * List of all votes cast by a pool
      *
      * @param poolBech32 Pool ID in bech32 format
      * @param options    Filtering Options (optional)
-     * @return List of all votes casted by the requested pool
+     * @return List of all votes cast by the requested pool
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
+    @Deprecated
     Result<List<PoolVote>> getPoolVotes(String poolBech32, Options options) throws ApiException;
 }

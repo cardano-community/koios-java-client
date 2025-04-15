@@ -25,10 +25,10 @@ public class HexUtil {
     }
 
     public static byte[] decodeHexString(String hexString) {
-        if(hexString != null && hexString.startsWith("0x"))
+        if (hexString != null && hexString.startsWith("0x"))
             hexString = hexString.substring(2);
 
-        if (hexString.length() % 2 == 1) {
+        if (hexString == null || hexString.length() % 2 == 1) {
             throw new IllegalArgumentException(
                     "Invalid hexadecimal String supplied. " + hexString);
         }

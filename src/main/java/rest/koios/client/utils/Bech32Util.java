@@ -75,8 +75,7 @@ public class Bech32Util {
 
     private static boolean isValidHrp(String hrp) {
         return hrp != null &&
-                hrp.trim().length() > 0 &&
-                hrp.length() >= HRP_MIN_LENGTH &&
+                !hrp.trim().isEmpty() &&
                 hrp.length() < HRP_MAX_LENGTH &&
                 hrp.chars().allMatch(character -> character >= HRP_MIN_VALUE && character <= HRP_MAX_VALUE);
     }

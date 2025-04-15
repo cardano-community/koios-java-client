@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.network.api;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import rest.koios.client.backend.api.network.model.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -28,6 +29,9 @@ public interface NetworkApi {
 
     @GET("param_updates")
     Call<List<ParamUpdateProposal>> getParamUpdateProposals(@QueryMap Map<String, String> paramsMap);
+
+    @GET("cli_protocol_params")
+    Call<JsonNode> getCliProtocolParameters(@QueryMap Map<String, String> paramsMap);
 
     @GET("reserve_withdrawals")
     Call<List<Withdrawal>> getReserveWithdrawals(@QueryMap Map<String, String> paramsMap);

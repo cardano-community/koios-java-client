@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import rest.koios.client.backend.api.address.model.AddressOutput;
 import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
@@ -73,6 +74,16 @@ class AddressServiceMainnetIntegrationTest {
                 "addr1q9xvgr4ehvu5k5tmaly7ugpnvekpqvnxj8xy50pa7kyetlnhel389pa4rnq6fmkzwsaynmw0mnldhlmchn2sfd589fgsz9dd0y");
         ApiException exception = assertThrows(ApiException.class, () -> addressService.getAddressUTxOs(addresses, false, Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
+    void getAddressOutputs() throws ApiException {
+        List<String> addresses = List.of("addr1qy2jt0qpqz2z2z9zx5w4xemekkce7yderz53kjue53lpqv90lkfa9sgrfjuz6uvt4uqtrqhl2kj0a9lnr9ndzutx32gqleeckv",
+                "addr1q9xvgr4ehvu5k5tmaly7ugpnvekpqvnxj8xy50pa7kyetlnhel389pa4rnq6fmkzwsaynmw0mnldhlmchn2sfd589fgsz9dd0y");
+        Result<List<AddressOutput>> addressUTxOsResult = addressService.getAddressOutputs(addresses, 6238675, Options.EMPTY);
+        Assertions.assertTrue(addressUTxOsResult.isSuccessful());
+        Assertions.assertNotNull(addressUTxOsResult.getValue());
+        log.info(addressUTxOsResult.getValue().toString());
     }
 
     @Test

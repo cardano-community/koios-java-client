@@ -112,6 +112,19 @@ public interface PoolService {
     Result<List<PoolBlock>> getPoolBlocks(String poolBech32, Options options) throws ApiException;
 
     /**
+     * Return information about pool owner's historical stake and their promised pledge to their pools
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param poolIds List of Cardano Pool Ids (bech32 format)
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolOwnerHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolOwnerHistory>> getPoolOwnerHistory(List<String> poolIds, Options options) throws ApiException;
+
+    /**
      * Pool Stake, Block and Reward History by Epoch with Filtering, Pagination, Ordering Options
      * Return information about pool stake, block and reward history in a given epoch _epoch_no (or all epochs that pool existed for, in descending order if no _epoch_no was provided)
      * <p><b>200</b> - Success!
@@ -209,6 +222,19 @@ public interface PoolService {
     Result<List<PoolRelay>> getPoolRelays(Options options) throws ApiException;
 
     /**
+     * Pool Groups with Filtering, Pagination, Ordering Options
+     * List of all registered pool and their groups across sources from pool_groups repository. This is only relevant for mainnet
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolGroup}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolGroup>> getPoolGroups(Options options) throws ApiException;
+
+    /**
      * Pool Metadata with Filtering, Pagination, Ordering Options
      * Metadata(on &amp; off-chain) for all currently registered/retiring (not retired) pools
      * <p><b>200</b> - Success!
@@ -234,4 +260,17 @@ public interface PoolService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<PoolMetadata>> getPoolMetadata(List<String> poolIds, Options options) throws ApiException;
+
+    /**
+     * Pool Calidus Keys with Filtering, Pagination, Ordering Options
+     * List of valid calidus keys for all pools
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link PoolCalidusKey}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<PoolCalidusKey>> getPoolCalidusKeys(Options options) throws ApiException;
 }
