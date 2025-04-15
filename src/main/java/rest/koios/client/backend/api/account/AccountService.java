@@ -63,7 +63,7 @@ public interface AccountService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param stakeAddresses List of Cardano stake address(es) in bech32 format
-     * @param extended       Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param extended       Controls whether certain optional fields supported by a given endpoint are populated as a part of the call
      * @param options        Filtering and Pagination options (optional)
      * @return Result of Type List of {@link UTxO} associated with stake address
      * @throws ApiException if an error occurs while attempting to invoke the API
@@ -99,7 +99,23 @@ public interface AccountService {
      * @return Result of Type List of {@link AccountRewards}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
+    @Deprecated
     Result<List<AccountRewards>> getAccountRewards(List<String> addressList, Integer epochNo, Options options) throws ApiException;
+
+    /**
+     * Account Reward History
+     * Get the full rewards history (including MIR) for given stake addresses (accounts)
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param addressList Array of Cardano stake address(es) in bech32 format
+     * @param epochNo     Only fetch information for a specific epoch (optional)
+     * @param options     Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link AccountRewardHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<AccountRewardHistory>> getAccountRewardHistory(List<String> addressList, Integer epochNo, Options options) throws ApiException;
 
     /**
      * Account Updates (History)
@@ -113,7 +129,22 @@ public interface AccountService {
      * @return Result of Type List of {@link AccountUpdates}
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
+    @Deprecated
     Result<List<AccountUpdates>> getAccountUpdates(List<String> addressList, Options options) throws ApiException;
+
+    /**
+     * Account Updates History
+     * Get the account updates (registration, deregistration, delegation and withdrawals)
+     * <p><b>200</b> - Success!
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param addressList Array of Cardano stake address(es) in bech32 format (required)
+     * @param options     Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link AccountUpdateHistory}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<AccountUpdateHistory>> getAccountUpdateHistory(List<String> addressList, Options options) throws ApiException;
 
     /**
      * Account Addresses
@@ -160,5 +191,20 @@ public interface AccountService {
      * @return Result of Type List of {@link AccountHistory} active stake values per epoch
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
+    @Deprecated
     Result<List<AccountHistory>> getAccountHistory(List<String> addressList, Integer epochNo, Options options) throws ApiException;
+
+    /**
+     * Account Stake History
+     * Get the staking history of given stake addresses (accounts)
+     * <p><b>200</b> - Array of active stake values per epoch
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param addressList Array of Cardano stake address(es) in bech32 format
+     * @param options     Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link AccountStakeHistory} active stake values per epoch
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<AccountStakeHistory>> getAccountStakeHistory(List<String> addressList, Options options) throws ApiException;
 }

@@ -72,7 +72,12 @@ public class Pool {
     /**
      * Pool ticker
      */
-    private String ticker = null;
+    private String ticker;
+
+    /**
+     * A group that the pool was identified to be associated with
+     */
+    private String poolGroup;
 
     /**
      * Pool metadata URL

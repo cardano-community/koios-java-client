@@ -4,6 +4,7 @@ import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
+import rest.koios.client.backend.api.block.model.BlockTxCbor;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
 import rest.koios.client.backend.api.transactions.model.TxInfo;
 import rest.koios.client.backend.factory.options.Options;
@@ -82,6 +83,17 @@ public interface BlockService {
     Result<List<BlockTxHash>> getBlockTransactions(List<String> blockHashes, Options options) throws ApiException;
 
     /**
+     * Block Transactions (Raw CBOR)
+     * Get raw CBOR data for all transaction(s) within requested blocks
+     *
+     * @param blockHashes List of Block Hashes in hex format (required)
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link BlockTxCbor} Included Transaction of a specific block
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<BlockTxCbor>> getBlockTransactionsCbor(List<String> blockHashes, Options options) throws ApiException;
+
+    /**
      * Block Transactions (Detailed Info)
      * Get detailed information about transaction(s) for requested blocks
      * <p><b>200</b> - Success!
@@ -101,6 +113,7 @@ public interface BlockService {
      * @throws ApiException if an error occurs while attempting to invoke the API
      *
      */
+    @Deprecated
     Result<List<TxInfo>> getBlockTransactionsInfo(List<String> blockHashes, Boolean inputs, Boolean metadata, Boolean assets,
                                                  Boolean withdrawals, Boolean certs, Boolean scripts, Boolean byteCode, Options options) throws ApiException;
 }

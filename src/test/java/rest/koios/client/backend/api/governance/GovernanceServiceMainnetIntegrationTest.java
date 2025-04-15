@@ -10,6 +10,8 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.governance.model.*;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.filters.Filter;
+import rest.koios.client.backend.factory.options.filters.FilterType;
 
 import java.util.List;
 
@@ -69,9 +71,19 @@ class GovernanceServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getDRepsVotingPowerTest() throws ApiException {
+        int epochNo = 320;
+        String drepId = "drep17l6sywnwqu9aedd6aumev42w39ln5zfl9nw7j4ak6u8swyrwvz3";
+        Result<List<DRepVotingPowerHistory>> result = governanceService.getDRepsVotingPowerHistory(drepId, epochNo, Options.EMPTY);
+        Assertions.assertTrue(result.isSuccessful());
+        Assertions.assertNotNull(result.getValue());
+        log.info(result.getValue().toString());
+    }
+
+    @Test
     void getDRepsVotesTest() throws ApiException {
         String drepId = "drep17l6sywnwqu9aedd6aumev42w39ln5zfl9nw7j4ak6u8swyrwvz3";
-        Result<List<DRepVote>> result = governanceService.getDRepsVotes(drepId, Options.EMPTY);
+        Result<List<Vote>> result = governanceService.getVoteList(Options.builder().option(Filter.of("voter_id", FilterType.EQ, drepId)).build());
         Assertions.assertTrue(result.isSuccessful());
         Assertions.assertNotNull(result.getValue());
         log.info(result.getValue().toString());
@@ -139,9 +151,19 @@ class GovernanceServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getPoolsVotingPowerHistoryTest() throws ApiException {
+        int epochNo = 320;
+        String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
+        Result<List<PoolsVotingPowerHistory>> result = governanceService.getPoolsVotingPowerHistory(poolBech32, epochNo, Options.EMPTY);
+        Assertions.assertTrue(result.isSuccessful());
+        Assertions.assertNotNull(result.getValue());
+        log.info(result.getValue().toString());
+    }
+
+    @Test
     void getPoolVotesTest() throws ApiException {
         String poolBech32 = "pool155efqn9xpcf73pphkk88cmlkdwx4ulkg606tne970qswczg3asc";
-        Result<List<PoolVote>> result = governanceService.getPoolVotes(poolBech32, Options.EMPTY);
+        Result<List<Vote>> result = governanceService.getVoteList(Options.builder().option(Filter.of("voter_id", FilterType.EQ, poolBech32)).build());
         Assertions.assertTrue(result.isSuccessful());
         Assertions.assertNotNull(result.getValue());
         log.info(result.getValue().toString());

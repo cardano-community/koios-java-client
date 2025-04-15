@@ -9,8 +9,8 @@ import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.block.model.Block;
 import rest.koios.client.backend.api.block.model.BlockInfo;
+import rest.koios.client.backend.api.block.model.BlockTxCbor;
 import rest.koios.client.backend.api.block.model.BlockTxHash;
-import rest.koios.client.backend.api.transactions.model.TxInfo;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
@@ -108,9 +108,25 @@ class BlockServicePreviewIntegrationTest {
     }
 
     @Test
+    void getBlockTransactionsCborTest() throws ApiException {
+        String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
+        Result<List<BlockTxCbor>> blockTransactionsResult = blockService.getBlockTransactionsCbor(List.of(hash), Options.EMPTY);
+        Assertions.assertTrue(blockTransactionsResult.isSuccessful());
+        Assertions.assertNotNull(blockTransactionsResult.getValue());
+        log.info(blockTransactionsResult.getValue().toString());
+    }
+
+    @Test
+    void getBlockTransactionsCborBadRequestTest() {
+        String hash = "test";
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactionsCbor(List.of(hash), Options.EMPTY));
+        assertInstanceOf(ApiException.class, exception);
+    }
+
+    @Test
     void getBlockTransactionsInfoTest() throws ApiException {
         String hash = "501fc2c3e3d03f61ec6d19d3f8feb38f3c3c30df66c68027abbd6c99b5acef0e";
-        Result<List<TxInfo>> blockTransactionsResult = blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, true, Options.EMPTY);
+        Result<List<BlockTxCbor>> blockTransactionsResult = blockService.getBlockTransactionsCbor(List.of(hash), Options.EMPTY);
         Assertions.assertTrue(blockTransactionsResult.isSuccessful());
         Assertions.assertNotNull(blockTransactionsResult.getValue());
         log.info(blockTransactionsResult.getValue().toString());
@@ -119,7 +135,7 @@ class BlockServicePreviewIntegrationTest {
     @Test
     void getBlockTransactionsInfoBadRequestTest() {
         String hash = "test";
-        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactionsInfo(List.of(hash), true, true, true, true, true, true, true, Options.EMPTY));
+        ApiException exception = assertThrows(ApiException.class, () -> blockService.getBlockTransactionsCbor(List.of(hash), Options.EMPTY));
         assertInstanceOf(ApiException.class, exception);
     }
 }

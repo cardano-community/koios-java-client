@@ -85,6 +85,17 @@ public interface PoolApi {
     Call<List<PoolBlock>> getPoolBlocks(@Query("_pool_bech32") String poolBech32, @QueryMap Map<String, String> paramsMap);
 
     /**
+     * Pool Owner History
+     * Return information about pool owner's historical stake and their promised pledge to their pools
+     *
+     * @param requestBody List of Cardano pool IDs (bech32 format)
+     * @param paramsMap   Options and Filters Map
+     * @return List of {@link PoolOwnerHistory}
+     */
+    @POST("pool_owner_history")
+    Call<List<PoolOwnerHistory>> getPoolOwnerHistory(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
      * Return information about pool stake, block and reward history in a given epoch _epoch_no (or all epochs that pool existed for, in descending order if no _epoch_no was provided)
      *
      * @param poolBech32 Pool ID in bech32 format
@@ -155,6 +166,15 @@ public interface PoolApi {
     Call<List<PoolRelay>> getPoolRelays(@QueryMap Map<String, String> paramsMap);
 
     /**
+     * List of all registered pool and their groups across sources from pool_groups repository. This is only relevant for mainnet
+     *
+     * @param paramsMap Options and Filters Map
+     * @return List of {@link PoolGroup}
+     */
+    @GET("pool_groups")
+    Call<List<PoolGroup>> getPoolGroups(@QueryMap Map<String, String> paramsMap);
+
+    /**
      * Metadata (on and off-chain) for all currently registered/retiring (not retired) pools
      *
      * @param requestBody Array of Cardano pool IDs (bech32 format)
@@ -163,4 +183,13 @@ public interface PoolApi {
      */
     @POST("pool_metadata")
     Call<List<PoolMetadata>> getPoolMetadata(@Body Map<String, Object> requestBody, @QueryMap Map<String, String> paramsMap);
+
+    /**
+     * List of valid calidus keys for all pools
+     *
+     * @param paramsMap Options and Filters Map
+     * @return List of {@link PoolCalidusKey}
+     */
+    @GET("pool_calidus_keys")
+    Call<List<PoolCalidusKey>> getPoolCalidusKeys(@QueryMap Map<String, String> paramsMap);
 }

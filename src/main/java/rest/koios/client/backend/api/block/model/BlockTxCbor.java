@@ -1,4 +1,4 @@
-package rest.koios.client.backend.api.transactions.model;
+package rest.koios.client.backend.api.block.model;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -8,32 +8,47 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Raw Transaction
+ * Block Tx Cbor
  */
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class RawTx {
+public class BlockTxCbor {
 
     /**
      * Hash identifier of the transaction
      */
     private String txHash;
 
+    /**
+     * Hash of the block
+     */
     private String blockHash;
 
-    private Long blockHeight;
-
-    private Integer epochNo;
-
-    private Long absoluteSlot;
-
-    private Long txTimestamp;
+    /**
+     * Block height
+     */
+    private Integer blockHeight;
 
     /**
-     * Raw Tx in CBOR format
+     * Epoch number of the block
      */
-    private String cbor = null;
+    private Integer epochNo;
+
+    /**
+     * Absolute slot number of the block
+     */
+    private Integer absoluteSlot;
+
+    /**
+     * UNIX timestamp of the transaction
+     */
+    private Integer txTimestamp;
+
+    /**
+     * CBOR encoded raw transaction
+     */
+    private String cbor;
 }

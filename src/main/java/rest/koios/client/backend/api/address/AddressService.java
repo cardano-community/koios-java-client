@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.address;
 
+import rest.koios.client.backend.api.address.model.AddressOutput;
 import rest.koios.client.backend.api.base.common.TxHash;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
@@ -52,12 +53,27 @@ public interface AddressService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param addresses List of Cardano payment address(es) in bech32 format
-     * @param extended  Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param extended  Controls whether certain optional fields supported by a given endpoint are populated as a part of the call
      * @param options   Filtering and Pagination options (optional)
      * @return Result of Type List of address {@link UTxO}s.
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<UTxO>> getAddressUTxOs(List<String> addresses, boolean extended, Options options) throws ApiException;
+
+    /**
+     * Address Outputs
+     * Basic transaction output info for given addresses
+     * <p><b>200</b> - List of basic transaction output information
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param addresses List of Cardano payment address(es) in bech32 format
+     * @param afterBlockHeight Only fetch information after specific block height
+     * @param options   Filtering and Pagination options (optional)
+     * @return Result of Type List of address {@link UTxO}s.
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<AddressOutput>> getAddressOutputs(List<String> addresses, Integer afterBlockHeight, Options options) throws ApiException;
 
     /**
      * UTxOs from payment credentials
@@ -67,7 +83,7 @@ public interface AddressService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param paymentCredentials List of Cardano payment credential(s) in hex format
-     * @param extended           Controls whether or not certain optional fields supported by a given endpoint are populated as a part of the call
+     * @param extended           Controls whether certain optional fields supported by a given endpoint are populated as a part of the call
      * @param options            Filtering and Pagination options (optional)
      * @return Result of Type List of address {@link UTxO}s.
      * @throws ApiException if an error occurs while attempting to invoke the API

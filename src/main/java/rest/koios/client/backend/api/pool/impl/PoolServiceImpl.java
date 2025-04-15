@@ -87,6 +87,15 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
+    public Result<List<PoolOwnerHistory>> getPoolOwnerHistory(List<String> poolIds, Options options) throws ApiException {
+        for (String poolId : poolIds) {
+            validateBech32(poolId);
+        }
+        Call<List<PoolOwnerHistory>> call = poolApi.getPoolOwnerHistory(buildBody(poolIds), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
     public Result<PoolHistory> getPoolHistoryByEpoch(String poolBech32, Integer epochNo, Options options) throws ApiException {
         validateBech32(poolBech32);
         validateEpoch(epochNo);
@@ -133,6 +142,12 @@ public class PoolServiceImpl extends BaseService implements PoolService {
     }
 
     @Override
+    public Result<List<PoolGroup>> getPoolGroups(Options options) throws ApiException {
+        Call<List<PoolGroup>> call = poolApi.getPoolGroups(optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
     public Result<List<PoolMetadata>> getPoolMetadata(Options options) throws ApiException {
         return getPoolMetadata(Collections.emptyList(), options);
     }
@@ -143,6 +158,12 @@ public class PoolServiceImpl extends BaseService implements PoolService {
             validateBech32(poolId);
         }
         Call<List<PoolMetadata>> call = poolApi.getPoolMetadata(buildBody(poolIds), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<PoolCalidusKey>> getPoolCalidusKeys(Options options) throws ApiException {
+        Call<List<PoolCalidusKey>> call = poolApi.getPoolCalidusKeys(optionsToParamMap(options));
         return processResponse(call);
     }
 

@@ -4,6 +4,7 @@ import rest.koios.client.backend.api.address.AddressService;
 import rest.koios.client.backend.api.address.api.AddressApi;
 import rest.koios.client.backend.api.address.model.AddressAsset;
 import rest.koios.client.backend.api.address.model.AddressInfo;
+import rest.koios.client.backend.api.address.model.AddressOutput;
 import rest.koios.client.backend.api.base.BaseService;
 import rest.koios.client.backend.api.base.Result;
 import rest.koios.client.backend.api.base.common.TxHash;
@@ -72,6 +73,15 @@ public class AddressServiceImpl extends BaseService implements AddressService {
             validateBech32(address);
         }
         Call<List<UTxO>> call = addressApi.getAddressUTxOs(buildBodyUTxOs(addresses, extended), optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
+    public Result<List<AddressOutput>> getAddressOutputs(List<String> addresses, Integer afterBlockHeight, Options options) throws ApiException {
+        for (String address : addresses) {
+            validateBech32(address);
+        }
+        Call<List<AddressOutput>> call = addressApi.getAddressOutputs(buildBody("_addresses", addresses, afterBlockHeight), optionsToParamMap(options));
         return processResponse(call);
     }
 

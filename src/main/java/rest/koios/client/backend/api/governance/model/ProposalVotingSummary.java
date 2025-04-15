@@ -1,10 +1,8 @@
 package rest.koios.client.backend.api.governance.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
-import rest.koios.client.backend.api.transactions.model.TxWithdrawal;
 
 /**
  * Proposal Voting Summary
@@ -33,9 +31,14 @@ public class ProposalVotingSummary {
     private Integer drepYesVotesCast;
 
     /**
-     * Power of 'yes' votes from dreps
+     * Power of 'yes' votes that were explicitly cast
      */
-    private Integer drepYesVotePower;
+    private String drepActiveYesVotePower;
+
+    /**
+     * Power of 'yes' votes from dreps (includes explicit yes and inferred via other means)
+     */
+    private String drepYesVotePower;
 
     /**
      * Percentage of 'yes' votes from dreps
@@ -48,9 +51,14 @@ public class ProposalVotingSummary {
     private Integer drepNoVotesCast;
 
     /**
-     * Power of 'no' votes from dreps
+     * Power of 'no' votes that were explicitly cast
      */
-    private Integer drepNoVotePower;
+    private String drepActiveNoVotePower;
+
+    /**
+     * Power of 'no' votes from dreps (includes explicit no and inferred via other means)
+     */
+    private String drepNoVotePower;
 
     /**
      * Percentage of 'no' votes from dreps
@@ -63,14 +71,34 @@ public class ProposalVotingSummary {
     private Integer drepAbstainVotesCast;
 
     /**
+     * Power of 'abstain' votes that were explicitly cast
+     */
+    private String drepActiveAbstainVotePower;
+
+    /**
+     * Power of votes delegated to 'always_no_confidence' predefined drep
+     */
+    private String drepAlwaysNoConfidenceVotePower;
+
+    /**
+     * Power of votes delegated to 'always_abstain' predefined drep
+     */
+    private String drepAlwaysAbstainVotePower;
+
+    /**
      * Number of 'yes' votes casted by pools
      */
     private Integer poolYesVotesCast;
 
     /**
-     * Power of 'yes' votes from pools
+     * Power of 'yes' pool votes that were explicitly cast
      */
-    private Integer poolYesVotePower;
+    private String poolActiveYesVotePower;
+
+    /**
+     * Power of 'yes' votes from pools (includes explicit yes and inferred via other means)
+     */
+    private String poolYesVotePower;
 
     /**
      * Percentage of 'yes' votes from pools
@@ -83,9 +111,14 @@ public class ProposalVotingSummary {
     private Integer poolNoVotesCast;
 
     /**
-     * Power of 'no' votes from pools
+     * Power of 'no' pool votes that were explicitly cast
      */
-    private Integer poolNoVotePower;
+    private String poolActiveNoVotePower;
+
+    /**
+     * Power of 'no' votes from pools (includes explicit no and inferred via other means)
+     */
+    private String poolNoVotePower;
 
     /**
      * Percentage of 'no' votes from pools
@@ -96,6 +129,11 @@ public class ProposalVotingSummary {
      * Percentage of 'abstain' votes from pools
      */
     private Double poolAbstainVotesCast;
+
+    /**
+     * Power of 'abstain' pool votes that were explicitly cast
+     */
+    private String poolActiveAbstainVotePower;
 
     /**
      * Number of non-voting SPO pool reward addresses delegating to 'always_abstain' drep

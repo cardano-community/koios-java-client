@@ -40,7 +40,13 @@ public class Tip {
     /**
      * Block Height number on chain
      **/
+    @Deprecated
     private Integer blockNo = null;
+
+    /**
+     * Block Height
+     */
+    private Integer blockHeight;
 
     /**
      * UNIX timestamp of the block

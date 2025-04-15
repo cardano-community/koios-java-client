@@ -11,12 +11,12 @@ public class Tuple<T, Z> {
     /**
      * First Parameter
      */
-    public T _1;
+    public final T _1;
 
     /**
      * Second Parameter
      */
-    public Z _2;
+    public final Z _2;
 
     /**
      * Tuple Constructor

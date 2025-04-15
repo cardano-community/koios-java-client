@@ -46,4 +46,24 @@ public class Totals {
      * Total Reserves yet to be unlocked on chain
      **/
     private String reserves = null;
+
+    /**
+     * The amount (in Lovelace) in the fee pot
+     */
+    private String fees;
+
+    /**
+     * The amount (in Lovelace) in the obligation pot coming from stake key and pool deposits.
+     */
+    private String depositsStake;
+
+    /**
+     * The amount (in Lovelace) in the obligation pot coming from drep registrations deposits.
+     */
+    private String depositsDrep;
+
+    /**
+     * The amount (in Lovelace) in the obligation pot coming from governance proposal deposits.
+     */
+    private String depositsProposal;
 }
