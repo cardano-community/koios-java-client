@@ -12,6 +12,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           cache: maven
+          cache-dependency-path: pom.xml
       - name: Install Dependencies
         run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -Dgpg.skip
       - name: Run tests and collect coverage
