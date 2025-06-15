@@ -40,6 +40,14 @@ public interface TransactionsService {
      */
     Result<List<RawTx>> getRawTransaction(List<String> txHashes, Options options) throws ApiException;
 
+    default Result<TxInfo> getTransactionInformation(String txHash) throws ApiException {
+        return getTransactionInformation(txHash, true, true, true, true, true, true, true);
+    }
+
+    default Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, Options options) throws ApiException {
+        return getTransactionInformation(txHashes, true, true, true, true, true, true, true, options);
+    }
+
     /**
      * Transaction Information for Specific Transaction
      * Get detailed information about transaction
@@ -51,7 +59,7 @@ public interface TransactionsService {
      * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<TxInfo> getTransactionInformation(String txHash) throws ApiException;
+    Result<TxInfo> getTransactionInformation(String txHash, boolean isInputs, boolean isMetadata, boolean isAssets, boolean isWithdrawals, boolean isCertificates, boolean isScripts, boolean isByteCode) throws ApiException;
 
     /**
      * Transaction Information
@@ -65,7 +73,7 @@ public interface TransactionsService {
      * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
-    Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, Options options) throws ApiException;
+    Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, boolean isInputs, boolean isMetadata, boolean isAssets, boolean isWithdrawals, boolean isCertificates, boolean isScripts, boolean isByteCode, Options options) throws ApiException;
 
     /**
      * Transaction Metadata
