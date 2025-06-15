@@ -51,18 +51,18 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
     }
 
     @Override
-    public Result<TxInfo> getTransactionInformation(String txHash) throws ApiException {
+    public Result<TxInfo> getTransactionInformation(String txHash, boolean isInputs, boolean isMetadata, boolean isAssets, boolean isWithdrawals, boolean isCertificates, boolean isScripts, boolean isByteCode) throws ApiException {
         validateHexFormat(txHash);
-        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildTxInfoBody(List.of(txHash)), Collections.emptyMap());
+        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildTxInfoBody(List.of(txHash), isInputs, isMetadata, isAssets, isWithdrawals, isCertificates, isScripts, isByteCode), Collections.emptyMap());
         return processResponseGetOne(call);
     }
 
     @Override
-    public Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, Options options) throws ApiException {
+    public Result<List<TxInfo>> getTransactionInformation(List<String> txHashes, boolean isInputs, boolean isMetadata, boolean isAssets, boolean isWithdrawals, boolean isCertificates, boolean isScripts, boolean isByteCode, Options options) throws ApiException {
         for (String tx : txHashes) {
             validateHexFormat(tx);
         }
-        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildTxInfoBody(txHashes), optionsToParamMap(options));
+        Call<List<TxInfo>> call = transactionApi.getTransactionInformation(buildTxInfoBody(txHashes, isInputs, isMetadata, isAssets, isWithdrawals, isCertificates, isScripts, isByteCode), optionsToParamMap(options));
         return processResponse(call);
     }
 
@@ -97,16 +97,16 @@ public class TransactionsServiceImpl extends BaseService implements Transactions
         return processResponse(call);
     }
 
-    private Map<String, Object> buildTxInfoBody(List<String> txHashes) {
+    private Map<String, Object> buildTxInfoBody(List<String> txHashes, boolean isInputs, boolean isMetadata, boolean isAssets, boolean isWithdrawals, boolean isCertificates, boolean isScripts, boolean isByteCode) {
         Map<String, Object> bodyMap = new HashMap<>();
         bodyMap.put("_tx_hashes", txHashes);
-        bodyMap.put("_inputs", true);
-        bodyMap.put("_metadata", true);
-        bodyMap.put("_assets", true);
-        bodyMap.put("_withdrawals", true);
-        bodyMap.put("_certs", true);
-        bodyMap.put("_scripts", true);
-        bodyMap.put("_bytecode", true);
+        bodyMap.put("_inputs", isInputs);
+        bodyMap.put("_metadata", isMetadata);
+        bodyMap.put("_assets", isAssets);
+        bodyMap.put("_withdrawals", isWithdrawals);
+        bodyMap.put("_certs", isCertificates);
+        bodyMap.put("_scripts", isScripts);
+        bodyMap.put("_bytecode", isByteCode);
         return bodyMap;
     }
 
