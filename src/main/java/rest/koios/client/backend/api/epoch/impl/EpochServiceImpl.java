@@ -10,6 +10,8 @@ import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
+import rest.koios.client.backend.factory.options.Order;
+import rest.koios.client.backend.factory.options.SortType;
 import retrofit2.Call;
 
 import java.util.Collections;
@@ -35,7 +37,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<EpochInfo> getLatestEpochInfo() throws ApiException {
-        Options options = Options.builder().option(Limit.of(1)).build();
+        Options options = Options.builder().option(Limit.of(1)).option(Order.by("epoch_no", SortType.DESC)).build();
         Call<List<EpochInfo>> call = epochApi.getEpochInformation(null, false, optionsToParamMap(options));
         return processResponseGetOne(call);
     }
@@ -55,7 +57,7 @@ public class EpochServiceImpl extends BaseService implements EpochService {
 
     @Override
     public Result<EpochParams> getLatestEpochParameters() throws ApiException {
-        Options options = Options.builder().option(Limit.of(1)).build();
+        Options options = Options.builder().option(Limit.of(1)).option(Order.by("epoch_no", SortType.DESC)).build();
         Call<List<EpochParams>> call = epochApi.getEpochParameters(optionsToParamMap(options));
         return processResponseGetOne(call);
     }
