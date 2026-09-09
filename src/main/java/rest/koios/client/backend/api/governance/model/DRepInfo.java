@@ -31,9 +31,9 @@ public class DRepInfo {
     private Boolean hasScript;
 
     /**
-     * Flag to show if the DRep is currently registered
+     * DRep registration status (registered, deregistered or retired)
      */
-    private Boolean registered;
+    private String drepStatus;
 
     /**
      * DRep's registration deposit in number (null if not applicable)
@@ -64,4 +64,9 @@ public class DRepInfo {
      * A hash of the contents of the metadata URL (null if not applicable)
      */
     private String metaHash;
+
+    /**
+     * Number of delegators whose last voting power delegation was to this DRep
+     */
+    private Integer liveDelegatorCount;
 }

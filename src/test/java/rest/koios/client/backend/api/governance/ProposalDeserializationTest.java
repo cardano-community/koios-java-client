@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import rest.koios.client.backend.api.governance.model.Proposal;
+import rest.koios.client.backend.api.governance.model.ProposalVotingSummary;
 import rest.koios.client.backend.api.transactions.model.ProposalProcedure;
 
 import java.util.List;
@@ -48,5 +49,17 @@ class ProposalDeserializationTest {
         Assertions.assertEquals(1, procedure.getWithdrawal().size());
         Assertions.assertEquals("stake1784sdxt6jjennmstphgdu7l7c2scf5d02a6cve2dgn5s2kq5u3j9v",
                 procedure.getWithdrawal().get(0).getStakeAddress());
+    }
+
+    @Test
+    void votingSummaryPassiveVotePowerExceedsIntRangeTest() throws Exception {
+        String json = "{\"proposal_type\":\"NewCommittee\",\"epoch_no\":653," +
+                "\"pool_passive_always_abstain_vote_power\":\"9868154138925825\"," +
+                "\"pool_passive_always_no_confidence_vote_power\":\"48183240800265\"}";
+
+        ProposalVotingSummary summary = objectMapper.readValue(json, ProposalVotingSummary.class);
+
+        Assertions.assertEquals("9868154138925825", summary.getPoolPassiveAlwaysAbstainVotePower());
+        Assertions.assertEquals("48183240800265", summary.getPoolPassiveAlwaysNoConfidenceVotePower());
     }
 }
