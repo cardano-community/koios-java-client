@@ -294,4 +294,9 @@ public class EpochParams {
      * Minimum Fee for Reference Script cost per byte.
      */
     private BigDecimal minFeeRefScriptCostPerByte = null;
+
+    /**
+     * Cardano Era
+     */
+    private String era;
 }

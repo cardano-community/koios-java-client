@@ -66,4 +66,19 @@ public class Totals {
      * The amount (in Lovelace) in the obligation pot coming from governance proposal deposits.
      */
     private String depositsProposal;
+
+    /**
+     * The amount (in Lovelace) donated to the treasury
+     */
+    private String treasuryDonation;
+
+    /**
+     * The amount (in Lovelace) withdrawn from the treasury
+     */
+    private String treasuryWithdrawal;
+
+    /**
+     * The amount (in Lovelace) withdrawn from reserves
+     */
+    private String reservesWithdrawal;
 }

@@ -20,7 +20,10 @@ public class CommitteeMember {
      */
     private String status;
 
-    private String ccHotd;
+    /**
+     * Committee member hot key ID in CIP-129 bech32 format (null if not applicable)
+     */
+    private String ccHotId;
 
     private String ccColdId;
 

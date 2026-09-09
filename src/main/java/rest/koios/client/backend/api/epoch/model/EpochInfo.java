@@ -74,4 +74,9 @@ public class EpochInfo {
      * Average block reward for epoch (null for pre-Shelley epochs)
      */
     private String avgBlkReward;
+
+    /**
+     * Cardano Era
+     */
+    private String era;
 }

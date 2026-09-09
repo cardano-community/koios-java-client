@@ -52,4 +52,9 @@ public class Tip {
      * UNIX timestamp of the block
      **/
     private Long blockTime = null;
+
+    /**
+     * Cardano Era
+     */
+    private String era;
 }
