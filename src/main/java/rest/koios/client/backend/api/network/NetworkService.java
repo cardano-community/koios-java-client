@@ -92,6 +92,21 @@ public interface NetworkService {
     Result<JsonNode> getCliProtocolParameters(Options options) throws ApiException;
 
     /**
+     * Era Summaries with Filtering, Pagination, Ordering Options
+     * Get some information about each era on the network alongwith it's start epoch
+     *
+     * <p><b>200</b> - Information about each era on the network alongwith it's start epoch
+     * <p><b>400</b> - The server cannot process the request due to invalid input
+     * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
+     * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
+     *
+     * @param options Filtering and Pagination options (optional)
+     * @return Result of Type List of {@link EraSummary}
+     * @throws ApiException if an error occurs while attempting to invoke the API
+     */
+    Result<List<EraSummary>> getEraSummaries(Options options) throws ApiException;
+
+    /**
      * Reserve Withdrawals
      * List of withdrawals from reserves against stake accounts
      *
