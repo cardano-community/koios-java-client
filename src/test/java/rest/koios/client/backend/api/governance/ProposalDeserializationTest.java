@@ -62,4 +62,16 @@ class ProposalDeserializationTest {
         Assertions.assertEquals("9868154138925825", summary.getPoolPassiveAlwaysAbstainVotePower());
         Assertions.assertEquals("48183240800265", summary.getPoolPassiveAlwaysNoConfidenceVotePower());
     }
+
+    @Test
+    void proposalProcedureParamProposalIsAnObjectTest() throws Exception {
+        String json = "{\"index\":0,\"type\":\"ParameterChange\"," +
+                "\"param_proposal\":{\"max_tx_ex_mem\":17500000,\"min_pool_cost\":75000000}}";
+
+        ProposalProcedure procedure = objectMapper.readValue(json, ProposalProcedure.class);
+
+        Assertions.assertNotNull(procedure.getParamProposal());
+        Assertions.assertEquals(17500000, procedure.getParamProposal().get("max_tx_ex_mem").asInt());
+        Assertions.assertEquals(75000000, procedure.getParamProposal().get("min_pool_cost").asInt());
+    }
 }

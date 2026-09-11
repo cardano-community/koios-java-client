@@ -1,5 +1,6 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
@@ -69,5 +70,5 @@ public class ProposalProcedure {
     /**
      * If not null, the proposed new parameter set
      */
-    private List<Object> paramProposal;
+    private JsonNode paramProposal;
 }
