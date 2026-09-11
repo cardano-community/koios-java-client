@@ -51,4 +51,9 @@ public class BlockTxCbor {
      * CBOR encoded raw transaction
      */
     private String cbor;
+
+    /**
+     * Flag to show if all contracts in the transaction are valid
+     */
+    private Boolean validContract;
 }

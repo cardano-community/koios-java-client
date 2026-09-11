@@ -134,10 +134,12 @@ class GovernanceServiceMainnetIntegrationTest {
 
     @Test
     void getProposalVotingSummaryTest() throws ApiException {
-        String proposalId = "gov_action1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqpzklpgpf";
+        String proposalId = "gov_action1w2w64uhelz0cg2np7m37hal905tdd7jpzm3fcyc3g7qvkwgfppgqqfsggt5";
         Result<List<ProposalVotingSummary>> result = governanceService.getProposalVotingSummary(proposalId, Options.EMPTY);
         Assertions.assertTrue(result.isSuccessful());
         Assertions.assertNotNull(result.getValue());
+        Assertions.assertFalse(result.getValue().isEmpty());
+        Assertions.assertNotNull(result.getValue().get(0).getPoolPassiveAlwaysAbstainVotePower());
         log.info(result.getValue().toString());
     }
 

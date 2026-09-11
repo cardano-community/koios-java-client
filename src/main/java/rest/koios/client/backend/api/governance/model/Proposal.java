@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
-import rest.koios.client.backend.api.transactions.model.TxWithdrawal;
+
+import java.util.List;
 
 /**
  * Proposal
@@ -46,6 +47,12 @@ public class Proposal {
      * Description for Proposal Action
      */
     private JsonNode proposalDescription;
+
+    /**
+     * If not null, the CIP-129 formatted governance action ID of the previous governance action in a
+     * chain of actions (e.g. for NewConstitution or HardForkInitiation)
+     */
+    private String previousGovActionProposalId;
 
     /**
      * DRep's registration deposit in number (null if not applicable)
@@ -118,9 +125,10 @@ public class Proposal {
     private Boolean metaIsValid;
 
     /**
-     * Object containing the withdrawal details or null if not applicable
+     * The array of amounts withdrawn from treasury into specified stake addresses by this proposal
+     * (null if not applicable)
      */
-    private TxWithdrawal withdrawal;
+    private List<ProposalWithdrawal> withdrawal;
 
     /**
      * Object containing parameter proposal details

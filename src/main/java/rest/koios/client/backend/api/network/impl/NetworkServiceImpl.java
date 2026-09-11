@@ -68,6 +68,12 @@ public class NetworkServiceImpl extends BaseService implements NetworkService {
     }
 
     @Override
+    public Result<List<EraSummary>> getEraSummaries(Options options) throws ApiException {
+        Call<List<EraSummary>> call = networkApi.getEraSummaries(optionsToParamMap(options));
+        return processResponse(call);
+    }
+
+    @Override
     public Result<List<Withdrawal>> getReserveWithdrawals(Options options) throws ApiException {
         Call<List<Withdrawal>> call = networkApi.getReserveWithdrawals(optionsToParamMap(options));
         return processResponse(call);

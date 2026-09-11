@@ -1,11 +1,13 @@
 package rest.koios.client.backend.api.transactions.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import rest.koios.client.backend.api.governance.model.ProposalWithdrawal;
 
 import java.util.List;
 
@@ -63,10 +65,10 @@ public class ProposalProcedure {
     /**
      * If not null, the amount withdrawn from treasury into stake address by this this proposal
      */
-    private List<TxWithdrawal> withdrawal;
+    private List<ProposalWithdrawal> withdrawal;
 
     /**
      * If not null, the proposed new parameter set
      */
-    private List<Object> paramProposal;
+    private JsonNode paramProposal;
 }

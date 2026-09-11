@@ -29,4 +29,9 @@ public class EpochBlockProtocols {
      * Amount of blocks with specified major and protocol combination
      */
     private Integer blocks = null;
+
+    /**
+     * Cardano Era
+     */
+    private String era;
 }

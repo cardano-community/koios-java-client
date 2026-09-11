@@ -43,4 +43,9 @@ public class AssetSummary {
      * Total number of unique addresses holding the given asset
      */
     private Long addresses;
+
+    /**
+     * Asset fingerprint (CIP-14)
+     */
+    private String fingerprint;
 }

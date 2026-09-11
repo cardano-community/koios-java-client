@@ -143,7 +143,7 @@ public class ProposalVotingSummary {
     /**
      * Combined power of non-voting SPO pool votes where reward addresses delegate to 'always_abstain'
      */
-    private Integer poolPassiveAlwaysAbstainVotePower;
+    private String poolPassiveAlwaysAbstainVotePower;
 
     /**
      * Number of non-voting SPO pool reward addresses delegating to 'always_no_confidence' drep
@@ -153,7 +153,7 @@ public class ProposalVotingSummary {
     /**
      * Combined power of non-voting SPO pool votes where reward addresses delegate to
      */
-    private Integer poolPassiveAlwaysNoConfidenceVotePower;
+    private String poolPassiveAlwaysNoConfidenceVotePower;
 
     /**
      * Number of 'yes' votes casted by committee

@@ -61,4 +61,14 @@ public class PoolCalidusKey {
      * UNIX timestamp of the block
      */
     private Integer blockTime;
+
+    /**
+     * Flag to show if the pool has active calidus key as registered
+     */
+    private Boolean registered;
+
+    /**
+     * Raw Transaction metadata in hex
+     */
+    private String bytes;
 }
