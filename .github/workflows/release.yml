@@ -11,6 +11,13 @@ name: Release
 #                              the old OSSRH credentials do not work)
 #   GPG_PRIVATE_KEY         - ASCII-armored private key: gpg --armor --export-secret-keys KEY_ID
 #   GPG_PASSPHRASE          - passphrase for that key
+#
+# The token must come from the Central Portal account that owns the
+# io.github.cardano-community namespace. Sonatype treats Google sign-in and
+# email+password sign-in as two separate accounts even for the same address,
+# and only one of them holds the namespace. A token from the wrong one still
+# authenticates, then fails with "Namespace 'io.github.cardano-community' is
+# not allowed".
 
 on:
   release:

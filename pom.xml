@@ -181,7 +181,12 @@
                          user token (not the old OSSRH username/password). -->
                     <publishingServerId>central</publishingServerId>
                     <autoPublish>true</autoPublish>
-                    <waitUntil>published</waitUntil>
+                    <!-- Return once Central has validated and accepted the bundle. With
+                         autoPublish the publish then happens on its own; waiting for it
+                         here only blocks on Sonatype's queue. Publishing 1.22.0 sat in
+                         PUBLISHING for ~25 minutes and timed out the build, well after
+                         the deployment itself had succeeded. -->
+                    <waitUntil>validated</waitUntil>
                 </configuration>
             </plugin>
             <plugin>
