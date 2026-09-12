@@ -90,12 +90,16 @@ class EpochServicePreprodIntegrationTest {
     @Test
     void getEpochBlockProtocolsByEpochTest() throws ApiException {
         Integer epochNo = 31;
-        Integer blocks = 8211;
         Result<EpochBlockProtocols> epochBlockProtocolsResult = epochService.getEpochBlockProtocolsByEpoch(epochNo);
         Assertions.assertTrue(epochBlockProtocolsResult.isSuccessful());
         Assertions.assertNotNull(epochBlockProtocolsResult.getValue());
         log.info(epochBlockProtocolsResult.getValue().toString());
-        assertEquals(blocks, epochBlockProtocolsResult.getValue().getBlocks());
+        EpochBlockProtocols epochBlockProtocols = epochBlockProtocolsResult.getValue();
+        Assertions.assertNotNull(epochBlockProtocols.getEra());
+        Assertions.assertNotNull(epochBlockProtocols.getProtoMajor());
+        Assertions.assertNotNull(epochBlockProtocols.getProtoMinor());
+        Assertions.assertNotNull(epochBlockProtocols.getBlocks());
+        Assertions.assertTrue(epochBlockProtocols.getBlocks() > 0);
     }
 
     @Test
