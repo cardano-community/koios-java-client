@@ -9,3 +9,9 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+    ignore:
+      # JUnit 6 requires Java 17, but this library targets Java 11 (java.version
+      # in pom.xml). A major bump fails to compile with "class file has wrong
+      # version 61.0, should be 55.0". Drop this entry if the Java baseline moves.
+      - dependency-name: "org.junit.jupiter:junit-jupiter"
+        update-types: ["version-update:semver-major"]
