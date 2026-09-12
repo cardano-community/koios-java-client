@@ -42,7 +42,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
     </thead>
     <tbody>
         <tr>
-            <td rowspan="7">Network</td>
+            <td rowspan="8">Network</td>
             <td>Chain Tip</td>
             <td>Get the tip info about the latest block seen by chain</td>
         </tr>
@@ -61,6 +61,10 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
         <tr>
             <td>CLI Protocol Parameters</td>
             <td>Get Current Protocol Parameters as published by cardano-cli.</td>
+        </tr>
+        <tr>
+            <td>Era Summaries</td>
+            <td>Get some information about each era on the network alongwith it's start epoch</td>
         </tr>
         <tr>
             <td>Reserve Withdrawals</td>
@@ -408,6 +412,7 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
   
 | Koios Instance | Koios Java Client |
 |:--------------:|:-----------------:|
+|     1.4.2      |      1.22.0       |
 |     1.3.2      |      1.21.1       |
 |     1.3.0      |      1.20.1       |
 |     1.2.0      |      1.19.3       |
@@ -428,13 +433,13 @@ Resource and maintenance requirements for Cardano blockchain components (e.g. ca
 <dependency>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.21.1</version>
+    <version>1.22.0</version>
 </dependency>
 ```
 
 - For Gradle, add the following dependency to build.gradle
 ```
-compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.21.1'
+compile group: 'io.github.cardano-community', name: 'koios-java-client', version: '1.22.0'
 ```
 
 ### Get Koios Backend Service (No API Token)
