@@ -145,7 +145,7 @@ public class BaseService {
                 }
             } else {
                 String errorBody = Objects.requireNonNull(response.errorBody()).string();
-                return (Result<T>) Result.builder().successful(false).response(errorBody).code(response.code()).error(parseError(errorBody)).build();
+                return (Result<T>) Result.builder().successful(false).response(errorBody).code(response.code()).error(errorFor(errorBody, response.code())).build();
             }
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
@@ -173,6 +173,33 @@ public class BaseService {
         }
     }
 
+    /**
+     * Builds the error for a failing response, adding guidance for statuses that Koios reports as
+     * plain text rather than JSON.
+     * <p>
+     * A 413 means the request body exceeded the instance's size limit, which Koios enforces on the
+     * bulk endpoints such as {@code /pool_info} and {@code /drep_info}. The server reports it as
+     * plain text, so there is nothing to parse; the message is kept verbatim and a hint is added,
+     * since the fix is always to send fewer ids per call.
+     *
+     * @param body     raw response body
+     * @param httpCode HTTP status of the response
+     * @return parsed or constructed error, or null when the body carries nothing usable
+     */
+    private static KoiosError errorFor(String body, int httpCode) {
+        KoiosError parsed = parseError(body);
+        if (parsed != null) {
+            return parsed;
+        }
+        if (httpCode == 413) {
+            String message = (body == null || body.trim().isEmpty())
+                    ? "Request body too large" : body.trim();
+            return new KoiosError(String.valueOf(httpCode), message, null,
+                    "Split the request into smaller batches and call the endpoint once per batch.");
+        }
+        return null;
+    }
+
     protected <T> Result<T> badRequestResult(String responseText) {
         return (Result<T>) Result.builder().successful(false).response(responseText).code(400).synthetic(true).build();
     }
@@ -192,7 +219,7 @@ public class BaseService {
                 return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body()).code(response.code()).build();
             } else {
                 String errorBody = Objects.requireNonNull(response.errorBody()).string();
-                return (Result<T>) Result.builder().successful(false).response(errorBody).code(response.code()).error(parseError(errorBody)).build();
+                return (Result<T>) Result.builder().successful(false).response(errorBody).code(response.code()).error(errorFor(errorBody, response.code())).build();
             }
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);

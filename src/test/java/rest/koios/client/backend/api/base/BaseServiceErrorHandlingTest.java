@@ -136,12 +136,37 @@ class BaseServiceErrorHandlingTest {
 
     @Test
     void payloadTooLargeIsSurfacedTest() throws ApiException {
-        server.enqueue(new MockResponse().setResponseCode(413).setBody("Request body too large"));
+        // verbatim from a live mainnet /pool_info call with 300 ids
+        String koiosText = "Payload too large, body length was 18022. " +
+                "Please ensure your request body size is below 5120 bytes";
+        server.enqueue(new MockResponse().setResponseCode(413).setBody(koiosText));
 
         Result<Tip> result = backendService.getNetworkService().getChainTip();
 
         Assertions.assertFalse(result.isSuccessful());
         Assertions.assertEquals(413, result.getCode());
+        Assertions.assertFalse(result.isSynthetic(), "413 is a real server response");
+        // Koios reports this as plain text, so there is nothing to parse; the client supplies the
+        // remedy, which is always to batch
+        KoiosError error = result.getError();
+        Assertions.assertNotNull(error);
+        Assertions.assertEquals("413", error.getCode());
+        Assertions.assertEquals(koiosText, error.getMessage());
+        Assertions.assertNotNull(error.getHint());
+        Assertions.assertTrue(error.getHint().contains("batches"), error.getHint());
+    }
+
+    @Test
+    void payloadTooLargeWithEmptyBodyStillCarriesGuidanceTest() throws ApiException {
+        server.enqueue(new MockResponse().setResponseCode(413));
+
+        Result<Tip> result = backendService.getNetworkService().getChainTip();
+
+        KoiosError error = result.getError();
+        Assertions.assertNotNull(error);
+        Assertions.assertEquals("413", error.getCode());
+        Assertions.assertEquals("Request body too large", error.getMessage());
+        Assertions.assertNotNull(error.getHint());
     }
 
     @Test
