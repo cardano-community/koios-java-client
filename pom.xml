@@ -16,6 +16,7 @@
         <retrofit.version>2.11.0</retrofit.version>
         <jackson-databind.version>2.18.10</jackson-databind.version>
         <logging-interceptor.version>4.12.0</logging-interceptor.version>
+        <mockwebserver.version>4.12.0</mockwebserver.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <slf4j-api.version>2.0.19</slf4j-api.version>
         <slf4j-reload4j.version>2.0.19</slf4j-reload4j.version>
@@ -104,6 +105,12 @@
             <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>${mockwebserver.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -121,6 +128,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <environmentVariables>
+                        <!-- Keep the retry backoff short during tests. Without this a single
+                             429 from a live Koios instance stalls the build for ~10 minutes. -->
+                        <KOIOS_JAVA_LIB_RETRY_SLEEP_TIME_SEC>1</KOIOS_JAVA_LIB_RETRY_SLEEP_TIME_SEC>
+                    </environmentVariables>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
