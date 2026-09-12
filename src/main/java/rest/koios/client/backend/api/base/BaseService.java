@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 /**
  * Base Service
  */
@@ -119,7 +121,7 @@ public class BaseService {
 
         String sleepTimeSecEnv = System.getenv("KOIOS_JAVA_LIB_RETRY_SLEEP_TIME_SEC");
         if (sleepTimeSecEnv != null && !sleepTimeSecEnv.isEmpty()) {
-            sleepTimeSec = Math.max(Integer.parseInt(sleepTimeSecEnv), 60);
+            sleepTimeSec = Math.max(Integer.parseInt(sleepTimeSecEnv), 1);
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -181,7 +183,7 @@ public class BaseService {
     public Response<?> execute(Call<?> call) throws ApiException, IOException {
         int tryCount = 1;
         Response<?> response = null;
-        while (tryCount < retriesCount) {
+        while (tryCount <= retriesCount) {
             try {
                 response = call.clone().execute();
                 if (response.code() == 429) {
@@ -209,7 +211,7 @@ public class BaseService {
         }
     }
 
-    private void sleep(int timeMillis) {
+    private void sleep(long timeMillis) {
         try {
             Thread.sleep(timeMillis);
         } catch (InterruptedException e) {
@@ -219,9 +221,9 @@ public class BaseService {
 
     private int retry(int tryCount, Integer responseCode) throws ApiException {
         tryCount++;
-        if (tryCount < retriesCount) {
+        if (tryCount <= retriesCount) {
             log.info("Retrying in {}s ... ({}/{})", getSleepTimeSec() * tryCount, tryCount, retriesCount);
-            sleep(getSleepTimeSec() * tryCount);
+            sleep(SECONDS.toMillis((long) getSleepTimeSec() * tryCount));
         } else if (responseCode == null) {
             throw new ApiException("Timeout Error");
         } else if (responseCode == 429) {
