@@ -111,4 +111,9 @@ public class BlockInfo {
      * Child Block Hash
      */
     private String childHash;
+
+    /**
+     * Cardano Era
+     */
+    private String era;
 }

@@ -91,6 +91,16 @@ class NetworkServiceMainnetIntegrationTest {
     }
 
     @Test
+    void getEraSummariesTest() throws ApiException {
+        Result<List<EraSummary>> eraSummariesResult = networkService.getEraSummaries(Options.EMPTY);
+        Assertions.assertTrue(eraSummariesResult.isSuccessful());
+        Assertions.assertNotNull(eraSummariesResult.getValue());
+        Assertions.assertFalse(eraSummariesResult.getValue().isEmpty());
+        Assertions.assertNotNull(eraSummariesResult.getValue().get(0).getEra());
+        log.info(eraSummariesResult.getValue().toString());
+    }
+
+    @Test
     void getReserveWithdrawalsTest() throws ApiException {
         Options options = Options.builder().option(Limit.of(10)).build();
         Result<List<Withdrawal>> withdrawalsResult = networkService.getReserveWithdrawals(options);

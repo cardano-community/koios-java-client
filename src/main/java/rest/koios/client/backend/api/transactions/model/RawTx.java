@@ -36,4 +36,9 @@ public class RawTx {
      * Raw Tx in CBOR format
      */
     private String cbor = null;
+
+    /**
+     * Flag to show if all contracts in the transaction are valid
+     */
+    private Boolean validContract;
 }

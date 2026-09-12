@@ -65,4 +65,9 @@ public class DRepMetadata {
      * Indicate whether data is invalid
      */
     private Boolean isValid;
+
+    /**
+     * Raw metadata in hex (null if not applicable)
+     */
+    private String bytes;
 }

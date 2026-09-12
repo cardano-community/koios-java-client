@@ -33,6 +33,9 @@ public interface NetworkApi {
     @GET("cli_protocol_params")
     Call<JsonNode> getCliProtocolParameters(@QueryMap Map<String, String> paramsMap);
 
+    @GET("era_summaries")
+    Call<List<EraSummary>> getEraSummaries(@QueryMap Map<String, String> paramsMap);
+
     @GET("reserve_withdrawals")
     Call<List<Withdrawal>> getReserveWithdrawals(@QueryMap Map<String, String> paramsMap);
 

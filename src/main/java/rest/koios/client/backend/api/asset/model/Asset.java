@@ -28,4 +28,9 @@ public class Asset {
      * The CIP14 fingerprint of the asset
      */
     private String fingerprint;
+
+    /**
+     * Asset Name (ASCII)
+     */
+    private String assetNameAscii;
 }
