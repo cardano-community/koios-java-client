@@ -50,6 +50,35 @@ class BaseServiceErrorHandlingTest {
     }
 
     @Test
+    void successCarriesNoErrorTest() throws ApiException {
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setHeader("Content-Type", "application/json")
+                .setBody("[{\"hash\":\"abc\",\"epoch_no\":655,\"era\":\"Conway\"}]"));
+
+        Result<Tip> result = backendService.getNetworkService().getChainTip();
+
+        Assertions.assertTrue(result.isSuccessful());
+        Assertions.assertNull(result.getError());
+    }
+
+    @Test
+    void partialErrorBodyIsParsedTest() throws ApiException {
+        server.enqueue(new MockResponse()
+                .setResponseCode(400)
+                .setHeader("Content-Type", "application/json")
+                .setBody("{\"message\":\"request body too large\",\"hint\":\"send fewer ids\"}"));
+
+        Result<Tip> result = backendService.getNetworkService().getChainTip();
+
+        KoiosError error = result.getError();
+        Assertions.assertNotNull(error);
+        Assertions.assertEquals("request body too large", error.getMessage());
+        Assertions.assertEquals("send fewer ids", error.getHint());
+        Assertions.assertNull(error.getCode());
+    }
+
+    @Test
     void serverErrorBodyIsSurfacedTest() throws ApiException {
         String postgrestError = "{\"code\":\"42703\",\"details\":null,\"hint\":null," +
                 "\"message\":\"column pgrst_call.ticker does not exist\"}";
@@ -64,6 +93,13 @@ class BaseServiceErrorHandlingTest {
         Assertions.assertEquals(400, result.getCode());
         Assertions.assertEquals(postgrestError, result.getResponse());
         Assertions.assertNull(result.getValue());
+        // the same body, parsed
+        KoiosError error = result.getError();
+        Assertions.assertNotNull(error);
+        Assertions.assertEquals("42703", error.getCode());
+        Assertions.assertEquals("column pgrst_call.ticker does not exist", error.getMessage());
+        Assertions.assertNull(error.getDetails());
+        Assertions.assertNull(error.getHint());
     }
 
     @Test
@@ -75,6 +111,8 @@ class BaseServiceErrorHandlingTest {
         Assertions.assertFalse(result.isSuccessful());
         Assertions.assertEquals(500, result.getCode());
         Assertions.assertEquals("upstream failure", result.getResponse());
+        // a plain-text body is not a structured error; the raw text is still available
+        Assertions.assertNull(result.getError());
     }
 
     @Test
