@@ -10,7 +10,9 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
+import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.factory.BackendFactory;
+import rest.koios.client.backend.factory.BackendService;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 
@@ -23,10 +25,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EpochServiceMainnetIntegrationTest {
 
     private EpochService epochService;
+    private NetworkService networkService;
 
     @BeforeAll
     public void setup() {
-        epochService = BackendFactory.getKoiosMainnetService().getEpochService();
+        BackendService backendService = BackendFactory.getKoiosMainnetService();
+        epochService = backendService.getEpochService();
+        networkService = backendService.getNetworkService();
     }
 
     @Test
@@ -45,6 +50,8 @@ class EpochServiceMainnetIntegrationTest {
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
+        assertEquals(networkService.getChainTip().getValue().getEpochNo(),
+                epochInformationResult.getValue().getEpochNo());
     }
 
     @Test
@@ -72,6 +79,8 @@ class EpochServiceMainnetIntegrationTest {
         Result<EpochParams> epochParametersResult = epochService.getLatestEpochParameters();
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());
+        assertEquals(networkService.getChainTip().getValue().getEpochNo(),
+                epochParametersResult.getValue().getEpochNo());
         log.info(epochParametersResult.getValue().toString());
     }
 

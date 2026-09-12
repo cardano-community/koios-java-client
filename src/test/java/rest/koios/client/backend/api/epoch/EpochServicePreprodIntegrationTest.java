@@ -10,7 +10,9 @@ import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.epoch.model.EpochBlockProtocols;
 import rest.koios.client.backend.api.epoch.model.EpochInfo;
 import rest.koios.client.backend.api.epoch.model.EpochParams;
+import rest.koios.client.backend.api.network.NetworkService;
 import rest.koios.client.backend.factory.BackendFactory;
+import rest.koios.client.backend.factory.BackendService;
 import rest.koios.client.backend.factory.options.Limit;
 import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.options.Order;
@@ -25,10 +27,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class EpochServicePreprodIntegrationTest {
 
     private EpochService epochService;
+    private NetworkService networkService;
 
     @BeforeAll
     public void setup() {
-        epochService = BackendFactory.getKoiosPreprodService().getEpochService();
+        BackendService backendService = BackendFactory.getKoiosPreprodService();
+        epochService = backendService.getEpochService();
+        networkService = backendService.getNetworkService();
     }
 
     @Test
@@ -47,6 +52,8 @@ class EpochServicePreprodIntegrationTest {
         Assertions.assertTrue(epochInformationResult.isSuccessful());
         Assertions.assertNotNull(epochInformationResult.getValue());
         log.info(epochInformationResult.getValue().toString());
+        assertEquals(networkService.getChainTip().getValue().getEpochNo(),
+                epochInformationResult.getValue().getEpochNo());
     }
 
     @Test
@@ -74,6 +81,8 @@ class EpochServicePreprodIntegrationTest {
         Result<EpochParams> epochParametersResult = epochService.getLatestEpochParameters();
         Assertions.assertTrue(epochParametersResult.isSuccessful());
         Assertions.assertNotNull(epochParametersResult.getValue());
+        assertEquals(networkService.getChainTip().getValue().getEpochNo(),
+                epochParametersResult.getValue().getEpochNo());
         log.info(epochParametersResult.getValue().toString());
     }
 
