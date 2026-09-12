@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.cardano-community</groupId>
     <artifactId>koios-java-client</artifactId>
-    <version>1.22.0</version>
+    <version>1.22.1</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Koios Java Client is a Java REST Client library which allows interacting with Koios Server Instances using Java Objects</description>
     <url>https://github.com/cardano-community/koios-java-client</url>
@@ -13,7 +13,7 @@
     <properties>
         <java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <retrofit.version>2.11.0</retrofit.version>
+        <retrofit.version>3.0.0</retrofit.version>
         <jackson-databind.version>2.18.10</jackson-databind.version>
         <logging-interceptor.version>4.12.0</logging-interceptor.version>
         <mockwebserver.version>4.12.0</mockwebserver.version>
