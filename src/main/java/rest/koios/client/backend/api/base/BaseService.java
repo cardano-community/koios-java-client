@@ -139,9 +139,9 @@ public class BaseService {
                 if (response.body() != null && !response.body().isEmpty()) {
                     return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body().get(0)).code(response.code()).build();
                 } else if (response.body() != null) {
-                    return (Result<T>) Result.builder().successful(false).response("Response Body is Empty").code(404).build();
+                    return (Result<T>) Result.builder().successful(false).response("Response Body is Empty").code(404).synthetic(true).build();
                 } else {
-                    return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
+                    return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).synthetic(true).build();
                 }
             } else {
                 String errorBody = Objects.requireNonNull(response.errorBody()).string();
@@ -174,7 +174,7 @@ public class BaseService {
     }
 
     protected <T> Result<T> badRequestResult(String responseText) {
-        return (Result<T>) Result.builder().successful(false).response(responseText).code(400).build();
+        return (Result<T>) Result.builder().successful(false).response(responseText).code(400).synthetic(true).build();
     }
 
     /**

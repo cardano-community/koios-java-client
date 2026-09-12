@@ -7,11 +7,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import rest.koios.client.backend.api.base.exception.ApiException;
+import rest.koios.client.backend.api.asset.model.AssetInformation;
 import rest.koios.client.backend.api.network.model.Tip;
+import rest.koios.client.backend.factory.options.Options;
 import rest.koios.client.backend.factory.BackendFactory;
 import rest.koios.client.backend.factory.BackendService;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Error handling tests that run against a local {@link MockWebServer} instead of a live Koios
@@ -50,6 +53,19 @@ class BaseServiceErrorHandlingTest {
     }
 
     @Test
+    void locallyRejectedRequestIsSyntheticTest() throws ApiException {
+        // rejected by client-side validation, so no request is ever sent
+        Result<List<AssetInformation>> result =
+                backendService.getAssetService().getAssetInformationBulk(null, Options.EMPTY);
+
+        Assertions.assertFalse(result.isSuccessful());
+        Assertions.assertEquals(400, result.getCode());
+        Assertions.assertTrue(result.isSynthetic(), "no request was sent, so the 400 is the client's");
+        Assertions.assertNull(result.getError());
+        Assertions.assertEquals(0, server.getRequestCount(), "nothing should have been sent");
+    }
+
+    @Test
     void successCarriesNoErrorTest() throws ApiException {
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
@@ -60,6 +76,7 @@ class BaseServiceErrorHandlingTest {
 
         Assertions.assertTrue(result.isSuccessful());
         Assertions.assertNull(result.getError());
+        Assertions.assertFalse(result.isSynthetic());
     }
 
     @Test
@@ -91,6 +108,7 @@ class BaseServiceErrorHandlingTest {
 
         Assertions.assertFalse(result.isSuccessful());
         Assertions.assertEquals(400, result.getCode());
+        Assertions.assertFalse(result.isSynthetic(), "a real server 400 is not synthetic");
         Assertions.assertEquals(postgrestError, result.getResponse());
         Assertions.assertNull(result.getValue());
         // the same body, parsed
@@ -110,6 +128,7 @@ class BaseServiceErrorHandlingTest {
 
         Assertions.assertFalse(result.isSuccessful());
         Assertions.assertEquals(500, result.getCode());
+        Assertions.assertFalse(result.isSynthetic(), "a real server 500 is not synthetic");
         Assertions.assertEquals("upstream failure", result.getResponse());
         // a plain-text body is not a structured error; the raw text is still available
         Assertions.assertNull(result.getError());
@@ -135,7 +154,10 @@ class BaseServiceErrorHandlingTest {
         Result<Tip> result = backendService.getNetworkService().getChainTip();
 
         Assertions.assertFalse(result.isSuccessful());
+        // the server returned 200; this 404 is the client's, not Koios's
         Assertions.assertEquals(404, result.getCode());
+        Assertions.assertTrue(result.isSynthetic(), "an empty body yields a client-generated code");
+        Assertions.assertNull(result.getError());
         Assertions.assertEquals("Response Body is Empty", result.getResponse());
     }
 
