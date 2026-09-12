@@ -35,6 +35,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @Getter
 public class BaseService {
 
+    private static final ObjectMapper ERROR_MAPPER = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
     private final Retrofit retrofit;
     private int retriesCount = 5;
     private boolean retryOnTimeout = true;
@@ -141,10 +144,32 @@ public class BaseService {
                     return (Result<T>) Result.builder().successful(false).response("Response Body is Invalid").code(500).build();
                 }
             } else {
-                return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
+                String errorBody = Objects.requireNonNull(response.errorBody()).string();
+                return (Result<T>) Result.builder().successful(false).response(errorBody).code(response.code()).error(parseError(errorBody)).build();
             }
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Parses a JSON error body returned by Koios into a {@link KoiosError}.
+     *
+     * @param body raw response body, which may be plain text rather than JSON
+     * @return parsed error, or null if the body is blank, is not JSON, or carries none of the
+     * expected fields
+     */
+    private static KoiosError parseError(String body) {
+        if (body == null || body.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            KoiosError error = ERROR_MAPPER.readValue(body, KoiosError.class);
+            boolean empty = error.getCode() == null && error.getMessage() == null
+                    && error.getDetails() == null && error.getHint() == null;
+            return empty ? null : error;
+        } catch (IOException e) {
+            return null;
         }
     }
 
@@ -163,10 +188,12 @@ public class BaseService {
     protected <T> Result<T> processResponse(Call<?> call) throws ApiException {
         try {
             Response<T> response = (Response<T>) execute(call);
-            if (response.isSuccessful())
+            if (response.isSuccessful()) {
                 return (Result<T>) Result.builder().successful(true).response(response.toString()).value(response.body()).code(response.code()).build();
-            else
-                return (Result<T>) Result.builder().successful(false).response(Objects.requireNonNull(response.errorBody()).string()).code(response.code()).build();
+            } else {
+                String errorBody = Objects.requireNonNull(response.errorBody()).string();
+                return (Result<T>) Result.builder().successful(false).response(errorBody).code(response.code()).error(parseError(errorBody)).build();
+            }
         } catch (IOException e) {
             throw new ApiException(e.getMessage(), e);
         }
