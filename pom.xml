@@ -221,6 +221,15 @@
                         <goals>
                             <goal>sign</goal>
                         </goals>
+                        <configuration>
+                            <!-- gpg 2.1+ will not take a passphrase from a non-interactive
+                                 session without loopback pinentry, which is how the Release
+                                 workflow signs. Harmless locally. -->
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
