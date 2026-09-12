@@ -10,9 +10,9 @@ import lombok.*;
  * <pre>
  * {"code":"42703","details":null,"hint":null,"message":"column pgrst_call.ticker does not exist"}
  * </pre>
- * When a failing response carries such a body it is parsed into this object and exposed via
- * {@link Result#getError()}. Responses whose body is not JSON of this shape leave it null; the raw
- * body is always available from {@link Result#getResponse()} either way.
+ * When a failing response carries such a body it is parsed into this object and exposed as the
+ * {@code error} field of {@link Result}. Responses whose body is not JSON of this shape leave it
+ * null; the raw body is always available from the {@code response} field either way.
  */
 @Getter
 @Setter
