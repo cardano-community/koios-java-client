@@ -41,6 +41,10 @@ jobs:
       - name: Install Dependencies
         run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -Dgpg.skip
       - name: Run tests and collect coverage
-        run: mvn '-Dtest=*Preview*' -B test -Dgpg.skip
+        # Everything except the mainnet and preprod suites: the preview integration
+        # tests plus the offline unit tests. The previous '*Preview*' selector matched
+        # on class name, so none of the offline tests ran here and none of their
+        # coverage was ever reported.
+        run: mvn '-Dtest=!*Mainnet*,!*Preprod*' -B test -Dgpg.skip
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
