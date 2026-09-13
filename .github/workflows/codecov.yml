@@ -47,4 +47,13 @@ jobs:
         # coverage was ever reported.
         run: mvn '-Dtest=!*Mainnet*,!*Preprod*' -B test -Dgpg.skip
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        # v5 is required for the current Codecov token format: the uploader bundled
+        # with v3 only accepts the legacy 36 character UUID and rejects today's
+        # 50 character tokens with "did not pass validation".
+        uses: codecov/codecov-action@v5
+        with:
+          # Tokenless uploads from public repos are rate limited; without this the
+          # upload fails with 429 and, because the action exits 0 on upload errors,
+          # the job still reports success while the badge silently goes stale.
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
