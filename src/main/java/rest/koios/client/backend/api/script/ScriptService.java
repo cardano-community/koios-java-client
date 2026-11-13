@@ -20,6 +20,7 @@ public interface ScriptService {
      * <p><b>401</b> - The selected server has restricted the endpoint to be only usable via authentication. The authentication supplied was not authorized to access the endpoint
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
+     * @param scriptHashes List of script hashes
      * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link PlutusScript}
      * @throws ApiException if an error occurs while attempting to invoke the API

@@ -21,6 +21,7 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param utxoRefs List of Cardano utxo references in the form "hash#index"
+     * @param extended Include asset list, inline datum and reference script details for each UTxO
      * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
@@ -56,6 +57,13 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param txHash Cardano Transaction hash
+     * @param isInputs Include transaction inputs
+     * @param isMetadata Include transaction metadata
+     * @param isAssets Include assets in inputs and outputs
+     * @param isWithdrawals Include reward withdrawals
+     * @param isCertificates Include certificates
+     * @param isScripts Include script details (native scripts, Plutus contracts, datums and redeemers)
+     * @param isByteCode Include script bytecode
      * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API
      */
@@ -69,6 +77,13 @@ public interface TransactionsService {
      * <p><b>404</b> - The server does not recognise the combination of endpoint and parameters provided
      *
      * @param txHashes List of Cardano Transaction hashes
+     * @param isInputs Include transaction inputs
+     * @param isMetadata Include transaction metadata
+     * @param isAssets Include assets in inputs and outputs
+     * @param isWithdrawals Include reward withdrawals
+     * @param isCertificates Include certificates
+     * @param isScripts Include script details (native scripts, Plutus contracts, datums and redeemers)
+     * @param isByteCode Include script bytecode
      * @param options Filtering and Pagination options (optional)
      * @return Result of Type List of {@link TxInfo} detailed information about transaction(s)
      * @throws ApiException if an error occurs while attempting to invoke the API

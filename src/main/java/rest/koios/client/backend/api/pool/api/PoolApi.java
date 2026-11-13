@@ -140,6 +140,7 @@ public interface PoolApi {
      * Pool Registrations
      * Return all pool registrations initiated in the requested epoch
      *
+     * @param epochNo   Epoch Number to fetch registrations for
      * @param paramsMap Options and Filters Map
      * @return List of {@link PoolStatus}
      */
@@ -150,6 +151,7 @@ public interface PoolApi {
      * Pool Retirements
      * Return all pool retirements initiated in the requested epoch
      *
+     * @param epochNo   Epoch Number to fetch retirements for
      * @param paramsMap Options and Filters Map
      * @return List of {@link PoolStatus}
      */

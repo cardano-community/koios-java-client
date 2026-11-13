@@ -23,6 +23,7 @@ public class BackendFactory {
     /**
      * Get Mainnet BackendService for Koios (Latest Version)
      *
+     * @param apiToken Authorization Bearer JWT Token
      * @return {@link BackendService}
      */
     public static BackendService getKoiosMainnetService(String apiToken) {
@@ -63,6 +64,7 @@ public class BackendFactory {
      * Get Guild Network BackendService for Koios By Version
      *
      * @param apiVersion API Version
+     * @param apiToken   Authorization Bearer JWT Token
      * @return {@link BackendService}
      */
     public static BackendService getKoiosGuildService(ApiVersion apiVersion, String apiToken) {
