@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import rest.koios.client.backend.api.base.exception.ApiException;
 import rest.koios.client.backend.api.asset.model.AssetInformation;
 import rest.koios.client.backend.api.network.model.Tip;
@@ -224,6 +226,38 @@ class BaseServiceErrorHandlingTest {
 
         Assertions.assertTrue(result.isSuccessful());
         Assertions.assertEquals(2, server.getRequestCount(), "the 504 should have been retried once");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {502, 503})
+    void transientServerErrorIsRetriedThenSucceedsTest(int code) throws ApiException {
+        server.enqueue(new MockResponse()
+                .setResponseCode(code)
+                .setHeader("Content-Type", "application/json")
+                .setBody("{\"code\":\"PGRST002\",\"details\":null,\"hint\":null,"
+                        + "\"message\":\"Could not query the database for the schema cache. Retrying.\"}"));
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setHeader("Content-Type", "application/json")
+                .setBody("[{\"hash\":\"abc\",\"epoch_no\":655,\"era\":\"Conway\"}]"));
+
+        Result<Tip> result = backendService.getNetworkService().getChainTip();
+
+        Assertions.assertTrue(result.isSuccessful());
+        Assertions.assertEquals(2, server.getRequestCount(), "the " + code + " should have been retried once");
+    }
+
+    @Test
+    void persistentServerErrorExhaustsRetriesTest() {
+        for (int i = 0; i < 10; i++) {
+            server.enqueue(new MockResponse().setResponseCode(503));
+        }
+
+        ApiException exception = Assertions.assertThrows(ApiException.class,
+                () -> backendService.getNetworkService().getChainTip());
+
+        Assertions.assertTrue(exception.getMessage().contains("Retry Count Exceeded"), exception.getMessage());
+        Assertions.assertEquals(5, server.getRequestCount());
     }
 
     @Test
