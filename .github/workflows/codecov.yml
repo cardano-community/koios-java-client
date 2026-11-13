@@ -5,9 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       - name: Set up JDK 11
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v6
         with:
           java-version: '11'
           distribution: 'temurin'
@@ -16,7 +16,7 @@ jobs:
         run: mkdir -p ~/.m2/repository
 
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: ~/.m2/repository
           key: maven-${{ runner.os }}-${{ hashFiles('**/pom.xml') }}
@@ -50,7 +50,7 @@ jobs:
         # v5 is required for the current Codecov token format: the uploader bundled
         # with v3 only accepts the legacy 36 character UUID and rejects today's
         # 50 character tokens with "did not pass validation".
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           # Tokenless uploads from public repos are rate limited; without this the
           # upload fails with 429 and, because the action exits 0 on upload errors,

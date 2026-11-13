@@ -243,8 +243,8 @@ public class BaseService {
                 if (response.code() == 429) {
                     log.warn("429 Too Many Requests.");
                     tryCount = retry(tryCount, response.code());
-                } else if (response.code() == 504) {
-                    log.warn(response.message());
+                } else if (isTransientServerError(response.code())) {
+                    log.warn("{} {}", response.code(), response.message());
                     tryCount = retry(tryCount, response.code());
                 } else {
                     return response;
@@ -263,6 +263,15 @@ public class BaseService {
         } else {
             throw new ApiException("Retry Count Exceeded (" + tryCount + "/" + retriesCount + ").");
         }
+    }
+
+    /**
+     * 502, 503 and 504 come from the gateway or PostgREST while the backend is briefly
+     * unavailable (for example a 503 PGRST002 while the schema cache reloads), so the
+     * same request is expected to succeed on a later attempt.
+     */
+    private static boolean isTransientServerError(int code) {
+        return code == 502 || code == 503 || code == 504;
     }
 
     private void sleep(long timeMillis) {

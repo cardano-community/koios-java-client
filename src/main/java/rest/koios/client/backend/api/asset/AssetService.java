@@ -38,6 +38,7 @@ public interface AssetService {
      *
      * @param options Filtering and Pagination options (optional)
      * @return Array of token registry information for each asset
+     * @throws ApiException if an error occurs while attempting to invoke the API
      */
     Result<List<AssetTokenRegistry>> getAssetTokenRegistry(Options options) throws ApiException;
 
